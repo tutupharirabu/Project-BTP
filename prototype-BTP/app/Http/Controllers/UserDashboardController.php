@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RoomLogs;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UserDashboardController extends Controller
 {
@@ -25,13 +26,16 @@ class UserDashboardController extends Controller
             $request->img->move(public_path('/assets/img/'), $filename);
         }
 
+        $borrow_date_start = Carbon::createFromFormat('d/m/Y', $request->borrow_date_start)->format('Y-m-d');
+        $borrow_date_end = Carbon::createFromFormat('d/m/Y', $request->borrow_date_end)->format('Y-m-d');
+
         $room = new RoomLogs;
         $room->user_id = 1;
         $room->room_id = $ruang;
         $room->keperluan = $request->keperluan;
         $room->jumlahPesertaPanitia = $request->jumlahPesertaPanitia;
-        $room->borrow_date_start = $request->borrow_date_start;
-        $room->borrow_date_end = $request->borrow_date_end;
+        $room->borrow_date_start = $borrow_date_start;
+        $room->borrow_date_end = $borrow_date_end;
         $room->jam_mulai = $request->jam_mulai;
         $room->jam_berakhir = $request->jam_berakhir;
         $room->penanggungjawab = $request->penanggungjawab;
