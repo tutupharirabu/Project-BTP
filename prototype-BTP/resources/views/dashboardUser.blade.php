@@ -55,7 +55,7 @@
                 </div>
                 @endif
 
-                <form action="/userDashboard" method="post">
+                <form action="/userDashboard" method="post" enctype="multipart/form-data" id="formUserDashboard">
                     @csrf
                     <h5>Ruangan yang akan dipinjam</h5>
                     <select class="form-select mt-3 mb-3" name="kategoriRuangan">
@@ -89,7 +89,7 @@
 
                     <div class="row mt-3 mb-3">
                         <h5>Tanggal Mulai</h5>
-                        <input id="borrow_date_start"/>
+                        <input id="borrow_date_start" name="borrow_date_start"/>
                         <script>
                             $('#borrow_date_start').datepicker({
                                 uiLibrary: 'bootstrap5'
@@ -99,7 +99,7 @@
 
                     <div class="row mt-3 mb-3">
                         <h5>Tanggal Selesai</h5>
-                        <input id="borrow_date_end"/>
+                        <input id="borrow_date_end" name="borrow_date_end"/>
                         <script>
                             $('#borrow_date_end').datepicker({
                                 uiLibrary: 'bootstrap5'
@@ -109,7 +109,7 @@
 
                     <div class="row mt-3 mb-3">
                         <h5>Jam Mulai</h5>
-                        <input id="jam_mulai"/>
+                        <input id="jam_mulai" name="jam_mulai"/>
                         <script>
                             $('#jam_mulai').timepicker({
                                 uiLibrary: 'bootstrap5'
@@ -119,7 +119,7 @@
 
                     <div class="row mt-3 mb-3">
                         <h5>Jam Berakhir</h5>
-                        <input id="jam_berakhir"/>
+                        <input id="jam_berakhir" name="jam_berakhir"/>
                         <script>
                             $('#jam_berakhir').timepicker({
                                 uiLibrary: 'bootstrap5'
