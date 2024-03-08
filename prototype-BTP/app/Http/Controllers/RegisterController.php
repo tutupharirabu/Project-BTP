@@ -40,6 +40,6 @@ class RegisterController extends Controller
         $user->status_id = $status;
         $user->save();
 
-        return redirect('/login')->with('success', 'Registration Successfull~ Please Login!');
+        return redirect('/')->with('success', 'Registration Successfull~ Please Login!');
     }
 }

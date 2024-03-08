@@ -17,7 +17,7 @@ use App\Http\Controllers\AdminDashboardController;
 |
 */
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'index']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
