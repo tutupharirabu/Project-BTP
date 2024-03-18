@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\RoomLogs;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
@@ -30,7 +31,7 @@ class UserDashboardController extends Controller
         $borrow_date_end = Carbon::createFromFormat('d/m/Y', $request->borrow_date_end)->format('Y-m-d');
 
         $room = new RoomLogs;
-        $room->user_id = 1;
+        $room->user_id = Auth::id();
         $room->room_id = $ruang;
         $room->keperluan = $request->keperluan;
         $room->jumlahPesertaPanitia = $request->jumlahPesertaPanitia;
