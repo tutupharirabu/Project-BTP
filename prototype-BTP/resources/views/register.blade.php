@@ -40,13 +40,13 @@
                     @enderror
                 </div>
 
-                <select class="form-select m-2" name="kategoriStatus">
+                {{-- <select class="form-select m-2" name="kategoriStatus">
                     <option selected>Choose</option>
                     <option value="1">Tenaga Pendidik (Dosen)</option>
                     <option value="2">Tenaga Kependidikan (TPA)</option>
                     <option value="3">Mahasiswa</option>
                     <option value="4">Umum</option>
-                </select>
+                </select> --}}
 
                 <div class="form-floating m-2">
                     <input type="text" name="instansi" class="form-control rounded-top @error('instansi') is-invalid @enderror" id="instansi" value="{{ old('instansi') }}" required>
