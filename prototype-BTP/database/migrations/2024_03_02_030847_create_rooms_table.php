@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('room_code');
             $table->string('title');
-            $table->string('status')->default('available');
+            // $table->string('status')->default('available');
             $table->timestamps();
         });
     }

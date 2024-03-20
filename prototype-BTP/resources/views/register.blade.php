@@ -77,7 +77,7 @@
                     @enderror
                 </div>
                 <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Sign Up</button>
-                <h6 class="text-center">Already registered? <a href="/login">Login</a></h6>
+                <h6 class="text-center">Already registered? <a href="/">Login</a></h6>
             </form>
         </main>
     </div>
