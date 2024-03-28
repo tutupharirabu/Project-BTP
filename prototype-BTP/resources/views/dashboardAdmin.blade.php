@@ -76,7 +76,7 @@
                         <td>{{ $p->jam_mulai }}</td>
                         <td>{{ $p->jam_berakhir }}</td>
                         <td>{{ $p->penanggungjawab }}</td>
-                        <td>{{ $p->img }}</td>
+                        <td><img src="{{ $p->img }}" alt="Image" width="250" height="250"></td>
                         <td>
                             <a href=""><button class="btn btn-success">Approve</button></a>
                             <a href=""><button class="btn btn-danger">Remove</button></a>

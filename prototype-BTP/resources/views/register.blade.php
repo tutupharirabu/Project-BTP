@@ -67,6 +67,7 @@
                     </div>
                     @enderror
                 </div>
+
                 <div class="form-floating m-2">
                     <input type="password" name="password" class="form-control rounded-top @error('password') is-invalid @enderror" id="password" required>
                     <label for="password">Password</label>
