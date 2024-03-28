@@ -28,7 +28,7 @@ class LoginController extends Controller
                 return redirect()->intended('/adminDashboard');
             }
 
-            if(Auth::user()->role_id == 2) {
+            if(Auth::user()->role_id == 2 || Auth::user()->role_id == 3) {
                 return redirect()->intended('/userDashboard');
             }
         }

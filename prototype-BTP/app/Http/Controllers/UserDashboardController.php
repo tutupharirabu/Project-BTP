@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class UserDashboardController extends Controller
 {
     public function index() {
+        $room_logs = RoomLogs::all();
+
         return view('dashboardUser', [
             'title' => 'dashboard',
             'active' => 'dashboard'
-        ]);
+        ], compact('room_logs'));
     }
 
     public function store(Request $request) {
@@ -40,7 +42,13 @@ class UserDashboardController extends Controller
         $room->jam_mulai = $request->jam_mulai;
         $room->jam_berakhir = $request->jam_berakhir;
         $room->penanggungjawab = $request->penanggungjawab;
-        $room->img = $filename;
+
+        if (Auth::user()->role_id == 2) {
+            $room->link = $filename;
+        } else {
+            $room->link = 'Ini Eksternal';
+        }
+
         $room->save();
 
         return redirect('/userDashboard')->with('success', 'Pesan Ruangan Berhasil~');
