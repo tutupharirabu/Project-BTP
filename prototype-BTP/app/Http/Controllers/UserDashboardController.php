@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\RoomLogs;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
     public function index() {
+        $room_logs = RoomLogs::all();
+
         return view('dashboardUser', [
             'title' => 'dashboard',
             'active' => 'dashboard'
-        ]);
+        ], compact('room_logs'));
     }
 
     public function store(Request $request) {
@@ -30,7 +33,7 @@ class UserDashboardController extends Controller
         $borrow_date_end = Carbon::createFromFormat('d/m/Y', $request->borrow_date_end)->format('Y-m-d');
 
         $room = new RoomLogs;
-        $room->user_id = 1;
+        $room->user_id = Auth::id();
         $room->room_id = $ruang;
         $room->keperluan = $request->keperluan;
         $room->jumlahPesertaPanitia = $request->jumlahPesertaPanitia;
@@ -39,7 +42,13 @@ class UserDashboardController extends Controller
         $room->jam_mulai = $request->jam_mulai;
         $room->jam_berakhir = $request->jam_berakhir;
         $room->penanggungjawab = $request->penanggungjawab;
-        $room->img = $filename;
+
+        if (Auth::user()->role_id == 2) {
+            $room->link = $filename;
+        } else {
+            $room->link = 'Ini Eksternal';
+        }
+
         $room->save();
 
         return redirect('/userDashboard')->with('success', 'Pesan Ruangan Berhasil~');

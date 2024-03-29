@@ -12,6 +12,14 @@
             <form action="/register" method="post">
                 @csrf
                 <h1 class="h3 mb-3 fw-normal text-center">Register Form</h1>
+
+                <h6 class="m-2">Pilih Status</h6>
+                <select class="form-select" name="kategoriRole">
+                    <option selected>Choose</option>
+                    <option value="2">Internal</option>
+                    <option value="3">Eksternal</option>
+                </select>
+
                 <div class="form-floating m-2">
                     <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}" required>
                     <label for="name">Name</label>
@@ -40,14 +48,6 @@
                     @enderror
                 </div>
 
-                {{-- <select class="form-select m-2" name="kategoriStatus">
-                    <option selected>Choose</option>
-                    <option value="1">Tenaga Pendidik (Dosen)</option>
-                    <option value="2">Tenaga Kependidikan (TPA)</option>
-                    <option value="3">Mahasiswa</option>
-                    <option value="4">Umum</option>
-                </select> --}}
-
                 <div class="form-floating m-2">
                     <input type="text" name="instansi" class="form-control rounded-top @error('instansi') is-invalid @enderror" id="instansi" value="{{ old('instansi') }}" required>
                     <label for="instansi">Instansi Asal</label>
@@ -67,6 +67,7 @@
                     </div>
                     @enderror
                 </div>
+
                 <div class="form-floating m-2">
                     <input type="password" name="password" class="form-control rounded-top @error('password') is-invalid @enderror" id="password" required>
                     <label for="password">Password</label>
@@ -77,7 +78,7 @@
                     @enderror
                 </div>
                 <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Sign Up</button>
-                <h6 class="text-center">Already registered? <a href="/login">Login</a></h6>
+                <h6 class="text-center">Already registered? <a href="/">Login</a></h6>
             </form>
         </main>
     </div>

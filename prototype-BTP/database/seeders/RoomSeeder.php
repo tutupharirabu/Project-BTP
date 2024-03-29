@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Status;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class StatusSeeder extends Seeder
+class RoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,16 +15,16 @@ class StatusSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Status::truncate();
+        Room::truncate();
         Schema::enableForeignKeyConstraints();
 
         $data = [
-            'Tenaga Pendidik (Dosen)', 'Tenaga Kependidikan (TPA)', 'Mahasiswa', 'Umum'
+            'Ruang Multimedia A', 'Ruang Rapat Besar Lantai 2 Gedung B', 'Ruang Rapat Pelatihan Lantai 2 Gedung B', 'Ruang Aula Lantai 2 Gedung C', 'Ruang Rapat Lantai Dasar Gedung C'
         ];
 
         foreach ($data as $value) {
-            Status::insert([
-                'name' => $value
+            Room::insert([
+                'title' => $value
             ]);
         }
     }
