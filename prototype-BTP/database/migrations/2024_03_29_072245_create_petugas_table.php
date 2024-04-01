@@ -15,8 +15,8 @@ return new class extends Migration
             $table->increments('id_petugas');
             $table->string('nama_lengkap', 255);
             $table->string('jenis_kelamin', 11);
-            $table->string('divisi', 255);
             $table->string('alamat', 255);
+            $table->bigInteger('nomor_telepon');
             $table->string('email', 255);
             $table->string('password');
             $table->timestamps();

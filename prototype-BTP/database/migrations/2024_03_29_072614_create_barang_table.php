@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->increments('id_barang');
             $table->string('nama_barang', 255);
-            $table->string('jenis_barang', 255);
             $table->bigInteger('jumlah_barang');
-            $table->dateTime('tanggal_peminjaman');
             $table->timestamps();
         });
     }

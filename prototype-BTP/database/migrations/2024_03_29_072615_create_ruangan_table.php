@@ -15,14 +15,7 @@ return new class extends Migration
             $table->increments('id_ruangan');
             $table->string('nama_ruangan', 255);
             $table->bigInteger('kapasitas_ruangan');
-            $table->bigInteger('jumlah_peserta');
-            $table->date('tanggal_pemesanan');
-            $table->time('waktu_mulai');
-            $table->time('waktu_berakhir');
-            $table->unsignedInteger('id_petugas');
-            $table->unsignedInteger('id_penyewa');
-            $table->foreign('id_petugas')->references('id_petugas')->on('petugas');
-            $table->foreign('id_penyewa')->references('id_penyewa')->on('penyewa');
+            $table->string('lokasi', 255);
             $table->timestamps();
         });
     }
