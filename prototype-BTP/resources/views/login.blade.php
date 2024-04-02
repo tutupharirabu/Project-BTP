@@ -45,7 +45,7 @@
                     @enderror
                 </div>
                 <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Sign in</button>
-                <h6 class="text-center">Not registered? <a href="/register">Register Now!</a></h6>
+                <h6 class="text-center">Not registered? <a href="/daftarPenyewa">Register Now!</a></h6>
             </form>
         </main>
     </div>
