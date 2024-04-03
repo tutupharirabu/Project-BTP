@@ -17,20 +17,20 @@ class LoginController extends Controller
     public function authenticate(Request $request) {
 
         $credentials = $request -> validate([
-            'username' => 'required',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            if(Auth::user()->role_id == 1) {
-                return redirect()->intended('/adminDashboard');
-            }
+            return redirect()->intended('/adminDashboard');
+        }
 
-            if(Auth::user()->role_id == 2 || Auth::user()->role_id == 3) {
-                return redirect()->intended('/userDashboard');
-            }
+        if (Auth::guard('penyewa')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('/userDashboard');
         }
 
         return back()->with('loginError', 'Login Failed~');

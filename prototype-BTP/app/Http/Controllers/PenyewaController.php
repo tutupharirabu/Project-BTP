@@ -56,7 +56,7 @@ class PenyewaController extends Controller
 
         $penyewa->save();
 
-        return redirect()->route('login');
+        return redirect('/')->with('success', 'Registration Successfull~ Please Login!');
     }
 
     /**

@@ -46,7 +46,7 @@
         </header>
     </div>
 
-    <div class="row text-center">
+    {{-- <div class="row text-center">
         <h3 class="m-3"> Database Peminjaman Ruangan </h3>
         <div class="col m-2">
             <table class="table table-bordered ">
@@ -86,6 +86,6 @@
                 @endforeach
             </table>
         </div>
-    </div>
+    </div> --}}
 </body>
 </html>

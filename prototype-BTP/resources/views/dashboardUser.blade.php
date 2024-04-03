@@ -45,7 +45,7 @@
             </div>
         </header>
 
-        <div class="container">
+        {{-- <div class="container">
             @if(session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success' )}}
@@ -98,7 +98,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="container">
             <h3 class="m-3 text-center fw-bold"> Form Peminjaman Ruangan </h3>
@@ -185,12 +185,12 @@
                         @enderror
                     </div>
 
-                    @if(Auth::user()->role_id == 2)
+                    {{-- @if(Auth::user()->role_id == 2)
                     <div class="mt-3 mb-3">
                         <h5>Upload Identitas Jaminan</h5>
                         <input type="file" name="img" class="form-control"/>
                     </div>
-                    @endif
+                    @endif --}}
 
                     <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Submit</button>
                 </form>
