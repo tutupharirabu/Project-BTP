@@ -32,3 +32,4 @@ Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 
 Route::get('/userDashboard', [UserDashboardController::class, 'index']);
 Route::post('/userDashboard', [UserDashboardController::class, 'store']);
+
