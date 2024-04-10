@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Penyewa;
-use App\Models\Barang;
-use App\Models\Ruangan;
-use App\Models\Meminjam;
 
-class MeminjamController extends Controller
+class MeminjamRuanganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +19,7 @@ class MeminjamController extends Controller
      */
     public function create()
     {
-        $dataMeminjam = Meminjam::with(['penyewa', 'barang', 'ruangan'])->get();
-        $dataPenyewa = Penyewa::all();
-        $dataBarang = Barang::all();
-        $dataRuangan = Ruangan::all();
-
-        return view('admin.meminjam', compact('dataMeminjam', 'dataPenyewa', 'dataBarang', 'dataRuangan'));
+        //
     }
 
     /**
