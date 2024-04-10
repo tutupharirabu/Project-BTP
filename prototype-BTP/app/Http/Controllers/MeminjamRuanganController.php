@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MeminjamRuangan;
+use App\Models\Penyewa;
+use App\Models\Ruangan;
 
 class MeminjamRuanganController extends Controller
 {
@@ -19,7 +22,11 @@ class MeminjamRuanganController extends Controller
      */
     public function create()
     {
-        //
+        $dataMeminjamRuangan = MeminjamRuangan::with(['penyewa', 'ruangan'])->get();
+        $dataPenyewa = Penyewa::all();
+        $dataRuangan = Ruangan::all();
+
+        return view('penyewa.meminjamRuangan', compact('dataMeminjamRuangan', 'dataPenyewa', 'dataRuangan'));
     }
 
     /**
@@ -27,7 +34,26 @@ class MeminjamRuanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tanggal_peminjaman' => 'required',
+            'tanggal_selesai' => 'required',
+            'jumlah_pengguna' => 'required',
+            'id_penyewa' => 'required',
+            'id_ruangan' => 'required',
+        ]);
+
+        $meminjamRuangan = new MeminjamRuangan([
+            'tanggal_peminjaman' => $request->input('tanggal_peminjaman'),
+            'tanggal_selesai' => $request->input('tanggal_selesai'),
+            'jumlah_pengguna' => $request->input('jumlah_pengguna'),
+            'id_penyewa' => $request->input('id_penyewa'),
+            'id_ruangan' => $request->input('id_ruangan'),
+        ]);
+
+        $meminjamRuangan->save();
+
+        return redirect('/daftarMeminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
+
     }
 
     /**

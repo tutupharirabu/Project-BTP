@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Auth::guard('penyewa')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/userDashboard');
+            return redirect()->intended('/daftarMeminjamRuangan');
         }
 
         return back()->with('loginError', 'Login Failed~');

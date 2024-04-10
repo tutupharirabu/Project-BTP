@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MeminjamRuanganController;
+// use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 
@@ -18,15 +19,21 @@ use App\Http\Controllers\AdminDashboardController;
 |
 */
 
+// Authenticate
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 
+// Register penyewa
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
-Route::get('/register', [RegisterController::class, 'index']);
-Route::post('/register', [RegisterController::class, 'store']);
+// Form peminjaman Ruangan
+Route::get('/daftarMeminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('daftarMeminjamRuangan');
+Route::post('/daftarMeminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.daftarMeminjamRuangan');
+
+// Route::get('/register', [RegisterController::class, 'index']);
+// Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 
