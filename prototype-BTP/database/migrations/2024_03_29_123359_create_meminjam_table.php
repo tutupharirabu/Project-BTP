@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('id_penyewa');
             $table->unsignedInteger('id_barang');
             $table->unsignedInteger('id_ruangan');
+            $table->string('status', 255);
             $table->foreign('id_penyewa')->references('id_penyewa')->on('penyewa');
             $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');

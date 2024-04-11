@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\MeminjamRuanganController;
+use App\Http\Controllers\MeminjamBarangController;
 // use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
@@ -31,6 +32,10 @@ Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('
 // Form peminjaman Ruangan
 Route::get('/daftarMeminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('daftarMeminjamRuangan');
 Route::post('/daftarMeminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.daftarMeminjamRuangan');
+
+// Form peminjaman Barang
+Route::get('/daftarMeminjamBarang', [MeminjamBarangController::class, 'create'])->name('daftarMeminjamBarang');
+Route::post('/daftarMeminjamBarang/posts', [MeminjamBarangController::class, 'store'])->name('posts.daftarMeminjamBarang');
 
 // Route::get('/register', [RegisterController::class, 'index']);
 // Route::post('/register', [RegisterController::class, 'store']);

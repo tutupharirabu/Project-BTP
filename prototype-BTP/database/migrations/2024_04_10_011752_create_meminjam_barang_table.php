@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_meminjamBarang');
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_selesai');
+            $table->bigInteger('jumlah_barang');
             $table->unsignedInteger('id_penyewa');
             $table->unsignedInteger('id_barang');
             $table->foreign('id_penyewa')->references('id_penyewa')->on('penyewa');
