@@ -24,7 +24,7 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/adminDashboard');
+            return redirect()->intended('/adminRuangan');
         }
 
         if (Auth::guard('penyewa')->attempt($credentials)) {

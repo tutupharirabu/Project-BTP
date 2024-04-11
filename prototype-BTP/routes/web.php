@@ -5,9 +5,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\MeminjamBarangController;
+use App\Http\Controllers\AdminRuanganController;
 // use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserDashboardController;
-use App\Http\Controllers\AdminDashboardController;
+// use App\Http\Controllers\UserDashboardController;
+// use App\Http\Controllers\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,12 @@ Route::post('/daftarMeminjamBarang/posts', [MeminjamBarangController::class, 'st
 // Route::get('/register', [RegisterController::class, 'index']);
 // Route::post('/register', [RegisterController::class, 'store']);
 
+// crud ruangan
+Route::get('/adminRuangan', [AdminRuanganController::class, 'index'])->name('admin.ruangan');
+Route::get('/adminRuangan/tambahRuangan', [AdminRuanganController::class, 'create'])->name('admin.ruangan.tambahRuangan');
+Route::post('/adminRuangan/posts', [AdminRuanganController::class, 'store'])->name('posts.adminRuangan');
+
 Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 
-Route::get('/userDashboard', [UserDashboardController::class, 'index']);
+// Route::get('/userDashboard', [UserDashboardController::class, 'index']);
 Route::post('/userDashboard', [UserDashboardController::class, 'store']);

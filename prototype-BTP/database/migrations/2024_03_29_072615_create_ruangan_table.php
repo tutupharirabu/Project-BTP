@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_ruangan');
             $table->string('nama_ruangan', 255);
             $table->bigInteger('kapasitas_ruangan');
+            $table->string('foto_ruangan', 255);
             $table->string('lokasi', 255);
             $table->timestamps();
         });
