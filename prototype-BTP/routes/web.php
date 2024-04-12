@@ -45,6 +45,10 @@ Route::post('/daftarMeminjamBarang/posts', [MeminjamBarangController::class, 'st
 Route::get('/adminRuangan', [AdminRuanganController::class, 'index'])->name('admin.ruangan');
 Route::get('/adminRuangan/tambahRuangan', [AdminRuanganController::class, 'create'])->name('admin.ruangan.tambahRuangan');
 Route::post('/adminRuangan/posts', [AdminRuanganController::class, 'store'])->name('posts.adminRuangan');
+Route::get('/adminRuangan/{id}/detail', [AdminRuanganController::class, 'show'])->name('detail.adminRuangan');
+Route::get('/adminRuangan/{id}/edit', [AdminRuanganController::class, 'edit'])->name('edit.adminRuangan');
+Route::put('/adminRuangan/{id}', [AdminRuanganController::class, 'update'])->name('update.adminRuangan');
+Route::delete('/adminRuangan/delete/{id}', [AdminRuanganController::class, 'destroy'])->name('destroy.AdminRuangan');
 
 Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ruangan;
+use App\Models\Meminjam;
+use App\Models\MeminjamRuangan;
+use App\Models\Pengelola;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminRuanganController extends Controller
 {
@@ -54,9 +58,15 @@ class AdminRuanganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id_ruangan)
     {
-        //
+        $dataRuangan = Ruangan::where('id_ruangan', $id_ruangan)->first();
+
+        if(!$dataRuangan){
+            abort(404);
+        }
+
+        return view('admin.crud.ruangan.adminDetailRuangan', ['dataRuangan' => $dataRuangan]);
     }
 
     /**
@@ -64,22 +74,47 @@ class AdminRuanganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dataRuangan = Ruangan::find($id);
+        return view('admin.crud.ruangan.adminEditRuangan', ['dataRuangan' => $dataRuangan]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_ruangan)
     {
-        //
+        $dataRuangan = Ruangan::find($id_ruangan);
+        $request->validate([
+            'nama_ruangan' => 'required',
+            'kapasitas_ruangan' => 'required',
+            'foto_ruangan' => 'required|image|mimes:jpeg,png,jpg',
+            'lokasi' => 'required',
+        ]);
+
+        $file = request()->file('foto_ruangan') ? request()->file('foto_ruangan')->store('ruangan', 'public') : null;
+
+        Ruangan::where('id_ruangan', $dataRuangan->id_ruangan)->update([
+            'nama_ruangan' => $request['nama_ruangan'],
+            'kapasitas_ruangan' => $request['kapasitas_ruangan'],
+            'foto_ruangan' => $file,
+            'lokasi' => $request['lokasi'],
+        ]);
+
+        return redirect()->route('admin.ruangan');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_ruangan)
     {
-        //
+        $dataRuangan = Ruangan::with(['meminjam', 'meminjam_ruangan', 'pengelola'])->where('id_ruangan', $id_ruangan)->first();
+        $image_name = $dataRuangan->foto_ruangan;
+        $image_path = \public_path('storage/' . $dataRuangan->foto_ruangan);
+        if(File::exists($image_path)){
+            unlink($image_path);
+        }
+        Ruangan::destroy($dataRuangan->id_ruangan);
+        return redirect()->route('admin.ruangan');
     }
 }

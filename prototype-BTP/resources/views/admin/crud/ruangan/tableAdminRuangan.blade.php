@@ -19,13 +19,13 @@
                       Details
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="/adminRuangan/ruangan/{{$dR->id_ruangan}}/detail"><i class="fa-regular fa-eye"></i> Lihat</a></li>
-                      <li><a class="dropdown-item" href="/adminRuangan/ruangan/{{$dR->id_ruangan}}/edit"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
+                      <li><a class="dropdown-item" href="/adminRuangan/{{$dR->id_ruangan}}/detail"><i class="fa-regular fa-eye"></i> Lihat</a></li>
+                      <li><a class="dropdown-item" href="/adminRuangan/{{$dR->id_ruangan}}/edit"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
                       <li>
-                            <form class="form-valid" action="/adminRuangan/ruangan/delete/{{ $dR->id_ruangan }}" method="POST" id="formDeleteHlp-{{$dR->id_ruangan}}">
+                            <form class="form-valid" action="/adminRuangan/delete/{{$dR->id_ruangan}}" method="POST" id="formDeleteRuangan-{{$dR->id_ruangan}}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="dropdown-item" type="submit" id="id_helper"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                <button class="dropdown-item" type="submit" id="id_ruangan"><i class="fa-solid fa-trash"></i> Hapus</button>
                             </form>
 
                       </li>
