@@ -45,16 +45,64 @@
             </div>
         </header>
 
+        {{-- <div class="container">
+            @if(session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success' )}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            <div class="row text-center">
+                <h3 class="m-3 fw-bold"> Data Status Peminjaman Ruangan </h3>
+                <div class="col m-2">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <th scope="col"> Nama Peminjam </th>
+                            <th scope="col"> Ruangan Yang Dipinjam </th>
+                            <th scope="col"> Keperluan </th>
+                            <th scope="col"> Jumlah Peserta + Panitia </th>
+                            <th scope="col"> Tanggal Mulai </th>
+                            <th scope="col"> Tanggal Berakhir </th>
+                            <th scope="col"> Jam Mulai </th>
+                            <th scope="col"> Jam Berakhir </th>
+                            <th scope="col"> Penanggung Jawab </th>
+                            @if(Auth::user()->role_id == 2)
+                            <th scope="col"> Bukti </th>
+                            @endif
+                            <th scope="col"> Status </th>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($room_logs as $p)
+                            @if(Auth::user()->id == $p->user->id)
+                            <tr>
+                                <td>{{ $p->user->name }}</td>
+                                <td>{{ $p->room->title }}</td>
+                                <td>{{ $p->keperluan }}</td>
+                                <td>{{ $p->jumlahPesertaPanitia }}</td>
+                                <td>{{ $p->borrow_date_start }}</td>
+                                <td>{{ $p->borrow_date_end }}</td>
+                                <td>{{ $p->jam_mulai }}</td>
+                                <td>{{ $p->jam_berakhir }}</td>
+                                <td>{{ $p->penanggungjawab }}</td>
+                                @if(Auth::user()->role_id == 2)
+                                <td>{{ $p->link }}</td>
+                                @endif
+                                <td>
+                                    <a href=""><button class="btn btn-primary fw-bold">Attempt</button></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        @endif
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div> --}}
 
         <div class="container">
+            <h3 class="m-3 text-center fw-bold"> Form Peminjaman Ruangan </h3>
             <div class="w-100 m-auto">
-                @if(session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success' )}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
                 <form action="/userDashboard" method="post" enctype="multipart/form-data" id="formUserDashboard">
                     @csrf
                     <h5>Ruangan yang akan dipinjam</h5>
@@ -137,10 +185,12 @@
                         @enderror
                     </div>
 
+                    {{-- @if(Auth::user()->role_id == 2)
                     <div class="mt-3 mb-3">
                         <h5>Upload Identitas Jaminan</h5>
                         <input type="file" name="img" class="form-control"/>
                     </div>
+                    @endif --}}
 
                     <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Submit</button>
                 </form>

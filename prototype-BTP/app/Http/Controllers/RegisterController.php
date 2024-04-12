@@ -28,7 +28,7 @@ class RegisterController extends Controller
 
         $request['password'] = Hash::make($request['password']);
 
-        $status = $request->input('kategoriStatus');
+        $role = $request->input('kategoriRole');
 
         $user = new User;
         $user->name = $request->name;
@@ -37,9 +37,9 @@ class RegisterController extends Controller
         $user->password = $request->password;
         $user->telephone_number = $request->telephone_number;
         $user->instansi = $request->instansi;
-        $user->status_id = $status;
+        $user->role_id = $role;
         $user->save();
 
-        return redirect('/login')->with('success', 'Registration Successfull~ Please Login!');
+        return redirect('/')->with('success', 'Registration Successfull~ Please Login!');
     }
 }

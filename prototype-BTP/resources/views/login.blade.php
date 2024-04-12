@@ -27,9 +27,9 @@
                 @csrf
                 <h1 class="h3 mb-3 fw-normal text-center">Login Form</h1>
                 <div class="form-floating m-2">
-                    <input type="text" name="username" class="form-control rounded-top @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" required>
-                    <label for="username">Username</label>
-                    @error('username')
+                    <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" required>
+                    <label for="email">Email address</label>
+                    @error('email')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -45,7 +45,7 @@
                     @enderror
                 </div>
                 <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Sign in</button>
-                <h6 class="text-center">Not registered? <a href="/register">Register Now!</a></h6>
+                <h6 class="text-center">Not registered? <a href="/daftarPenyewa">Register Now!</a></h6>
             </form>
         </main>
     </div>
