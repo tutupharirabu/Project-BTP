@@ -22,6 +22,7 @@ class MeminjamSeeder extends Seeder
             $tanggal = $faker->date();
             $jumlahPengguna = $faker->numberBetween(1, 100);
             $id = $faker->numberBetween(1, 10);
+            $status = $faker->randomElement(['Diterima', 'Ditolak', 'Sedang Menunggu']);
 
             DB::table('meminjam')->insert([
                 'tanggal_peminjaman'  => $tanggal,
@@ -30,6 +31,7 @@ class MeminjamSeeder extends Seeder
                 'id_penyewa' => $id,
                 'id_barang' => $id,
                 'id_ruangan' => $id,
+                'status' => $status,
             ]);
         }
     }
