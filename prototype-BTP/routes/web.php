@@ -6,6 +6,8 @@ use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\MeminjamBarangController;
 use App\Http\Controllers\AdminRuanganController;
+use App\Http\Controllers\DashboardController;
+
 // use App\Http\Controllers\RegisterController;
 // use App\Http\Controllers\UserDashboardController;
 // use App\Http\Controllers\AdminDashboardController;
@@ -55,3 +57,4 @@ Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 // Route::get('/userDashboard', [UserDashboardController::class, 'index']);
 Route::post('/userDashboard', [UserDashboardController::class, 'store']);
 
+Route::get('/dashboard', [DashboardController::class, 'index']);
