@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,6 +13,12 @@ class DashboardController extends Controller
     public function index()
     {
         return view('userDashboard');
+    }
+
+    public function getEvents()
+    {
+        $schedules = Schedule::all();
+        return response()->json($schedules);
     }
 
     /**

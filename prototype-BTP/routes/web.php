@@ -58,3 +58,4 @@ Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
 Route::post('/userDashboard', [UserDashboardController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/events', [DashboardController::class, 'getEvents']);
