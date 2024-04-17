@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ruangan;
 use App\Models\Meminjam;
 use App\Models\MeminjamRuangan;
-use App\Models\Pengelola;
+use App\Models\Mengelola;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -87,11 +87,11 @@ class AdminRuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required',
             'kapasitas_ruangan' => 'required',
-            'foto_ruangan' => 'required|image|mimes:jpeg,png,jpg',
             'lokasi' => 'required',
         ]);
 
-        $file = request()->file('foto_ruangan') ? request()->file('foto_ruangan')->store('ruangan', 'public') : null;
+        $oldfile = $dataRuangan->foto_ruangan;
+        $file = request()->file('foto_ruangan') ? request()->file('foto_ruangan')->store('ruangan', 'public') : $oldfile;
 
         Ruangan::where('id_ruangan', $dataRuangan->id_ruangan)->update([
             'nama_ruangan' => $request['nama_ruangan'],
@@ -108,7 +108,7 @@ class AdminRuanganController extends Controller
      */
     public function destroy(string $id_ruangan)
     {
-        $dataRuangan = Ruangan::with(['meminjam', 'meminjam_ruangan', 'pengelola'])->where('id_ruangan', $id_ruangan)->first();
+        $dataRuangan = Ruangan::with(['meminjam', 'meminjam_ruangan', 'mengelola'])->where('id_ruangan', $id_ruangan)->first();
         $image_name = $dataRuangan->foto_ruangan;
         $image_path = \public_path('storage/' . $dataRuangan->foto_ruangan);
         if(File::exists($image_path)){

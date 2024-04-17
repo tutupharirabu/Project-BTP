@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengelola', function (Blueprint $table) {
+        Schema::create('mengelola', function (Blueprint $table) {
             $table->increments('id_pengelola');
+            $table->unsignedInteger('id_admin');
             $table->unsignedInteger('id_petugas');
             $table->unsignedInteger('id_ruangan');
             $table->unsignedInteger('id_barang');
+            $table->foreign('id_admin')->references('id_admin')->on('admin');
             $table->foreign('id_petugas')->references('id_petugas')->on('petugas');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
             $table->foreign('id_barang')->references('id_barang')->on('barang');
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengelola');
+        Schema::dropIfExists('mengelola');
     }
 };

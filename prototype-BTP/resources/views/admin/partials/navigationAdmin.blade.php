@@ -61,8 +61,8 @@
                 Assets
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Ruangan</a></li>
-                <li><a class="dropdown-item" href="#">Barang</a></li>
+                <li><a class="dropdown-item" href="/adminRuangan">Ruangan</a></li>
+                <li><a class="dropdown-item" href="/adminBarang">Barang</a></li>
             </ul>
           </li>
           <li class="nav-item">

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_barang');
             $table->string('nama_barang', 255);
             $table->bigInteger('jumlah_barang');
+            $table->string('foto_barang', 225);
             $table->timestamps();
         });
     }

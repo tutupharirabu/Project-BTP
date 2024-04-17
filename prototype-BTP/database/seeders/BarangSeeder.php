@@ -19,12 +19,14 @@ class BarangSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i=1; $i <= 10 ; $i++) {
-            $namaBarang = $faker->randomElement(['sound system', 'kursi', 'meja', 'proyektor']);
+            $namaBarang = $faker->randomElement(['Sound System', 'Kursi', 'Meja', 'Proyektor']);
             $jumlahBarang = $faker->numberBetween(1, 100);
+            $fotoBarang = $faker->imageUrl($width = 640, $height = 480);
 
             DB::table('barang')->insert([
                 'nama_barang'  => $namaBarang,
                 'jumlah_barang' => $jumlahBarang,
+                'foto_barang' => $fotoBarang,
             ]);
         }
 

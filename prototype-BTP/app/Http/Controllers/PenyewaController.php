@@ -26,7 +26,7 @@ class PenyewaController extends Controller
     public function create()
     {
         $data = Penyewa::all();
-        return view('loginsys.daftarPenyewa', compact('data'));
+        return view('registersys.daftarPenyewa', compact('data'));
     }
 
     /**

@@ -1,6 +1,6 @@
-@extends('loginsys.layouts.mainLoginSys')
-@section('containLoginSys')
-    <div class="d-flex align-items-center py-4 bg-body-tertiary font-monospace">
+@extends('registersys.layouts.mainRegisterSys')
+@section('containRegisterSys')
+    <div class="d-flex align-items-center py-4 font-monospace">
         <div class="container-sm">
             <h1 class="text-center pb-3">Form Daftar Penyewa Ruangan</h1>
             <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST" class="form-valid" enctype="multipart/form-data" novalidate>

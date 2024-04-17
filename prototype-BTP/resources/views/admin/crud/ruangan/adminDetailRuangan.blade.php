@@ -3,7 +3,7 @@
     <div class="container">
         <div class="card my-3">
             <div class="card-body">
-                <a href="#" class="text-none align-middle text-dark">Assets</a><span class="text-secondary">/</span> <a href="/adminRuangan" class="text-none align-middle text-dark">Ruangan</a><span class="text-secondary">/</span> <a href="#" class="text-none align-middle text-dark">Detail ruangan</a>
+                <a href="#" class="text-none align-middle text-dark">Assets</a><span class="text-secondary">/</span> <a href="/adminRuangan" class="text-none align-middle text-dark">Ruangan</a><span class="text-secondary">/</span> <a href="{{ route('detail.adminRuangan', $dataRuangan->id_ruangan) }}" class="text-none align-middle text-dark">Detail ruangan</a>
             </div>
         </div>
 
