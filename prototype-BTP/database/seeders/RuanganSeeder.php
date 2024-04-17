@@ -18,8 +18,11 @@ class RuanganSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Room', 'Virtual Office', 'Multimedia', 'Aula', 'R. Meeting', 'Training Room', 'Overtime Room'];
+        shuffle($rooms);
+
         for ($i=1; $i <= 10 ; $i++) {
-            $namaRuangan = $faker->randomElement(['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Room', 'Virtual Office', 'Multimedia', 'Aula', 'R. Meeting', 'Training Room', 'Overtime Room']);
+            $namaRuangan = $rooms[$i-1];
             $kapasitasRuangan = $faker->numberBetween(1, 100);
             $fotoRuangan = $faker->imageUrl($width = 640, $height = 480);
             $lokasi = '';

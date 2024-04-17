@@ -22,6 +22,14 @@
                     </ul>
 
                     @endif
+
+                    @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success' )}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
                     <div class="col-md-6">
                       <label for="tanggal_peminjaman" class="form-label">Tanggal peminjaman</label>
                       <input type="date" class="form-control" id="tanggal_peminjaman" name="tanggal_peminjaman" required>
@@ -52,7 +60,7 @@
                       <label for="id_barang" class="form-label">Nama barang</label>
                       <select name="id_barang" id="id_barang" class="form-select">
                         @foreach ($dataBarang as $barang)
-                            <option value="{{$barang->id_barang}}">{{$barang->nama_barang}}</option>
+                            <option value="{{$barang->id_barang}}">{{$barang->nama_barang}} ({{$barang->jumlah_barang}})</option>
                         @endforeach
                       </select>
                       <div class="invalid-feedback">

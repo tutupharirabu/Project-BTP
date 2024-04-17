@@ -12,6 +12,24 @@
                 <form class="row g-3 needs-validation" action="{{ route('posts.daftarMeminjamRuangan') }}" method="POST" class="form-valid" enctype="multipart/form-data" novalidate>
 
                     @csrf
+                    @if (isset($errors) && count($errors))
+
+                        {{count($errors->all())}} Error(s)
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }} </li>
+                        @endforeach
+                    </ul>
+
+                    @endif
+
+                    @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success' )}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
                     <div class="col-md-6">
                       <label for="tanggal_peminjaman" class="form-label">Tanggal peminjaman</label>
                       <input type="date" class="form-control" id="tanggal_peminjaman" name="tanggal_peminjaman" required>
@@ -42,7 +60,7 @@
                       <label for="id_ruangan" class="form-label">Nama Ruangan</label>
                       <select name="id_ruangan" id="id_ruangan" class="form-select">
                         @foreach ($dataRuangan as $ruangan)
-                            <option value="{{$ruangan->id_ruangan}}">{{$ruangan->nama_ruangan}}</option>
+                            <option value="{{$ruangan->id_ruangan}}">{{$ruangan->nama_ruangan}} ({{$ruangan->kapasitas_ruangan}})</option>
                         @endforeach
                       </select>
                       <div class="invalid-feedback">

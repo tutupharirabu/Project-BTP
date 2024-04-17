@@ -18,8 +18,11 @@ class BarangSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i=1; $i <= 10 ; $i++) {
-            $namaBarang = $faker->randomElement(['Sound System', 'Kursi', 'Meja', 'Proyektor']);
+        $items = ['Sound System', 'Kursi', 'Meja', 'Proyektor'];
+        shuffle($items);
+
+        for ($i=1; $i <= 4 ; $i++) {
+            $namaBarang = $items[$i-1];
             $jumlahBarang = $faker->numberBetween(1, 100);
             $fotoBarang = $faker->imageUrl($width = 640, $height = 480);
 
