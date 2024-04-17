@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\MeminjamRuangan;
 use App\Models\Penyewa;
 use App\Models\Ruangan;
+use App\Models\Meminjam;
+use Illuminate\Http\Request;
+use App\Models\MeminjamRuangan;
 
 class MeminjamRuanganController extends Controller
 {
@@ -51,6 +52,17 @@ class MeminjamRuanganController extends Controller
         ]);
 
         $meminjamRuangan->save();
+
+        $simpanRuangan = new Meminjam([
+            'tanggal_peminjaman' => $request->input('tanggal_peminjaman'),
+            'tanggal_selesai' => $request->input('tanggal_selesai'),
+            'jumlah_pengguna' => $request->input('jumlah_pengguna'),
+            'id_penyewa' => $request->input('id_penyewa'),
+            'id_ruangan' => $request->input('id_ruangan'),
+        ]);
+
+        $simpanRuangan->id_meminjamRuangan = $meminjamRuangan->id_meminjamRuangan;
+        $simpanRuangan->save();
 
         return redirect('/daftarMeminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
 

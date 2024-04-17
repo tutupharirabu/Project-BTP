@@ -3,7 +3,7 @@
     <div class="container">
         <div class="card my-3">
             <div class="card-body">
-                <a href="#" class="text-none align-middle text-dark">Daftar Meminjam ruangan</a>
+                <a href="#" class="text-none align-middle text-dark">Daftar Meminjam Ruangan</a>
             </div>
         </div>
 
@@ -31,14 +31,14 @@
                     @endif
 
                     <div class="col-md-6">
-                      <label for="tanggal_peminjaman" class="form-label">Tanggal peminjaman</label>
+                      <label for="tanggal_peminjaman" class="form-label">Tanggal Peminjaman</label>
                       <input type="date" class="form-control" id="tanggal_peminjaman" name="tanggal_peminjaman" required>
                       <div class="invalid-feedback">
                         Isi tanggal mulai meminjam anda!
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="tanggal_selesai" class="form-label">Tanggal selesai meminjam</label>
+                      <label for="tanggal_selesai" class="form-label">Tanggal Selesai Meminjam</label>
                       <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
                       <div class="invalid-feedback">
                         Isi tanggal selesai meminjam anda!

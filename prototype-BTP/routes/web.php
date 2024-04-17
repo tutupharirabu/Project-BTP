@@ -5,8 +5,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\AdminBarangController;
 use App\Http\Controllers\AdminRuanganController;
+use App\Http\Controllers\AdminPengajuanController;
 use App\Http\Controllers\MeminjamBarangController;
 use App\Http\Controllers\MeminjamRuanganController;
+use App\Http\Controllers\DashboardPenyewaController;
 // use App\Http\Controllers\RegisterController;
 // use App\Http\Controllers\UserDashboardController;
 // use App\Http\Controllers\AdminDashboardController;
@@ -58,3 +60,11 @@ Route::get('/adminBarang/{id}/edit', [AdminBarangController::class, 'edit'])->na
 Route::put('/adminBarang/{id}', [AdminBarangController::class, 'update'])->name('update.adminBarang');
 Route::delete('/adminBarang/delete/{id}', [AdminBarangController::class, 'destroy'])->name('destroy.AdminBarang');
 
+// Dashboard penyewa
+
+Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard');
+
+// Pengajuan admin
+
+Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
+Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
