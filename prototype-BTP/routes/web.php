@@ -10,6 +10,7 @@ use App\Http\Controllers\MeminjamBarangController;
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\DashboardPenyewaController;
 use App\Http\Controllers\DashboardController;
+
 // use App\Http\Controllers\RegisterController;
 // use App\Http\Controllers\UserDashboardController;
 // use App\Http\Controllers\AdminDashboardController;
@@ -69,3 +70,6 @@ Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->
 
 Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
 Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
+
+//Dashboard peminjam
+Route::get('/dashboard', [DashboardController::class, 'index']);
