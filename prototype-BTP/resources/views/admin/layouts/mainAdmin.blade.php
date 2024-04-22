@@ -23,7 +23,7 @@
     @include('penyewa.partials.navigation')
 
     <div class="row d-flex min-vh-100">
-        @include('penyewa.partials.sidebar')
+        @include('admin.partials.sidebar')
         <div class="col-md-9">
             @yield('containAdmin')
         </div>
