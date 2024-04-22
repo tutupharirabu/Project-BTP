@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminPengajuanController;
 use App\Http\Controllers\MeminjamBarangController;
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\DashboardPenyewaController;
+use App\Http\Controllers\DashboardController;
 // use App\Http\Controllers\RegisterController;
 // use App\Http\Controllers\UserDashboardController;
 // use App\Http\Controllers\AdminDashboardController;
