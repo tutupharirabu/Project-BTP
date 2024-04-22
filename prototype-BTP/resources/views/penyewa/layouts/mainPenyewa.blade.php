@@ -68,4 +68,3 @@
 
     calendar.render();
 </script>
-< /html>

@@ -12,7 +12,7 @@
 {{-- <div class="col-md-2 col-lg-2 d-none d-md-block" style="background-color: #d9d9d9">
     <nav class="nav flex-column">
         <a class="nav-link active" href="#">Dashboard</a>
-        <a class="nav-link" href="#">Daftar Ruangan</a>
+        <a class="nav-link" href="">Daftar Ruangan</a> ///bikin routes controller arah ke page daftarRuangan.blade
         <a class="nav-link" href="#">Status Pengajuan</a>
         <a class="nav-link" href="#">Keluar</a>
     </nav>
