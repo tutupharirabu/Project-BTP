@@ -24,7 +24,7 @@
 
     <div class="row d-flex min-vh-100">
         @include('admin.partials.sidebar')
-        <div class="col-md-9">
+        <div class="col-md-10">
             @yield('containAdmin')
         </div>
     </div>
