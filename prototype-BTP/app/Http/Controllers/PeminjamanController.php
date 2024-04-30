@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Peminjaman;
 
 class PeminjamanController extends Controller
 {
@@ -11,7 +12,8 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        $dataPeminjaman = Peminjaman::with(['users', 'ruangan', 'barang'])->get();
+        return view('penyewa.peminjaman.peminjaman', compact('dataPeminjaman'));
     }
 
     /**
