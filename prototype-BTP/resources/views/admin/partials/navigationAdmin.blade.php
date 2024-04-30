@@ -49,24 +49,15 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Peminjaman
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Peminjaman Ruangan</a></li>
-                <li><a class="dropdown-item" href="#">Peminjaman Barang</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Assets
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Ruangan</a></li>
-                <li><a class="dropdown-item" href="#">Barang</a></li>
+                <li><a class="dropdown-item" href="/adminRuangan">Ruangan</a></li>
+                <li><a class="dropdown-item" href="/adminBarang">Barang</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pengajuan</a>
+            <a class="nav-link" href="/pengajuan">Pengajuan</a>
           </li>
         </ul>
         <!-- Left links -->

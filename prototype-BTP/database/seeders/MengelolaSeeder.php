@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 
-class PengelolaSeeder extends Seeder
+class mengelolaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,7 +21,7 @@ class PengelolaSeeder extends Seeder
         for ($i=1; $i <= 10 ; $i++) {
             $id = $faker->numberBetween(1, 10);
 
-            DB::table('pengelola')->insert([
+            DB::table('mengelola')->insert([
                 'id_petugas'  => $id,
                 'id_ruangan' => $id,
                 'id_barang' => $id,

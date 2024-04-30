@@ -40,5 +40,14 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('fadhiladminaja123'),
         ]);
 
+        DB::table('admin')->insert([
+            'nama_lengkap'  => 'Irfan Zharauri Nanda Sudiyanto',
+            'jenis_kelamin' => 'Male',
+            'nomor_telepon' => preg_replace("/[^0-9]/", "", $faker->phoneNumber),
+            'alamat' => $faker->address,
+            'email' => 'code.zharaurien@gmail.com',
+            'password' => Hash::make('inipasswordya?'),
+        ]);
+
     }
 }

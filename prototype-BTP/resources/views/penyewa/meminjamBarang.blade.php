@@ -22,22 +22,30 @@
                     </ul>
 
                     @endif
+
+                    @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success' )}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
                     <div class="col-md-6">
-                      <label for="tanggal_peminjaman" class="form-label">Tanggal peminjaman</label>
+                      <label for="tanggal_peminjaman" class="form-label">Tanggal Peminjaman</label>
                       <input type="date" class="form-control" id="tanggal_peminjaman" name="tanggal_peminjaman" required>
                       <div class="invalid-feedback">
                         Isi tanggal mulai meminjam anda!
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="tanggal_selesai" class="form-label">Tanggal selesai meminjam</label>
+                      <label for="tanggal_selesai" class="form-label">Tanggal Selesai Meminjam</label>
                       <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
                       <div class="invalid-feedback">
                         Isi tanggal selesai meminjam anda!
                       </div>
                     </div>
                     <div class="col-md-2">
-                      <label for="jumlah_barang" class="form-label">Jumlah barang</label>
+                      <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
                       <input type="number" class="form-control" id="jumlah_barang" name="jumlah_barang" required>
                       <div class="invalid-feedback">
                         Isi jumlah barang yang akan meminjam ruangan anda!
@@ -52,7 +60,7 @@
                       <label for="id_barang" class="form-label">Nama barang</label>
                       <select name="id_barang" id="id_barang" class="form-select">
                         @foreach ($dataBarang as $barang)
-                            <option value="{{$barang->id_barang}}">{{$barang->nama_barang}}</option>
+                            <option value="{{$barang->id_barang}}">{{$barang->nama_barang}} ({{$barang->jumlah_barang}})</option>
                         @endforeach
                       </select>
                       <div class="invalid-feedback">

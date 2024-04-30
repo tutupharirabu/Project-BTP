@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
+use App\Models\Penyewa;
+use App\Models\Meminjam;
 use Illuminate\Http\Request;
 use App\Models\MeminjamBarang;
-use App\Models\Penyewa;
-use App\Models\Barang;
 
 class MeminjamBarangController extends Controller
 {
@@ -60,6 +61,16 @@ class MeminjamBarangController extends Controller
         $barang->save();
 
         $meminjamBarang->save();
+
+        $simpanBarang = new Meminjam();
+        $simpanBarang->tanggal_peminjaman = $request->input('tanggal_peminjaman');
+        $simpanBarang->tanggal_selesai = $request->input('tanggal_selesai');
+        $simpanBarang->jumlah_barang = $jumlah_barang; // Gunakan nilai input dari pengguna
+        $simpanBarang->id_penyewa = $request->input('id_penyewa');
+        $simpanBarang->id_barang = $request->input('id_barang');
+        $simpanBarang->id_meminjamBarang = $meminjamBarang->id_meminjamBarang;
+
+        $simpanBarang->save();
 
         return redirect('/daftarMeminjamBarang')->with('success', 'Daftar Meminjam Barang Successfull');
     }

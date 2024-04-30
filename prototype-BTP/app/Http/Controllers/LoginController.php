@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function index() {
-        return view('login', [
+        return view('loginsys.login', [
             'title' => 'login',
             'active' => 'login'
         ]);
@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Auth::guard('penyewa')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/daftarMeminjamRuangan');
+            return redirect()->intended('/dashboardPenyewa');
         }
 
         return back()->with('loginError', 'Login Failed~');

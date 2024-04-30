@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Meminjam;
 use App\Models\MeminjamRuangan;
-use App\Models\Pengelola;
+use App\Models\Mengelola;
 
 class Ruangan extends Model
 {
@@ -23,7 +23,7 @@ class Ruangan extends Model
         return $this->belongsTo(MeminjamRuangan::class, 'id_meminjamRuangan', 'id_meminjamRuangan');
     }
 
-    public function pengelola() {
-        return $this->belongsTo(Pengelola::class, 'id_pengelola', 'id_pengelola');
+    public function mengelola() {
+        return $this->belongsTo(Mengelola::class, 'id_pengelola', 'id_pengelola');
     }
 }

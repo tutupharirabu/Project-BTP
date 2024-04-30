@@ -8,7 +8,7 @@ use App\Models\Petugas;
 use App\Models\Ruangan;
 use App\Models\Barang;
 
-class Pengelola extends Model
+class Mengelola extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_pengelola';
