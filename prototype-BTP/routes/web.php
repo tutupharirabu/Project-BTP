@@ -12,6 +12,7 @@ use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\DashboardPenyewaController;
 use App\Http\Controllers\AdminStatusRuanganController;
 use App\Http\Controllers\PenyewaStatusRuanganController;
+use App\Http\Controllers\PenyewaDaftarRuangan;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,3 +75,4 @@ Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index']
 
 // Penyewa lihat status Ruangan
 Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
+Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);

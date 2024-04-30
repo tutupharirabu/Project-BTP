@@ -13,8 +13,6 @@ class PenyewaStatusRuanganController extends Controller
 
     public function getEvents()
     {
-        $schedules = Schedule::all();
-        return response()->json($schedules);
     }
 
     /**
