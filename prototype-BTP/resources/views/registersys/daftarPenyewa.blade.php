@@ -15,17 +15,6 @@
                         Masukkan nama lengkap anda!
                     </div>
                 </div>
-                {{-- <div class="col-md-4">
-                  <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                  <select name="jenis_kelamin" id="jenis_kelamin" class="form-select">
-                    <option selected disabled value="">Pilih jenis kelamin anda...</option>
-                    <option value="male">Laki-Laki</option>
-                    <option value="female">Perempuan</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Pilih jenis kelamin anda!
-                  </div>
-                </div> --}}
                 <div class="col-md-6">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username"
@@ -34,27 +23,6 @@
                         Masukkan username anda!
                     </div>
                 </div>
-                {{-- <div class="col-md-6">
-                    <label for="status" class="form-label">Status pekerjaan</label>
-                    <select name="status" id="status" class="form-select">
-                        <option selected disabled value="">Pilih status pekerjaan anda...</option>
-                        <option value="internal">Ditmawa</option>
-                        <option value="internal">Dosen</option>
-                        <option value="eksternal">Mahasiswa</option>
-                        <option value="eksternal">Lainnya</option>
-                    </select>
-                    <div class="invalid-feedback">
-                      Masukkan status pekerjaan anda!
-                    </div>
-                </div> --}}
-                {{-- <div class="col-md-12">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <textarea name="alamat" id="alamat" cols="30" rows="10" class="form-control" style="height: 100px"
-                        placeholder="Masukkan alamat anda" required></textarea>
-                    <div class="invalid-feedback">
-                        Masukkan alamat anda!
-                    </div>
-                </div> --}}
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" id="email" class="form-control"
