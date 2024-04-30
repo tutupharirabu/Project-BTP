@@ -63,6 +63,8 @@ Route::delete('/adminBarang/delete/{id}', [AdminBarangController::class, 'destro
 // Dashboard penyewa
 
 Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard');
+// Route::post('/userDashboard', [UserDashboardController::class, 'store']);
+
 
 // Pengajuan admin
 

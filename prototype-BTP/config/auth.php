@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'users',
         'passwords' => 'users',
     ],
 
@@ -38,17 +38,17 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'user',
         ],
 
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admin_users',
-        ],
+        // 'admin' => [
+        //     'driver' => 'session',
+        //     'provider' => 'admin_users',
+        // ],
 
         'penyewa' => [
             'driver' => 'session',
-            'provider' => 'penyewa',
+            'provider' => 'users',
         ],
     ],
 
@@ -75,14 +75,14 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'admin_users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
-        ],
+        // 'admin_users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Admin::class,
+        // ],
 
         'penyewa' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Penyewa::class,
+            'model' => App\Models\Users::class,
         ],
     ],
 

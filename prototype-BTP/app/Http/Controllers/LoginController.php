@@ -21,11 +21,11 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
+        // if (Auth::guard('admin')->attempt($credentials)) {
+        //     $request->session()->regenerate();
 
-            return redirect()->intended('/adminRuangan');
-        }
+        //     return redirect()->intended('/adminRuangan');
+        // }
 
         if (Auth::guard('penyewa')->attempt($credentials)) {
             $request->session()->regenerate();

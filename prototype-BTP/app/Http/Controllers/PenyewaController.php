@@ -26,7 +26,7 @@ class PenyewaController extends Controller
     public function create()
     {
         $data = Users::all();
-        return view('loginsys.daftarPenyewa', compact('data'));
+        return view('registersys.daftarPenyewa', compact('data'));
     }
 
     /**
@@ -35,22 +35,18 @@ class PenyewaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'username' => 'required',
             'email' => 'required',
             'role' => 'required',
             'nama_lengkap' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-            'email' => 'required|email',
             'password' => 'required'
         ]);
 
         $penyewa = new Users([
-            'nama_lengkap' => $request->input('nama_lengkap'),
-            'jenis_kelamin' => $request->input('jenis_kelamin'),
-            'instansi' => $request->input('instansi'),
-            'status' => $request->input('status'),
-            'alamat' => $request->input('alamat'),
+            'username' => $request->input('username'),
             'email' => $request->input('email'),
+            'role' => $request->input('role'),
+            'nama_lengkap' => $request->input('nama_lengkap'),
             'password' => bcrypt($request->input('password')),
         ]);
 
