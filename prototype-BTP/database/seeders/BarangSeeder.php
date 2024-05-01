@@ -18,18 +18,24 @@ class BarangSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $items = ['Sound System', 'Kursi', 'Meja', 'Proyektor'];
+        $items = ['Wireless 1', 'Wireless 2', 'Kursi Sofa', 'Meja Kecil Operator/Pelatihan', 'Meja Sofa', 'LCD Proyektor (dengan Kabel VGA Standar)', 'Layar Proyektor'];
         shuffle($items);
 
-        for ($i=1; $i <= 4 ; $i++) {
+        $kondisi = ['Baik', 'Rusak Parah', 'Sedang Korslet', 'Baik Parah', 'Agak Laen', 'Setengah Rusak', 'Tidak Baik'];
+        shuffle($kondisi);
+
+        for ($i=1; $i <= 7 ; $i++) {
             $namaBarang = $items[$i-1];
-            $jumlahBarang = $faker->numberBetween(1, 100);
-            $fotoBarang = $faker->imageUrl($width = 640, $height = 480);
+            $jumlahBarang = $faker->numberBetween(1, 10);
+            $kondisiBarang = $kondisi[$i-1];
+            $hargaBarang = $faker->numberBetween(10000, 1000000);
 
             DB::table('barang')->insert([
                 'nama_barang'  => $namaBarang,
                 'jumlah_barang' => $jumlahBarang,
-                'foto_barang' => $fotoBarang,
+                'kondisi_barang' => $kondisiBarang,
+                'harga_barang' => $hargaBarang,
+                'tersedia' => true,
             ]);
         }
 

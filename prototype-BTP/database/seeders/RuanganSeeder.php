@@ -18,15 +18,13 @@ class RuanganSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Room', 'Virtual Office', 'Multimedia', 'Aula', 'R. Meeting', 'Training Room', 'Overtime Room'];
+        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Office', 'Multimedia', 'Aula', 'R. Meeting', 'Training Room', 'Overtime Room'];
         shuffle($rooms);
 
-        for ($i=1; $i <= 10 ; $i++) {
+        for ($i=1; $i <= 9 ; $i++) {
             $namaRuangan = $rooms[$i-1];
             $kapasitasRuangan = $faker->numberBetween(1, 100);
-            $fotoRuangan = $faker->imageUrl($width = 640, $height = 480);
-            $lokasi = '';
-
+            $hargaRuangan = $faker->numberBetween(10000, 1000000);
 
             if($namaRuangan == 'Rent Office (Private Space)'){
                 $lokasi = 'Gedung B dan C';
@@ -50,8 +48,9 @@ class RuanganSeeder extends Seeder
             DB::table('ruangan')->insert([
                 'nama_ruangan'  => $namaRuangan,
                 'kapasitas_ruangan' => $kapasitasRuangan,
-                'foto_ruangan' => $fotoRuangan,
                 'lokasi' => $lokasi,
+                'harga_ruangan' => $hargaRuangan,
+                'tersedia' => true,
             ]);
         }
     }
