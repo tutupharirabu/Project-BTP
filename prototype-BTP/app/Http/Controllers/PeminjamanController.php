@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use App\Models\Peminjaman;
 
-class DashboardPenyewaController extends Controller
+class PeminjamanController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        //
+        $dataPeminjaman = Peminjaman::with(['users', 'ruangan', 'barang'])->get();
+        return view('penyewa.peminjaman.peminjaman', compact('dataPeminjaman'));
     }
 
     /**
@@ -17,9 +21,7 @@ class DashboardPenyewaController extends Controller
      */
     public function create()
     {
-        $dataPeminjaman = Peminjaman::with(['users', 'ruangan', 'barang'])->get();
-
-        return view('userDashboard', compact('dataPeminjaman'));
+        //
     }
 
     /**
@@ -62,4 +64,3 @@ class DashboardPenyewaController extends Controller
         //
     }
 }
-

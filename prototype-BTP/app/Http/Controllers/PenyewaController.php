@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Penyewa;
+use App\Models\Users;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -25,7 +25,7 @@ class PenyewaController extends Controller
      */
     public function create()
     {
-        $data = Penyewa::all();
+        $data = Users::all();
         return view('registersys.daftarPenyewa', compact('data'));
     }
 
@@ -35,22 +35,18 @@ class PenyewaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'username' => 'required',
+            'email' => 'required',
+            'role' => 'required',
             'nama_lengkap' => 'required|string|max:255',
-            'jenis_kelamin' => 'required',
-            'instansi' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $penyewa = new Penyewa([
-            'nama_lengkap' => $request->input('nama_lengkap'),
-            'jenis_kelamin' => $request->input('jenis_kelamin'),
-            'instansi' => $request->input('instansi'),
-            'status' => $request->input('status'),
-            'alamat' => $request->input('alamat'),
+        $penyewa = new Users([
+            'username' => $request->input('username'),
             'email' => $request->input('email'),
+            'role' => $request->input('role'),
+            'nama_lengkap' => $request->input('nama_lengkap'),
             'password' => bcrypt($request->input('password')),
         ]);
 
