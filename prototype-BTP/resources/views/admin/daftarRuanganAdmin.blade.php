@@ -72,11 +72,11 @@
                                     <td>0012</td>
                                     <td>Ruang Rapat</td>
                                     <td>13 Orang</td>
-                                    <td><a class="btn btn-sm text-white"
-                                            style="background : #414141;width: 100px;">Booked</a></td>
+                                    <td><a class="btn text-white" style="background : #414141; width: 100px;">Booked</a>
+                                    </td>
                                     <td>
-                                        <a href="#" class="btn btn-warning btn-sm" style="width: 80px;">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm" style="width: 80px;">Delete</a>
+                                        <a href="#" class="btn btn-warning" style="width: 80px;">Edit</a>
+                                        <a href="#" class="btn btn-danger" style="width: 80px;">Delete</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,18 +84,15 @@
                                     <td>0012</td>
                                     <td>Ruang Rapat</td>
                                     <td>13 Orang</td>
-                                    <td><a class="btn btn-success btn-sm" style="width: 100px;">Available </a></td>
+                                    <td><a class="btn btn-success" style="width: 100px;">Available </a></td>
                                     <td>
-                                        <a href="#" class="btn btn-warning btn-sm" style="width: 80px;">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm" style="width: 80px;">Delete</a>
+                                        <a href="#" class="btn btn-warning" style="width: 80px;">Edit</a>
+                                        <a href="#" class="btn btn-danger" style="width: 80px;">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+        @endsection
