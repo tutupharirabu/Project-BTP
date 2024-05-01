@@ -15,7 +15,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
-
+    
 </head>
 
 <body>
@@ -43,6 +43,8 @@
 
 
 </body>
+
+
 
 {{-- Calendar JS --}}
 <script type="text/javascript">

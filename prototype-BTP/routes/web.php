@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenyewaDetailRuangan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
@@ -76,3 +77,4 @@ Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index']
 // Penyewa lihat status Ruangan
 Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);
+Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index']);
