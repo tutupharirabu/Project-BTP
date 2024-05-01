@@ -26,9 +26,9 @@
     </div>
 
     <nav class="nav flex-column mt-auto">
-        <a class="nav-link active" href="/dashboard">Dashboard</a>
+        <a class="nav-link active" href="#">Dashboard</a>
         <a class="nav-link" href="#">Daftar Ruangan</a>
-        <a class="nav-link" href="/statusRuanganPenyewa">Status Pengajuan</a>
+        <a class="nav-link" href="/statusRuanganAdmin">Status Pengajuan</a>
         <a class="nav-link" href="#">Keluar</a>
     </nav>
 </div>

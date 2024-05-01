@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenyewaDetailRuangan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\PeminjamanController;
 // use App\Http\Controllers\RegisterController;
 // use App\Http\Controllers\UserDashboardController;
 // use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminStatusRuanganController;
+use App\Http\Controllers\PenyewaStatusRuanganController;
+use App\Http\Controllers\PenyewaDaftarRuangan;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,3 +78,16 @@ Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('penyewa
 
 // Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
 // Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+// Pengajuan admin
+Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
+Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
+
+// Admin lihat status Ruangan
+Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index']);
+
+// Penyewa lihat status Ruangan
+Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
+Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);
+Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index']);

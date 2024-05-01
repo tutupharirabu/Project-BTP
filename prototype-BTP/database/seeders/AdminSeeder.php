@@ -49,5 +49,14 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('inipasswordya?'),
         ]);
 
+        DB::table('admin')->insert([
+            'nama_lengkap'  => 'Hafiz Yazid Muhammad',
+            'jenis_kelamin' => 'Male',
+            'nomor_telepon' => preg_replace("/[^0-9]/", "", $faker->phoneNumber),
+            'alamat' => $faker->address,
+            'email' => 'yazidn@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
     }
 }
