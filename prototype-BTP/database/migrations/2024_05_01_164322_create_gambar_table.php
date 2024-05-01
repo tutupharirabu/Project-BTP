@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengelolaan', function (Blueprint $table) {
-            $table->increments('id_pengelolaan');
-            $table->unsignedInteger('id_users');
-            $table->unsignedInteger('id_barang');
+        Schema::create('gambar', function (Blueprint $table) {
+            $table->increments('id_gambar');
             $table->unsignedInteger('id_ruangan');
-            $table->foreign('id_users')->references('id_users')->on('users');
-            $table->foreign('id_barang')->references('id_barang')->on('barang')->nullable();
+            $table->unsignedInteger('id_barang');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->nullable();
-            $table->dateTime('tanggal');
-            $table->string('keterangan', 255);
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->nullable();
+            $table->string('url', 255);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengelolaan');
+        Schema::dropIfExists('gambar');
     }
 };

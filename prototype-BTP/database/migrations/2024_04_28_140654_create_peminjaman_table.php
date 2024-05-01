@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreign('id_users')->references('id_users')->on('users');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->nullable();
             $table->foreign('id_barang')->references('id_barang')->on('barang')->nullable();
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
+            $table->dateTime('tanggal_mulai');
+            $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
             $table->string('status', 255);
             $table->timestamps();

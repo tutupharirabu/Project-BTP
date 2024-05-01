@@ -18,20 +18,7 @@ class AdminSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        // for ($i=1; $i <= 10; $i++) {
-        //     $gender = $faker->randomElement(['male', 'female']);
-
-        //     DB::table('admin')->insert([
-        //         'nama_lengkap'  => $faker->name,
-        //         'jenis_kelamin' => $gender,
-        //         'nomor_telepon' => preg_replace("/[^0-9]/", "", $faker->phoneNumber),
-        //         'alamat' => $faker->address,
-        //         'email' => $faker->safeEmail,
-        //         'password' => Hash::make('password'),
-        //     ]);
-        // }
-
-        DB::table('admin')->insert([
+        DB::table('users')->insert([
             'nama_lengkap'  => 'Muhammad Fadhil Ardiansyah Supiyan',
             'jenis_kelamin' => 'Male',
             'nomor_telepon' => preg_replace("/[^0-9]/", "", $faker->phoneNumber),

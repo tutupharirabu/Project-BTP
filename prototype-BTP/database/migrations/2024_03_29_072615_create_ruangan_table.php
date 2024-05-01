@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_ruangan', 255);
             $table->bigInteger('kapasitas_ruangan');
             $table->string('lokasi', 255);
-            $table->bigInteger('harga_ruangan');
+            $table->string('harga_ruangan', 255);
             $table->boolean('tersedia');
             $table->timestamps();
         });

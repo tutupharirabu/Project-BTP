@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_barang', 255);
             $table->bigInteger('jumlah_barang');
             $table->string('kondisi_barang', 225);
-            $table->bigInteger('harga_barang');
+            $table->string('harga_barang', 255);
             $table->boolean('tersedia');
             $table->timestamps();
         });
