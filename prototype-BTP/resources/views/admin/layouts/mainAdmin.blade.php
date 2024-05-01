@@ -19,7 +19,6 @@
 </head>
 
 <body>
-
     @include('penyewa.partials.navigation')
 
     <div class="row d-flex min-vh-100">
