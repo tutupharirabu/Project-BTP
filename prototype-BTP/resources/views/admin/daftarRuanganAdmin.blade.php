@@ -1,6 +1,10 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
+    @foreach ($dataPengajuan as $data)
+        {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
+    @endforeach
+
     <div class="container-fluid mt-4">
         <!-- Judul -->
         <div class="row">
@@ -20,7 +24,7 @@
                             check_circle
                         </span>
                     </div>
-                    <div class="text-black text-justify w-50 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
+                    <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
                         <h5 class="text-md">Available</h5>
                         <h5 class="text-md">1</h5>
                     </div>
@@ -33,7 +37,7 @@
                             check_circle
                         </span>
                     </div>
-                    <div class="text-black text-justify w-50 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
+                    <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
                         <h5 class="text-md">Booked</h5>
                         <h5 class="text-md">3</h5>
                     </div>
@@ -52,7 +56,7 @@
 
         <!-- table edit -->
         <div class="row">
-            <div class="col-lg-10 col-xl-10 col-xxl-10 col-md-12 col-sm-6">
+            <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
                 <div class="container ml-4 mt-4">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered text-center">
@@ -62,34 +66,28 @@
                                     <th scope="col">No Ruangan</th>
                                     <th scope="col">Nama Ruangan</th>
                                     <th scope="col">Kapasitas</th>
+                                    <th scope="col">Harga</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>5</td>
-                                    <td>0012</td>
-                                    <td>Ruang Rapat</td>
-                                    <td>13 Orang</td>
-                                    <td><a class="btn text-white" style="background : #414141; width: 100px;">Booked</a>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning" style="width: 80px;">Edit</a>
-                                        <a href="#" class="btn btn-danger" style="width: 80px;">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>0012</td>
-                                    <td>Ruang Rapat</td>
-                                    <td>13 Orang</td>
-                                    <td><a class="btn btn-success" style="width: 100px;">Available </a></td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning" style="width: 80px;">Edit</a>
-                                        <a href="#" class="btn btn-danger" style="width: 80px;">Delete</a>
-                                    </td>
-                                </tr>
+                                @foreach ($dataPengajuan as $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data->id_ruangan }}</td>
+                                        <td>{{ $data->nama_ruangan }}</td>
+                                        <td>{{ $data->kapasitas_ruangan }}</td>
+                                        <td>harganya</td>
+                                        <td><a class="btn btn-success text-white">Available</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-warning">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>

@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class AdminStatusRuanganController extends Controller
 {
     public function index()
     {
-        return view('admin.daftarRuanganAdmin');
+        $dataPengajuan = Ruangan::all();
+        return view('admin.daftarRuanganAdmin',compact('dataPengajuan'));
     }
 
     public function getEvents()
     {
-        $schedules = Schedule::all();
-        return response()->json($schedules);
+        // $schedules = Schedule::all();
+        // return response()->json($schedules);
     }
 
     /**
