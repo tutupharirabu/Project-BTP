@@ -48,8 +48,8 @@
                                 Peminjaman
                             </a> -->
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/daftarMeminjamRuangan">Peminjaman Ruangan</a></li>
-                            <li><a class="dropdown-item" href="/daftarMeminjamBarang">Peminjaman Barang</a></li>
+                            <li><a class="dropdown-item" href="/peminjaman">Peminjaman Ruangan</a></li>
+                            <li><a class="dropdown-item" href="/peminjaman">Peminjaman Barang</a></li>
                         </ul>
                 </li>
             </ul>

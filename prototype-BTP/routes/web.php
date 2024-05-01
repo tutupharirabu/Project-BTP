@@ -17,6 +17,8 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminStatusRuanganController;
 use App\Http\Controllers\PenyewaStatusRuanganController;
 use App\Http\Controllers\PenyewaDaftarRuangan;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminPengajuanController;
 
 /*
 |--------------------------------------------------------------------------

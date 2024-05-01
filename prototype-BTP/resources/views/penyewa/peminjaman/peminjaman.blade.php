@@ -14,7 +14,7 @@
                     class="form-valid" enctype="multipart/form-data" novalidate>
 
                     @csrf
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label for="ruang" class="form-label">Ruangan</label>
                         <select name="ruang" id="ruang" class="form-select">
                             <option selected disabled value="">Pilih ruangan</option>
@@ -23,6 +23,14 @@
                         </select>
                         <div class="invalid-feedback">
                             Masukkan ruangan anda!
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="peserta" class="form-label">Jumlah Peserta</label>
+                        <input type="number" name="peserta" id="peserta" class="date form-control" max="50"
+                            min="0" placeholder="Masukkan Jumlah Peserta" required>
+                        <div class="invalid-feedback">
+                            Masukkan Jumlah Peserta!
                         </div>
                     </div>
                     <div class="col-md-6">
