@@ -15,7 +15,7 @@ class MeminjamRuanganController extends Controller
      */
     public function index()
     {
-        //
+        return view('penyewa.meminjamRuangan' );
     }
 
     /**

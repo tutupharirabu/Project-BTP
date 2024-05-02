@@ -19,6 +19,8 @@ use App\Http\Controllers\PenyewaStatusRuanganController;
 use App\Http\Controllers\PenyewaDaftarRuangan;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminPengajuanController;
+use App\Http\Controllers\MeminjamBarangController;
+use App\Http\Controllers\MeminjamRuanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,8 @@ Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->
 //Peminjaman
 
 Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('penyewa.peminjaman');
+Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'index'])->name('penyewa.peminjamanRuangan');
+Route::get('/meminjamBarang', [MeminjamBarangController::class, 'index'])->name('penyewa.peminjamanBarang');
 
 // // Pengajuan admin
 

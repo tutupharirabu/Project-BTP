@@ -15,7 +15,8 @@ class MeminjamBarangController extends Controller
      */
     public function index()
     {
-        //
+        return view('penyewa.meminjamBarang');
+
     }
 
     /**

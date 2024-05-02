@@ -5,10 +5,8 @@
 <!-- MDB -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
-
-
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
@@ -48,8 +46,8 @@
                                 Peminjaman
                             </a> -->
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/peminjaman">Peminjaman Ruangan</a></li>
-                            <li><a class="dropdown-item" href="/peminjaman">Peminjaman Barang</a></li>
+                            <li><a class="dropdown-item" href="/meminjamRuangan">Peminjaman Ruangan</a></li>
+                            <li><a class="dropdown-item" href="/meminjamBarang">Peminjaman Barang</a></li>
                         </ul>
                 </li>
             </ul>
