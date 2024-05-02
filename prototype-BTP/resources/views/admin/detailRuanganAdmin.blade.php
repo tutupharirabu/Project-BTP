@@ -1,6 +1,6 @@
-@extends('penyewa.layouts.mainPenyewa')
+@extends('admin.layouts.mainAdmin')
 
-@section('containPenyewa')
+@section('containAdmin')
 <div class="container-fluid mt-4">
   <!-- title -->
   <div class="row">
@@ -48,43 +48,40 @@
   </div>
 </div>
 
-<div class="row">
-    <div class="container-fluid mt-5 w-70 d-flex justify-content-center">
-        <table class="table table-striped p-0" style="width: 80%; font-size: 18px;">
-            <thead>
-                <tr>
-                    <th class="border border-secondary" style="width: 33.33%;">Detail Ruangan</th>
-                    <th class="border-bottom border-secondary" colspan="2"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="border border-secondary">Nama Ruangan</td>
-                    <td colspan="3" class="border border-secondary">Multimedia</td>
-                </tr>
-                <tr>
-                    <td class="border border-secondary">Kapasitas</td>
-                    <td colspan="3" class="border border-secondary">50 Orang</td>
-                </tr>
-                <tr>
-                    <td class="border border-secondary">Lokasi</td>
-                    <td colspan="3" class="border border-secondary">Gedung A</td>
-                </tr>
-                <tr>
-                    <td class="border border-secondary">Harga</td>
-                    <td colspan="3" class="border border-secondary">Rp70000</td>
-                </tr>
-                <tr>
-                    <td class="border border-secondary">Status</td>
-                    <td colspan="3" class="border border-secondary"><button type="button" class="btn btn-success btn-sm" style="font-size: 18px; text-transform: capitalize;">Availabe</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="container-fluid mt-5 mb-4  w-70 d-flex justify-content-center">
+            <table class="table table-striped p-0" style="width: 80%; font-size: 18px;">
+                <thead>
+                    <tr>
+                        <th class="border border-secondary" style="width: 33.33%;">Detail Ruangan</th>
+                        <th class="border-bottom border-secondary" colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-secondary">Nama Ruangan</td>
+                        <td colspan="3" class="border border-secondary">Multimedia</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-secondary">Kapasitas</td>
+                        <td colspan="3" class="border border-secondary">50 Orang</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-secondary">Lokasi</td>
+                        <td colspan="3" class="border border-secondary">Gedung A</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-secondary">Harga</td>
+                        <td colspan="3" class="border border-secondary">Rp70000</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-secondary">Status</td>
+                        <td colspan="3" class="border border-secondary"><button type="button" class="btn btn-success btn-sm" style="font-size: 18px; text-transform: capitalize;">Availabe</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="container-fluid mt-4 mb-6 d-flex justify-content-end" style="width: 80%;">
-        <button type="button" class="btn btn-dark btn-sm" style="font-size: 18px; text-transform: capitalize;">Pinjam Ruangan</button>
-    </div>
-  </div>
 </div>
 
 @endsection

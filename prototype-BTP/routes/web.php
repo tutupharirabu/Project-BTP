@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDetailRuangan;
 use App\Http\Controllers\PenyewaDetailRuangan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -88,6 +89,7 @@ Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->nam
 
 // Admin lihat status Ruangan
 Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index']);
+Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index']);
 
 // Penyewa lihat status Ruangan
 Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
