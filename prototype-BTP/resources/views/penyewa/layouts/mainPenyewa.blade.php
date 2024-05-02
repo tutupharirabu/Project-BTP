@@ -24,7 +24,7 @@
 
     <div class="row d-flex min-vh-100">
         @include('penyewa.partials.sidebarUser')
-        <div class="col-md-9">
+        <div class="col-md-10">
             @yield('containPenyewa')
         </div>
     </div>
@@ -43,6 +43,8 @@
 
 
 </body>
+
+
 
 {{-- Calendar JS --}}
 <script type="text/javascript">

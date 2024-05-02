@@ -11,8 +11,7 @@
 <!-- MDB -->
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
-  rel="stylesheet"
-/>
+  rel="stylesheet"/>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
