@@ -19,11 +19,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
+    <!-- darp drop down lib -->
+    <link href="https://cdn.jsdelivr.net/npm/dropzone@5.7.0/dist/min/dropzone.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.7.0/dist/dropzone.min.js"></script>
+
     <style>
         body {
             padding-top: 60px;
         }
     </style>
+
+
 </head>
 
 <body>
@@ -45,6 +51,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+
+    <script>
+        Dropzone.options.dropzone = {
+            url: '/upload',
+            maxFilesize: 2,
+            acceptedFiles: '.png, .jpg, .jpeg',
+            // addRemoveLinks: true,
+            // dictRemoveFile: 'Remove file',
+            dictDefaultMessage: "Drop files disini",
+            init: function() {
+                this.on("removedfile", function(file) {
+                    console.log("File removed:", file.name);
+                });
+            }
+        };
+    </script>
+    <!-- <script>
+        Dropzone.autoDiscover = false;
+
+        // Dropzone configuration
+        var myDropzone = new Dropzone(".dropzone", {
+            url: "/file/post",
+            paramName: "file",
+            maxFilesize: 2, // MB
+            maxFiles: 10,
+            acceptedFiles: 'image/*',
+            dictDefaultMessage: "Drag files here or click to upload.",
+            clickable: true
+        });
+    </script> -->
+
+
+
+
 </body>
 
 </html>
