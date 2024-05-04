@@ -49,7 +49,8 @@
         <div class="row">
             <div class="col-2 col-md-4 col-sm-4">
                 <div class="container ml-4 mt-4">
-                    <a href="" type="button btn-lg" class="btn btn-success text-white text-center"> Add </a>
+                    <a href="/tambahRuanganAdmin" type="button btn-lg" class="btn btn-success text-white text-center"> Add
+                    </a>
                 </div>
             </div>
         </div>
@@ -82,7 +83,7 @@
                                         <td><a class="btn btn-success text-white">Available</a>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-warning">Edit</a>
+                                            <a href="/editRuanganAdmin" class="btn btn-warning">Edit</a>
                                             <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}"
                                                 class="btn btn-danger">Delete</a>
                                         </td>

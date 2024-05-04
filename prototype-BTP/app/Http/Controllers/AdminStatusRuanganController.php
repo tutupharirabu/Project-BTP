@@ -24,7 +24,7 @@ class AdminStatusRuanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tambahRuanganAdmin');
     }
 
     /**
@@ -46,9 +46,9 @@ class AdminStatusRuanganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        return view('admin.editRuanganAdmin');
     }
 
     /**

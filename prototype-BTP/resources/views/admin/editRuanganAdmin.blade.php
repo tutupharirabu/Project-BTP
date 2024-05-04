@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="container mx-2">
-                    <h4>Tambah Ruangan<h4>
+                    <h4>Edit Ruangan<h4>
                 </div>
             </div>
         </div>
@@ -80,8 +80,8 @@
                                             <div class="card-body">
                                                 <div class="dropzone" id="dropzone">
                                                     <!-- <span class="material-symbols-outlined " style="font-size: 4em;">
-                                                        upload_file
-                                                    </span> -->
+                                                                    upload_file
+                                                                </span> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                         <div class="col-auto">
                                             <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
                                             <button type="submit" class="btn btn-primary">
-                                                Add
+                                                Edit
                                             </button>
                                         </div>
                                     </div>

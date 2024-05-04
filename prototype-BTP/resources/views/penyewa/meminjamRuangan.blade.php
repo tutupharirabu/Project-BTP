@@ -86,20 +86,146 @@
             $('#datetimepicker1').datetimepicker();
         });
     </script>
+
+    <div class="container-fluid mt-4">
+        <!-- title -->
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="container mx-2">
+                    <h4>Form Sewa Ruangan</h4>
+                    <h4>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- value -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-11">
+                <div class="card border shadow shadow-md">
+                    <div class="card-body">
+                        <form>
+                            <!-- left from text field -->
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="col-md">
+                                        <label for="namaPeminjam" class="form-label">Nama Peminjam</label>
+                                        <input type="text" name="namaPeminjam" id="namaPeminjam"
+                                            class="date form-control" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Nama Peminjam!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4">
+                                        <label for="ruang" class="form-label">Ruangan</label>
+                                        <select name="ruang" id="ruang" class="form-select">
+                                            <option selected disabled value="">Pilih ruangan</option>
+                                            {{-- <option value="penyewa">Penyewa</option>
+                                                <option value="petugas">Petugas</option> --}}
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Masukkan ruangan anda!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4">
+                                        <label for="lokasi" class="form-label">Lokasi</label>
+                                        <input type="text" name="lokasi" id="lokasi" class="date form-control"
+                                            disabled required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Lokasi!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4">
+                                        <label for="harga" class="form-label">Harga</label>
+                                        <input type="text" name="harga" id="harga" class="date form-control"
+                                            disabled required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Lokasi!
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- right form file -->
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-md ">
+                                            <label for="mulaiPinjam" class="form-label">Tanggal Mulai Peminjaman</label>
+                                            <input type="date" name="mulaiPinjam" id="mulaiPinjam"
+                                                class="date form-control" required>
+                                            <div class="invalid-feedback">
+                                                Masukkan Mulai Peminjaman!
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-3">
+                                            <label for="selesaiPinjam" class="form-label">Tanggal Selesai Peminjaman</label>
+                                            <input type="date" name="selesaiPinjam" id="selesaiPinjam"
+                                                class="date form-control" required>
+                                            <div class="invalid-feedback">
+                                                Masukkan Selesai Peminjaman!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md ">
+                                            <label for="mulaiPinjam" class="form-label">Tanggal Mulai Peminjaman</label>
+                                            <input type="date" name="mulaiPinjam" id="mulaiPinjam"
+                                                class="date form-control" required>
+                                            <div class="invalid-feedback">
+                                                Masukkan Mulai Peminjaman!
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-3">
+                                            <label for="selesaiPinjam" class="form-label">Tanggal Selesai Peminjaman</label>
+                                            <input type="date" name="selesaiPinjam" id="selesaiPinjam"
+                                                class="date form-control" required>
+                                            <div class="invalid-feedback">
+                                                Masukkan Selesai Peminjaman!
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md mt-4 ">
+                                        {{-- <label for="namaPeminjam" class="form-label">Nama Peminjam</label>
+                                        <input type="text" name="namaPeminjam" id="namaPeminjam"
+                                            class="date form-control" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Nama Peminjam!
+                                        </div> --}}
+                                        <div class="form-group">
+                                            <label for="catatn" class="mb-2">Example textarea</label>
+                                            <textarea class="form-control" name="catatan" id="catatan" id="" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mt-4">
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <h>Keterangan<br>*Harga Diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)<br>**Harap
+                    membaca <a href="https://www.google.co.id/webhp?hl=en">Syarat & ketentuan</a> yang berlaku</h>
+            </div>
+        </div>
+    </div>
+
     {{-- ruangan --}}
-    <div class="d-flex align-items-center py-4 font-monospace">
+    {{-- <div class="d-flex align-items-center py-4 font-monospace">
         <div class="container-sm">
             <h1 class="text-center pb-3">Form Sewa Ruangan</h1>
-            <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST" class="form-valid"
-                enctype="multipart/form-data" novalidate>
+            <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST"
+                class="form-valid" enctype="multipart/form-data" novalidate>
 
                 @csrf
                 <div class="col-md-6">
                     <label for="ruang" class="form-label">Ruangan</label>
                     <select name="ruang" id="ruang" class="form-select">
                         <option selected disabled value="">Pilih ruangan</option>
-                        {{-- <option value="penyewa">Penyewa</option>
-                            <option value="petugas">Petugas</option> --}}
+                        <option value="penyewa">Penyewa</option>
+                        <option value="petugas">Petugas</option>
                     </select>
                     <div class="invalid-feedback">
                         Masukkan ruangan anda!
@@ -135,5 +261,5 @@
                     </div>
                 </div>
             </form>
-        </div>
-    @endsection
+        </div> --}}
+@endsection
