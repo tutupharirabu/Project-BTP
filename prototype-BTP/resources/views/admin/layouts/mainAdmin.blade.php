@@ -8,8 +8,7 @@
     <title>Admin Bandung Techno Park</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- untuk logo check, cancel dan wait di status ruangan admin -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
@@ -32,7 +31,7 @@
 
     <div class="row d-flex min-vh-100">
         @include('penyewa.partials.sidebarUser')
-        <div class="col-md-9">
+        <div class="col-md-10">
             @yield('containAdmin')
         </div>
     </div>
