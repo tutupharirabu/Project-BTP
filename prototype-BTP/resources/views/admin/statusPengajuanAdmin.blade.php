@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-4">
                 <div class="container ml-4">
-                    <h4>Daftar Ruangan<h4>
+                    <h4>Pengajuan Ruangan<h4>
                 </div>
             </div>
         </div>
