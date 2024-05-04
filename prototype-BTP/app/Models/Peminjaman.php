@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ruangan;
 use App\Models\Barang;
+use App\Models\Users;
 
 class Peminjaman extends Model
 {
@@ -13,6 +14,10 @@ class Peminjaman extends Model
     protected $table = 'peminjaman';
     protected $primaryKey = 'id_peminjaman';
     protected $fillable = ['id_users', 'id_ruangan', 'tanggal_mulai', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'status'];
+
+    public function users(){
+        return $this->belongsTo(Users::class, 'id_users', 'id_users');
+    }
 
     public function ruangan(){
         return $this->belongsTo(Ruangan::class, 'id_ruangan', 'id_ruangan');
