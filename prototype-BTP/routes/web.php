@@ -93,7 +93,7 @@ Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('adm
 Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
 
 // Admin lihat status Ruangan
-Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index']);
+Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status');
 Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index']);
 Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index']);
 
@@ -101,3 +101,6 @@ Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'ind
 Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);
 Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index']);
+
+//Admin delete ruangan
+Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'destroy']);

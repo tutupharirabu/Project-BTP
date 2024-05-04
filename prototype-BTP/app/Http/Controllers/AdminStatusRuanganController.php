@@ -64,6 +64,8 @@ class AdminStatusRuanganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Ruangan::find($id);
+        $data -> delete();
+        return redirect()->route('admin.status');
     }
 }

@@ -83,7 +83,8 @@
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-warning">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
+                                            <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}"
+                                                class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -93,4 +94,4 @@
                     </div>
                 </div>
             </div>
-@endsection
+        @endsection
