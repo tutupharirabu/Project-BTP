@@ -35,6 +35,7 @@ class PeminjamanSeeder extends Seeder
                 'tanggal_selesai'  => $tanggal,
                 'jumlah' => $jumlah,
                 'status' => $status,
+                'Keterangan' => "-",
             ]);
         }
     }

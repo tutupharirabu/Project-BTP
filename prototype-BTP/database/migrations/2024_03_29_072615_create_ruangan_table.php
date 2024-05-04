@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('lokasi', 255);
             $table->string('harga_ruangan', 255);
             $table->boolean('tersedia');
+            $table->string('status', 255);
             $table->timestamps();
         });
     }

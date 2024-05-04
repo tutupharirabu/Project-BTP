@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
             $table->string('status', 255);
+            $table->string('keterangan', 255);
             $table->timestamps();
         });
     }

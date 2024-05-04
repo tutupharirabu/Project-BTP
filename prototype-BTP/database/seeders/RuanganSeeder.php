@@ -51,6 +51,7 @@ class RuanganSeeder extends Seeder
                 'lokasi' => $lokasi,
                 'harga_ruangan' => $hargaRuangan,
                 'tersedia' => true,
+                'status' => '-',
             ]);
         }
     }
