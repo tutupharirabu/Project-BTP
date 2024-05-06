@@ -143,6 +143,14 @@
                                             Masukkan Lokasi!
                                         </div>
                                     </div>
+                                    <div class="col-md mt-4">
+                                        <label for="peserta" class="form-label">Jumlah Peserta</label>
+                                        <input type="number" name="peserta" id="peserta" class="date form-control" max="100"
+                                            min="0" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Jumlah Peserta!
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- right form file -->
                                 <div class="col">
@@ -166,17 +174,17 @@
                                     </div>
                                     <div class="row mt-4">
                                         <div class="col-md ">
-                                            <label for="mulaiPinjam" class="form-label">Tanggal Mulai Peminjaman</label>
-                                            <input type="date" name="mulaiPinjam" id="mulaiPinjam"
-                                                class="date form-control" required>
+                                            <label for="tanggal_mulai" class="form-label">Jam Mulai Peminjaman</label>
+                                            <input type="time" name="tanggal_mulai" id="tanggal_mulai"
+                                                class=" form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
                                         <div class="col-md col-3">
-                                            <label for="selesaiPinjam" class="form-label">Tanggal Selesai Peminjaman</label>
-                                            <input type="date" name="selesaiPinjam" id="selesaiPinjam"
-                                                class="date form-control" required>
+                                            <label for="tanggal_selesai" class="form-label">Jam Selesai Peminjaman</label>
+                                            <input type="time" name="tanggal_selesai" id="tanggal_selesai"
+                                                class=" form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Selesai Peminjaman!
                                             </div>
@@ -191,7 +199,7 @@
                                             Masukkan Nama Peminjam!
                                         </div> --}}
                                         <div class="form-group">
-                                            <label for="catatn" class="mb-2">Example textarea</label>
+                                            <label for="catatn" class="mb-2">Catatan</label>
                                             <textarea class="form-control" name="catatan" id="catatan" id="" rows="5"></textarea>
                                         </div>
                                     </div>
