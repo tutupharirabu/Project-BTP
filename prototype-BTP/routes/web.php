@@ -95,6 +95,7 @@ Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index']);
 Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index']);
 // Admin Menambah ruangan
 Route::get('/tambahRuanganAdmin', [AdminTambahRuangan::class, 'index']);
+Route::post('/upload',[AdminTambahRuangan::class,'store'])->name('dropzone.store');
 
 // Penyewa lihat status Ruangan
 Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);

@@ -16,14 +16,15 @@
         <div class="col-11">
             <div class="card border shadow shadow-md">
                 <div class="card-body">
-                    <form>
+                    <form action="{{route('dropzone.store')}}" method="POST" enctype="multipart/form-data" id="my-form">
+                        @csrf
                         <!-- left from text field -->
                         <div class="row">
                             <div class="col-7">
                                 <div class="form-group row">
                                     <label for="room_id" class="col-md-3 col-form-label text-md-left-right">ID Ruangan</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="room_id" class="form-control" name="room_id" required>
+                                        <input type="text" id="room_id" class="form-control" name="room_id" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -69,10 +70,8 @@
                                 <div class="mb-3 text-center" style="margin-right: 0px">
                                     <div class="card shadow">
                                         <div class="card-body">
-                                            <div  class="dropzone" id="dropzone">
-                                                <!-- <span class="material-symbols-outlined " style="font-size: 4em;">
-                                                    upload_file
-                                                </span> -->
+                                            <div id="my-dropzone" class="dropzone">
+                                                
                                             </div>
                                         </div>
                                     </div>
