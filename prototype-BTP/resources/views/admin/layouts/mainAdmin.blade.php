@@ -20,8 +20,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
     <!-- darp drop down lib -->
-    <link href="https://cdn.jsdelivr.net/npm/dropzone@5.7.0/dist/min/dropzone.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.7.0/dist/dropzone.min.js"></script>
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 
     <style>
         body {
@@ -87,6 +87,43 @@
 
 
 </body>
+
+<!-- drag drop zone -->
+<style>
+    /* Overrides the default styling for file previews */
+    .dropzone .dz-preview .dz-image {
+        background: transparent !important;
+        /* Remove any background color */
+        border-radius: 10px;
+        /* Optional: adds rounded corners to the thumbnail */
+    }
+
+    .dropzone .dz-preview .dz-details img {
+        width: 100%;
+        /* Ensures the thumbnail image uses all available space */
+        height: auto;
+        /* Maintains aspect ratio */
+        border-radius: 10px;
+        /* Rounded corners for the image */
+    }
+
+    .dropzone .dz-preview .dz-progress {
+        display: none;
+        /* Hide the progress bar */
+    }
+</style>
+<script type="text/javascript">
+    var dropzone = new Dropzone("#my-dropzone", {
+        url: "{{ route('dropzone.store') }}",
+        thumbnailWidth: 200,
+        maxFilesize: 2,
+        acceptedFiles: ".jpeg,.jpg,.png,.svg",
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        dictRemoveFile: 'Remove file',
+        previewTemplate: '<div class="dz-preview dz-file-preview"><div class="dz-image"><img data-dz-thumbnail /></div><div class="dz-details"><div class="dz-size"><span data-dz-size></span></div><div class="dz-filename"><span data-dz-name></span></div></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div><div class="dz-error-message"><span data-dz-errormessage></span></div></div>'
+    });
+</script>
 
 </html>
 
