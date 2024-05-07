@@ -104,7 +104,7 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form>
+                        <form action="" method="POST" class="form-valid" enctype="multipart/form-data">
                             <!-- left from text field -->
                             <div class="row">
                                 <div class="col-5">
@@ -120,8 +120,9 @@
                                         <label for="ruang" class="form-label">Ruangan</label>
                                         <select name="ruang" id="ruang" class="form-select">
                                             <option selected disabled value="">Pilih ruangan</option>
-                                            {{-- <option value="penyewa">Penyewa</option>
-                                                <option value="petugas">Petugas</option> --}}
+                                            @foreach ($dataRuangan as $dr)
+                                                <option value="{{$dr->nama_ruangan}}">{{$dr->nama_ruangan}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="invalid-feedback">
                                             Masukkan ruangan anda!
@@ -140,7 +141,7 @@
                                         <input type="text" name="harga" id="harga" class="date form-control"
                                             disabled required>
                                         <div class="invalid-feedback">
-                                            Masukkan Lokasi!
+                                            Masukkan Harga!
                                         </div>
                                     </div>
                                     <div class="col-md mt-4">

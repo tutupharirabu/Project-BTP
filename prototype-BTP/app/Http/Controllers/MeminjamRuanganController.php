@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Penyewa;
 use App\Models\Ruangan;
-use App\Models\Meminjam;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
-use App\Models\MeminjamRuangan;
 
 class MeminjamRuanganController extends Controller
 {
@@ -15,7 +13,10 @@ class MeminjamRuanganController extends Controller
      */
     public function index()
     {
-        return view('penyewa.meminjamRuangan' );
+        $dataPeminjaman = Peminjaman::all();
+        $dataRuangan = Ruangan::all();
+
+        return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan'));
     }
 
     /**
@@ -23,11 +24,7 @@ class MeminjamRuanganController extends Controller
      */
     public function create()
     {
-        $dataMeminjamRuangan = MeminjamRuangan::with(['penyewa', 'ruangan'])->get();
-        $dataPenyewa = Penyewa::all();
-        $dataRuangan = Ruangan::all();
-
-        return view('penyewa.meminjamRuangan', compact('dataMeminjamRuangan', 'dataPenyewa', 'dataRuangan'));
+        //
     }
 
     /**

@@ -45,14 +45,6 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
-// // Form peminjaman Ruangan
-// Route::get('/daftarMeminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('daftarMeminjamRuangan');
-// Route::post('/daftarMeminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.daftarMeminjamRuangan');
-
-// // Form peminjaman Barang
-// Route::get('/daftarMeminjamBarang', [MeminjamBarangController::class, 'create'])->name('daftarMeminjamBarang');
-// Route::post('/daftarMeminjamBarang/posts', [MeminjamBarangController::class, 'store'])->name('posts.daftarMeminjamBarang');
-
 // // CRUD ruangan
 // Route::get('/adminRuangan', [AdminRuanganController::class, 'index'])->name('admin.ruangan');
 // Route::get('/adminRuangan/tambahRuangan', [AdminRuanganController::class, 'create'])->name('admin.ruangan.tambahRuangan');
