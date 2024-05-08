@@ -13,17 +13,13 @@ class Peminjaman extends Model
     use HasFactory;
     protected $table = 'peminjaman';
     protected $primaryKey = 'id_peminjaman';
-    protected $fillable = ['id_users', 'id_ruangan', 'tanggal_mulai', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'status'];
-
-    public function users(){
-        return $this->belongsTo(Users::class, 'id_users', 'id_users');
-    }
+    protected $fillable = ['nama_peminjam', 'id_ruangan', 'id_barang', 'tanggal_mulai', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'status', 'keterangan'];
 
     public function ruangan(){
-        return $this->belongsTo(Ruangan::class, 'id_ruangan', 'id_ruangan');
+        return $this->hasMany(Ruangan::class, 'id_ruangan', 'id_ruangan');
     }
 
     public function barang(){
-        return $this->belongsTo(Barang::class, 'id_barang', 'id_barang');
+        return $this->hasMany(Barang::class, 'id_barang', 'id_barang');
     }
 }

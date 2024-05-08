@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
+use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MeminjamRuanganController extends Controller
 {
@@ -13,10 +15,7 @@ class MeminjamRuanganController extends Controller
      */
     public function index()
     {
-        $dataPeminjaman = Peminjaman::all();
-        $dataRuangan = Ruangan::all();
-
-        return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan'));
+        //
     }
 
     /**
@@ -24,7 +23,10 @@ class MeminjamRuanganController extends Controller
      */
     public function create()
     {
-        //
+        $dataPeminjaman = Peminjaman::all();
+        $dataRuangan = Ruangan::all();
+
+        return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan'));
     }
 
     /**
@@ -33,35 +35,31 @@ class MeminjamRuanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tanggal_peminjaman' => 'required',
-            'tanggal_selesai' => 'required',
-            'jumlah_pengguna' => 'required',
-            'id_penyewa' => 'required',
+            'nama_peminjam' => 'required|string',
             'id_ruangan' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+            'jumlah' => 'required',
+            'keterangan' => 'required',
         ]);
 
-        $meminjamRuangan = new MeminjamRuangan([
-            'tanggal_peminjaman' => $request->input('tanggal_peminjaman'),
-            'tanggal_selesai' => $request->input('tanggal_selesai'),
-            'jumlah_pengguna' => $request->input('jumlah_pengguna'),
-            'id_penyewa' => $request->input('id_penyewa'),
+        $tanggal_mulai = $request->input('tanggal_mulai').' '.$request->input('jam_mulai');
+        $tanggal_selesai = $request->input('tanggal_selesai').' '.$request->input('jam_selesai');
+
+        $meminjamRuangan = new Peminjaman([
+            'nama_peminjam' => $request->input('nama_peminjam'),
             'id_ruangan' => $request->input('id_ruangan'),
+            'id_barang' => null,
+            'tanggal_mulai' => $tanggal_mulai,
+            'tanggal_selesai' => $tanggal_selesai,
+            'jumlah' => $request->input('jumlah'),
+            'status' => 'Menunggu',
+            'keterangan' => $request->input('keterangan'),
         ]);
 
         $meminjamRuangan->save();
 
-        $simpanRuangan = new Meminjam([
-            'tanggal_peminjaman' => $request->input('tanggal_peminjaman'),
-            'tanggal_selesai' => $request->input('tanggal_selesai'),
-            'jumlah_pengguna' => $request->input('jumlah_pengguna'),
-            'id_penyewa' => $request->input('id_penyewa'),
-            'id_ruangan' => $request->input('id_ruangan'),
-        ]);
-
-        $simpanRuangan->id_meminjamRuangan = $meminjamRuangan->id_meminjamRuangan;
-        $simpanRuangan->save();
-
-        return redirect('/daftarMeminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
+        return redirect('/meminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
 
     }
 

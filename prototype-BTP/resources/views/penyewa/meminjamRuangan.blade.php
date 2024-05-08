@@ -104,24 +104,25 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form action="" method="POST" class="form-valid" enctype="multipart/form-data">
+                        <form action="/meminjamRuangan/posts" method="POST" class="form-valid" enctype="multipart/form-data">
+                            @csrf
                             <!-- left from text field -->
                             <div class="row">
                                 <div class="col-5">
                                     <div class="col-md">
-                                        <label for="namaPeminjam" class="form-label">Nama Peminjam</label>
-                                        <input type="text" name="namaPeminjam" id="namaPeminjam"
-                                            class="date form-control" required>
+                                        <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
+                                        <input type="text" name="nama_peminjam" id="nama_peminjam"
+                                        class="date form-control" required>
                                         <div class="invalid-feedback">
                                             Masukkan Nama Peminjam!
                                         </div>
                                     </div>
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label">Ruangan</label>
-                                        <select name="ruang" id="ruang" class="form-select">
+                                        <select name="id_ruangan" id="id_ruangan" class="form-select">
                                             <option selected disabled value="">Pilih ruangan</option>
                                             @foreach ($dataRuangan as $dr)
-                                                <option value="{{$dr->nama_ruangan}}">{{$dr->nama_ruangan}}</option>
+                                                <option value="{{$dr->id_ruangan}}">{{$dr->nama_ruangan}}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -131,22 +132,26 @@
                                     <div class="col-md mt-4">
                                         <label for="lokasi" class="form-label">Lokasi</label>
                                         <input type="text" name="lokasi" id="lokasi" class="date form-control"
-                                            disabled required>
+                                            @foreach ($dataRuangan as $dr)
+                                                value="{{$dr->lokasi}}"
+                                            @endforeach  disabled required>
                                         <div class="invalid-feedback">
                                             Masukkan Lokasi!
                                         </div>
                                     </div>
                                     <div class="col-md mt-4">
-                                        <label for="harga" class="form-label">Harga</label>
-                                        <input type="text" name="harga" id="harga" class="date form-control"
-                                            disabled required>
+                                        <label for="harga_ruangan" class="form-label">Harga</label>
+                                        <input type="text" name="harga_ruangan" id="harga_ruangan" class="date form-control"
+                                            @foreach ($dataRuangan as $dr)
+                                                value="{{$dr->harga_ruangan}}"
+                                            @endforeach disabled required>
                                         <div class="invalid-feedback">
                                             Masukkan Harga!
                                         </div>
                                     </div>
                                     <div class="col-md mt-4">
-                                        <label for="peserta" class="form-label">Jumlah Peserta</label>
-                                        <input type="number" name="peserta" id="peserta" class="date form-control" max="100"
+                                        <label for="jumlah" class="form-label">Jumlah Peserta</label>
+                                        <input type="number" name="jumlah" id="peserta" class="date form-control" max="100"
                                             min="0" required>
                                         <div class="invalid-feedback">
                                             Masukkan Jumlah Peserta!
@@ -157,16 +162,16 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col-md ">
-                                            <label for="mulaiPinjam" class="form-label">Tanggal Mulai Peminjaman</label>
-                                            <input type="date" name="mulaiPinjam" id="mulaiPinjam"
+                                            <label for="tanggal_mulai" class="form-label">Tanggal Mulai Peminjaman</label>
+                                            <input type="date" name="tanggal_mulai" id="tanggal_mulai"
                                                 class="date form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
                                         <div class="col-md col-3">
-                                            <label for="selesaiPinjam" class="form-label">Tanggal Selesai Peminjaman</label>
-                                            <input type="date" name="selesaiPinjam" id="selesaiPinjam"
+                                            <label for="tanggal_selesai" class="form-label">Tanggal Selesai Peminjaman</label>
+                                            <input type="date" name="tanggal_selesai" id="tanggal_selesai"
                                                 class="date form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Selesai Peminjaman!
@@ -175,16 +180,16 @@
                                     </div>
                                     <div class="row mt-4">
                                         <div class="col-md ">
-                                            <label for="tanggal_mulai" class="form-label">Jam Mulai Peminjaman</label>
-                                            <input type="time" name="tanggal_mulai" id="tanggal_mulai"
+                                            <label for="jam_mulai" class="form-label">Jam Mulai Peminjaman</label>
+                                            <input type="time" name="jam_mulai" id="tanggal_mulai"
                                                 class=" form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
                                         <div class="col-md col-3">
-                                            <label for="tanggal_selesai" class="form-label">Jam Selesai Peminjaman</label>
-                                            <input type="time" name="tanggal_selesai" id="tanggal_selesai"
+                                            <label for="jam_selesai" class="form-label">Jam Selesai Peminjaman</label>
+                                            <input type="time" name="jam_selesai" id="jam_selesai"
                                                 class=" form-control" required>
                                             <div class="invalid-feedback">
                                                 Masukkan Selesai Peminjaman!
@@ -200,8 +205,8 @@
                                             Masukkan Nama Peminjam!
                                         </div> --}}
                                         <div class="form-group">
-                                            <label for="catatn" class="mb-2">Catatan</label>
-                                            <textarea class="form-control" name="catatan" id="catatan" id="" rows="5"></textarea>
+                                            <label for="keterangan" class="mb-2">Catatan</label>
+                                            <textarea class="form-control" name="keterangan" id="keterangan" id="" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
