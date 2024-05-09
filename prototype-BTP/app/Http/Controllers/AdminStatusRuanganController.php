@@ -9,8 +9,8 @@ class AdminStatusRuanganController extends Controller
 {
     public function index()
     {
-        $dataPengajuan = Ruangan::all();
-        return view('admin.daftarRuanganAdmin',compact('dataPengajuan'));
+        $dataRuangan = Ruangan::all();
+        return view('admin.daftarRuanganAdmin',compact('dataRuangan'));
     }
 
     public function getEvents()

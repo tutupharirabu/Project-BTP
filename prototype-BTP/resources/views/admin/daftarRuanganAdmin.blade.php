@@ -1,7 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    @foreach ($dataPengajuan as $data)
+    @foreach ($dataRuangan as $data)
         {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
     @endforeach
 
@@ -26,7 +26,13 @@
                     </div>
                     <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
                         <h5 class="text-md">Available</h5>
-                        <h5 class="text-md">1</h5>
+                        <h5 class="text-md">
+                            @php
+                                $bookedCount = $dataRuangan->where('status', 'Available')->count();
+                            @endphp
+
+                            {{ $bookedCount }}
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -39,7 +45,13 @@
                     </div>
                     <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
                         <h5 class="text-md">Booked</h5>
-                        <h5 class="text-md">3</h5>
+                        <h5 class="text-md">
+                            @php
+                                $bookedCount = $dataRuangan->where('status', 'Booked')->count();
+                            @endphp
+
+                            {{ $bookedCount }}
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -73,14 +85,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($dataPengajuan as $data)
+                                @foreach ($dataRuangan as $data)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->id_ruangan }}</td>
                                         <td>{{ $data->nama_ruangan }}</td>
                                         <td>{{ $data->kapasitas_ruangan }}</td>
-                                        <td>harganya</td>
-                                        <td><a class="btn btn-success text-white">Available</a>
+                                        <td>Rp {{$data->harga_ruangan}}</td>
+                                        <td>
+                                            @if ($data->status == "Available")
+                                                <a class="btn btn-success text-white">Available</a>
+                                            @elseif ($data->status == "Booked")
+                                                <a class="btn btn-secondary text-dark">Booked</a>
+                                            @else
+                                                <a class="btn btn-info text-white">-</a>
+                                            @endif
+
                                         </td>
                                         <td>
                                             <a href="/editRuanganAdmin" class="btn btn-warning">Edit</a>
