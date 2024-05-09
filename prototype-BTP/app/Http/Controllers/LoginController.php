@@ -30,6 +30,9 @@ class LoginController extends Controller
         if (Auth::guard('penyewa')->attempt($credentials)) {
             $request->session()->regenerate();
 
+            $request->session()->put('id_users', Auth::guard('penyewa')->user()->id);
+            $request->session()->put('email', Auth::guard('penyewa')->user()->email);
+
             return redirect()->intended('/dashboardPenyewa');
         }
 
@@ -37,7 +40,10 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request){
-        Auth::logout();
+        $request->session()->forget('id_users');
+        $request->session()->forget('email');
+
+        Auth::guard('penyewa')->logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();

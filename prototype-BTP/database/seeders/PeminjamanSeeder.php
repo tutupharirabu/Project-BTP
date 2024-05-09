@@ -17,10 +17,10 @@ class PeminjamanSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('id_ID');
 
         for ($i=1; $i <= 10 ; $i++) {
-            $id_users = $faker->numberBetween(1, 10);
+            $namaPeminjam = $faker->name;
             $id_ruangan = $faker->numberBetween(1, 9);
             $id_barang = $faker->numberBetween(1, 7);
             $tanggal = $faker->dateTime();
@@ -28,7 +28,7 @@ class PeminjamanSeeder extends Seeder
             $status = $faker->randomElement(['Available', 'Booked', 'Waiting']);
 
             DB::table('peminjaman')->insert([
-                'id_users'  => $id_users,
+                'nama_peminjam'  => $namaPeminjam,
                 'id_ruangan' => $id_ruangan,
                 'id_barang' => $id_barang,
                 'tanggal_mulai'  => $tanggal,
