@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'users',
+        'guard' => 'penyewa',
         'passwords' => 'users',
     ],
 
@@ -107,7 +107,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'penyewa',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
