@@ -63,6 +63,21 @@ class MeminjamRuanganController extends Controller
 
     }
 
+    public function getRuanganDetails(Request $request)
+{
+    $idRuangan = $request->query('id_ruangan');
+    $ruangan = Ruangan::find($idRuangan);
+
+    if ($ruangan) {
+        return response()->json([
+            'lokasi' => $ruangan->lokasi,
+            'harga_ruangan' => $ruangan->harga_ruangan,
+        ]);
+    } else {
+        return response()->json(['error' => 'Ruangan not found'], 404);
+    }
+}
+
     /**
      * Display the specified resource.
      */

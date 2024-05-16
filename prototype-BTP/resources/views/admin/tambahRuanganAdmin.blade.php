@@ -72,17 +72,6 @@
                                                 </select>
 
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="status"
-                                                    class="col-md-3 col-form-label text-md-right">Status</label>
-                                                <div class="col-md-7">
-                                                    <select id="status" class="form-control" name="status">
-                                                        <option value="">Pilih Status</option>
-                                                        <option value="available">Available</option>
-                                                        <option value="booked">Booked</option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!-- right form file -->
 

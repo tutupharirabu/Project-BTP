@@ -1,84 +1,3 @@
-{{-- @extends('penyewa.layouts.mainPenyewa')
-@section('containPenyewa')
-    <div class="container">
-        <div class="card my-3">
-            <div class="card-body">
-                <a href="#" class="text-none align-middle text-dark">Daftar Meminjam Ruangan</a>
-            </div>
-        </div>
-
-        <div class="card my-3">
-            <div class="card-body">
-                <form class="row g-3 needs-validation" action="{{ route('posts.daftarMeminjamRuangan') }}" method="POST"
-                    class="form-valid" enctype="multipart/form-data" novalidate>
-
-                    @csrf
-                    @if (isset($errors) && count($errors))
-                        {{ count($errors->all()) }} Error(s)
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }} </li>
-                            @endforeach
-                        </ul>
-                    @endif
-
-                    @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-
-                    <div class="col-md-6">
-                        <label for="tanggal_peminjaman" class="form-label">Tanggal Peminjaman</label>
-                        <input type="date" class="form-control" id="tanggal_peminjaman" name="tanggal_peminjaman"
-                            required>
-                        <div class="invalid-feedback">
-                            Isi tanggal mulai meminjam anda!
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="tanggal_selesai" class="form-label">Tanggal Selesai Meminjam</label>
-                        <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
-                        <div class="invalid-feedback">
-                            Isi tanggal selesai meminjam anda!
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="jumlah_pengguna" class="form-label">Jumlah Pengguna</label>
-                        <input type="number" class="form-control" id="jumlah_pengguna" name="jumlah_pengguna" required>
-                        <div class="invalid-feedback">
-                            Isi jumlah pengguna yang akan meminjam ruangan anda!
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <label for="id_penyewa" class="form-label">Nama Lengkap</label>
-                        <input type="text" name="id_penyewa" id="id_penyewa" value="{{ Auth::guard('penyewa')->id() }}"
-                            class="form-control" hidden>
-                        <input type="text" value="{{ Auth::guard('penyewa')->user()->nama_lengkap }}"
-                            class="form-control" disabled>
-                    </div>
-                    <div class="col-md-5">
-                        <label for="id_ruangan" class="form-label">Nama Ruangan</label>
-                        <select name="id_ruangan" id="id_ruangan" class="form-select">
-                            @foreach ($dataRuangan as $ruangan)
-                                <option value="{{ $ruangan->id_ruangan }}">{{ $ruangan->nama_ruangan }}
-                                    ({{ $ruangan->kapasitas_ruangan }})</option>
-                            @endforeach
-                        </select>
-                        <div class="invalid-feedback">
-                            Pilih ruangan anda!
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Ajukan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-@endsection --}}
-
 @extends('penyewa.layouts.mainPenyewa')
 @section('containPenyewa')
     <script type="text/javascript">
@@ -107,22 +26,22 @@
                         <form action="/meminjamRuangan/posts" method="POST" class="form-valid" enctype="multipart/form-data">
                             @csrf
                             <!-- left from text field -->
-                            <div class="row">
+                            <div class="row needs-validation">
                                 <div class="col-5">
                                     <div class="col-md">
                                         <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
-                                        class="date form-control" required>
+                                            class="date form-control">
                                         <div class="invalid-feedback">
                                             Masukkan Nama Peminjam!
                                         </div>
                                     </div>
-                                    <div class="col-md mt-4">
+                                    {{-- <div class="col-md mt-4">
                                         <label for="ruang" class="form-label">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select">
                                             <option selected disabled value="">Pilih ruangan</option>
                                             @foreach ($dataRuangan as $dr)
-                                                <option value="{{$dr->id_ruangan}}">{{$dr->nama_ruangan}}</option>
+                                                <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -133,30 +52,70 @@
                                         <label for="lokasi" class="form-label">Lokasi</label>
                                         <input type="text" name="lokasi" id="lokasi" class="date form-control"
                                             @foreach ($dataRuangan as $dr)
-                                                value="{{$dr->lokasi}}"
-                                            @endforeach  disabled required>
+                                                value="{{ $dr->lokasi }}" @endforeach
+                                            disabled required>
                                         <div class="invalid-feedback">
                                             Masukkan Lokasi!
                                         </div>
                                     </div>
-                                    <div class="col-md mt-4">
+                                    <div class="col-md mt-3">
                                         <label for="harga_ruangan" class="form-label">Harga</label>
-                                        <input type="text" name="harga_ruangan" id="harga_ruangan" class="date form-control"
+                                        <input type="text" name="harga_ruangan" id="harga_ruangan"
+                                            class="date form-control"
                                             @foreach ($dataRuangan as $dr)
-                                                value="{{$dr->harga_ruangan}}"
-                                            @endforeach disabled required>
+                                                value="{{ $dr->harga_ruangan }}" @endforeach
+                                            disabled required>
                                         <div class="invalid-feedback">
                                             Masukkan Harga!
                                         </div>
                                     </div>
-                                    <div class="col-md mt-4">
+                                    <div class="col-md mt-3">
                                         <label for="jumlah" class="form-label">Jumlah Peserta</label>
-                                        <input type="number" name="jumlah" id="peserta" class="date form-control" max="100"
-                                            min="0" required>
+                                        <input type="number" name="jumlah" id="peserta" class="date form-control"
+                                            max="100" min="0" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Jumlah Peserta!
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-md mt-4">
+                                        <label for="ruang" class="form-label">Ruangan</label>
+                                        <select name="id_ruangan" id="id_ruangan" class="form-select"
+                                            onchange="fetchRuanganDetails()">
+                                            <option selected disabled value="">Pilih ruangan</option>
+                                            @foreach ($dataRuangan as $dr)
+                                                <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Masukkan ruangan anda!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-3">
+                                        <label for="lokasi" class="form-label">Lokasi</label>
+                                        <input type="text" name="lokasi" id="lokasi" class="date form-control"
+                                            disabled required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Lokasi!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-3">
+                                        <label for="harga_ruangan" class="form-label">Harga</label>
+                                        <input type="text" name="harga_ruangan" id="harga_ruangan"
+                                            class="date form-control" disabled required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Harga!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-3">
+                                        <label for="jumlah" class="form-label">Jumlah Peserta</label>
+                                        <input type="number" name="jumlah" id="peserta" class="date form-control"
+                                            max="100" min="0" required>
                                         <div class="invalid-feedback">
                                             Masukkan Jumlah Peserta!
                                         </div>
                                     </div>
+
                                 </div>
                                 <!-- right form file -->
                                 <div class="col">
@@ -170,7 +129,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md col-3">
-                                            <label for="tanggal_selesai" class="form-label">Tanggal Selesai Peminjaman</label>
+                                            <label for="tanggal_selesai" class="form-label">Tanggal Selesai
+                                                Peminjaman</label>
                                             <input type="date" name="tanggal_selesai" id="tanggal_selesai"
                                                 class="date form-control" required>
                                             <div class="invalid-feedback">
@@ -181,16 +141,16 @@
                                     <div class="row mt-4">
                                         <div class="col-md ">
                                             <label for="jam_mulai" class="form-label">Jam Mulai Peminjaman</label>
-                                            <input type="time" name="jam_mulai" id="tanggal_mulai"
-                                                class=" form-control" required>
+                                            <input type="time" name="jam_mulai" id="tanggal_mulai" class=" form-control"
+                                                required>
                                             <div class="invalid-feedback">
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
                                         <div class="col-md col-3">
                                             <label for="jam_selesai" class="form-label">Jam Selesai Peminjaman</label>
-                                            <input type="time" name="jam_selesai" id="jam_selesai"
-                                                class=" form-control" required>
+                                            <input type="time" name="jam_selesai" id="jam_selesai" class=" form-control"
+                                                required>
                                             <div class="invalid-feedback">
                                                 Masukkan Selesai Peminjaman!
                                             </div>
@@ -206,7 +166,7 @@
                                         </div> --}}
                                         <div class="form-group">
                                             <label for="keterangan" class="mb-2">Catatan</label>
-                                            <textarea class="form-control" name="keterangan" id="keterangan" id="" rows="5"></textarea>
+                                            <textarea class="form-control" name="keterangan" id="keterangan" id="" rows="8"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -225,55 +185,18 @@
             </div>
         </div>
     </div>
-
-    {{-- ruangan --}}
-    {{-- <div class="d-flex align-items-center py-4 font-monospace">
-        <div class="container-sm">
-            <h1 class="text-center pb-3">Form Sewa Ruangan</h1>
-            <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST"
-                class="form-valid" enctype="multipart/form-data" novalidate>
-
-                @csrf
-                <div class="col-md-6">
-                    <label for="ruang" class="form-label">Ruangan</label>
-                    <select name="ruang" id="ruang" class="form-select">
-                        <option selected disabled value="">Pilih ruangan</option>
-                        <option value="penyewa">Penyewa</option>
-                        <option value="petugas">Petugas</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Masukkan ruangan anda!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="peserta" class="form-label">Jumlah Peserta</label>
-                    <input type="number" name="peserta" id="peserta" class="date form-control" max="50"
-                        min="0" placeholder="Masukkan Jumlah Peserta" required>
-                    <div class="invalid-feedback">
-                        Masukkan Jumlah Peserta!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="date" name="startDate" id="startDate" class="date form-control"
-                        placeholder="Masukkan tanggal mulai" required>
-                    <div class="invalid-feedback">
-                        Masukkan tanggal mulai!
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="endDate" class="form-label">End Date</label>
-                    <input type="date" name="endDate" id="endDate" class="date form-control"
-                        placeholder="Masukkan tanggal selesai" required>
-                    <div class="invalid-feedback">
-                        Masukkan tanggal selesai!
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </form>
-        </div> --}}
+    <script>
+        function fetchRuanganDetails() {
+            const idRuangan = document.getElementById('id_ruangan').value;
+            if (idRuangan) {
+                fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('lokasi').value = data.lokasi;
+                        document.getElementById('harga_ruangan').value = data.harga_ruangan;
+                    })
+                    .catch(error => console.error('Error fetching ruangan details:', error));
+            }
+        }
+    </script>
 @endsection

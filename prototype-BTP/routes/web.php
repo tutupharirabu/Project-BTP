@@ -73,6 +73,8 @@ Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->
 // Peminjaman Ruangan
 Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan');
 Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
+Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails']);
+
 
 // Peminjaman Barang
 Route::get('/meminjamBarang', [MeminjamBarangController::class, 'index'])->name('penyewa.peminjamanBarang');
