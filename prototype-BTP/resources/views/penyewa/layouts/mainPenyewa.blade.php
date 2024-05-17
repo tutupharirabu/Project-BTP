@@ -33,6 +33,8 @@
             @yield('containPenyewa')
         </div>
     </div>
+    @include('penyewa.partials.footerUser')
+
 
 
     {{-- bootstrap --}}

@@ -19,8 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
             <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                <img src="https://btp.or.id/wp-content/uploads/2023/06/15072022_GSM-Logo-BTP-1.png" height="30"
-                    alt="MDB Logo" loading="lazy" />
+                <img src="{{ asset('assets/img/logotelkombtp.png') }}" height="30" alt="MDB Logo" loading="lazy" />
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -80,10 +79,12 @@
             <div class="dropdown">
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                    Agus
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle"
-                        height="40" alt="Black and White Portrait of a Man" loading="lazy" />
 
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
+                        height="40" alt="Black and White Portrait of a Man" loading="lazy" />
+                    <p>
+                        <center style="color: black">Rudy Harry Yanto</center>
+                    </p>
                 </a>
                 {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>

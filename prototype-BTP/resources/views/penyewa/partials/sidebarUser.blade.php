@@ -18,7 +18,7 @@
     </nav>
 </div> --}}
 
-<div class="col-md-2 col-lg-2 d-none d-md-block d-flex flex-column " style="background-color: #d9d9d9">
+<div class="col-md-2 col-lg-2 d-none d-md-block d-flex flex-column " style="background-color: #ed3c35; color: #FFFFFF">
     <div class="text-center mt-3">
         <img src="https://placehold.it/150x150" alt="User Avatar" class="rounded-circle mb-3"
             style="width: 100px; height: 100px;">
@@ -26,10 +26,10 @@
     </div>
 
     <nav class="nav flex-column mt-auto">
-        <a class="nav-link active" href="/dashboardPenyewa">Dashboard</a>
-        <a class="nav-link" href="/statusRuanganAdmin">Daftar Ruangan</a>
-        <a class="nav-link" href="/statusPengajuanAdmin">Status Pengajuan</a>
-        <a class="nav-link" href="/logout">Keluar</a>
+        <a class="text-white nav-link active" href="/dashboardPenyewa">Dashboard</a>
+        <a class="text-white nav-link" href="/statusRuanganAdmin">Daftar Ruangan</a>
+        <a class="text-white nav-link" href="/statusPengajuanAdmin">Status Pengajuan</a>
+        <a class="text-white  nav-link" href="/logout">Keluar</a>
     </nav>
 </div>
 
