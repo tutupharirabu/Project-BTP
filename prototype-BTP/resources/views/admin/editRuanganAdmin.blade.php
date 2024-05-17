@@ -37,9 +37,10 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form action="{{ route('posts.ruangan') }}" method="POST" enctype="multipart/form-data"
+                        <form action="{{route('update.ruangan', $dataRuangan->id_ruangan)}}" method="POST" enctype="multipart/form-data"
                             id="my-form">
                             @csrf
+                            @method('PUT')
                             <!-- left from text field -->
                             <div class="row">
                                 <div class="col-7">
@@ -48,8 +49,9 @@
                                             <label for="id_ruangan" class="col-md-3 col-form-label text-md-left-right">ID
                                                 Ruangan</label>
                                             <div class="col-md-7">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                 <input type="text" id="id_ruangan" class="form-control" name="id_ruangan"
-                                                    style="" disabled>
+                                                    style="" disabled value="{{$dataRuangan->id_ruangan}}">
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -57,7 +59,7 @@
                                                 Ruangan</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="nama_ruangan" class="form-control"
-                                                    name="nama_ruangan" required>
+                                                    name="nama_ruangan" value="{{$dataRuangan->nama_ruangan}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -65,7 +67,7 @@
                                                 class="col-md-3 col-form-label text-md-right">Kapasitas</label>
                                             <div class="col-md-7">
                                                 <input type="number" id="kapasitas_ruangan" class="form-control"
-                                                    name="kapasitas_ruangan" required>
+                                                    name="kapasitas_ruangan" value="{{$dataRuangan->kapasitas_ruangan}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -73,7 +75,7 @@
                                                 class="col-md-3 col-form-label text-md-right">Lokasi</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="lokasi" class="form-control" name="lokasi"
-                                                    required>
+                                                value="{{$dataRuangan->lokasi}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -81,7 +83,7 @@
                                                 class="col-md-3 col-form-label text-md-right">Harga</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="harga_ruangan" class="form-control"
-                                                    name="harga_ruangan" required>
+                                                    name="harga_ruangan" value="{{$dataRuangan->harga_ruangan}}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -89,12 +91,12 @@
                                                 class="col-md-3 col-form-label text-md-right">Status</label>
                                             <div class="col-md-7">
                                                 <select id="status" class="form-control" name="status">
-                                                    <option value="">Pilih Status</option>
-                                                    <option value="available">Available</option>
-                                                    <option value="booked">Booked</option>
+                                                    <option value="{{$dataRuangan->status}}">{{$dataRuangan->status}}</option>
+                                                    <option value="Available">Available</option>
+                                                    <option value="Booked">Booked</option>
                                                 </select>
                                                 <input type="number" id="tersedia" class="form-control" name="tersedia"
-                                                    value="" required hidden>
+                                                    value="{{$dataRuangan->tersedia}}" required hidden>
                                             </div>
                                         </div>
                                         <!-- right form file -->
@@ -115,11 +117,17 @@
                                                     </div>
                                                 </div> --}}
                                                 <div id="drop-area">
-                                                    <p>Drag and Drop files here</p>
+                                                    @if ($dataRuangan->gambar->count() > 0)
+                                                        @foreach($dataRuangan->gambar as $gambar)
+                                                            <img src="{{ asset('storage/'.$gambar->url) }}" alt="Gambar Ruangan" width="200">
+                                                        @endforeach
+                                                    @else
+                                                        <p>Drag and Drop files here</p>
+                                                    @endif
                                                 </div>
                                                 <p>or</p>
                                                 <button type="button" onclick="fileInput.click()">Select
-                                                    Files</button> <input type="file" id="fileInput" name="url[]"
+                                                    Files</button> <input type="file" id="fileInput" name="url[]" @foreach($dataRuangan->gambar as $gambar) value="{{ $gambar->url }}" @endforeach
                                                     multiple hidden>
                                                 {{-- </div> <input type="file" name="url[]" multiple required> --}}
                                             </div>
@@ -127,7 +135,7 @@
                                     </div>
                                     <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
                                     <button type="submit" class="btn btn-primary">
-                                        Add
+                                        Submit
                                     </button>
                                 </div>
                             </div>
@@ -139,6 +147,22 @@
     </div>
 
     <script>
+        document.getElementById('status').addEventListener('change', function() {
+            var status = this.value;
+            var tersediaInput = document.getElementById('tersedia');
+
+            if (status === 'Available') {
+                tersediaInput.value = 0;
+            } else if (status === 'Booked') {
+                tersediaInput.value = 1;
+            } else if (status === {{$dataRuangan->status}}){
+                tersediaInput.value = {{$dataRuangan->tersedia}};
+            }
+            else {
+                tersediaInput.value = '';
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', (event) => {
             const dropArea = document.getElementById('drop-area');
             const fileInput = document.getElementById('fileInput');

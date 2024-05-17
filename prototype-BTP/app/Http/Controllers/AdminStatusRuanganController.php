@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ruangan;
 use App\Models\Gambar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminStatusRuanganController extends Controller
 {
@@ -82,9 +83,10 @@ class AdminStatusRuanganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(string $id)
     {
-        return view('admin.editRuanganAdmin');
+        $dataRuangan = Ruangan::with('gambar')->find($id);
+        return view('admin.editRuanganAdmin', ['dataRuangan' => $dataRuangan]);
     }
 
     /**
@@ -92,7 +94,46 @@ class AdminStatusRuanganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dataRuangan = Ruangan::find($id);
+
+        $request->validate([
+            'nama_ruangan' => 'required|string',
+            'kapasitas_ruangan' => 'required',
+            'lokasi' => 'required',
+            'harga_ruangan' => 'required',
+            'tersedia' => 'required',
+            'status' => 'required',
+            'url' => 'required|array',
+            'url.*' => 'required|image'
+        ]);
+
+        Ruangan::where('id_ruangan', $dataRuangan->id_ruangan)->update([
+            'nama_ruangan' => $request['nama_ruangan'],
+            'kapasitas_ruangan' => $request['kapasitas_ruangan'],
+            'lokasi' => $request['lokasi'],
+            'harga_ruangan' => $request['harga_ruangan'],
+            'tersedia' => $request['tersedia'],
+            'status' => $request['status'],
+        ]);
+
+        if ($request->hasFile('url')) {
+            // Hapus gambar lama
+            foreach ($dataRuangan->gambar as $gambar) {
+                Storage::delete('public/' . $gambar->url);
+                $gambar->delete();
+            }
+
+            // Tambahkan gambar baru
+            foreach ($request->file('url') as $file) {
+                $path = $file->store('ruangan', 'public');
+                Gambar::create([
+                    'id_ruangan' => $dataRuangan->id_ruangan,
+                    'url' => $path
+                ]);
+            }
+        }
+
+        return redirect()->route('statusRuangan')->with('success', 'Ruangan updated successfully');
     }
 
     /**

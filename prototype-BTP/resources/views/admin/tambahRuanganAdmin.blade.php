@@ -92,8 +92,8 @@
                                             <div class="col-md-7">
                                                 <select id="status" class="form-control" name="status">
                                                     <option value="">Pilih Status</option>
-                                                    <option value="available">Available</option>
-                                                    <option value="booked">Booked</option>
+                                                    <option value="Available">Available</option>
+                                                    <option value="Booked">Booked</option>
                                                 </select>
                                                 <input type="number" id="tersedia" class="form-control" name="tersedia"
                                                     value="" required hidden>
@@ -149,18 +149,16 @@
             var status = this.value;
             var tersediaInput = document.getElementById('tersedia');
 
-            if (status === 'available') {
+            if (status === 'Available') {
                 tersediaInput.value = 0;
-            } else if (status === 'booked') {
+            } else if (status === 'Booked') {
                 tersediaInput.value = 1;
             } else {
                 tersediaInput.value = '';
             }
         });
-    </script>
 
-    {{-- Drag and Drop --}}
-    <script>
+        // drag and drop
         document.addEventListener('DOMContentLoaded', (event) => {
             const dropArea = document.getElementById('drop-area');
             const fileInput = document.getElementById('fileInput');

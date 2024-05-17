@@ -29,6 +29,6 @@ class Ruangan extends Model
     }
 
     public function gambar(){
-        return $this->hashMany(Gambar::class, 'id_ruangan', 'id_ruangan');
+        return $this->hasMany(Gambar::class, 'id_ruangan', 'id_ruangan');
     }
 }

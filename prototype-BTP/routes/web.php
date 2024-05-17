@@ -100,13 +100,14 @@ Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'ind
 // Route::get('/tambahRuanganAdmin', [AdminTambahRuangan::class, 'index']);
 
 // Penyewa lihat status Ruangan
-Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index']);
+Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index'])->name('statusRuangan');
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);
 Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index']);
 
 //Admin crud ruangan
-Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create']); //create
+Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create']);
 Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan');
 Route::post('/upload',[AdminStatusRuanganController::class,'dropzone'])->name('dropzone.store');
-Route::get('/editRuanganAdmin', [AdminStatusRuanganController::class, 'edit']); //create
+Route::get('/editRuanganAdmin/{id}/edit', [AdminStatusRuanganController::class, 'edit']);
+Route::put('/editRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'update'])->name('update.ruangan');
 Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'destroy']); //delete
