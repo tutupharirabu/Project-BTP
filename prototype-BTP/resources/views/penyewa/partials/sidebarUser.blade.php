@@ -29,6 +29,7 @@
         <a class="text-white nav-link active" href="/dashboardPenyewa">Dashboard</a>
         <a class="text-white nav-link" href="/statusRuanganAdmin">Daftar Ruangan</a>
         <a class="text-white nav-link" href="/statusPengajuanAdmin">Status Pengajuan</a>
+        <a class="text-white nav-link" href="/statusRuanganPenyewa">Daftar Ruangan (user)</a>
         <a class="text-white  nav-link" href="/logout">Keluar</a>
     </nav>
 </div>
