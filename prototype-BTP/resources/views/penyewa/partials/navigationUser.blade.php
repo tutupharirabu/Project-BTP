@@ -23,9 +23,6 @@
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboardPenyewa">Dashboard</a>
-                </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="/peminjaman">Peminjaman</a>
                 </li> --}}
@@ -46,7 +43,7 @@
                             </a> -->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/meminjamRuangan">Peminjaman Ruangan</a></li>
-                            <li><a class="dropdown-item" href="/meminjamBarang">Peminjaman Barang</a></li>
+                            <li><a class="dropdown-item" href="#">Peminjaman Barang</a></li>
                         </ul>
                 </li>
             </ul>
@@ -76,7 +73,7 @@
                 </ul>
             </div> --}}
             <!-- Avatar -->
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
 
@@ -86,7 +83,7 @@
                         <center style="color: black">Rudy Harry Yanto</center>
                     </p>
                 </a>
-                {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
                         <a class="dropdown-item" href="#">My profile</a>
                     </li>
@@ -96,8 +93,8 @@
                     <li>
                         <a class="dropdown-item" href="/logout">Logout</a>
                     </li>
-                </ul> --}}
-            </div>
+                </ul>
+            </div> --}}
         </div>
         <!-- Right elements -->
     </div>

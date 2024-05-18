@@ -5,8 +5,7 @@
 <!-- MDB -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
-
-
+<?php $nama = Auth::user()->nama_lengkap ?>
 
 <!-- Navbar -->
 {{-- <div class="col-md-2 col-lg-2 d-none d-md-block" style="background-color: #d9d9d9">
@@ -20,9 +19,9 @@
 
 <div class="col-md-2 col-lg-2 d-none d-md-block d-flex flex-column " style="background-color: #ed3c35; color: #FFFFFF">
     <div class="text-center mt-3">
-        <img src="https://placehold.it/150x150" alt="User Avatar" class="rounded-circle mb-3"
+        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="User Avatar" class="rounded-circle mb-3"
             style="width: 100px; height: 100px;">
-        <p class="h6">Username</p>
+        <p class="h6">{{ $nama }}</p>
     </div>
 
     <nav class="nav flex-column mt-auto">
