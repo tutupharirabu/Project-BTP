@@ -119,7 +119,7 @@
                                                 <div id="drop-area">
                                                     @if ($dataRuangan->gambar->count() > 0)
                                                         @foreach($dataRuangan->gambar as $gambar)
-                                                            <img src="{{ asset('storage/'.$gambar->url) }}" alt="Gambar Ruangan" width="200">
+                                                            <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="200">
                                                         @endforeach
                                                     @else
                                                         <p>Drag and Drop files here</p>
