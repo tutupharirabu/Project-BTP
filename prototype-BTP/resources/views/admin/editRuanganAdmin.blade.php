@@ -15,6 +15,20 @@
             margin-bottom: 20px;
             font-size: 1vw;
             /* font-size: 1vh; */
+
+            .image-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px; /* Optional: adds space between the images */
+                width: 150%; /* Make the container take the full width of its parent */
+                max-width: 1000px; /* Set a max-width if needed, adjust as per your layout */
+                margin: 0 auto; /* Center the container */
+            }
+            .image-container img {
+                display: block;
+                width: 80px; /* Ensure the width of each image remains consistent */
+                height: auto; /* Maintain the aspect ratio of the images */
+            }
         }
 
         #drop-area.highlight {
@@ -118,9 +132,12 @@
                                                 </div> --}}
                                                 <div id="drop-area">
                                                     @if ($dataRuangan->gambar->count() > 0)
+                                                    <div class="image-container">
                                                         @foreach($dataRuangan->gambar as $gambar)
-                                                            <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="200">
-                                                        @endforeach
+                                                        <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="100">
+                                                         @endforeach
+                                                    </div>
+
                                                     @else
                                                         <p>Drag and Drop files here</p>
                                                     @endif
