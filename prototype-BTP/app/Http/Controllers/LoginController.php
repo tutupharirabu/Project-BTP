@@ -51,7 +51,7 @@ class LoginController extends Controller
 
                 return redirect()->intended('/dashboardPenyewa'); // jangan lupa dia harusnya /adminRuangan
 
-            } else if (Auth::user()->role == 'Penyewa') {
+            } else if (Auth::user()->role == 'penyewa') {
                 $request->session()->put('id_users', Auth::user()->id);
                 $request->session()->put('email', Auth::user()->email);
 

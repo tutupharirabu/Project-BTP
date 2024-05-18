@@ -42,8 +42,8 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('posts.log
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Register penyewa
-Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa')->middleware('auth');
-Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa')->middleware('auth');
+Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
+Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
 // // CRUD ruangan
 // Route::get('/adminRuangan', [AdminRuanganController::class, 'index'])->name('admin.ruangan');
