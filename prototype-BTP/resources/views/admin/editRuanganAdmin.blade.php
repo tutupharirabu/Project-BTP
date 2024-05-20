@@ -134,7 +134,7 @@
                                                     @if ($dataRuangan->gambar->count() > 0)
                                                     <div class="image-container">
                                                         @foreach($dataRuangan->gambar as $gambar)
-                                                        <img src="{{ asset('storage/' . $gambar->url) }}" alt="Gambar Ruangan" width="100">
+                                                        <img src="{{ url('storage/' . $gambar->url) }}" alt="Gambar Ruangan" width="100">
                                                          @endforeach
                                                     </div>
 
