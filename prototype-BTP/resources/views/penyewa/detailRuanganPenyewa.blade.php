@@ -6,7 +6,17 @@
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="container mx-2">
-        <h4>Detail Ruangan<h4>
+        <h4>Detail Ruangan</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- href ui -->
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="container my-2 mx-2 d-flex">
+        <a href="" style="color: #797979;font-size:12px;">Daftar Ruangan > </a> 
+        <a style="color: #FF0000;font-size:12px;">Detail Ruangan</a>
       </div>
     </div>
   </div>
@@ -50,13 +60,7 @@
 
 <div class="row">
     <div class="container-fluid mt-5 w-70 d-flex justify-content-center">
-        <table class="table table-striped p-0" style="width: 80%; font-size: 18px;">
-            <thead>
-                <tr>
-                    <th class="border border-secondary" style="width: 33.33%;">Detail Ruangan</th>
-                    <th class="border-bottom border-secondary" colspan="2"></th>
-                </tr>
-            </thead>
+        <table class="table table-striped p-0" style="width: 80%;">
             <tbody>
                 <tr>
                     <td class="border border-secondary">Nama Ruangan</td>
@@ -76,15 +80,34 @@
                 </tr>
                 <tr>
                     <td class="border border-secondary">Status</td>
-                    <td colspan="3" class="border border-secondary"><button type="button" class="btn btn-success btn-sm" style="font-size: 18px; text-transform: capitalize;">Availabe</button></td>
+                    <td colspan="3" class="border border-secondary"><button type="button boder" class="btn btn-sm text-white" style="background-color: #00DB09; border-radius: 10px; ">Tersedia</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="container-fluid mt-4 mb-6 d-flex justify-content-end" style="width: 80%;">
-        <button type="button" class="btn btn-dark btn-sm" style="font-size: 18px; text-transform: capitalize;">Pinjam Ruangan</button>
+    <div class="container-fluid mt-4 mb-6 d-flex justify-content-between" style="width: 80%;">
+        <div class="text-black">
+            <p>Keterangan :</p>
+            <p>*Harga Diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
+            <p> **Harap membaca Syarat & ketentuan  yang berlaku </p>
+        </div>
+        <div class="">
+          <button type="button" class="btn btn-sm text-white" style="background-color: #00DB09; font-size: 20px; border-radius: 7px;">Pinjam Ruangan</button>
+        </div>
     </div>
   </div>
 </div>
+
+<style>
+    .table td, .table th {
+        font-size: 20px; /* Mengubah ukuran teks */
+        padding: 0.5rem; /* Mengurangi padding */
+    }
+
+    .btn {
+        font-size: 20px; /* Ukuran teks pada tombol */
+        text-transform: capitalize;
+    }
+</style>
 
 @endsection
