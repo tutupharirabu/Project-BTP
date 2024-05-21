@@ -1,28 +1,10 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    {{-- CSS Drag and Drop --}}
-    <style>
-        #drop-area {
-            border: 2px dashed #ccc;
-            border-radius: 20px;
-            width: 100%;
-            height: 200px;
-            text-align: center;
-            padding: 85px;
-            /* font-family: Arial, sans-serif; */
-            color: #333;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            font-size: 1vw;
-            /* font-size: 1vh; */
-        }
 
-        #drop-area.highlight {
-            border-color: purple;
-        }
-    </style>
-
+    <head>
+        <link rel="stylesheet" href="assets/css/dragndrop.css">
+    </head>
 
     <div class="container-fluid mt-4">
         <!-- title -->
@@ -108,29 +90,15 @@
                                         <label for="url" class="col-md-4 col-form-label text-md-right">Gambar
                                             Ruangan</label>
                                     </div>
-                                    <div class="mb-3 text-center" style="margin-right: 0px">
-                                        <div class="card shadow">
-                                            <div class="card-body">
-                                                {{-- <div id="my-dropzone" class="dropzone">
-                                                    <div id="url" name="url">
-                                                        <input type="file" name="url[]" multiple required>
-                                                    </div>
-                                                </div> --}}
-                                                <div id="drop-area">
-                                                    <p>Drag and Drop files here</p>
-                                                </div>
-                                                <p>or</p>
-                                                <button type="button" onclick="fileInput.click()">Select
-                                                    Files</button> <input type="file" id="fileInput" name="url[]"
-                                                    multiple hidden>
-                                                {{-- </div> <input type="file" name="url[]" multiple required> --}}
-                                            </div>
-                                        </div>
+
+                                    <div class="drop-zone">
+                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                        <input type="file" for="url" id="url" name="url[]"
+                                            class="drop-zone__input" multiple>
                                     </div>
+
                                     <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
-                                    <button type="submit" class="btn btn-primary">
-                                        Add
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
                     </div>
@@ -142,86 +110,5 @@
     </div>
     </div>
     </div>
-
-    {{-- Auto Fill --}}
-    <script>
-        document.getElementById('status').addEventListener('change', function() {
-            var status = this.value;
-            var tersediaInput = document.getElementById('tersedia');
-
-            if (status === 'Available') {
-                tersediaInput.value = 0;
-            } else if (status === 'Booked') {
-                tersediaInput.value = 1;
-            } else {
-                tersediaInput.value = '';
-            }
-        });
-
-        // drag and drop
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const dropArea = document.getElementById('drop-area');
-            const fileInput = document.getElementById('fileInput');
-
-            // Prevent default drag behaviors
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-                document.body.addEventListener(eventName, preventDefaults, false);
-            });
-
-            // Highlight drop area when item is dragged over it
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-
-            // Handle dropped files
-            dropArea.addEventListener('drop', handleDrop, false);
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            function highlight(e) {
-                dropArea.classList.add('highlight');
-            }
-
-            function unhighlight(e) {
-                dropArea.classList.remove('highlight');
-            }
-
-            function handleDrop(e) {
-                let dt = e.dataTransfer;
-                let files = dt.files;
-
-                handleFiles(files);
-            }
-
-            function handleFiles(files) {
-                ([...files]).forEach(uploadFile);
-                fileInput.files = files; // update the hidden file input with the dropped files
-            }
-
-            function uploadFile(file) {
-                let url = 'YOUR_UPLOAD_URL_HERE';
-                let formData = new FormData();
-                formData.append('file', file);
-
-                fetch(url, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(() => {
-                        /* Done. Inform the user */
-                    })
-                    .catch(() => {
-                        /* Error. Inform the user */
-                    });
-            }
-        });
-    </script>
+    <script src="assets/js/admin/dragndrop.js"></script>
 @endsection
