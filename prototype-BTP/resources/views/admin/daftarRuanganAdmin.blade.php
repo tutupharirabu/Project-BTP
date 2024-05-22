@@ -30,7 +30,6 @@
                             @php
                                 $bookedCount = $dataRuangan->where('status', 'Available')->count();
                             @endphp
-
                             {{ $bookedCount }}
                         </h5>
                     </div>

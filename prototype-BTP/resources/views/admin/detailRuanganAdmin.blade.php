@@ -76,7 +76,7 @@
                     </tr>
                     <tr>
                         <td class="border border-secondary">Status</td>
-                        <td colspan="3" class="border border-secondary"><button type="button" class="btn btn-success btn-sm" style="font-size: 18px; text-transform: capitalize;">Availabe</button></td>
+                        <td colspan="3" class="border border-secondary"><button type="button" class="btn btn-success btn-sm" style="font-size: 18px; text-transform: capitalize;">Tersedia</button></td>
                     </tr>
                 </tbody>
             </table>

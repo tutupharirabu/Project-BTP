@@ -114,7 +114,7 @@
         /* Hide the progress bar */
     }
 </style>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     var dropzone = new Dropzone("#my-dropzone", {
         url: "{{ route('dropzone.store') }}",
         thumbnailWidth: 200,
@@ -125,7 +125,7 @@
         dictRemoveFile: 'Remove file',
         previewTemplate: '<div class="dz-preview dz-file-preview"><div class="dz-image"><img data-dz-thumbnail /></div><div class="dz-details"><div class="dz-size"><span data-dz-size></span></div><div class="dz-filename"><span data-dz-name></span></div></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div><div class="dz-error-message"><span data-dz-errormessage></span></div></div>'
     });
-</script>
+</script> --}}
 
 </html>
 
