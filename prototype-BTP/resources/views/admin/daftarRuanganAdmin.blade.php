@@ -103,7 +103,7 @@
                                         </td>
                                         <td>
                                             <a href="/editRuanganAdmin/{{$data->id_ruangan}}/edit" class="btn btn-warning">Edit</a>
-                                            <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}"
+                                            <a href="/daftarRuanganAdmin/{{ $data->id_ruangan }}"
                                                 class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>

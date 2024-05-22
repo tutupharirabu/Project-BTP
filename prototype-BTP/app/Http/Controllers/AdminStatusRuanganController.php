@@ -6,6 +6,7 @@ use App\Models\Ruangan;
 use App\Models\Gambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminStatusRuanganController extends Controller
 {
@@ -142,7 +143,28 @@ class AdminStatusRuanganController extends Controller
     public function destroy(string $id)
     {
         $data = Ruangan::find($id);
-        $data -> delete();
+
+        if ($data) {
+            // Retrieve all related gambar records
+            $relatedGambars = Gambar::where('id_ruangan', $id)->get();
+
+            // Loop through each gambar record
+            foreach ($relatedGambars as $relatedGambar) {
+                $image_path = public_path('storage/' . $relatedGambar->url);
+
+                // Check if the image file exists and delete it
+                if (File::exists($image_path)) {
+                    unlink($image_path);
+                }
+
+                // Delete the gambar record
+                $relatedGambar->delete();
+            }
+
+            // Now delete the ruangan record
+            $data->delete();
+        }
+
         return redirect()->route('admin.status');
     }
 }
