@@ -34,7 +34,6 @@
 
 <body>
     @include('penyewa.partials.navigationUser')
-
     <div class="row d-flex min-vh-100">
         @include('penyewa.partials.sidebarUser')
         <div class="col-md-10">

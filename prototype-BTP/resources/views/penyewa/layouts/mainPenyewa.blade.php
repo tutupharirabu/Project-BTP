@@ -31,10 +31,9 @@
         @include('penyewa.partials.sidebarUser')
         <div class="col-md-10">
             @yield('containPenyewa')
-            @include('penyewa.partials.footerUser')
         </div>
     </div>
-    
+    @include('penyewa.partials.footerUser')
 
 
 

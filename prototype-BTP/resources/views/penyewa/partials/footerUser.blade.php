@@ -1,9 +1,9 @@
-<footer class="footer mt-4 py-4 border-top">
+<footer class="footer py-4 border-top">
   <div class="container d-flex justify-content-center align-items-center">
     <div class="footer-logo d-flex align-items-center">
       <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo Telkom University" class="footer-logo-img">
     </div>
-    <div class="footer-copyright">
+    <div class="footer-copyright text-dark">
       © Copyrights 2024. All rights reserved
     </div>
   </div>
