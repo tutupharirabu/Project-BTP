@@ -6,59 +6,70 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-4">
                 <div class="container ml-4">
-                    <h4>Pengajuan Ruangan<h4>
+                    <h4>Pengajuan Ruangan <h4>
                 </div>
             </div>
         </div>
 
+     <!-- Inside box status-search-table  -->
+     <div class="p-3 border mb-2" style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+
         <!-- Status -->
+
         <div class="row">
-            <div class="col-lg-4 col-xl-4 col-xxl-4 col-md-6 col-sm-4 ml-4">
-                <div class="container d-flex justify-content-md-start justify-content-sm-starts mt-2">
-                    <div class="bg-warning text-black text-center p-2 ml-3 w-25 h-25" style="padding: 10px;">
-                        <span class="material-symbols-outlined" style="font-size: 4em;">
-                            schedule
+            <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
+                <div class="container d-flex justify-content-md-start justify-content-sm-start">
+                    <div class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                            check_circle
                         </span>
                     </div>
-                    <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
-                        <h5 class="text-md">Available</h5>
-                        <h5 class="text-md">1</h5>
+                    <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 18px;">Available</p>
+                        <p class="font-weight-bold text-center m-0" style="font-size: 32px;">
+                            7
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-4 col-xxl-4 col-sm col-md-6 col-sm-4">
-                <div class="container d-flex justify-content-md-start justify-content-sm-starts mt-2">
-                    <div class="bg-success text-black text-center p-2 ml-3 w-25 h-25" style="padding: 10px;">
-                    <span class="material-symbols-outlined" style="font-size: 4em;">
-                        check_circle
-                    </span>
-                    </div>
-                    <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
-                        <h5 class="text-md">Booked</h5>
-                        <h5 class="text-md">3</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-4 col-xxl-4 col-md-6 col-sm-4 ml-4">
-                <div class="container d-flex justify-content-md-start justify-content-sm-starts mt-2">
-                    <div class="bg-danger text-black text-center p-2 ml-3 w-25 h-25" style="padding: 10px;">
-                        <span class="material-symbols-outlined" style="font-size: 4em;">
+            <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="container d-flex align-items-center">
+                    <div  class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
                             cancel
                         </span>
                     </div>
-                    <div class="text-black text-justify w-100 h-25" style="background-color: #C4C4C4; padding: 11.5px;">
-                        <h5 class="text-md">Available</h5>
-                        <h5 class="text-md">1</h5>
+                    <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 18px;">Ditolak</p>
+                        <p class="font-weight-bold text-center m-0" style="font-size: 38px;">
+                            9
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="container d-flex align-items-center">
+                    <div  class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FCE303; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <span class="material-symbols-outlined my-0" style="font-size: 5em;">
+                            schedule
+                        </span>
+                    </div>
+                    <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 18px;">Menunggu</p>
+                        <p class="font-weight-bold text-center m-0" style="font-size: 32px;">
+                            9
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- button add  -->
-        <div class="row">
-            <div class="col-2 col-md-4 col-sm-4">
-                <div class="container ml-4 mt-4">
-                    <a href="" type="button btn-lg" class="btn btn-success text-white text-center"> Add </a>
+        <!-- Search and button add -->
+        <div class="container mt-4 mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <input type="text" class="form-control" placeholder="Cari Ruangan..." style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                    <button id="searchButton" type="button" class="btn btn-md text-white text-center" style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
                 </div>
             </div>
         </div>
@@ -79,7 +90,7 @@
                                     <th scope="col">Tanggal Mulai</th>
                                     <th scope="col">Tanggal Selesai</th>
                                     <th scope="col" style="width: 250px;">Action</th>
-                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" >Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,11 +135,11 @@
                                     <td>01/05/2024</td>
                                     <td>01/05/2024</td>
                                     <td class="d-flex justify-content-between">
-                                        <a type="button" class="btn btn-success" style="width: 100px;font-size: 13px;text-transform: capitalize;">Approve</a>
-                                        <a type="button" class="btn btn-outline-danger" style="width: 100px;font-size: 13px;text-transform: capitalize;">Reject</a>
+                                        <a type="button" class="text-white center-text" style="background-color:#0EB100; border-radius:6px;">Tersedia</a>
+                                        <a type="button" class="btn btn-outline-danger" style="width: 100px;font-size: 13px;text-transform: capitalize;">Tolak</a>
                                     </td>
                                     <td>
-                                        <a type="button" class="btn btn-success" style="width: 100px;font-size: 13px;text-transform: capitalize;">Approve</a>
+                                        <a type="button" class="text-white center-text" style="background-color:#0EB100; border-radius:6px;">Disetujui</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -136,4 +147,17 @@
                     </div>
                 </div>
             </div>
+    </div>
+
+        <style>
+            .table td, .table th {
+                padding: 10px; /* Adjust the padding table */
+            }
+            .center-text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100px;
+            }
+        </style>
 @endsection

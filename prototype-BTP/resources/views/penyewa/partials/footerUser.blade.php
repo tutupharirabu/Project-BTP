@@ -1,5 +1,5 @@
-<footer class="footer py-4 border-top">
-  <div class="container d-flex justify-content-center align-items-center">
+<footer class="footer mt-auto border-top">
+  <div class="container d-flex justify-content-center align-items-center" style="height: 56px;">
     <div class="footer-logo d-flex align-items-center">
       <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo Telkom University" class="footer-logo-img">
     </div>

@@ -18,9 +18,9 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-            <div class="container my-2 mx-2">
-                <h6 href="" style="color: red;font-size:12px;">Daftar Ruangan<h4>
-            </div>
+                <div class="container my-2 mx-2">
+                    <a class="" href="" style="color: red;font-size:12px;font-weight: bold;">Daftar Ruangan</a>
+                </div>
             </div>
         </div>
 
@@ -32,14 +32,14 @@
             <div class="row">
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
                     <div class="container d-flex justify-content-md-start justify-content-sm-start">
-                        <div class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 4em;">
+                        <div class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
                                 check_circle
                             </span>
                         </div>
-                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #F1F1F1; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
-                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Available</p>
-                            <p class="font-weight-bold text-center m-0" style="font-size: 42px;">
+                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Tersedia</p>
+                            <p class="font-weight-bold text-center m-0" style="font-size:   32px;">
                                 @php
                                     $bookedCount = $dataRuangan->where('status', 'Available')->count();
                                 @endphp
@@ -50,14 +50,14 @@
                 </div>
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
-                        <div  class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;"">
-                            <span class="material-symbols-outlined my-0" style="font-size: 4em;">
+                        <div  class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
                                 cancel
                             </span>
                         </div>
-                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #F1F1F1; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
-                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Booked</p>
-                            <p class="font-weight-bold text-center m-0" style="font-size: 42px;">
+                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Digunakan</p>
+                            <p class="font-weight-bold text-center m-0" style="font-size: 32px;">
                                 @php
                                     $bookedCount = $dataRuangan->where('status', 'Booked')->count();
                                 @endphp
@@ -71,16 +71,15 @@
     
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
-                <div class="row">
-                    <div class="col d-flex align-items-center">
-                        <input type="text" class="form-control" placeholder="Cari Ruangan..." style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B ; border: 2px solid #B1B1B1;">
-                        <button type="button" class="btn btn-md text-white text-center" style="margin-left:20px; background-color: #0EB100;">Cari</button>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-control" placeholder="Cari Ruangan..." style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                        <button id="searchButton" type="button" class="btn btn-md text-white text-center" style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
                     </div>
-                    <div class="col-auto d-flex align-items-center">
-                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center" style="background-color: #0EB100;"> Tambah Ruangan +</a>
-                    </div>
+                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center" style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                 </div>
             </div>
+            
     
             <!-- table edit -->
             <div class="row">
@@ -111,18 +110,18 @@
                                             <td><a class="text-blue" href=""><u>Gambar</u></a></td>
                                             <td style="display: flex; justify-content: center;">
                                                 @if ($data->status == "Available")
-                                                    <a class="btn text-white" style="display: flex; align-items: center; justify-content: center; background-color: #0EB100; width:91px; height: 27px;">Tersedia</a>
+                                                    <a class="btn text-white" style="display: flex; align-items: center; justify-content: center; background-color: #0EB100; width:91px; height: 27px; border-radius: 6px">Tersedia</a>
                                                 @elseif ($data->status == "Booked")
-                                                    <a class="btn text-dark" style="display: flex; align-items: center; justify-content: center; background-color: #B0B0B0; width:91px; height: 27px;">Digunakan</a>
+                                                    <a class="btn text-dark" style="display: flex; align-items: center; justify-content: center; background-color: #B0B0B0; width:91px; height: 27px; border-radius: 6px">Digunakan</a>
                                                 @else
-                                                    <a class="btn text-white" style="display: flex; align-items: center; justify-content: center; background-color: #61677A; width:91px; height: 27px;"> - </a>
+                                                    <a class="btn text-white" style="display: flex; align-items: center; justify-content: center; background-color: #61677A; width:91px; height: 27px; border-radius: 6px"> - </a>
                                                 @endif
     
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">
-                                                    <a href="/editRuanganAdmin/{{$data->id_ruangan}}/edit" class="btn text-white" style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #E0AF00">Edit</a>
-                                                    <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}" class="btn text-white" style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #FF0000">Hapus</a>
+                                                    <a href="/editRuanganAdmin/{{$data->id_ruangan}}/edit" class="btn text-white" style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #E0AF00;border-radius: 6px">Edit</a>
+                                                    <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}" class="btn text-white" style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #FF0000;border-radius: 6px">Hapus</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -138,8 +137,16 @@
         
         <style>
             .table td, .table th {
-                padding: 10px; /* Adjust the padding as needed */
+                padding: 10px; /* Adjust the padding table */
             }
         </style>
+
+        <script>
+            document.getElementById('searchButton').addEventListener('click', function(event) {
+                event.preventDefault();
+                let searchTerm = document.getElementById('searchInput').value;
+                console.log('Mencari ruangan:', searchTerm);
+            });
+        </script>
 
         @endsection
