@@ -32,14 +32,14 @@
             <div class="row">
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
                     <div class="container d-flex justify-content-md-start justify-content-sm-start">
-                        <div class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
                             <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
                                 check_circle
                             </span>
                         </div>
-                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Tersedia</p>
-                            <p class="font-weight-bold text-center m-0" style="font-size:   32px;">
+                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Tersedia</p>
+                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                 @php
                                     $bookedCount = $dataRuangan->where('status', 'Available')->count();
                                 @endphp
@@ -50,14 +50,14 @@
                 </div>
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
-                        <div  class="text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                        <div  class="left-status text-black d-flex align-items-center justify-content-center shadow" style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
                             <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
                                 cancel
                             </span>
                         </div>
-                        <div class="text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
-                            <p class="font-weight-bold text-center mt-1 mb-2" style="font-size: 20px;">Digunakan</p>
-                            <p class="font-weight-bold text-center m-0" style="font-size: 32px;">
+                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
+                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Digunakan</p>
+                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                 @php
                                     $bookedCount = $dataRuangan->where('status', 'Booked')->count();
                                 @endphp
@@ -138,6 +138,23 @@
         <style>
             .table td, .table th {
                 padding: 10px; /* Adjust the padding table */
+            }
+            .left-status {
+                border-left: 1px;
+                border-right: 0px;
+                border-bottom: 1px;
+                border-top: 1px;
+                border-style: solid;
+                border-color: rgb(187, 187, 187);
+            }
+
+            .right-status {
+                border-left: 0px;
+                border-right: 1px;
+                border-bottom: 1px;
+                border-top: 1px;
+                border-style: solid;
+                border-color: rgb(187, 187, 187);
             }
         </style>
 
