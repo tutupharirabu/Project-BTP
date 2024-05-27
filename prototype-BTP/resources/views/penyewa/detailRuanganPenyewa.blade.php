@@ -14,9 +14,9 @@
   <!-- href ui -->
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="container my-2 mx-2 d-flex">
-        <a href="" style="color: #797979;font-size:12px;">Daftar Ruangan > </a> 
-        <a style="color: #FF0000;font-size:12px;">Detail Ruangan</a>
+      <div class="d-flex container my-2 mx-2">
+        <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan ></a>
+        <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Detail Ruangan </a>
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@
 
 <div class="row">
     <div class="container-fluid mt-5 w-70 d-flex justify-content-center">
-        <table class="table table-striped p-0" style="width: 80%;">
+        <table class="table table-striped p-0" style="width: 80%; font-size:20px;">
             <tbody>
                 <tr>
                     <td class="border border-secondary">Nama Ruangan</td>
@@ -80,7 +80,11 @@
                 </tr>
                 <tr>
                     <td class="border border-secondary">Status</td>
-                    <td colspan="3" class="border border-secondary"><button type="button boder" class="btn btn-sm text-white" style="background-color: #00DB09; border-radius: 10px; ">Tersedia</button></td>
+                    <td colspan="3" class="border border-secondary">
+                      <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                        Tersedia
+                      </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -92,7 +96,7 @@
             <p> **Harap membaca Syarat & ketentuan  yang berlaku </p>
         </div>
         <div class="">
-          <button type="button" class="btn btn-sm text-white" style="background-color: #00DB09; font-size: 20px; border-radius: 7px;">Pinjam Ruangan</button>
+          <a type="button" class="btn btn-sm text-white" style="background-color: #021BFF; font-size: 16px; border-radius: 7px;" href="/meminjamRuangan" >Pinjam Ruangan</a>
         </div>
     </div>
   </div>

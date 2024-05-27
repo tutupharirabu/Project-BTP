@@ -24,46 +24,46 @@
     <div class="container">
     <div class="row justify-content-sm-center text-center text-dark">
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
+                <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
+                <div class="card-body">
+                    <h5 class="card-title">Overtime Room</h5>
+                    <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
+                    <div class="status-group">
+                        <span class="status-not-available">Digunakan</span>
+                        <a href="/detailRuanganPenyewa"  class="btn btn-dark shadow-none status-detail">Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Virtual Office</h5>
                     <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
                     <div class="status-group">
                         <span class="status-available">Tersedia</span>
-                        <a href="#" class="btn btn-dark shadow-none status-detail">Detail</a>
+                        <a href="/detailRuanganPenyewa" class="btn btn-dark shadow-none status-detail">Detail</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
-                <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
-                <div class="card-body">
-                    <h5 class="card-title">Virtual Office</h5>
-                    <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
-                    <div class="status-group">
-                        <span class="status-available">Tersedia</span>
-                        <a href="#" class="btn btn-dark shadow-none status-detail">Detail</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Multimedia Office</h5>
                     <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
                     <div class="status-group">
                         <span class="status-available">Tersedia</span>
-                        <a href="#" class="btn btn-dark shadow-none status-detail">Detail</a>
+                        <a href="/detailRuanganPenyewa" class="btn btn-dark shadow-none status-detail">Detail</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Meeting Office</h5>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Training Room</h5>
@@ -89,20 +89,20 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Overtime Room</h5>
                     <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
                     <div class="status-group">
-                        <span class="status-available">Tersedia</span>
+                        <span class="status-not-available">Digunakan</span>
                         <a href="#" class="btn btn-dark shadow-none status-detail">Detail</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Virtual Office</h5>
@@ -115,13 +115,13 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card my-3 mx-2 shadow card-fixed" style="height:24rem; width:18rem;">
+            <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                 <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
                 <div class="card-body">
                     <h5 class="card-title">Virtual Office</h5>
                     <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
                     <div class="status-group">
-                        <span class="status-available">Tersedia</span>
+                        <span class="status-not-available">Digunakan</span>
                         <a href="#" class="btn btn-dark shadow-none status-detail">Detail</a>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
         margin-bottom: 0.5rem; /* Mengurangi jarak bawah gambar */
         }
 
-        .status-available, .status-detail {
+        .status-detail {
             background-color: green;
             margin-bottom: 8px; /* Adjusted margin for spacing between the elements */
             color: white;
@@ -167,5 +167,29 @@
             align-items: center;
             margin-top: 0.5rem;
         }
+
+        .status-available {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #071FF2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .status-not-available {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #717171;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+
+
     </style>
 @endsection
