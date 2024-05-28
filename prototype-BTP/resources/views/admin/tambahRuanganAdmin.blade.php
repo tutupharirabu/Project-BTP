@@ -16,13 +16,14 @@
             </div>
         </div>
 
-          <!-- href ui -->
+        <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="d-flex container my-2 mx-2">
-                <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan ></a>
-                <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Tambah Ruangan </a>
-            </div>
+                <div class="d-flex container my-2 mx-2">
+                    <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan
+                        ></a>
+                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Tambah Ruangan </a>
+                </div>
             </div>
         </div>
 
@@ -106,6 +107,9 @@
                                         <input type="file" for="url" id="url" name="url[]"
                                             class="drop-zone__input" multiple>
                                     </div>
+
+                                    <strong>Uploaded Files</strong>
+                                    <p class="uploadedRooms"></p>
 
                                     <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
                                     <button type="submit" class="btn btn-primary">Add</button>
