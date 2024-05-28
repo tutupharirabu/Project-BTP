@@ -66,48 +66,50 @@ Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('
 
 // Dashboard penyewa
 
-Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard');
+Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard')->middleware('auth');
 // Route::post('/userDashboard', [UserDashboardController::class, 'store']);
 
 //Peminjaman
 // Peminjaman Ruangan
-Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan');
-Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
-Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails']);
+Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan')->middleware('auth');
+Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan')->middleware('auth');
+Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails'])->middleware('auth');
 
 
 // Peminjaman Barang
-Route::get('/meminjamBarang', [MeminjamBarangController::class, 'index'])->name('penyewa.peminjamanBarang');
+Route::get('/meminjamBarang', [MeminjamBarangController::class, 'index'])->name('penyewa.peminjamanBarang')->middleware('auth');
 
 // // Pengajuan admin
 
 // Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
 // Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 // Pengajuan admin
-Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
-Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
+// Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan')->middleware('auth');
+// Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 
 // Admin lihat status Ruangan
-Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status');
-Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index']);
+Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
+Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index'])->middleware('auth');
 
 // Status Pengajuan
-Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index']);
+Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index'])->middleware('auth');
+Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 
 // Admin Menambah ruangan
 // Route::get('/tambahRuanganAdmin', [AdminTambahRuangan::class, 'index']);
 
 // Penyewa lihat status Ruangan
-Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index'])->name('statusRuangan');
-Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index']);
-Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index']);
+// Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index'])->name('statusRuangan')->middleware('auth');
+Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index'])->name('daftarRuanganPenyewa')->middleware('auth');
+Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuangan::class, 'show'])->name('detailRuanganPenyewa')->middleware('auth');
+// Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index'])->middleware('auth');
 
 //Admin crud ruangan
-Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create']);
-Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan');
-Route::post('/upload',[AdminStatusRuanganController::class,'dropzone'])->name('dropzone.store');
-Route::get('/editRuanganAdmin/{id}/edit', [AdminStatusRuanganController::class, 'edit']);
-Route::put('/editRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'update'])->name('update.ruangan');
-Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'destroy']); //delete
+Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create'])->middleware('auth');
+Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan')->middleware('auth');
+Route::post('/upload',[AdminStatusRuanganController::class,'dropzone'])->name('dropzone.store')->middleware('auth');
+Route::get('/editRuanganAdmin/{id}/edit', [AdminStatusRuanganController::class, 'edit'])->middleware('auth');
+Route::put('/editRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'update'])->name('update.ruangan')->middleware('auth');
+Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'destroy'])->middleware('auth'); //delete

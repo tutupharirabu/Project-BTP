@@ -28,7 +28,7 @@
             </a>
         </div>
         <div class="m-1">
-            <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusRuanganPenyewa">
+            <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganPenyewa">
                 <i class="material-symbols-outlined me-2">view_list</i>
                 <span>Daftar Ruangan (user)</span>
             </a>
@@ -71,7 +71,7 @@
     function setActiveMenu() {
         const menuItems = document.querySelectorAll('.menu-item');
         const currentPath = window.location.pathname;
-        
+
         menuItems.forEach(item => {
             if (item.getAttribute('href') === currentPath) {
                 item.classList.add('active');

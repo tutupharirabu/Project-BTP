@@ -23,9 +23,9 @@
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="/dashboardPenyewa">Dashboard</a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="/peminjaman">Peminjaman</a>
                 </li> --}}
@@ -46,7 +46,7 @@
                             </a> -->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/meminjamRuangan">Peminjaman Ruangan</a></li>
-                            <li><a class="dropdown-item" href="/meminjamBarang">Peminjaman Barang</a></li>
+                            <li><a class="dropdown-item" href="#">Peminjaman Barang</a></li>
                         </ul>
                 </li>
             </ul>

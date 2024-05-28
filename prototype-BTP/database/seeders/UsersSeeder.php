@@ -24,6 +24,14 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('dhiladminaja123'),
         ]);
 
+        DB::table('users')->insert([
+            'username'  => 'tutupharirabu',
+            'email' => 'code.zharaurien@gmail.com',
+            'role' => 'admin',
+            'nama_lengkap' => 'Irfan Zharauri Nanda Sudiyanto',
+            'password' => Hash::make('inipasswordya?'),
+        ]);
+
         $faker = Faker::create('id_ID');
         for ($i=1; $i <= 10 ; $i++) {
             $role = $faker->randomElement(['Penyewa', 'Petugas']);

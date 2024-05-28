@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class PenyewaStatusRuanganController extends Controller
 {
     public function index()
     {
-        return view('penyewa.daftarRuanganPenyewa');
+        $dataRuangan = Ruangan::all();
+        return view('penyewa.daftarRuanganPenyewa', compact('dataRuangan'));
     }
 
     public function getEvents()

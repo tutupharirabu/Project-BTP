@@ -61,14 +61,14 @@
                                 @php
                                     $bookedCount = $dataRuangan->where('status', 'Booked')->count();
                                 @endphp
-    
+
                                 {{ $bookedCount }}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-    
+
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -79,8 +79,8 @@
                         <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center" style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                 </div>
             </div>
-            
-    
+
+
             <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
@@ -116,7 +116,7 @@
                                                 @else
                                                     <a class="btn text-white" style="display: flex; align-items: center; justify-content: center; background-color: #61677A; width:91px; height: 27px; border-radius: 6px"> - </a>
                                                 @endif
-    
+
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">
@@ -126,7 +126,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-    
+
                                 </tbody>
                             </table>
                         </div>
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-        
+
         <style>
             .table td, .table th {
                 padding: 10px; /* Adjust the padding table */

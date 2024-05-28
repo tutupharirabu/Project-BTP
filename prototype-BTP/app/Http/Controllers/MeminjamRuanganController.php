@@ -59,7 +59,7 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan->save();
 
-        return redirect('/meminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
+        return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Successfull');
 
     }
 

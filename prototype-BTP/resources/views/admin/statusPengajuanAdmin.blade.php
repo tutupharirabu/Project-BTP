@@ -1,6 +1,10 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
+    @php
+    use Carbon\Carbon;
+    @endphp
+
     <div class="container-fluid mt-4">
         <!-- Judul -->
         <div class="row">
@@ -34,9 +38,12 @@
                         </span>
                     </div>
                     <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                        <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Tersedia</p>
+                        <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Disetujui</p>
                         <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                            7
+                            @php
+                                $bookedCount = $dataPeminjaman->where('status', 'Disetujui')->count();
+                            @endphp
+                            {{ $bookedCount }}
                         </p>
                     </div>
                 </div>
@@ -51,7 +58,10 @@
                     <div class="left-status text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
                         <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Ditolak</p>
                         <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                            9
+                            @php
+                                $bookedCount = $dataPeminjaman->where('status', 'Ditolak')->count();
+                            @endphp
+                            {{ $bookedCount }}
                         </p>
                     </div>
                 </div>
@@ -66,7 +76,10 @@
                     <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center" style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
                         <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">Menunggu</p>
                         <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                            5
+                            @php
+                                $bookedCount = $dataPeminjaman->where('status', 'Menunggu')->count();
+                            @endphp
+                            {{ $bookedCount }}
                         </p>
                     </div>
                 </div>
@@ -103,54 +116,49 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataPeminjaman as $data)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Budi</td>
-                                    <td>MultiMedia</td>
-                                    <td>13:00</td>
-                                    <td>15:00</td>
-                                    <td>01/05/2024</td>
-                                    <td>01/05/2024</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->nama_peminjam }}</td>
+                                    <td>{{ $data->ruangan->nama_ruangan }}</td>
+                                    <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
+                                    <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
+                                    <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
+                                    <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
+                                    @if($data->status == 'Menunggu')
                                     <td class="d-flex justify-content-between">
-                                        <a type="button" class="btn btn-outline-success" style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Setuju</a>
-                                        <a type="button" class="btn btn-outline-danger" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Tolak</a>
+                                        <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" name="pilihan" value='terima' class="btn btn-outline-success" style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Setuju</button>
+                                            <button type="submit" name="pilihan" value='tolak' class="btn btn-outline-danger" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Tolak</button>
+                                        </form>
                                     </td>
                                     <td>
                                         <a type="button" class="btn btn-warning" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Menunggu</a>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Budi</td>
-                                    <td>MultiMedia</td>
-                                    <td>13:00</td>
-                                    <td>15:00</td>
-                                    <td>01/05/2024</td>
-                                    <td>01/05/2024</td>
-                                    <td class="d-flex justify-content-between" >
-                                        <a type="button" class="btn btn-outline-success" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
-                                        <a type="button" class="btn btn-danger" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Tolak</a>
-                                    </td>
-                                    <td>
-                                        <a type="button" class="btn btn-danger" style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Tolak</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Budi</td>
-                                    <td>MultiMedia</td>
-                                    <td>13:00</td>
-                                    <td>15:00</td>
-                                    <td>01/05/2024</td>
-                                    <td>01/05/2024</td>
+                                    @elseif($data->status == 'Disetujui')
                                     <td class="d-flex justify-content-between">
-                                        <a type="button" class="btn text-white" style="background-color:#0EB100; border-radius:6px; width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a> 
-                                        <a type="button" class="btn btn-outline-danger" style="border-radius:6px;;width: 100px;font-size: 13px; text-transform: capitalize;">Tolak</a>
+                                        <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}" method="POST">
+                                            <a type="button" class="btn text-white" style="background-color:#0EB100; border-radius:6px; width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
+                                            <a type="button" class="btn btn-outline-danger" style="border-radius:6px;;width: 100px;font-size: 13px; text-transform: capitalize;">Tolak</a>
+                                        </form>
                                     </td>
                                     <td>
                                         <a type="button" class="btn text-white" style="background-color:#0EB100; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Disetujui</a>
                                     </td>
+                                    @elseif($data->status == 'Ditolak')
+                                    <td class="d-flex justify-content-between">
+                                        <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}" method="POST">
+                                            <a type="button" class="btn btn-outline-success" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
+                                            <a type="button" class="btn btn-danger" style="border-radius:6px;width: 100px; font-size: 13px;text-transform: capitalize;">Tolak</a>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a type="button" class="btn btn-danger" style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
+                                    </td>
+                                    @endif
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

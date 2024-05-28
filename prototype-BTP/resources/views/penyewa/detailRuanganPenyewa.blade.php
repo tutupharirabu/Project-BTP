@@ -64,26 +64,32 @@
             <tbody>
                 <tr>
                     <td class="border border-secondary">Nama Ruangan</td>
-                    <td colspan="3" class="border border-secondary">Multimedia</td>
+                    <td colspan="3" class="border border-secondary">{{ $ruangan->nama_ruangan }}</td>
                 </tr>
                 <tr>
                     <td class="border border-secondary">Kapasitas</td>
-                    <td colspan="3" class="border border-secondary">50 Orang</td>
+                    <td colspan="3" class="border border-secondary">{{ $ruangan->kapasitas_ruangan }}</td>
                 </tr>
                 <tr>
                     <td class="border border-secondary">Lokasi</td>
-                    <td colspan="3" class="border border-secondary">Gedung A</td>
+                    <td colspan="3" class="border border-secondary">{{ $ruangan->lokasi }}</td>
                 </tr>
                 <tr>
                     <td class="border border-secondary">Harga</td>
-                    <td colspan="3" class="border border-secondary">Rp70000</td>
+                    <td colspan="3" class="border border-secondary">{{ $ruangan->harga_ruangan }}</td>
                 </tr>
                 <tr>
                     <td class="border border-secondary">Status</td>
                     <td colspan="3" class="border border-secondary">
-                      <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
-                        Tersedia
-                      </div>
+                        @if($ruangan->tersedia == '1')
+                        <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                            Tersedia
+                        </div>
+                        @elseif($ruangan->tersedia == '0')
+                        <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                            Digunakan
+                        </div>
+                        @endif
                     </td>
                 </tr>
             </tbody>
