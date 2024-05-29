@@ -62,7 +62,7 @@ class AdminStatusRuanganController extends Controller
             ]);
         }
 
-        return redirect('/statusRuanganPenyewa')->with('success', 'Ruangan dan Gambar berhasil ditambahkan');
+        return redirect('/statusRuanganAdmin')->with('success', 'Ruangan dan Gambar berhasil ditambahkan');
     }
 
     public function dropzone(Request $req){
@@ -132,8 +132,7 @@ class AdminStatusRuanganController extends Controller
                 ]);
             }
         }
-
-        return redirect()->route('statusRuangan')->with('success', 'Ruangan updated successfully');
+        return redirect('/statusRuanganAdmin')->with('success', 'Ruangan updated successfully~');
     }
 
     /**
