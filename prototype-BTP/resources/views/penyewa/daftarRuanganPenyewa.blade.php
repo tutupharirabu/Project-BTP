@@ -26,7 +26,7 @@
             @foreach ($dataRuangan as $ruangan)
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
-                        <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg" class="card-img-top" style="">
+                        <img src="https://toffeedev.com/wp-content/uploads/2023/05/image-5.png" class="card-img-top" style="">
                         <div class="card-body">
                             <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                             <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>

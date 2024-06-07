@@ -56,10 +56,11 @@ class MeminjamRuanganController extends Controller
             'status' => 'Menunggu',
             'keterangan' => $request->input('keterangan'),
         ]);
-
+        
         $meminjamRuangan->save();
 
-        return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Successfull');
+        //return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Successfull');
+        return redirect('/meminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
 
     }
 
