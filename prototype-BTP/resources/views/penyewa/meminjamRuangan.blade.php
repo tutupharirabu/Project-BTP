@@ -38,7 +38,7 @@
                                             Masukkan Nama Peminjam!
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select border-color" onchange="fetchRuanganDetails()" required>
@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="col-md mt-3">
                                         <label for="lokasi" class="form-label text-color">Lokasi</label>
                                         <input type="text" name="lokasi" id="lokasi" class="date form-control border-color" disabled required>
@@ -74,7 +74,7 @@
                                             Masukkan Lokasi!
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md mt-3">
                                         <label for="harga_ruangan" class="form-label text-color">Harga</label>
                                         <input type="text" name="harga_ruangan" id="harga_ruangan" class="date form-control border-color" disabled required>
@@ -82,7 +82,7 @@
                                             Masukkan Harga!
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md mt-3">
                                         <label for="jumlah" class="form-label text-color">Jumlah Peserta</label>
                                         <input type="number" name="jumlah" id="peserta" class="date form-control border-color" max="100" min="0" required>
@@ -91,7 +91,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- right form file -->
                                 <div class="col">
                                     <div class="row">
@@ -102,7 +102,7 @@
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md col-3">
                                             <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai Peminjaman</label>
                                             <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required>
@@ -111,7 +111,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row mt-4">
                                         <div class="col-md">
                                             <label for="jam_mulai" class="form-label text-color">Jam Mulai Peminjaman</label>
@@ -120,7 +120,7 @@
                                                 Masukkan Mulai Peminjaman!
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md col-3">
                                             <label for="jam_selesai" class="form-label text-color">Jam Selesai Peminjaman</label>
                                             <input type="time" name="jam_selesai" id="jam_selesai" class="form-control border-color" required>
@@ -129,7 +129,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md mt-4">
                                         <div class="form-group">
                                             <label for="keterangan" class="mb-2 text-color">Catatan</label>
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md mt-4">
                                 <div class="d-grid gap-2 d-flex justify-content-end">
                                     <button type="button" class="btn text-white button-style capitalize-first-letter" onclick="showConfirmationModal(event)">Ajukan</button>
@@ -248,17 +248,20 @@
     });
 
     function fetchRuanganDetails() {
-        const idRuangan = document.getElementById('id_ruangan').value;
-        if (idRuangan) {
-            fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('lokasi').value = data.lokasi;
-                    document.getElementById('harga_ruangan').value = data.harga_ruangan;
-                })
-                .catch(error => console.error('Error fetching ruangan details:', error));
-        }
+    const idRuangan = document.getElementById('id_ruangan').value;
+    if (idRuangan) {
+        fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('lokasi').value = data.lokasi;
+                const hargaRuangan = parseInt(data.harga_ruangan);
+                const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+                document.getElementById('harga_ruangan').value = formattedHargaRuangan;
+            })
+            .catch(error => console.error('Error fetching ruangan details:', error));
     }
+}
+
 
     function showConfirmationModal(event) {
         event.preventDefault();
@@ -274,6 +277,10 @@
         const harga = document.getElementById('harga_ruangan').value;
         const keterangan = document.getElementById('keterangan').value;
 
+        const cleanedHarga = harga.replace(/[^\d]/g, '');
+        var hargaAwal = parseFloat(cleanedHarga);
+        var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
+
         document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
         document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
         document.getElementById('confirm_status').innerText = status;
@@ -283,22 +290,30 @@
         document.getElementById('confirm_tanggal_selesai').innerText = tanggalSelesai;
         document.getElementById('confirm_jam_mulai').innerText = jamMulai;
         document.getElementById('confirm_jam_selesai').innerText = jamSelesai;
-        document.getElementById('confirm_harga').innerText = harga;
+        document.getElementById('confirm_harga').innerText = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
         document.getElementById('confirm_keterangan').innerText = keterangan;
 
         $('#confirmationModal').modal('show');
     }
 
-    function showWhatsApp(event){
-        $('#confirmationModal').modal('hide');
-        $('#whatsappModal').modal('show');
-
-        // $("#confirmationModal").on('hide.bs.modal', function(){
-        //     $('#whatsappModal').modal('show');
-        // });
+    function toggleConfirmButton() {
+            var confirmButton = document.getElementById('confirm_button');
+            var checkbox = document.getElementById('confirm_agreement');
+            confirmButton.disabled = !checkbox.checked;
     }
 
-    
+    document.getElementById('confirm_agreement').addEventListener('change', toggleConfirmButton);
+
+    function showWhatsApp(event) {
+            var checkbox = document.getElementById('confirm_agreement');
+            if (!checkbox.checked) {
+                event.preventDefault();
+                alert('Anda harus menyetujui syarat & ketentuan sebelum melanjutkan.');
+            } else {
+                $('#confirmationModal').modal('hide');
+                $('#whatsappModal').modal('show');
+            }
+        }
 </script>
 
     <style>

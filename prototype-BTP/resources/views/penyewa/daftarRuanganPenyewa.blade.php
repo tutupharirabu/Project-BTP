@@ -26,10 +26,23 @@
             @foreach ($dataRuangan as $ruangan)
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
-                        <img src="https://toffeedev.com/wp-content/uploads/2023/05/image-5.png" class="card-img-top" style="">
+                        @foreach ($ruangan->gambar as $gambar)
+                        <img src="{{ asset('assets/' . $gambar->url) }}"
+                        class="card-img-top" style="" alt="Gambar Ruangan">
+                        @endforeach
                         <div class="card-body">
                             <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
-                            <p class="card-text">Rp. 500.000 Halfday/4 Jam</p>
+                            <p class="card-text">
+                                @if ($ruangan->nama_ruangan == 'Rent Office (Private Space)' || $ruangan->nama_ruangan == 'Coworking Space (Shared Space)' || $ruangan->nama_ruangan == 'Coworking Space (Private Room)')
+                                Rp {{ number_format((int)$ruangan->harga_ruangan, 0, ',', '.') }} Seat / Bulan
+                                @elseif ($ruangan->nama_ruangan == 'Virtual Office')
+                                Rp {{ number_format((int)$ruangan->harga_ruangan, 0, ',', '.') }} Perusahaan / Bulan
+                                @elseif ($ruangan->nama_ruangan == 'Multimedia' || $ruangan->nama_ruangan == 'Aula' || $ruangan->nama_ruangan == 'R. Meeting' || $ruangan->nama_ruangan == 'Training Room')
+                                Rp {{ number_format((int)$ruangan->harga_ruangan, 0, ',', '.') }} Halfday / 4 Jam
+                                @else
+                                Rp {{ number_format((int)$ruangan->harga_ruangan, 0, ',', '.') }} / Jam
+                                @endif
+                            </p>
                             <div class="status-group">
                                 @if($ruangan->tersedia == '1')
                                     <span class="status-available">Tersedia</span>

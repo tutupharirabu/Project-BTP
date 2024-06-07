@@ -39,20 +39,32 @@ class AdminStatusRuanganController extends Controller
             'kapasitas_ruangan' => 'required',
             'lokasi' => 'required',
             'harga_ruangan' => 'required',
-            'tersedia' => 'required',
             'status' => 'required',
             'url' => 'required|array',
             'url.*' => 'required|image'
         ]);
 
-        $ruangan = Ruangan::create([
-            'nama_ruangan' => $request->nama_ruangan,
-            'kapasitas_ruangan' => $request->kapasitas_ruangan,
-            'lokasi' => $request->lokasi,
-            'harga_ruangan' => $request->harga_ruangan,
-            'tersedia' => $request->tersedia,
-            'status' => $request->status,
-        ]);
+        $pilih = $request->input('status');
+
+        if ($pilih == 'Available') {
+            $ruangan = Ruangan::create([
+                'nama_ruangan' => $request->nama_ruangan,
+                'kapasitas_ruangan' => $request->kapasitas_ruangan,
+                'lokasi' => $request->lokasi,
+                'harga_ruangan' => $request->harga_ruangan,
+                'tersedia' => '1',
+                'status' => ''
+            ]);
+        } else if ($pilih == 'Booked') {
+            $ruangan = Ruangan::create([
+                'nama_ruangan' => $request->nama_ruangan,
+                'kapasitas_ruangan' => $request->kapasitas_ruangan,
+                'lokasi' => $request->lokasi,
+                'harga_ruangan' => $request->harga_ruangan,
+                'tersedia' => '0',
+                'status' => '-',
+            ]);
+        }
 
         foreach($request->file('url') as $file){
             $path = $file->store('ruangan', 'assets');

@@ -45,7 +45,7 @@
                                 Tersedia</p>
                             <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                 @php
-                                    $bookedCount = $dataRuangan->where('status', 'Available')->count();
+                                    $bookedCount = $dataRuangan->where('tersedia', '1')->count();
                                 @endphp
                                 {{ $bookedCount }}
                             </p>
@@ -66,7 +66,7 @@
                                 Digunakan</p>
                             <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                 @php
-                                    $bookedCount = $dataRuangan->where('status', 'Booked')->count();
+                                    $bookedCount = $dataRuangan->where('tersedia', '0')->count();
                                 @endphp
 
                                 {{ $bookedCount }}
@@ -116,7 +116,7 @@
                                             <td>{{ $data->id_ruangan }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>{{ $data->kapasitas_ruangan }}</td>
-                                            <td>Rp {{ $data->harga_ruangan }}</td>
+                                            <td>Rp {{ number_format((int)$data->harga_ruangan, 0, ',', '.') }}</td>
                                             <td>
                                                 <a class="text-blue" href="#" data-toggle="modal"
                                                     data-target="#imageModal{{ $data->id_ruangan }}"><u>Gambar</u></a>
@@ -150,10 +150,10 @@
                                                 </div>
                                             </td>
                                             <td style="display: flex; justify-content: center;">
-                                                @if ($data->status == 'Available')
+                                                @if ($data->tersedia == '1')
                                                     <a class="btn text-white"
                                                         style="display: flex; align-items: center; justify-content: center; background-color: #0EB100; width:91px; height: 27px; border-radius: 6px">Tersedia</a>
-                                                @elseif ($data->status == 'Booked')
+                                                @elseif ($data->tersedia != '1')
                                                     <a class="btn text-dark"
                                                         style="display: flex; align-items: center; justify-content: center; background-color: #B0B0B0; width:91px; height: 27px; border-radius: 6px">Digunakan</a>
                                                 @else

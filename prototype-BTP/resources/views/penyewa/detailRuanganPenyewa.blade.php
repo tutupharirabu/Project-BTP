@@ -76,7 +76,7 @@
                 </tr>
                 <tr>
                     <td class="border border-secondary">Harga</td>
-                    <td colspan="3" class="border border-secondary">{{ $ruangan->harga_ruangan }}</td>
+                    <td colspan="3" class="border border-secondary">Rp {{ number_format((int)$ruangan->harga_ruangan, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td class="border border-secondary">Status</td>
