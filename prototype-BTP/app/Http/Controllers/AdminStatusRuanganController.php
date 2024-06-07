@@ -11,7 +11,7 @@ class AdminStatusRuanganController extends Controller
 {
     public function index()
     {
-        $dataRuangan = Ruangan::all();
+        $dataRuangan = Ruangan::with('gambar')->get();
         return view('admin.daftarRuanganAdmin',compact('dataRuangan'));
     }
 
@@ -119,13 +119,13 @@ class AdminStatusRuanganController extends Controller
         if ($request->hasFile('url')) {
             // Hapus gambar lama
             foreach ($dataRuangan->gambar as $gambar) {
-                Storage::delete('public/' . $gambar->url);
+                Storage::delete('assets/' . $gambar->url);
                 $gambar->delete();
             }
 
             // Tambahkan gambar baru
             foreach ($request->file('url') as $file) {
-                $path = $file->store('ruangan', 'public');
+                $path = $file->store('ruangan', 'assets');
                 Gambar::create([
                     'id_ruangan' => $dataRuangan->id_ruangan,
                     'url' => $path
@@ -141,6 +141,7 @@ class AdminStatusRuanganController extends Controller
     public function destroy(string $id)
     {
         $data = Ruangan::find($id);
+        \DB::table('gambar')->where('id_ruangan', $data->id_ruangan)->delete();
         $data -> delete();
         return redirect()->route('admin.status');
     }

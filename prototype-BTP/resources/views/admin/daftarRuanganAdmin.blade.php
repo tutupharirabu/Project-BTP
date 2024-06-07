@@ -136,8 +136,10 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <img src="https://images.squarespace-cdn.com/content/v1/634457628ffbff6e2a1ded77/1665611068776-H63ADZG7MYAIM3Y29WN5/image-asset.jpeg"
-                                                                    alt="Gambar Ruangan" class="img-fluid">
+                                                                @foreach ($data->gambar as $gambar)
+                                                                    <img src="{{ asset('assets/' . $gambar->url) }}"
+                                                                        alt="Gambar Ruangan" class="img-fluid">
+                                                                @endforeach
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
