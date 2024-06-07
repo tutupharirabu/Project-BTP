@@ -1,0 +1,23 @@
+.text-color {
+    color: #717171;
+    font-size: 14px;
+    font-weight: 600;
+}
+.button-style{
+    background-color: #0C9300; width: 147px; height: 41px; border-radius:6px;font-size: 14px;
+}
+.button-style:hover {
+    background-color: #0A7A00; /* Slightly darker green for hover effect */
+}
+.capitalize-first-letter {
+    text-transform: capitalize; /* Transform all text to lowercase */
+}
+.bordered-text {
+    border: 1px solid #717171;
+    padding: 5px;
+    border-radius: 4px;
+    min-height: 35px;
+}
+.border-color{
+    border-color: #717171;
+}
