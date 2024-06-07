@@ -55,7 +55,7 @@ class AdminStatusRuanganController extends Controller
         ]);
 
         foreach($request->file('url') as $file){
-            $path = $file->store('ruangan', 'public');
+            $path = $file->store('ruangan', 'assets');
             Gambar::create([
                 'id_ruangan' => $ruangan->id_ruangan,
                 'url' => $path

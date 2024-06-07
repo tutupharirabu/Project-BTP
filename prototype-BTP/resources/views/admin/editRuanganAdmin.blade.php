@@ -19,15 +19,22 @@
             .image-container {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 10px; /* Optional: adds space between the images */
-                width: 150%; /* Make the container take the full width of its parent */
-                max-width: 1000px; /* Set a max-width if needed, adjust as per your layout */
-                margin: 0 auto; /* Center the container */
+                gap: 10px;
+                /* Optional: adds space between the images */
+                width: 150%;
+                /* Make the container take the full width of its parent */
+                max-width: 1000px;
+                /* Set a max-width if needed, adjust as per your layout */
+                margin: 0 auto;
+                /* Center the container */
             }
+
             .image-container img {
                 display: block;
-                width: 80px; /* Ensure the width of each image remains consistent */
-                height: auto; /* Maintain the aspect ratio of the images */
+                width: 80px;
+                /* Ensure the width of each image remains consistent */
+                height: auto;
+                /* Maintain the aspect ratio of the images */
             }
         }
 
@@ -51,8 +58,8 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form action="{{route('update.ruangan', $dataRuangan->id_ruangan)}}" method="POST" enctype="multipart/form-data"
-                            id="my-form">
+                        <form action="{{ route('update.ruangan', $dataRuangan->id_ruangan) }}" method="POST"
+                            enctype="multipart/form-data" id="my-form">
                             @csrf
                             @method('PUT')
                             <!-- left from text field -->
@@ -65,7 +72,7 @@
                                             <div class="col-md-7">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                 <input type="text" id="id_ruangan" class="form-control" name="id_ruangan"
-                                                    style="" disabled value="{{$dataRuangan->id_ruangan}}">
+                                                    style="" disabled value="{{ $dataRuangan->id_ruangan }}">
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -73,7 +80,7 @@
                                                 Ruangan</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="nama_ruangan" class="form-control"
-                                                    name="nama_ruangan" value="{{$dataRuangan->nama_ruangan}}" required>
+                                                    name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -81,7 +88,8 @@
                                                 class="col-md-3 col-form-label text-md-right">Kapasitas</label>
                                             <div class="col-md-7">
                                                 <input type="number" id="kapasitas_ruangan" class="form-control"
-                                                    name="kapasitas_ruangan" value="{{$dataRuangan->kapasitas_ruangan}}" required>
+                                                    name="kapasitas_ruangan" value="{{ $dataRuangan->kapasitas_ruangan }}"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -89,7 +97,7 @@
                                                 class="col-md-3 col-form-label text-md-right">Lokasi</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="lokasi" class="form-control" name="lokasi"
-                                                value="{{$dataRuangan->lokasi}}" required>
+                                                    value="{{ $dataRuangan->lokasi }}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -97,7 +105,7 @@
                                                 class="col-md-3 col-form-label text-md-right">Harga</label>
                                             <div class="col-md-7">
                                                 <input type="text" id="harga_ruangan" class="form-control"
-                                                    name="harga_ruangan" value="{{$dataRuangan->harga_ruangan}}" required>
+                                                    name="harga_ruangan" value="{{ $dataRuangan->harga_ruangan }}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
@@ -105,12 +113,13 @@
                                                 class="col-md-3 col-form-label text-md-right">Status</label>
                                             <div class="col-md-7">
                                                 <select id="status" class="form-control" name="status">
-                                                    <option value="{{$dataRuangan->status}}">{{$dataRuangan->status}}</option>
+                                                    <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}
+                                                    </option>
                                                     <option value="Available">Available</option>
                                                     <option value="Booked">Booked</option>
                                                 </select>
                                                 <input type="number" id="tersedia" class="form-control" name="tersedia"
-                                                    value="{{$dataRuangan->tersedia}}" required hidden>
+                                                    value="{{ $dataRuangan->tersedia }}" required hidden>
                                             </div>
                                         </div>
                                         <!-- right form file -->
@@ -132,19 +141,21 @@
                                                 </div> --}}
                                                 <div id="drop-area">
                                                     @if ($dataRuangan->gambar->count() > 0)
-                                                    <div class="image-container">
-                                                        @foreach($dataRuangan->gambar as $gambar)
-                                                        <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="100">
-                                                         @endforeach
-                                                    </div>
-
+                                                        <div class="image-container">
+                                                            @foreach ($dataRuangan->gambar as $gambar)
+                                                                {{-- <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="100"> --}}
+                                                                <img src="{{ asset('assets/' . $gambar->url) }}"
+                                                                    alt="Gambar Ruangan" width="100">
+                                                            @endforeach
+                                                        </div>
                                                     @else
                                                         <p>Drag and Drop files here</p>
                                                     @endif
                                                 </div>
                                                 <p>or</p>
                                                 <button type="button" onclick="fileInput.click()">Select
-                                                    Files</button> <input type="file" id="fileInput" name="url[]" @foreach($dataRuangan->gambar as $gambar) value="{{ $gambar->url }}" @endforeach
+                                                    Files</button> <input type="file" id="fileInput" name="url[]"
+                                                    @foreach ($dataRuangan->gambar as $gambar) value="{{ $gambar->url }}" @endforeach
                                                     multiple hidden>
                                                 {{-- </div> <input type="file" name="url[]" multiple required> --}}
                                             </div>
@@ -172,10 +183,9 @@
                 tersediaInput.value = 0;
             } else if (status === 'Booked') {
                 tersediaInput.value = 1;
-            } else if (status === {{$dataRuangan->status}}){
-                tersediaInput.value = {{$dataRuangan->tersedia}};
-            }
-            else {
+            } else if (status === {{ $dataRuangan->status }}) {
+                tersediaInput.value = {{ $dataRuangan->tersedia }};
+            } else {
                 tersediaInput.value = '';
             }
         });
