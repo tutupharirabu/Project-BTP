@@ -40,7 +40,7 @@
           <img src="https://media.designcafe.com/wp-content/uploads/2021/04/26164735/l-shaped-home-office-images-with-attahced-bookshelf.jpg" alt="Los Angeles" class="d-block w-100">
         </div>
         <div class="carousel-item">
-          <img src="https://media.designcafe.com/wp-content/uploads/2021/04/26164735/l-shaped-home-office-images-with-attahced-bookshelf.jpg" alt="Chicago" class="d-block w-100">
+          <img src="https://toffeedev.com/wp-content/uploads/2023/05/image-5.png" alt="Chicago" class="d-block w-100">
         </div>
         <div class="carousel-item">
           <img src="https://media.designcafe.com/wp-content/uploads/2021/04/26164735/l-shaped-home-office-images-with-attahced-bookshelf.jpg" alt="New York" class="d-block w-100">
