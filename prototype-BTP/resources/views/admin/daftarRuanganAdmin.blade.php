@@ -139,7 +139,7 @@
                                                                 @foreach ($data->gambar as $gambar)
                                                                     <img src="{{ asset('assets/' . $gambar->url) }}"
                                                                         alt="Gambar Ruangan" class="img-fluid"
-                                                                        style="max-height: 230px">
+                                                                        style="max-height: 300px">
                                                                 @endforeach
                                                             </div>
                                                             <div class="modal-footer">
