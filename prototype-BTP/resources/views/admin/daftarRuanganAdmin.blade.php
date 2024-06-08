@@ -116,7 +116,7 @@
                                             <td>{{ $data->id_ruangan }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>{{ $data->kapasitas_ruangan }}</td>
-                                            <td>Rp {{ number_format((int)$data->harga_ruangan, 0, ',', '.') }}</td>
+                                            <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }}</td>
                                             <td>
                                                 <a class="text-blue" href="#" data-toggle="modal"
                                                     data-target="#imageModal{{ $data->id_ruangan }}"><u>Gambar</u></a>
@@ -138,7 +138,8 @@
                                                             <div class="modal-body">
                                                                 @foreach ($data->gambar as $gambar)
                                                                     <img src="{{ asset('assets/' . $gambar->url) }}"
-                                                                        alt="Gambar Ruangan" class="img-fluid">
+                                                                        alt="Gambar Ruangan" class="img-fluid"
+                                                                        style="max-height: 230px">
                                                                 @endforeach
                                                             </div>
                                                             <div class="modal-footer">
