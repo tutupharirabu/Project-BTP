@@ -45,7 +45,7 @@
 
                 <div class="col-md-12">
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <button type="submit" class="btn btn-danger">Log in</button>
                         <h6 class="text-center">Not registered? <a href="/daftarPenyewa">Register Now!</a></h6>
                     </div>
                 </div>

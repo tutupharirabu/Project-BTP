@@ -26,7 +26,7 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md p-2">
                     <div class="card-body">
-                        <form id="rentalForm" action="/meminjamRuangan/posts" method="POST" class="form-valid" enctype="multipart/form-data" onsubmit="submitFormAndShowWhatsAppModal(event)">
+                        <form id="rentalForm" action="/meminjamRuangan/posts" method="POST" class="form-valid" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
                             @csrf
                             <div class="row needs-validation">
                                 <!-- left form text field -->
@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <!-- Modal Pop Up -->
+    <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -218,25 +218,40 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn text-white capitalize-first-letter" data-bs-dismiss="modal" style="height: 41px; background-color:#717171;font-size: 14px;">Batal</button>
-                    <button type="submit" class="btn button-style text-white capitalize-first-letter" form="rentalForm" onclick="showWhatsApp(event)">Konfirmasi</button>
+                    <button type="button" class="btn button-style text-white capitalize-first-letter" onclick="showConfirmationPopup()">Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Popup Modal -->
+    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman sudah sesuai?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Pastikan pemesanan sesuai dengan permintaan anda</p>
+                    <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn" style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn text-white text-capitalize font-btn width-btn " style="background-color:#0DA200" onclick="confirmSubmission()">Ya</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- WhatsApp Modal -->
-    <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="whatsappModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Pembayaran</h5>
+                <div class="modal-header text-center">
+                    <h5 class="modal-title">Silahkan menghubungi Admin untuk melakukan pembayaran</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p>Silahkan menghubungi Admin untuk melakukan pembayaran</p>
-                    <p>Konfirmasi pembayaran dapat dilakukan via WA dengan mengklik button di bawah ini</p>
-                    <a href="https://wa.me/+6285831384798" class="btn btn-success" target="_blank">WhatsApp</a>
-                    <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Tutup</button>
+                    <p>Konfirmasi pembayaran dapat dilakukan via WA, klik tombol di bawah</p>
+                    <a href="https://wa.me/+6285831384798" class="btn text-white text-capitalize btn-spacing font-btn mx-auto" style="background-color:#0DA200" target="_blank">WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -248,20 +263,19 @@
     });
 
     function fetchRuanganDetails() {
-    const idRuangan = document.getElementById('id_ruangan').value;
-    if (idRuangan) {
-        fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('lokasi').value = data.lokasi;
-                const hargaRuangan = parseInt(data.harga_ruangan);
-                const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
-                document.getElementById('harga_ruangan').value = formattedHargaRuangan;
-            })
-            .catch(error => console.error('Error fetching ruangan details:', error));
+        const idRuangan = document.getElementById('id_ruangan').value;
+        if (idRuangan) {
+            fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('lokasi').value = data.lokasi;
+                    const hargaRuangan = parseInt(data.harga_ruangan);
+                    const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+                    document.getElementById('harga_ruangan').value = formattedHargaRuangan;
+                })
+                .catch(error => console.error('Error fetching ruangan details:', error));
+        }
     }
-}
-
 
     function showConfirmationModal(event) {
         event.preventDefault();
@@ -293,28 +307,55 @@
         document.getElementById('confirm_harga').innerText = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
         document.getElementById('confirm_keterangan').innerText = keterangan;
 
-        $('#confirmationModal').modal('show');
+        $('#confirmationModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        }).modal('show');
     }
 
     function toggleConfirmButton() {
-            var confirmButton = document.getElementById('confirm_button');
-            var checkbox = document.getElementById('confirm_agreement');
-            confirmButton.disabled = !checkbox.checked;
+        var confirmButton = document.getElementById('confirm_button');
+        var checkbox = document.getElementById('confirm_agreement');
+        confirmButton.disabled = !checkbox.checked;
     }
 
     document.getElementById('confirm_agreement').addEventListener('change', toggleConfirmButton);
 
-    function showWhatsApp(event) {
-            var checkbox = document.getElementById('confirm_agreement');
-            if (!checkbox.checked) {
-                event.preventDefault();
-                alert('Anda harus menyetujui syarat & ketentuan sebelum melanjutkan.');
-            } else {
-                $('#confirmationModal').modal('hide');
-                $('#whatsappModal').modal('show');
-            }
+    function showConfirmationPopup() {
+        const checkbox = document.getElementById('confirm_agreement');
+
+        if (!checkbox.checked) {
+            alert('Anda harus menyetujui syarat & ketentuan sebelum melanjutkan.');
+            return;
         }
-</script>
+
+        $('#confirmationModal').modal('hide'); // Hide the confirmation modal
+        $('#confirmationPopupModal').modal('show'); // Show the confirmation popup modal
+    }
+
+    function confirmSubmission() {
+        const rentalForm = document.getElementById('rentalForm');
+        const formData = new FormData(rentalForm);
+
+        fetch(rentalForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                rentalForm.reset();
+                $('#confirmationPopupModal').modal('hide');
+                $('#whatsappModal').modal('show');
+            } else {
+                console.error('Form submission error:', response);
+            }
+        })
+        .catch(error => console.error('Error submitting form:', error));
+    }
+    </script>
 
     <style>
         .text-color {
@@ -339,6 +380,30 @@
         }
         .border-color{
             border-color: #717171;
+        }
+        .modal-content {
+            padding: 20px;
+        }
+        .modal-body p {
+            margin-bottom: 20px;
+        }
+        .btn-spacing {
+            margin-right: 30px;
+        }
+        .font-btn{
+            font-size: 15px;
+            
+        }
+        .width-btn{
+            width: 90px;
+        }
+        .btn-spacing1 {
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+        .modal-dialog-centered {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 @endsection

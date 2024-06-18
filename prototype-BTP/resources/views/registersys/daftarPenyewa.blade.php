@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-danger">Submit</button>
                         <a href="/" class="btn text-center btn-outline-danger">Batalkan</a>
                     </div>
                 </div>
