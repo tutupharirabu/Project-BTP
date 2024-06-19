@@ -134,16 +134,11 @@
                                     <div class="mb-3 text-center" style="margin-right: 0px">
                                         <div class="card shadow">
                                             <div class="card-body">
-                                                {{-- <div id="my-dropzone" class="dropzone">
-                                                    <div id="url" name="url">
-                                                        <input type="file" name="url[]" multiple required>
-                                                    </div>
-                                                </div> --}}
+
                                                 <div id="drop-area">
                                                     @if ($dataRuangan->gambar->count() > 0)
                                                         <div class="image-container">
                                                             @foreach ($dataRuangan->gambar as $gambar)
-                                                                {{-- <img src="{{ Storage::url($gambar->url) }}" alt="Gambar Ruangan" width="100"> --}}
                                                                 <img src="{{ asset('assets/' . $gambar->url) }}"
                                                                     alt="Gambar Ruangan" width="100">
                                                             @endforeach
@@ -157,7 +152,6 @@
                                                     Files</button> <input type="file" id="fileInput" name="url[]"
                                                     @foreach ($dataRuangan->gambar as $gambar) value="{{ $gambar->url }}" @endforeach
                                                     multiple hidden>
-                                                {{-- </div> <input type="file" name="url[]" multiple required> --}}
                                             </div>
                                         </div>
                                     </div>
