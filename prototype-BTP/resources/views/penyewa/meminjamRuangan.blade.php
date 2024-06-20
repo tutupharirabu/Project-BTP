@@ -1,6 +1,9 @@
 @extends('penyewa.layouts.mainPenyewa')
 
 @section('containPenyewa')
+
+    <link rel="stylesheet" href="style.css">
+
     <div class="container-fluid mt-4">
         <!-- title -->
         <div class="row">
