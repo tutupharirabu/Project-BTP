@@ -92,7 +92,7 @@
     }
 
     @media (min-width: 769px) {
-        .login-container {
+        .login-container{
             width: 40%;
         }
     }
