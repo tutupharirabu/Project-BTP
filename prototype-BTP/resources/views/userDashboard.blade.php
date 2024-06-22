@@ -10,37 +10,6 @@
                 </div>
             </div>
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr id="weekDays">
-                    @for ($day = 0; $day < 7; $day++)
-                        <th>{{ $weekStart->copy()->addDays($day)->format('D, M d') }}</th>
-                    @endfor
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="weekData">
-                    @for ($day = 0; $day < 7; $day++)
-                        <td>
-                            @foreach ($dataPeminjaman as $peminjaman)
-                                @if (date('Y-m-d', strtotime($peminjaman->tanggal_mulai)) == $weekStart->copy()->addDays($day)->format('Y-m-d'))
-                                    <div class="mb-2">
-                                        <strong>{{ $peminjaman->ruangan->nama_ruangan }}</strong><br>
-                                        {{ date('H:i', strtotime($peminjaman->tanggal_mulai)) }} -
-                                        {{ date('H:i', strtotime($peminjaman->tanggal_selesai)) }}<br>
-                                        Peminjam: {{ $peminjaman->nama_peminjam }}
-                                    </div>
-                                    <hr>
-                                @endif
-                            @endforeach
-                        </td>
-                    @endfor
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <script>
-        let currentDate = new Date("{{ $weekStart->format('Y-m-d') }}");
 
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
