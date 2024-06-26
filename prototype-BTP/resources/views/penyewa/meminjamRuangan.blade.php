@@ -61,7 +61,8 @@
 
                                     <div class="col-md mt-3">
                                         <label for="role" class="form-label text-color">Status</label>
-                                        <select name="role" id="role" class="form-control border-color" required>
+                                        <select name="role" id="role" class="form-control border-color"
+                                            onchange="fetchRuanganDetails()" required>
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="eksternal">Mahasiswa</option>
                                             <option value="internal">Dosen</option>
@@ -304,16 +305,46 @@
 
         function fetchRuanganDetails() {
             const idRuangan = document.getElementById('id_ruangan').value;
+            const role = document.getElementById('role').value;
+            const hargaInput = document.getElementById('harga_ruangan');
+            const lokasiInput = document.getElementById('lokasi');
+
+            console.log("Selected role:", role);
+            console.log("Selected ruangan ID:", idRuangan);
+
+            function updatePrice(data) {
+                if (role) {
+                    let hargaRuangan;
+                    if (role === 'internal') {
+                        hargaRuangan = 0;
+                        console.log("Internal role, setting price to 0");
+                    } else if (role === 'eksternal') {
+                        hargaRuangan = parseInt(data.harga_ruangan);
+                        console.log("External role, setting price to:", hargaRuangan);
+                    }
+
+                    const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+                    hargaInput.value = formattedHargaRuangan;
+                    console.log("Final formatted price:", formattedHargaRuangan);
+                } else {
+                    hargaInput.value = '';
+                    console.log("Role not selected, price not set");
+                }
+            }
+
             if (idRuangan) {
                 fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('lokasi').value = data.lokasi;
-                        const hargaRuangan = parseInt(data.harga_ruangan);
-                        const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
-                        document.getElementById('harga_ruangan').value = formattedHargaRuangan;
+                        console.log("Fetched data:", data);
+                        lokasiInput.value = data.lokasi;
+                        updatePrice(data);
                     })
                     .catch(error => console.error('Error fetching ruangan details:', error));
+            } else {
+                lokasiInput.value = '';
+                hargaInput.value = '';
+                console.log("No ruangan selected, clearing inputs");
             }
         }
 
@@ -321,7 +352,8 @@
             event.preventDefault();
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
-            const status = document.getElementById('role').selectedOptions[0].text;
+            // const status = document.getElementById('role').selectedOptions[0].text;
+            const status = document.getElementById('role').value;
             const lokasi = document.getElementById('lokasi').value;
             const jumlahPeserta = document.getElementById('peserta').value;
             const tanggalMulai = document.getElementById('tanggal_mulai').value;
@@ -331,9 +363,22 @@
             const harga = document.getElementById('harga_ruangan').value;
             const keterangan = document.getElementById('keterangan').value;
 
+            // Debugging logs
+            console.log("Selected status:", status);
+            console.log("Input Harga:", harga);
+
             const cleanedHarga = harga.replace(/[^\d]/g, '');
             var hargaAwal = parseFloat(cleanedHarga);
             var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
+            var priceAkhir;
+
+            if (status === 'eksternal') {
+                priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
+            } else {
+                priceAkhir = 'Rp 0';
+            }
+
+            console.log("Final price:", priceAkhir);
 
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
@@ -344,7 +389,7 @@
             document.getElementById('confirm_tanggal_selesai').innerText = tanggalSelesai;
             document.getElementById('confirm_jam_mulai').innerText = jamMulai;
             document.getElementById('confirm_jam_selesai').innerText = jamSelesai;
-            document.getElementById('confirm_harga').innerText = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
+            document.getElementById('confirm_harga').innerText = priceAkhir;
             document.getElementById('confirm_keterangan').innerText = keterangan;
 
             $('#confirmationModal').modal({
