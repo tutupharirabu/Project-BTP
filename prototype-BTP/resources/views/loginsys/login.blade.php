@@ -17,6 +17,10 @@
             </div>
         @endif
 
+        <div class="text-center pb-3">
+            <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo" style="max-width: 150px;">
+        </div>
+
         <h3 class="text-center pb-3">Masuk</h3>
         <p class="text-center">Hi! selamat datang di website peminjaman Bandung Techno Park</p>
         <form class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST" class="form-valid"
@@ -27,7 +31,7 @@
                 <div class="input-group">
                     <!-- <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span> -->
                     <input type="email" name="email" id="email" class="form-control"
-                        placeholder="Masukkan Email Anda!" required>
+                        placeholder="Masukkan Email Anda" required style="border-radius: 5px;">
                     <div class="invalid-feedback">
                         Masukkan Email Anda!
                     </div>
@@ -37,11 +41,9 @@
             <div class="col-md-12">
                 <label for="password" class="form-label thicker">Password</label>
                 <div class="input-group">
-                    <!-- <span class="input-group-text"><i class="fa-solid fa-lock"></i></span> -->
-                    <input type="password" class="form-control" id="inputpassword" placeholder="Masukkan Password!" name="password">
-                    <div class="invalid-feedback">
-                        Masukkan password anda!
-                    </div>
+                    <input type="password" class="form-control" id="inputpassword" placeholder="Masukkan Password"
+                        name="password">
+                    <span class="input-group-text icon" id="id_icon"><i class="fa-regular fa-eye"></i></span>
                 </div>
             </div>
 
@@ -61,53 +63,7 @@
     </div>
 </div>
 
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
-
-    .bg-image {
-        background-image: url('https://sdgs.telkomuniversity.ac.id/wp-content/uploads/2024/03/DCS-Telkom-University-2-scaled.jpg');
-        height: 100%; 
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login-container {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (max-width: 768px) {
-        .login-container {
-            width: 90%;
-        }
-    }
-
-    @media (min-width: 769px) {
-        .login-container{
-            width: 40%;
-        }
-    }
-
-    .thicker {
-        font-weight: 700;
-    }
-
-    .btnlog {
-        background-color: #FF0000;
-        color: white;
-        width: 100px;
-        font-weight: 600;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
