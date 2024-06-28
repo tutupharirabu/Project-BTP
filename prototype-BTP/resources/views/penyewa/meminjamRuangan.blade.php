@@ -455,6 +455,7 @@
                         rentalForm.reset();
                         $('#confirmationPopupModal').modal('hide');
                         $('#whatsappModal').modal('show');
+                        window.location.href = '/dashboardPenyewa';
                     } else {
                         console.error('Form submission error:', response);
                     }
