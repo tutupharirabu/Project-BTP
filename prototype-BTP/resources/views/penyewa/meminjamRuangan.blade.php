@@ -48,10 +48,12 @@
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
-                                            onchange="fetchRuanganDetails()" required>
+                                            onchange="fetchRuanganDetails(); adjustParticipantLimits()" required>
                                             <option selected disabled value="">Pilih ruangan</option>
                                             @foreach ($dataRuangan as $dr)
-                                                <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}</option>
+                                                <option value="{{ $dr->id_ruangan }}"
+                                                    data-max="{{ $dr->kapasitas_ruangan }}" data-min=10>
+                                                    {{ $dr->nama_ruangan }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -64,10 +66,12 @@
                                         <select name="role" id="role" class="form-control border-color"
                                             onchange="fetchRuanganDetails()" required>
                                             <option value="" disabled selected>Pilih Status</option>
-                                            <option value="eksternal">Mahasiswa</option>
-                                            <option value="internal">Dosen</option>
+                                            <option value="mahasiswa">Mahasiswa</option>
+                                            <option value="internal">Dosen (Telkom University)</option>
+                                            <option value="eksternal">Dosen (Luar instansi Telkom University)</option>
+                                            <option value="internal">Ditmawa</option>
                                             <option value="internal">Pegawai</option>
-                                            <option value="eksternal">Partisipan</option>
+                                            <option value="eksternal">Partisipan (Luar instansi Telkom University)</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             Pilih Status!
@@ -318,7 +322,7 @@
                     if (role === 'internal') {
                         hargaRuangan = 0;
                         console.log("Internal role, setting price to 0");
-                    } else if (role === 'eksternal') {
+                    } else if (role === 'eksternal' || role === 'mahasiswa') {
                         hargaRuangan = parseInt(data.harga_ruangan);
                         console.log("External role, setting price to:", hargaRuangan);
                     }
@@ -348,6 +352,23 @@
             }
         }
 
+        function adjustParticipantLimits() {
+            var select = document.getElementById("id_ruangan");
+            var pesertaInput = document.getElementById("peserta");
+
+            var selectedOption = select.options[select.selectedIndex];
+            var max = selectedOption.getAttribute("data-max");
+            var min = selectedOption.getAttribute("data-min");
+
+            pesertaInput.max = max;
+            pesertaInput.min = min;
+            pesertaInput.value = ""; // Reset the value to trigger validation
+
+            // Display validation message based on room capacity
+            var feedback = pesertaInput.nextElementSibling;
+            feedback.textContent = "Masukkan Jumlah Peserta antara " + min + " dan " + max + "!";
+        }
+
         function showConfirmationModal(event) {
             event.preventDefault();
             const namaPeminjam = document.getElementById('nama_peminjam').value;
@@ -372,7 +393,7 @@
             var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
             var priceAkhir;
 
-            if (status === 'eksternal') {
+            if (status === 'eksternal' || status === 'mahasiswa') {
                 priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
             } else {
                 priceAkhir = 'Rp 0';
