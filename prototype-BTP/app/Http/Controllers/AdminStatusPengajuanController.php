@@ -19,15 +19,44 @@ class AdminStatusPengajuanController extends Controller
         $dataPeminjaman = Peminjaman::find($id);
         $pilih = $request->input('pilihan');
 
-        if($pilih == 'terima') {
+        if ($pilih == 'terima') {
+            // Check for existing approved bookings at the same time
+            $conflictingBookings = Peminjaman::where('tanggal_mulai', '<=', $dataPeminjaman->tanggal_selesai)
+                ->where('tanggal_selesai', '>=', $dataPeminjaman->tanggal_mulai)
+                ->where('id_peminjaman', '!=', $id)
+                ->where('status', 'Menunggu')
+                ->get();
+
             $dataPeminjaman->status = 'Disetujui';
             $dataPeminjaman->ruangan->tersedia = '0';
-            $dataPeminjaman->ruangan->save();
+            $dataPeminjaman->save();
             $message = 'Peminjaman diterima!';
-        } else if ($pilih == 'tolak') {
+
+            foreach ($conflictingBookings as $booking) {
+                $booking->status = 'Ditolak';
+                $booking->save();
+                $message = 'Peminjaman ditolak!';
+            }
+        } elseif ($pilih == 'tolak') {
             $dataPeminjaman->status = 'Ditolak';
+            $dataPeminjaman->ruangan->save();
             $message = 'Peminjaman ditolak!';
         }
+
+
+        // if ($conflictingBooking) {
+        //     return redirect()->back()->with('error', 'Ruangan sudah dipinjam pada waktu tersebut.');
+        // }
+        // else if($pilih == 'terima') {
+        //     $dataPeminjaman->status = 'Disetujui';
+        //     $dataPeminjaman->ruangan->tersedia = '0';
+        //     $dataPeminjaman->ruangan->save();
+        //     $message = 'Peminjaman diterima!';
+        // } else if ($pilih == 'tolak') {
+        //     $dataPeminjaman->status = 'Ditolak';
+        //     $dataPeminjaman->ruangan->save();
+        //     $message = 'Peminjaman ditolak!';
+        // }
 
         // } else if ($pilih == 'tinjau ulang') {
         //     $dataMeminjam->status = 'Meninjau Kembali Pengajuan';
