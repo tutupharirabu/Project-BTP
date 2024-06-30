@@ -115,8 +115,8 @@ class AdminStatusRuanganController extends Controller
             'harga_ruangan' => 'required',
             'tersedia' => 'required',
             'status' => 'required',
-            'url' => 'required|array',
-            'url.*' => 'required|image'
+            // 'url' => 'required|array',
+            // 'url.*' => 'required|image'
         ]);
 
         Ruangan::where('id_ruangan', $dataRuangan->id_ruangan)->update([

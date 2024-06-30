@@ -2,44 +2,72 @@
 
 @section('containAdmin')
     <style>
-        #drop-area {
-            border: 2px dashed #ccc;
-            border-radius: 20px;
-            width: 100%;
+        /* #drop-area {
+                                border: 2px dashed #ccc;
+                                border-radius: 20px;
+                                width: 100%;
+                                height: 200px;
+                                text-align: center;
+                                padding: 85px;
+                                color: #333;
+                                margin-top: 20px;
+                                margin-bottom: 20px;
+                                font-size: 1vw;
+                            }
+
+                            #drop-area.highlight {
+                                border-color: purple;
+                            } */
+
+        /* batas */
+
+        .drop-zone {
+            width: 95%;
             height: 200px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 85px;
-            /* font-family: Arial, sans-serif; */
-            color: #333;
-            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+            cursor: pointer;
+            color: #cccccc;
+            border: 4px dashed #eeeeee;
+            border-radius: 10px;
             margin-bottom: 20px;
-            font-size: 1vw;
-            /* font-size: 1vh; */
-
-            .image-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                /* Optional: adds space between the images */
-                width: 150%;
-                /* Make the container take the full width of its parent */
-                max-width: 1000px;
-                /* Set a max-width if needed, adjust as per your layout */
-                margin: 0 auto;
-                /* Center the container */
-            }
-
-            .image-container img {
-                display: block;
-                width: 80px;
-                /* Ensure the width of each image remains consistent */
-                height: auto;
-                /* Maintain the aspect ratio of the images */
-            }
         }
 
-        #drop-area.highlight {
-            border-color: purple;
+        .drop-zone--over {
+            border-style: solid;
+        }
+
+        .drop-zone__input {
+            display: none;
+        }
+
+        .drop-zone__thumb {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #cccccc;
+            background-size: cover;
+            position: relative;
+        }
+
+        .drop-zone__thumb::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 5px 0;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.75);
+            font-size: 10px;
+            text-align: center;
         }
     </style>
 
@@ -133,42 +161,29 @@
                                                     value="{{ $dataRuangan->tersedia }}" required hidden>
                                             </div>
                                         </div>
-                                        <!-- right form file -->
-
                                     </div>
                                 </div>
+
+                                <!-- right form file -->
+
                                 <div class="col-5">
                                     <div class="form-group row mb-2">
                                         <label for="url" class="col-md-4 col-form-label text-md-right">Gambar
                                             Ruangan</label>
                                     </div>
-                                    <div class="mb-3 text-center" style="margin-right: 0px">
-                                        <div class="card shadow">
-                                            <div class="card-body">
 
-                                                <div id="drop-area">
-                                                    @if ($dataRuangan->gambar->count() > 0)
-                                                        <div class="image-container">
-                                                            @foreach ($dataRuangan->gambar as $gambar)
-                                                                <img src="{{ asset('assets/' . $gambar->url) }}"
-                                                                    alt="Gambar Ruangan" width="100">
-                                                            @endforeach
-                                                        </div>
-                                                    @else
-                                                        <p>Drag and Drop files here</p>
-                                                    @endif
-                                                </div>
-                                                <p>or</p>
-                                                <button type="button" onclick="fileInput.click()">Select
-                                                    Files</button> <input type="file" id="fileInput" name="url[]"
-                                                    @foreach ($dataRuangan->gambar as $gambar) value="{{ $gambar->url }}" @endforeach
-                                                    multiple hidden>
-                                            </div>
-                                        </div>
+                                    <div class="drop-zone">
+                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                        <input type="file" for="url" id="url" name="url[]"
+                                            class="drop-zone__input" multiple>
                                     </div>
+
+                                    <strong>Uploaded Files</strong>
+                                    <p class="uploadedRooms"></p>
+
                                     <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
+                                    <button type="submit" class="btn btn-primary" style="background-color: #0C9300">
+                                        Update
                                     </button>
                                 </div>
                             </div>
@@ -180,84 +195,131 @@
     </div>
 
     <script>
-        document.getElementById('status').addEventListener('change', function() {
+        document.getElementById("status").addEventListener("change", function() {
             var status = this.value;
-            var tersediaInput = document.getElementById('tersedia');
+            var tersediaInput = document.getElementById("tersedia");
 
-            if (status === 'Available') {
+            if (status === "Available") {
                 tersediaInput.value = 0;
-            } else if (status === 'Booked') {
+            } else if (status === "Booked") {
                 tersediaInput.value = 1;
-            } else if (status === {{ $dataRuangan->status }}) {
-                tersediaInput.value = {{ $dataRuangan->tersedia }};
             } else {
-                tersediaInput.value = '';
+                tersediaInput.value = "";
             }
         });
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const dropArea = document.getElementById('drop-area');
-            const fileInput = document.getElementById('fileInput');
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+            const dropZoneElement = inputElement.closest(".drop-zone");
 
-            // Prevent default drag behaviors
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-                document.body.addEventListener(eventName, preventDefaults, false);
+            dropZoneElement.addEventListener("click", (e) => {
+                inputElement.click();
             });
 
-            // Highlight drop area when item is dragged over it
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
+            inputElement.addEventListener("change", (e) => {
+                if (inputElement.files.length) {
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
             });
 
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-
-            // Handle dropped files
-            dropArea.addEventListener('drop', handleDrop, false);
-
-            function preventDefaults(e) {
+            dropZoneElement.addEventListener("dragover", (e) => {
                 e.preventDefault();
-                e.stopPropagation();
-            }
+                dropZoneElement.classList.add("drop-zone--over");
+            });
 
-            function highlight(e) {
-                dropArea.classList.add('highlight');
-            }
+            ["dragleave", "dragend"].forEach((type) => {
+                dropZoneElement.addEventListener(type, (e) => {
+                    dropZoneElement.classList.remove("drop-zone--over");
+                });
+            });
 
-            function unhighlight(e) {
-                dropArea.classList.remove('highlight');
-            }
+            dropZoneElement.addEventListener("drop", (e) => {
+                e.preventDefault();
 
-            function handleDrop(e) {
-                let dt = e.dataTransfer;
-                let files = dt.files;
+                if (e.dataTransfer.files.length) {
+                    inputElement.files = e.dataTransfer.files;
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
 
-                handleFiles(files);
-            }
-
-            function handleFiles(files) {
-                ([...files]).forEach(uploadFile);
-                fileInput.files = files; // update the hidden file input with the dropped files
-            }
-
-            function uploadFile(file) {
-                let url = 'YOUR_UPLOAD_URL_HERE';
-                let formData = new FormData();
-                formData.append('file', file);
-
-                fetch(url, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(() => {
-                        /* Done. Inform the user */
-                    })
-                    .catch(() => {
-                        /* Error. Inform the user */
-                    });
-            }
+                dropZoneElement.classList.remove("drop-zone--over");
+            });
         });
+
+        // /**
+        //  * Updates the thumbnail on a drop zone element.
+        //  *
+        //  * @param {HTMLElement} dropZoneElement
+        //  * @param {File} file
+        //  */
+        // function updateThumbnail(dropZoneElement, file) {
+        //     let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+        //     console.log(file);
+        //     // First time - remove the prompt
+        //     if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+        //         dropZoneElement.querySelector(".drop-zone__prompt").remove();
+        //     }
+
+        //     // First time - there is no thumbnail element, so lets create it
+        //     if (!thumbnailElement) {
+        //         thumbnailElement = document.createElement("div");
+        //         thumbnailElement.classList.add("drop-zone__thumb");
+        //         dropZoneElement.appendChild(thumbnailElement);
+        //     }
+
+        //     thumbnailElement.dataset.label = file.name;
+
+        //     // Show thumbnail for image files
+        //     if (file.type.startsWith("image/")) {
+        //         const reader = new FileReader();
+
+        //         reader.readAsDataURL(file);
+        //         reader.onload = () => {
+        //             thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+        //         };
+        //     } else {
+        //         thumbnailElement.style.backgroundImage = null;
+        //     }
+        // }
+
+        /**
+         * Updates the thumbnail on a drop zone element and displays the uploaded file names.
+         *
+         * @param {HTMLElement} dropZoneElement
+         * @param {File} file
+         */
+        function updateThumbnail(dropZoneElement, file) {
+            let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+            const uploadedRoomsElement = document.querySelector(".uploadedRooms");
+
+            console.log(file);
+            // First time - remove the prompt
+            if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+                dropZoneElement.querySelector(".drop-zone__prompt").remove();
+            }
+
+            // First time - there is no thumbnail element, so lets create it
+            if (!thumbnailElement) {
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+            }
+
+            thumbnailElement.dataset.label = file.name;
+
+            // Show thumbnail for image files
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+                };
+            } else {
+                thumbnailElement.style.backgroundImage = null;
+            }
+
+            // Update the uploaded file names in a new line
+            uploadedRoomsElement.innerHTML += file.name + "<br>";
+        }
     </script>
 @endsection
