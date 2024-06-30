@@ -21,7 +21,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
+    overflow-y: auto; /* Enable scrolling */
 }
 
 .login-container {
@@ -29,6 +29,9 @@ body, html {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ensure container has a maximum width */
+    max-width: 500px; /* Optional: Set a maximum width for larger screens */
+    margin: 20px; /* Add margin for spacing */
 }
 
 @media (max-width: 768px) {
