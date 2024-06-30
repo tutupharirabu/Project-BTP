@@ -53,6 +53,17 @@
             </div>
         </div>
 
+        <!-- href ui -->
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="d-flex container my-2 mx-2">
+                    <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan
+                        ></a>
+                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Edit Ruangan </a>
+                </div>
+            </div>
+        </div>
+
         <!-- value -->
         <div class="row justify-content-center mt-4">
             <div class="col-11">
