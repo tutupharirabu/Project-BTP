@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
-use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use DateTime;
 
@@ -26,6 +25,7 @@ class DashboardPenyewaController extends Controller
 
     $dataPeminjaman = Peminjaman::with('ruangan')
         ->whereBetween('tanggal_mulai', [$weekStart->format('Y-m-d'), $weekEnd->format('Y-m-d')])
+        ->where('status','Disetujui')
         ->get();
 
     if ($request->ajax()) {
