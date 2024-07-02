@@ -45,29 +45,8 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
-// // CRUD ruangan
-// Route::get('/adminRuangan', [AdminRuanganController::class, 'index'])->name('admin.ruangan');
-// Route::get('/adminRuangan/tambahRuangan', [AdminRuanganController::class, 'create'])->name('admin.ruangan.tambahRuangan');
-// Route::post('/adminRuangan/posts', [AdminRuanganController::class, 'store'])->name('posts.adminRuangan');
-// Route::get('/adminRuangan/{id}/detail', [AdminRuanganController::class, 'show'])->name('detail.adminRuangan');
-// Route::get('/adminRuangan/{id}/edit', [AdminRuanganController::class, 'edit'])->name('edit.adminRuangan');
-// Route::put('/adminRuangan/{id}', [AdminRuanganController::class, 'update'])->name('update.adminRuangan');
-// Route::delete('/adminRuangan/delete/{id}', [AdminRuanganController::class, 'destroy'])->name('destroy.AdminRuangan');
-
-// // CRUD barang
-
-// Route::get('/adminBarang', [AdminBarangController::class, 'index'])->name('admin.barang');
-// Route::get('/adminBarang/tambahBarang', [AdminBarangController::class, 'create'])->name('admin.barang.tambahBarang');
-// Route::post('/adminBarang/posts', [AdminBarangController::class, 'store'])->name('posts.adminBarang');
-// Route::get('/adminBarang/{id}/detail', [AdminBarangController::class, 'show'])->name('detail.adminBarang');
-// Route::get('/adminBarang/{id}/edit', [AdminBarangController::class, 'edit'])->name('edit.adminBarang');
-// Route::put('/adminBarang/{id}', [AdminBarangController::class, 'update'])->name('update.adminBarang');
-// Route::delete('/adminBarang/delete/{id}', [AdminBarangController::class, 'destroy'])->name('destroy.AdminBarang');
-
 // Dashboard penyewa
-
 Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard')->middleware('auth');
-// Route::post('/userDashboard', [UserDashboardController::class, 'store']);
 
 //Peminjaman
 // Peminjaman Ruangan
@@ -80,14 +59,7 @@ Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuang
 Route::get('/meminjamBarang', [MeminjamBarangController::class, 'index'])->name('penyewa.peminjamanBarang')->middleware('auth');
 
 // // Pengajuan admin
-
-// Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan');
-// Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-
-// Pengajuan admin
-// Route::get('/pengajuan', [AdminPengajuanController::class, 'create'])->name('admin.pengajuan')->middleware('auth');
-// Route::post('/pengajuan/{id}', [AdminPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 
 // Admin lihat status Ruangan
 Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
@@ -98,14 +70,9 @@ Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'ind
 Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan')->middleware('auth');
 Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 
-// Admin Menambah ruangan
-// Route::get('/tambahRuanganAdmin', [AdminTambahRuangan::class, 'index']);
-
 // Penyewa lihat status Ruangan
-// Route::get('/statusRuanganPenyewa', [PenyewaStatusRuanganController::class, 'index'])->name('statusRuangan')->middleware('auth');
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index'])->name('daftarRuanganPenyewa')->middleware('auth');
 Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuangan::class, 'show'])->name('detailRuanganPenyewa')->middleware('auth');
-// Route::get('/detailRuanganPenyewa', [PenyewaDetailRuangan::class, 'index'])->middleware('auth');
 
 //Admin crud ruangan
 Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create'])->middleware('auth');

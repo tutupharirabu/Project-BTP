@@ -1,4 +1,4 @@
-let currentDate = new Date("{{ $weekStart->format('Y-m-d') }}");
+let currentDate = new Date(initialDate);
 
 document.getElementById("prevWeek").addEventListener("click", function () {
     changeWeek(-7);
@@ -57,20 +57,23 @@ function updateTable(data) {
             const eventDiv = document.createElement("div");
             eventDiv.classList.add("mb-2");
             eventDiv.innerHTML = `
-                    <strong>${event.ruangan.nama_ruangan}</strong><br>
-                    ${new Date(event.tanggal_mulai).toLocaleTimeString(
-                        "en-US",
-                        { hour: "2-digit", minute: "2-digit" }
-                    )} -
-                    ${new Date(event.tanggal_selesai).toLocaleTimeString(
-                        "en-US",
-                        { hour: "2-digit", minute: "2-digit" }
-                    )}<br>
-                    Peminjam: ${event.nama_peminjam}
-                    <hr>
-                `;
+                <strong>${event.ruangan.nama_ruangan}</strong><br>
+                ${new Date(event.tanggal_mulai).toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })} -
+                ${new Date(event.tanggal_selesai).toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}<br>
+                Peminjam: ${event.nama_peminjam}
+                <hr>
+            `;
             dayData.appendChild(eventDiv);
         });
         weekData.appendChild(dayData);
     }
 }
+
+// Initial load
+fetchWeekData(currentDate);

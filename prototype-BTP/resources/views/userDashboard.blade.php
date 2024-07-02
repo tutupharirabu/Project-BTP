@@ -20,15 +20,15 @@
         </div>
 
         <div
-            class="container mt-2 py-2"style="solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            <h1>Weekly Schedule</h1>
+            class="container mt-2 pb-2 pt-3"style="solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+            {{-- <h1>Weekly Schedule</h1> --}}
             @php
                 $weekStart = now()->startOfWeek();
             @endphp
             <div class="d-flex justify-content-between mb-3">
-                <button id="prevWeek" class="btn btn-primary">Previous Week</button>
-                <h2>Week of <span id="weekOf">{{ $weekStart->format('M d, Y') }}</span></h2>
-                <button id="nextWeek" class="btn btn-primary">Next Week</button>
+                <button id="prevWeek" class="btn btn-outline-secondary">Previous Week</button>
+                <h2>Minggu pada <span id="weekOf">{{ $weekStart->format('M d, Y') }}</span></h2>
+                <button id="nextWeek" class="btn btn-outline-secondary">Next Week</button>
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -59,7 +59,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <script>
+        var initialDate = "{{ $weekStart->format('Y-m-d') }}";
+    </script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 
-        <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-
-    @endsection
+@endsection
