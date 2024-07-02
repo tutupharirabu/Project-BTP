@@ -33,14 +33,18 @@
 </head>
 
 <body>
-    @include('penyewa.partials.navigationUser')
-    <div class="row d-flex min-vh-100">
-        @include('penyewa.partials.sidebarUser')
-        <div class="col-md-10">
+    @include('admin.partials.navigationAdmin')
+    <div class="row d-flex">
+        <div class="col">
+            @include('admin.partials.sidebar')
+        </div>
+        <div class="col-10" style="margin-bottom:70px">
             @yield('containAdmin')
         </div>
     </div>
-    @include('penyewa.partials.footerUser')
+    <div class="footerstyle  border-top">
+        @include('admin.partials.footerAdmin')
+    </div>
 
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -59,8 +63,6 @@
             url: '/upload',
             maxFilesize: 2,
             acceptedFiles: '.png, .jpg, .jpeg',
-            // addRemoveLinks: true,
-            // dictRemoveFile: 'Remove file',
             dictDefaultMessage: "Drop files disini",
             init: function() {
                 this.on("removedfile", function(file) {
@@ -69,28 +71,12 @@
             }
         };
     </script>
-    <!-- <script>
-        Dropzone.autoDiscover = false;
-
-        // Dropzone configuration
-        var myDropzone = new Dropzone(".dropzone", {
-            url: "/file/post",
-            paramName: "file",
-            maxFilesize: 2, // MB
-            maxFiles: 10,
-            acceptedFiles: 'image/*',
-            dictDefaultMessage: "Drag files here or click to upload.",
-            clickable: true
-        });
-    </script> -->
-
-
-
 
 </body>
 
 <!-- drag drop zone -->
 <style>
+
     /* Overrides the default styling for file previews */
     .dropzone .dz-preview .dz-image {
         background: transparent !important;
@@ -111,6 +97,16 @@
     .dropzone .dz-preview .dz-progress {
         display: none;
         /* Hide the progress bar */
+    }
+    .footerstyle{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #f8f9fa;
+        text-align: center;
+        padding: 8px;
     }
 </style>
 {{-- <script type="text/javascript">

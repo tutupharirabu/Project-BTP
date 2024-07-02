@@ -29,14 +29,17 @@
 <body>
 
     @include('penyewa.partials.navigationUser')
-
-    <div class="row d-flex min-vh-100">
-        @include('penyewa.partials.sidebarUser')
-        <div class="col-md-10">
+    <div class="row d-flex">
+        <div class="col">
+            @include('penyewa.partials.sidebarUser')
+        </div>
+        <div class="col-10" style="margin-bottom:70px">
             @yield('containPenyewa')
         </div>
     </div>
-    @include('penyewa.partials.footerUser')
+    <div class="footerstyle  border-top">
+        @include('penyewa.partials.footerUser')
+    </div>
 
 
 
@@ -80,3 +83,15 @@
 
     calendar.render();
 </script>
+<style>
+    .footerstyle{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #f8f9fa;
+        text-align: center;
+        padding: 8px;
+    }
+</style>

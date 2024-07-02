@@ -292,7 +292,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Konfirmasi pembayaran dapat dilakukan via WA, klik tombol di bawah</p>
-                <a href="https://wa.me/+6285831384798"
+                <a href="https://wa.me/+6282127644368"
                     class="btn text-white text-capitalize btn-spacing font-btn mx-auto"
                     style="background-color:#0DA200" target="_blank">WhatsApp</a>
             </div>

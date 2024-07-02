@@ -25,10 +25,10 @@
   <div class="row justify-content-center mt-4">
     <div class="col-lg-6">
 
-    <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/09/DSC00331-2048x1365.jpg" class="img-fluid" alt="Responsive image">
+    <!-- <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/09/DSC00331-2048x1365.jpg" class="img-fluid" alt="Responsive image"> -->
       
     <!-- Carousel -->
-      <!-- <div id="demo" class="carousel slide" data-bs-ride="carousel">
+      <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
@@ -55,7 +55,7 @@
         <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
           <span class="carousel-control-next-icon"></span>
         </button>
-      </div> -->
+      </div>
     </div>
   </div>
 
@@ -68,7 +68,11 @@
                     <td colspan="3" class="border border-secondary">{{ $ruangan->nama_ruangan }}</td>
                 </tr>
                 <tr>
-                    <td class="border border-secondary">Kapasitas</td>
+                    <td class="border border-secondary">Kapasitas Maksimal</td>
+                    <td colspan="3" class="border border-secondary">{{ $ruangan->kapasitas_ruangan }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-secondary">Kapasitas Minimal</td>
                     <td colspan="3" class="border border-secondary">{{ $ruangan->kapasitas_ruangan }}</td>
                 </tr>
                 <tr>

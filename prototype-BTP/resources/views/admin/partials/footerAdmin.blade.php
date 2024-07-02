@@ -1,4 +1,4 @@
-<footer class="footer mt-1 py-4 border-top">
+<footer class="footer py-4">
   <div class="container d-flex justify-content-center align-items-center">
     <div class="footer-logo d-flex align-items-center">
       <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo Telkom University" class="footer-logo-img">
@@ -12,11 +12,10 @@
 <style>
   .footer {
     background-color: #FFFFFFF;
-    border-top: 1px solid #e7e7e7;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 56px; /* Atur tinggi footer */
+    height: 42px; /* Atur tinggi footer */
   }
 
   .footer .container {
