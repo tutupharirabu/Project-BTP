@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
-use DateTime;
+
 
 
 class DashboardPenyewaController extends Controller
@@ -19,20 +19,9 @@ class DashboardPenyewaController extends Controller
      */
     public function create(Request $request)
 {
-    $date = $request->query('date') ? new DateTime($request->query('date')) : new DateTime('this week');
-    $weekStart = (clone $date)->modify('this week');
-    $weekEnd = (clone $weekStart)->modify('+6 days');
+    $peminjamans = Peminjaman::with('ruangan')->get();
 
-    $dataPeminjaman = Peminjaman::with('ruangan')
-        ->whereBetween('tanggal_mulai', [$weekStart->format('Y-m-d'), $weekEnd->format('Y-m-d')])
-        ->where('status','Disetujui')
-        ->get();
-
-    if ($request->ajax()) {
-        return response()->json(['events' => $dataPeminjaman, 'weekStart' => $weekStart->format('Y-m-d')]);
-    }
-
-    return view('userDashboard', compact('dataPeminjaman', 'weekStart'));
+        return view('userDashboard', compact('peminjamans'));
 }
 
 

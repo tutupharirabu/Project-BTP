@@ -1,68 +1,96 @@
 @extends('penyewa.layouts.mainPenyewa')
 @section('containPenyewa')
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: auto;
+            gap: 1px;
+            background-color: #ddd;
+        }
 
-    <div class="container-fluid mt-4">
-        <!-- title -->
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="container">
-                    <h4>Dashboard</h4>
-                </div>
-            </div>
-        </div>
+        .calendar div {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
 
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="d-flex container my-2 mx-2">
-                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Dashboard </a>
-                </div>
-            </div>
-        </div>
+        .calendar .day-name {
+            background-color: #f3f3f3;
+            font-weight: bold;
+        }
 
-        <div
-            class="container mt-2 pb-2 pt-3"style="solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            {{-- <h1>Weekly Schedule</h1> --}}
+        .calendar .day {
+            height: 100px;
+            position: relative;
+        }
+
+        .calendar .event {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 2px;
+            margin: 2px 0;
+            font-size: 12px;
+        }
+
+        .calendar .date {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+
+    <h1>Monthly Calendar</h1>
+    <div class="calendar">
+        <!-- Days of the week -->
+        <div class="day-name">Sunday</div>
+        <div class="day-name">Monday</div>
+        <div class="day-name">Tuesday</div>
+        <div class="day-name">Wednesday</div>
+        <div class="day-name">Thursday</div>
+        <div class="day-name">Friday</div>
+        <div class="day-name">Saturday</div>
+
+        <!-- Calendar days -->
+        @php
+            $daysInMonth = \Carbon\Carbon::now()->daysInMonth;
+            $firstDayOfMonth = \Carbon\Carbon::now()->startOfMonth()->dayOfWeek;
+            $today = \Carbon\Carbon::now()->format('Y-m-d');
+            $events = $peminjamans->groupBy(function ($item) {
+                return \Carbon\Carbon::parse($item->tanggal_mulai)->format('Y-m-d');
+            });
+        @endphp
+
+        <!-- Empty days before the first day of the month -->
+        @for ($i = 0; $i < $firstDayOfMonth; $i++)
+            <div class="day"></div>
+        @endfor
+
+        <!-- Days of the month -->
+        @for ($day = 1; $day <= $daysInMonth; $day++)
             @php
-                $weekStart = now()->startOfWeek();
+                $currentDate = \Carbon\Carbon::now()
+                    ->startOfMonth()
+                    ->addDays($day - 1)
+                    ->format('Y-m-d');
             @endphp
-            <div class="d-flex justify-content-between mb-3">
-                <button id="prevWeek" class="btn btn-outline-secondary">Previous Week</button>
-                <h2>Minggu pada <span id="weekOf">{{ $weekStart->format('M d, Y') }}</span></h2>
-                <button id="nextWeek" class="btn btn-outline-secondary">Next Week</button>
+            <div class="day">
+                <div class="date">{{ $day }}</div>
+                @if ($events->has($currentDate))
+                    @foreach ($events[$currentDate] as $event)
+                        <div class="event">
+                            {{ $event->nama_peminjam }}<br>
+                            {{ $event->ruangan->nama_ruangan }}<br>
+                            {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('H:i') }} -
+                            {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('H:i') }}
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr id="weekDays">
-                        @for ($day = 0; $day < 7; $day++)
-                            <th>{{ $weekStart->copy()->addDays($day)->format('D, M d') }}</th>
-                        @endfor
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="weekData">
-                        @for ($day = 0; $day < 7; $day++)
-                            <td>
-                                @foreach ($dataPeminjaman as $peminjaman)
-                                    @if (date('Y-m-d', strtotime($peminjaman->tanggal_mulai)) == $weekStart->copy()->addDays($day)->format('Y-m-d'))
-                                        <div class="mb-2">
-                                            <strong>{{ $peminjaman->ruangan->nama_ruangan }}</strong><br>
-                                            {{ date('H:i', strtotime($peminjaman->tanggal_mulai)) }} -
-                                            {{ date('H:i', strtotime($peminjaman->tanggal_selesai)) }}<br>
-                                            Peminjam: {{ $peminjaman->nama_peminjam }}
-                                        </div>
-                                        <hr>
-                                    @endif
-                                @endforeach
-                            </td>
-                        @endfor
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @endfor
     </div>
-    <script>
-        var initialDate = "{{ $weekStart->format('Y-m-d') }}";
-    </script>
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 @endsection
