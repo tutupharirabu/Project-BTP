@@ -83,7 +83,7 @@
                     <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
                         height="40" alt="Black and White Portrait of a Man" loading="lazy" />
                     <p>
-                        <center style="color: black">Rudy Harry Yanto</center>
+                        <center style="color: black">Asep Junior</center>
                     </p>
                 </a>
                 {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">

@@ -5,6 +5,10 @@
         {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
     @endforeach
 
+    <head>
+        <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
+        <script src="assets/js/admin/daftarRuangan.js"></script>
+    </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
         <div class="row">
@@ -28,22 +32,20 @@
         <div class="p-3 border mb-2"
             style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
-
             <!-- Status -->
             <div class="row">
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
                     <div class="container d-flex justify-content-md-start justify-content-sm-start">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="height: 100px;width: 80px ;padding: 10px; background-color: #03FC0C; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
+                            style=" background-color: #071FF2;">
+                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
                                 check_circle
                             </span>
                         </div>
-                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center"
-                            style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                            <p class="text-center mt-1 mb-2 font-dv" >
                                 Tersedia</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                            <p class="text-center count">
                                 @php
                                     $bookedCount = $dataRuangan->where('tersedia', '1')->count();
                                 @endphp
@@ -54,17 +56,16 @@
                 </div>
                 <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="height: 100px;width: 80px ;padding: 10px; background-color: #FF0000; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
+                            style="background-color: #717171;">
+                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
                                 cancel
                             </span>
                         </div>
-                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center"
-                            style="height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                            <p class="text-center mt-1 mb-2 font-dv" >
                                 Digunakan</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                            <p class="text-center count">
                                 @php
                                     $bookedCount = $dataRuangan->where('tersedia', '0')->count();
                                 @endphp
@@ -89,7 +90,6 @@
                         style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                 </div>
             </div>
-
 
             <!-- table edit -->
             <div class="row">
@@ -152,31 +152,29 @@
                                             </td>
                                             <td style="display: flex; justify-content: center;">
                                                 @if ($data->tersedia == '1')
-                                                    <a class="btn text-white"
-                                                        style="display: flex; align-items: center; justify-content: center; background-color: #0EB100; width:91px; height: 27px; border-radius: 6px">Tersedia</a>
+                                                    <a class="btn text-white status"
+                                                        style=" background-color: #0EB100; ">Tersedia</a>
                                                 @elseif ($data->tersedia != '1')
-                                                    <a class="btn text-dark"
-                                                        style="display: flex; align-items: center; justify-content: center; background-color: #B0B0B0; width:91px; height: 27px; border-radius: 6px">Digunakan</a>
+                                                    <a class="btn text-dark status"
+                                                        style=" background-color: #B0B0B0; ">Digunakan</a>
                                                 @else
-                                                    <a class="btn text-white"
-                                                        style="display: flex; align-items: center; justify-content: center; background-color: #61677A; width:91px; height: 27px; border-radius: 6px">
+                                                    <a class="btn text-white status"
+                                                        style=" background-color: #61677A; ">
                                                         - </a>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">
                                                     <a href="/editRuanganAdmin/{{ $data->id_ruangan }}/edit"
-                                                        class="btn text-white"
-                                                        style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #E0AF00;border-radius: 6px">Edit</a>
-                                                    <a href="daftarRuanganAdmin/{{ $data->id_ruangan }}"
-                                                        class="btn text-white"
-                                                        style="display: flex; align-items: center; justify-content: center;width: 62px; height: 30px; background-color: #FF0000;border-radius: 6px">Hapus</a>
+                                                        class="btn text-white modify"
+                                                        style="background-color: #E0AF00;">Edit</a>
+                                                    <button class="btn text-white delete-btn modify"
+                                                        data-id="{{ $data->id_ruangan }}"
+                                                        style="background-color: #FF0000;">Hapus</button>
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -185,40 +183,25 @@
             </div>
         </div>
 
-        <style>
-            .table td,
-            .table th {
-                padding: 10px;
-                /* Adjust the padding table */
-            }
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="circle-add">
+                            <span class="material-symbols-outlined" style="font-size: 3.5em; color: #FFFFFF;">delete</span>
+                        </div>
+                        <p style="margin-top: 10px;">Apakah ruangan Multimedia ingin dihapus?</p>
+                        <button type="button" class="btn" style="background-color: #B0B0B0; color: white; margin-right: 30px;" onclick="closeConfirmationModal()">TIDAK</button>
+                        <button type="button" class="btn" style="background-color: #FF0000; color: white;" id="confirmDelete">YA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            .left-status {
-                border-left: 1px;
-                border-right: 0px;
-                border-bottom: 1px;
-                border-top: 1px;
-                border-style: solid;
-                border-color: rgb(187, 187, 187);
-            }
+        
 
-            .right-status {
-                border-left: 0px;
-                border-right: 1px;
-                border-bottom: 1px;
-                border-top: 1px;
-                border-style: solid;
-                border-color: rgb(187, 187, 187);
-            }
-        </style>
-
-        <script>
-            document.getElementById('searchButton').addEventListener('click', function(event) {
-                event.preventDefault();
-                let searchTerm = document.getElementById('searchInput').value;
-                console.log('Mencari ruangan:', searchTerm);
-            });
-        </script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    @endsection
+@endsection
