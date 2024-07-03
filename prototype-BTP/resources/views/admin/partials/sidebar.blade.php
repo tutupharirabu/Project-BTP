@@ -5,11 +5,13 @@
 <!-- MDB -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 <!-- logo google and friend -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 col-lg-2 sidebar d-none d-md-block d-flex flex-column" style="background-color: #ed3c35; color: #FFFFFF;">
+        <div class="col-md-2 col-lg-2 sidebar d-none d-md-block d-flex flex-column"
+            style="background-color: #ed3c35; color: #FFFFFF;">
             <nav class="nav flex-column">
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/dashboardPenyewa">
@@ -36,6 +38,12 @@
                     </a>
                 </div>
                 <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
+                        <i class="material-symbols-outlined me-2">history</i>
+                        <span>Riwayat</span>
+                    </a>
+                </div>
+                <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/logout">
                         <i class="material-symbols-outlined me-2">logout</i>
                         <span>Keluar</span>
@@ -55,24 +63,29 @@
         height: 100vh;
         overflow-y: auto;
     }
+
     .menu-item {
         transition: background-color 0.3s, color 0.3s;
         border-radius: 5px;
     }
+
     .menu-item:hover {
         background-color: white !important;
         color: #000 !important;
         border-radius: 5px;
     }
+
     .menu-item:hover .material-symbols-outlined {
         color: #000 !important;
         border-radius: 5px;
     }
+
     .menu-item.active {
         background-color: white !important;
         color: #000 !important;
         border-radius: 5px;
     }
+
     .menu-item.active .material-symbols-outlined {
         color: #000 !important;
         border-radius: 5px;
@@ -95,6 +108,7 @@
     document.addEventListener('DOMContentLoaded', setActiveMenu);
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EQBeqOJMW/xzPnfnvvQvORpLCzabw2aFUuHTI7sC9yXs5Ddq3HrLnGSs" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EQBeqOJMW/xzPnfnvvQvORpLCzabw2aFUuHTI7sC9yXs5Ddq3HrLnGSs" crossorigin="anonymous"></script>
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
