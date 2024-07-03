@@ -1,7 +1,10 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    @foreach ($dataRuangan as $data)
+    @php
+        use Carbon\Carbon;
+    @endphp
+    @foreach ($dataPeminjaman as $data)
         {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
     @endforeach
 
@@ -32,63 +35,17 @@
         <div class="p-3 border mb-2"
             style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
-            <!-- Status -->
-            {{-- <div class="row">
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
-                    <div class="container d-flex justify-content-md-start justify-content-sm-start">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
-                            style=" background-color: #071FF2;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
-                                check_circle
-                            </span>
-                        </div>
-                        <div
-                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv">
-                                Tersedia</p>
-                            <p class="text-center count">
-                                @php
-                                    $bookedCount = $dataRuangan->where('tersedia', '1')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
-                            style="background-color: #717171;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
-                                cancel
-                            </span>
-                        </div>
-                        <div
-                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv">
-                                Digunakan</p>
-                            <p class="text-center count">
-                                @php
-                                    $bookedCount = $dataRuangan->where('tersedia', '0')->count();
-                                @endphp
-
-                                {{ $bookedCount }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <input type="text" class="form-control" placeholder="Cari Ruangan..."
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari Ruangan..."
                             style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                        <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
+                        {{-- <button type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
-                    <a href="" class="btn btn-md text-white text-center"
+                    <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
                         style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                 </div>
             </div>
@@ -103,26 +60,33 @@
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Nama Peminjam</th>
+                                        <th scope="col">Tanggal Mulai</th>
+                                        <th scope="col">Tanggal Selesai</th>
                                         <th scope="col">Ruangan</th>
                                         <th scope="col">Kapasitas</th>
-                                        <th scope="col">Harga</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($dataRuangan as $data)
+                                <tbody id="dataHistory">
+                                    @foreach ($dataPeminjaman as $data)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                {{-- nama peminjam --}}
-                                            </td>
-                                            <td>{{ $data->nama_ruangan }}</td>
-                                            <td>
-                                                {{-- kapasitas yang diambil --}}
+                                                {{ $loop->iteration }}
                                             </td>
                                             <td>
-                                                {{-- Harga yang dibayar --}}
+                                                {{ $data->nama_peminjam }}
                                             </td>
-
+                                            <td>
+                                                {{ Carbon::parse($data->tanggal_mulai)->format('d-m-y') }}
+                                            </td>
+                                            <td>
+                                                {{ Carbon::parse($data->tanggal_selesai)->format('d-m-y') }}
+                                            </td>
+                                            <td>
+                                                {{ $data->ruangan->nama_ruangan }}
+                                            </td>
+                                            <td>
+                                                {{ $data->jumlah }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -157,4 +121,39 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script>
+            function liveSearch() {
+                // Get the input field and its value
+                let input = document.getElementById('searchInput');
+                let filter = input.value.toLowerCase();
+
+                // Get the table and all table rows
+                let table = document.getElementById('dataHistory');
+                let tr = table.getElementsByTagName('tr');
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (let i = 0; i < tr.length; i++) {
+                    let td = tr[i].getElementsByTagName('td');
+                    let rowContainsFilter = false;
+
+                    // Check each cell in the row
+                    for (let j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            let textValue = td[j].textContent || td[j].innerText;
+                            if (textValue.toLowerCase().indexOf(filter) > -1) {
+                                rowContainsFilter = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Show or hide the row based on the filter
+                    if (rowContainsFilter) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
+        </script>
     @endsection

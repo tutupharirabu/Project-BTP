@@ -84,3 +84,4 @@ Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'de
 
 //History
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
+Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');

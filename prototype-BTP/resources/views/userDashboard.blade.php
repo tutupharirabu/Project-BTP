@@ -112,7 +112,12 @@
             ];
 
             const labels = monthNames;
-            const values = peminjamanData.map(item => item.total);
+
+            // Hitung total keseluruhan peminjaman
+            const totalPeminjaman = peminjamanData.reduce((sum, item) => sum + item.total, 0);
+
+            // Ubah nilai peminjaman menjadi persentase
+            const values = peminjamanData.map(item => ((item.total / totalPeminjaman) * 100).toFixed(2));
 
             const ctx = document.getElementById('myLineChart').getContext('2d');
             const myLineChart = new Chart(ctx, {
@@ -120,7 +125,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Jumlah Peminjaman',
+                        label: 'Persentase Peminjaman',
                         data: values,
                         fill: false,
                         borderColor: 'rgba(75, 192, 192, 1)',
@@ -130,7 +135,13 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value +
+                                    '%'; // Tambahkan simbol persentase ke setiap nilai pada sumbu y
+                                }
+                            }
                         }
                     }
                 }
