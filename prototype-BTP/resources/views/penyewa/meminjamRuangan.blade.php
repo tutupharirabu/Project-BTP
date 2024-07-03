@@ -154,7 +154,7 @@
                                 <div class="col-md mt-4">
                                     <div class="form-group">
                                         <label for="keterangan" class="mb-2 text-color">Catatan</label>
-                                        <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8"></textarea>
+                                        <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="255"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -459,31 +459,38 @@
         }).modal('show'); // Show the confirmation popup modal
     }
 
-    function confirmSubmission() {
-        const rentalForm = document.getElementById('rentalForm');
-        const formData = new FormData(rentalForm);
+    // Final Submission
+function confirmSubmission() {
+    const rentalForm = document.getElementById('rentalForm');
+    const formData = new FormData(rentalForm);
 
-        fetch(rentalForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    rentalForm.reset();
-                    $('#confirmationPopupModal').modal('hide');
-                    $('#whatsappModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    }).modal('show'); // Show the WhatsApp modal
-                } else {
-                    console.error('Form submission error:', response);
-                }
-            })
-            .catch(error => console.error('Error submitting form:', error));
-    }
+    fetch(rentalForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            rentalForm.reset();
+            $('#confirmationPopupModal').modal('hide');
+            $('#whatsappModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            }).modal('show');
+
+            // Redirect to dashboardPenyewa after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/dashboardPenyewa';
+            }, 2000);
+        } else {
+            console.error('Form submission error:', response);
+        }
+    })
+    .catch(error => console.error('Error submitting form:', error));
+}
+
 </script>
 <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
 @endsection
