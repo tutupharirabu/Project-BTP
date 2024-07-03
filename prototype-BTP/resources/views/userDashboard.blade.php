@@ -91,6 +91,50 @@
             </div>
         @endfor
     </div>
+    <br>
+    <div class="container">
+        <center>
+            <h2>Grafik Peminjaman Per Bulan</h2>
+        </center>
+        <canvas id="myLineChart" width="200" height="100"></canvas>
+    </div>
 
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const peminjamanData = @json($peminjamanPerBulan);
+
+            // Array nama bulan
+            const monthNames = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            const labels = monthNames;
+            const values = peminjamanData.map(item => item.total);
+
+            const ctx = document.getElementById('myLineChart').getContext('2d');
+            const myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Peminjaman',
+                        data: values,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

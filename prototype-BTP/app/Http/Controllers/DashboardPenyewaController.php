@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use DB;
 
 
 
@@ -11,18 +12,40 @@ class DashboardPenyewaController extends Controller
 {
     public function index()
     {
-        //
+        $peminjamans = Peminjaman::with('ruangan')->where('status','Disetujui')->get();
+
+        $peminjamanPerBulan = Peminjaman::select(
+            DB::raw('MONTH(tanggal_mulai) as bulan'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->where('status', 'Disetujui')
+        ->groupBy('bulan')
+        ->get();
+
+        $defaultMonths = [
+            1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0,
+            7 => 0, 8 => 0, 9 => 0, 10 => 0, 11 => 0, 12 => 0
+        ];
+
+        foreach ($peminjamanPerBulan as $peminjaman) {
+            $defaultMonths[$peminjaman->bulan] = $peminjaman->total;
+        }
+
+        $peminjamanPerBulan = collect($defaultMonths)->map(function ($total, $bulan) {
+            return (object) ['bulan' => $bulan, 'total' => $total];
+        })->values();
+
+
+        return view('userDashboard', compact('peminjamans', 'peminjamanPerBulan'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
-{
-    $peminjamans = Peminjaman::with('ruangan')->get();
+    {
 
-        return view('userDashboard', compact('peminjamans'));
-}
+    }
 
 
     /**

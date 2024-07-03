@@ -46,7 +46,7 @@ Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftar
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
 // Dashboard penyewa
-Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'create'])->name('penyewa.dashboard')->middleware('auth');
+Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'index'])->name('penyewa.dashboard')->middleware('auth');
 
 //Peminjaman
 // Peminjaman Ruangan
