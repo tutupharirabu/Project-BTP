@@ -35,8 +35,15 @@ class DashboardPenyewaController extends Controller
             return (object) ['bulan' => $bulan, 'total' => $total];
         })->values();
 
-
-        return view('userDashboard', compact('peminjamans', 'peminjamanPerBulan'));
+        $events = array();
+        foreach($peminjamans as $peminjaman){
+            $events[] = [
+                'title' => $peminjaman->nama_peminjam.' '.$peminjaman->ruangan->nama_ruangan,
+                'start' => $peminjaman->tanggal_mulai,
+                'end' => $peminjaman->tanggal_selesai,
+            ];
+        }
+        return view('userDashboard', compact('peminjamans', 'peminjamanPerBulan','events'));
     }
 
     /**

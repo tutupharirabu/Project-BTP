@@ -1,105 +1,65 @@
 @extends('penyewa.layouts.mainPenyewa')
 @section('containPenyewa')
-    <style>
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: auto;
-            gap: 1px;
-            background-color: #ddd;
-        }
+    {{-- 
+    <head>
+        <link rel="stylesheet" href="assets/css/dashboard.css">
+    </head> --}}
 
-        .calendar div {
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    </head>
 
-        .calendar .day-name {
-            background-color: #f3f3f3;
-            font-weight: bold;
-        }
+    <div class="container-fluid mt-4">
 
-        .calendar .day {
-            height: 100px;
-            position: relative;
-        }
-
-        .calendar .event {
-            background-color: #e3f2fd;
-            border: 1px solid #90caf9;
-            padding: 2px;
-            margin: 2px 0;
-            font-size: 12px;
-        }
-
-        .calendar .date {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 12px;
-            color: #777;
-        }
-    </style>
-
-    <h1>Monthly Calendar</h1>
-    <div class="calendar">
-        <!-- Days of the week -->
-        <div class="day-name">Sunday</div>
-        <div class="day-name">Monday</div>
-        <div class="day-name">Tuesday</div>
-        <div class="day-name">Wednesday</div>
-        <div class="day-name">Thursday</div>
-        <div class="day-name">Friday</div>
-        <div class="day-name">Saturday</div>
-
-        <!-- Calendar days -->
-        @php
-            $daysInMonth = \Carbon\Carbon::now()->daysInMonth;
-            $firstDayOfMonth = \Carbon\Carbon::now()->startOfMonth()->dayOfWeek;
-            $today = \Carbon\Carbon::now()->format('Y-m-d');
-            $events = $peminjamans->groupBy(function ($item) {
-                return \Carbon\Carbon::parse($item->tanggal_mulai)->format('Y-m-d');
-            });
-        @endphp
-
-        <!-- Empty days before the first day of the month -->
-        @for ($i = 0; $i < $firstDayOfMonth; $i++)
-            <div class="day"></div>
-        @endfor
-
-        <!-- Days of the month -->
-        @for ($day = 1; $day <= $daysInMonth; $day++)
-            @php
-                $currentDate = \Carbon\Carbon::now()
-                    ->startOfMonth()
-                    ->addDays($day - 1)
-                    ->format('Y-m-d');
-            @endphp
-            <div class="day">
-                <div class="date">{{ $day }}</div>
-                @if ($events->has($currentDate))
-                    @foreach ($events[$currentDate] as $event)
-                        <div class="event">
-                            {{ $event->nama_peminjam }}<br>
-                            {{ $event->ruangan->nama_ruangan }}<br>
-                            {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('H:i') }} -
-                            {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('H:i') }}
-                        </div>
-                    @endforeach
-                @endif
+        <!-- Judul -->
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col mb-0">
+                <div class="container ml-4">
+                    <h4>Dashboard<h4>
+                </div>
             </div>
-        @endfor
-    </div>
-    <br>
-    <div class="container">
+        </div>
+
+        <!-- href ui -->
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
+                <div class="container my-2 mx-2">
+                    <a class="" href="" style="color: red;font-size:12px;font-weight: bold;">Dashboard</a>
+                </div>
+            </div>
+        </div>
         <center>
-            <h2>Grafik Peminjaman Per Bulan</h2>
+            <h2>Jadwal</h2>
         </center>
-        <canvas id="myLineChart" width="200" height="100"></canvas>
+
+        <div id="calendar" class="mx-3"></div>
+
+        <br>
+        <div class="container">
+            <center>
+                <h2>Grafik Peminjaman Per Bulan</h2>
+            </center>
+            <canvas id="myLineChart" width="200" height="100"></canvas>
+        </div>
     </div>
 
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var bookings = @json($events);
+            console.log(bookings);
+
+            $('#calendar').fullCalendar({
+                events: bookings
+            })
+        });
+    </script>
+    {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
+
+    {{-- Chart JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -139,7 +99,7 @@
                             ticks: {
                                 callback: function(value) {
                                     return value +
-                                    '%'; // Tambahkan simbol persentase ke setiap nilai pada sumbu y
+                                        '%'; // Tambahkan simbol persentase ke setiap nilai pada sumbu y
                                 }
                             }
                         }
