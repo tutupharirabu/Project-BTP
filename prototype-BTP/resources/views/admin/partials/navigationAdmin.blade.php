@@ -80,11 +80,18 @@
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
 
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
+                    <!-- jika belum login -->
+                    <span class="material-symbols-outlined " style="color: #2F3645;margin-right:10px;font-weight: 600;"> person </span>
+                    <p>
+                        <center style="color: #2F3645; font-weight: 600;"> Login </center>
+                    </p> 
+
+                    <!-- jika sudah login -->
+                    <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
                         height="40" alt="Black and White Portrait of a Man" loading="lazy" />
                     <p>
                         <center style="color: black">Asep Junior</center>
-                    </p>
+                    </p> -->
                 </a>
                 {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>

@@ -38,7 +38,7 @@
         <div class="col">
             @include('admin.partials.sidebar')
         </div>
-        <div class="col-10" style="margin-bottom:70px">
+        <div class="col col-sm-10 col-md-10 col-xl-10 col-lg-10" style="margin-bottom:70px">
             @yield('containAdmin')
         </div>
     </div>

@@ -39,13 +39,13 @@
         
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="https://media.designcafe.com/wp-content/uploads/2021/04/26164735/l-shaped-home-office-images-with-attahced-bookshelf.jpg" alt="Los Angeles" class="d-block w-100">
+            <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/07/profile-btp-03.jpg" alt="Los Angeles" class="d-block w-100 custom-carousel-img">
           </div>
           <div class="carousel-item">
-            <img src="https://toffeedev.com/wp-content/uploads/2023/05/image-5.png" alt="Chicago" class="d-block w-100">
+            <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/07/profile-btp-02.jpg" alt="Chicago" class="d-block w-100 custom-carousel-img">
           </div>
           <div class="carousel-item">
-            <img src="https://media.designcafe.com/wp-content/uploads/2021/04/26164735/l-shaped-home-office-images-with-attahced-bookshelf.jpg" alt="New York" class="d-block w-100">
+            <img src="https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg" alt="New York" class="d-block w-100 custom-carousel-img">
           </div>
         </div>
         
@@ -122,6 +122,11 @@
     .btn {
         font-size: 20px; /* Ukuran teks pada tombol */
         text-transform: capitalize;
+    }
+
+    .custom-carousel-img {
+        width: 600px; /* Width of the images */
+        height: 400px; /* Height of the images */
     }
 </style>
 

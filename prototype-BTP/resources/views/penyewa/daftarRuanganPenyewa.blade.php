@@ -30,7 +30,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                         @foreach ($ruangan->gambar as $gambar)
-                            <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top" style=""
+                            <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
                                 alt="Gambar Ruangan">
                         @endforeach
                         <div class="card-body">
@@ -70,5 +70,11 @@
     </div>
 </div>
 
-    
+<style>
+    .custom-img {
+        max-height: 200px;
+        width: auto;
+    }
+</style>
+
 @endsection

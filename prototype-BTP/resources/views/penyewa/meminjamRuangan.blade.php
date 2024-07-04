@@ -1,8 +1,10 @@
 @extends('penyewa.layouts.mainPenyewa')
 
 @section('containPenyewa')
-
-<link rel="stylesheet" href="style.css">
+<head>
+    <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
+    <link rel="stylesheet" href="style.css">
+</head>
 
 <div class="container-fluid mt-4">
     <!-- title -->
@@ -26,7 +28,7 @@
 
     <!-- value -->
     <div class="row justify-content-center mt-2">
-        <div class="col-11">
+        <div class="col m-3">
             <div class="card border shadow shadow-md p-2">
                 <div class="card-body">
                     <form id="rentalForm" action="{{ route('posts.peminjamanRuangan') }}" method="POST"
@@ -34,7 +36,7 @@
                         @csrf
                         <div class="row">
                             <!-- left form text field -->
-                            <div class="col-5">
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                 <div class="col-md">
                                     <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
                                     <input type="text" name="nama_peminjam" id="nama_peminjam"
@@ -106,9 +108,9 @@
                             </div>
 
                             <!-- right form file -->
-                            <div class="col">
+                            <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
                                 <div class="row">
-                                    <div class="col-md">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai
                                             Peminjaman</label>
                                         <input type="date" name="tanggal_mulai" id="tanggal_mulai"
@@ -118,7 +120,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md col-3">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai
                                             Peminjaman</label>
                                         <input type="date" name="tanggal_selesai" id="tanggal_selesai"
@@ -130,7 +132,7 @@
                                 </div>
 
                                 <div class="row mt-4">
-                                    <div class="col-md">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="jam_mulai" class="form-label text-color">Jam Mulai
                                             Peminjaman</label>
                                         <input type="time" name="jam_mulai" id="jam_mulai"
@@ -140,7 +142,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md col-3">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="jam_selesai" class="form-label text-color">Jam Selesai
                                             Peminjaman</label>
                                         <input type="time" name="jam_selesai" id="jam_selesai"
@@ -154,7 +156,7 @@
                                 <div class="col-md mt-4">
                                     <div class="form-group">
                                         <label for="keterangan" class="mb-2 text-color">Catatan</label>
-                                        <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="255"></textarea>
+                                        <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="254"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -288,11 +290,11 @@
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h5 class="modal-title">Silahkan menghubungi Admin untuk melakukan pembayaran</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close whatsapp-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
                 <p>Konfirmasi pembayaran dapat dilakukan via WA, klik tombol di bawah</p>
-                <a href="https://wa.me/+6282127644368"
+                <a id="whatsappButton" href="https://wa.me/+6282127644368"
                     class="btn text-white text-capitalize btn-spacing font-btn mx-auto"
                     style="background-color:#0DA200" target="_blank">WhatsApp</a>
             </div>
@@ -459,38 +461,51 @@
         }).modal('show'); // Show the confirmation popup modal
     }
 
-    // Final Submission
-function confirmSubmission() {
-    const rentalForm = document.getElementById('rentalForm');
-    const formData = new FormData(rentalForm);
+    
+    function confirmSubmission() {
+        const rentalForm = document.getElementById('rentalForm');
+        const formData = new FormData(rentalForm);
 
-    fetch(rentalForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            rentalForm.reset();
-            $('#confirmationPopupModal').modal('hide');
-            $('#whatsappModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            }).modal('show');
+        // Temporarily disable form validation
+        rentalForm.classList.remove('needs-validation');
 
-            // Redirect to dashboardPenyewa after 2 seconds
-            setTimeout(() => {
-                window.location.href = '/dashboardPenyewa';
-            }, 2000);
-        } else {
-            console.error('Form submission error:', response);
-        }
-    })
-    .catch(error => console.error('Error submitting form:', error));
-}
+        fetch(rentalForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    rentalForm.reset();
+                    $('#confirmationPopupModal').modal('hide');
+                    $('#whatsappModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    }).modal('show'); // Show the WhatsApp modal
+                } else {
+                    console.error('Form submission error:', response);
+                }
+            })
+            .catch(error => console.error('Error submitting form:', error))
+            .finally(() => {
+                // Re-enable form validation
+                rentalForm.classList.add('needs-validation');
+            });
+    }
+
+    document.getElementById('whatsappButton').addEventListener('click', function () {
+        setTimeout(function () {
+            window.location.href = "/dashboardPenyewa";
+        }, 1000); // Adjust the timeout as needed
+    });
+
+    // Redirect to dashboardPenyewa when the WhatsApp modal is closed
+    document.querySelector('.whatsapp-close-button').addEventListener('click', function () {
+        window.location.href = "/dashboardPenyewa";
+    });
 
 </script>
-<link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
+
 @endsection
