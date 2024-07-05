@@ -21,19 +21,19 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        // if (Auth::guard('admin')->attempt($credentials)) {
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended('/adminRuangan');
-        // }
-
-        if (Auth::guard('penyewa')->attempt($credentials)) {
+        if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'Petugas'))) {
             $request->session()->regenerate();
 
-            $request->session()->put('id_users', Auth::guard('penyewa')->user()->id);
-            $request->session()->put('email', Auth::guard('penyewa')->user()->email);
+            return redirect()->intended('/dashboardAdmin');
+        }
 
-            return redirect()->intended('/dashboardPenyewa');
+        if (Auth::attempt($credentials) && Auth::user()->role == 'Penyewa') {
+            $request->session()->regenerate();
+
+            $request->session()->put('id_users', Auth::user()->id);
+            $request->session()->put('email', Auth::user()->email);
+
+            return redirect()->intended('/');
         }
 
         return back()->with('loginError', 'Login Failed~');
@@ -43,11 +43,11 @@ class LoginController extends Controller
         $request->session()->forget('id_users');
         $request->session()->forget('email');
 
-        Auth::guard('penyewa')->logout();
+        Auth::logout();
 
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->intended('/');
     }
 }

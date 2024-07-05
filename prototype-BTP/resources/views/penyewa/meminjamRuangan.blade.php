@@ -67,12 +67,9 @@
                                     <select name="role" id="role" class="form-control border-color"
                                         onchange="fetchRuanganDetails()" required>
                                         <option value="" disabled selected>Pilih Status</option>
-                                        <option value="mahasiswa">Mahasiswa</option>
-                                        <option value="internal">Dosen (Telkom University)</option>
-                                        <option value="eksternal">Dosen (Luar instansi Telkom University)</option>
-                                        <option value="internal">Ditmawa</option>
-                                        <option value="internal">Pegawai</option>
-                                        <option value="eksternal">Partisipan (Luar instansi Telkom University)</option>
+                                        <option value="Internal">Pegawai</option>
+                                        <option value="Eksternal">Mahasiswa</option>
+                                        <option value="Eksternal">Umum</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         Pilih Status!
@@ -240,7 +237,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-color">Harga (Termasuk PPN 11% dan biaya Virtual Account)</label>
-                    <p id="confirm_harga" class="bordered-text"></p>
+                    <p id="confirm_harga_dengan_ppn" class="bordered-text"></p>
                 </div>
                 <div class="mb-3">
                     <label class="form-label text-color">Catatan Peminjaman</label>
@@ -339,10 +336,10 @@
         function updatePrice(data) {
             if (role) {
                 let hargaRuangan;
-                if (role === 'internal') {
+                if (role === 'Internal') {
                     hargaRuangan = 0;
                     console.log("Internal role, setting price to 0");
-                } else if (role === 'eksternal' || role === 'mahasiswa') {
+                } else if (role === 'Eksternal') {
                     hargaRuangan = parseInt(data.harga_ruangan);
                     console.log("External role, setting price to:", hargaRuangan);
                 }
@@ -412,7 +409,7 @@
         var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
         var priceAkhir;
 
-        if (status === 'eksternal' || status === 'mahasiswa') {
+        if (status === 'Eksternal') {
             priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
         } else {
             priceAkhir = 'Rp 0';
@@ -429,7 +426,8 @@
         document.getElementById('confirm_tanggal_selesai').innerText = tanggalSelesai;
         document.getElementById('confirm_jam_mulai').innerText = jamMulai;
         document.getElementById('confirm_jam_selesai').innerText = jamSelesai;
-        document.getElementById('confirm_harga').innerText = priceAkhir;
+        document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
+        document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
         document.getElementById('confirm_keterangan').innerText = keterangan;
 
         $('#confirmationModal').modal({
@@ -461,7 +459,7 @@
         }).modal('show'); // Show the confirmation popup modal
     }
 
-    
+
     function confirmSubmission() {
         const rentalForm = document.getElementById('rentalForm');
         const formData = new FormData(rentalForm);

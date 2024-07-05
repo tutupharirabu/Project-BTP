@@ -1,6 +1,6 @@
 @extends('penyewa.layouts.mainPenyewa')
 @section('containPenyewa')
-    {{-- 
+    {{--
     <head>
         <link rel="stylesheet" href="assets/css/dashboard.css">
     </head> --}}
@@ -39,12 +39,12 @@
         <div id="calendar" class="mx-3"></div>
 
         <br>
-        <div class="container">
+        {{-- <div class="container">
             <center>
                 <h2>Grafik Peminjaman Per Bulan</h2>
             </center>
             <canvas id="myLineChart" width="200" height="100"></canvas>
-        </div>
+        </div> --}}
     </div>
 
     <script>
@@ -60,7 +60,7 @@
     {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
 
     {{-- Chart JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const peminjamanData = @json($peminjamanPerBulan);
@@ -107,5 +107,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

@@ -19,36 +19,44 @@
                         <span>Dashboard</span>
                     </a>
                 </div>
-                <div class="m-1">
+                {{-- <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusRuanganAdmin">
+                        <i class="material-symbols-outlined me-2">view_list</i>
+                        <span>Daftar Ruangan</span>
+                    </a>
+                </div> --}}
+                {{-- <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPengajuanAdmin">
+                        <i class="material-symbols-outlined me-2">check_circle</i>
+                        <span>Status Pengajuan</span>
+                    </a>
+                </div> --}}
+                <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganPenyewa">
                         <i class="material-symbols-outlined me-2">view_list</i>
                         <span>Daftar Ruangan</span>
                     </a>
                 </div>
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPengajuanAdmin">
-                        <i class="material-symbols-outlined me-2">check_circle</i>
-                        <span>Status Pengajuan</span>
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/meminjamRuangan">
+                        <i class="material-symbols-outlined me-2">description</i>
+                        <span>Peminjaman Ruangan</span>
                     </a>
                 </div>
-                <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganPenyewa">
-                        <i class="material-symbols-outlined me-2">view_list</i>
-                        <span>Daftar Ruangan (user)</span>
-                    </a>
-                </div>
-                <div class="m-1">
+                {{-- <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
                         <i class="material-symbols-outlined me-2">history</i>
                         <span>Riwayat</span>
                     </a>
-                </div>
+                </div> --}}
+                @auth
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/logout">
                         <i class="material-symbols-outlined me-2">logout</i>
                         <span>Keluar</span>
                     </a>
                 </div>
+                @endauth
             </nav>
         </div>
     </div>

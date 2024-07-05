@@ -24,7 +24,7 @@
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-VoVp+Y7fE9gr/mq6+dL88UJ8RxmcrnhOHKAtMtTX/AriKVIyK/Bn0pNED0oGzUg0JeA7L+CK6XXNwOjf5eFpBQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
     <style>
         body {
             padding-top: 60px;
@@ -36,7 +36,7 @@
     @include('admin.partials.navigationAdmin')
     <div class="row d-flex">
         <div class="col">
-            @include('admin.partials.sidebar')
+            @include('admin.partials.sidebarAdmin')
         </div>
         <div class="col col-sm-10 col-md-10 col-xl-10 col-lg-10" style="margin-bottom:70px">
             @yield('containAdmin')

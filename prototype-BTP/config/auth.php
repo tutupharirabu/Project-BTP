@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'penyewa',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -38,17 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'user',
-        ],
-
-        // 'admin' => [
-        //     'driver' => 'session',
-        //     'provider' => 'admin_users',
-        // ],
-
-        'penyewa' => [
-            'driver' => 'session',
-            'provider' => 'penyewa',
+            'provider' => 'users',
         ],
     ],
 
@@ -70,17 +60,7 @@ return [
     */
 
     'providers' => [
-        'user' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        // 'admin_users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Admin::class,
-        // ],
-
-        'penyewa' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\Users::class,
         ],
@@ -107,7 +87,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'penyewa',
+            'provider' => 'users',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
