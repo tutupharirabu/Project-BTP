@@ -81,28 +81,18 @@
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
 
                     @auth
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
-                        height="40" alt="Black and White Portrait of a Man" loading="lazy" />
-                    <p>
-                        <center style="color: black">{{ Auth::user()->nama_lengkap}}</center>
-                    </p>
-
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="#">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Settings</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/logout">Logout</a>
-                        </li>
-                    </ul>
+                        <span class="material-symbols-outlined"
+                            style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
+                        <p>
+                            <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
+                        </p>
                     @else
-                    <a href="/login" style="text-decoration: none; display: flex; align-items: center; color: #2F3645;">
-                        <span class="material-symbols-outlined" style="margin-right: 10px; font-weight: 600;">person</span>
-                        <p style="margin: 0; font-weight: 600;">Login</p>
-                    </a>
+                        <a href="/login"
+                            style="text-decoration: none; display: flex; align-items: center; color: #2F3645;">
+                            <span class="material-symbols-outlined"
+                                style="margin-right: 10px; font-weight: 600;">person</span>
+                            <p style="margin: 0; font-weight: 600;">Login</p>
+                        </a>
                     @endauth
 
                     <!-- jika belum login -->

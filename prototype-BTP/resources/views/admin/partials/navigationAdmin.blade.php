@@ -81,20 +81,11 @@
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
 
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="ms-3 rounded-circle me-3"
-                        height="40" alt="Black and White Portrait of a Man" loading="lazy" />
+                    <span class="material-symbols-outlined"
+                        style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
                     <p>
                         <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
                     </p>
-
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="#">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Settings</a>
-                        </li>
-                    </ul>
                 </a>
             </div>
         </div>
@@ -110,4 +101,3 @@
 
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
-

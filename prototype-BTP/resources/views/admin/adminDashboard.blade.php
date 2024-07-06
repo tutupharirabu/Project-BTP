@@ -28,6 +28,15 @@
                 </div>
             </div>
         </div>
+
+        <center>
+            <h2>Jadwal</h2>
+        </center>
+
+        <div id="calendar" class="mx-3"></div>
+
+        <br>
+
         <center>
             <h2>Grafik Peminjaman Per Bulan</h2>
         </center>
@@ -35,6 +44,16 @@
         <canvas id="myLineChart" width="200" height="100"></canvas>
     </div>
 
+    <script>
+        $(document).ready(function() {
+            var bookings = @json($events);
+            console.log(bookings);
+
+            $('#calendar').fullCalendar({
+                events: bookings
+            })
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

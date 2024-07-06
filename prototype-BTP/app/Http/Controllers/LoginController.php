@@ -21,13 +21,13 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'Petugas'))) {
+        if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'petugas'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('/dashboardAdmin');
         }
 
-        if (Auth::attempt($credentials) && Auth::user()->role == 'Penyewa') {
+        if (Auth::attempt($credentials) && Auth::user()->role == 'penyewa') {
             $request->session()->regenerate();
 
             $request->session()->put('id_users', Auth::user()->id);

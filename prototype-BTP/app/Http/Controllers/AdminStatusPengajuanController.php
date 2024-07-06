@@ -43,6 +43,18 @@ class AdminStatusPengajuanController extends Controller
             $message = 'Peminjaman ditolak!';
         }
 
+        $existingBookings = Peminjaman::where('tanggal_mulai', '<=', $dataPeminjaman->tanggal_selesai)
+            ->where('tanggal_selesai', '>=', $dataPeminjaman->tanggal_mulai)
+            ->where('id_peminjaman', '!=', $id)
+            ->where('id_ruangan', '!=', $dataPeminjaman->id_ruangan)
+            ->get();
+
+        if ($existingBookings->isNotEmpty()) {
+            $dataPeminjaman->status = 'Menunggu';
+            $dataPeminjaman->save();
+            $message = 'Peminjaman menunggu karena ruangan berbeda!';
+        }
+
 
         // if ($conflictingBooking) {
         //     return redirect()->back()->with('error', 'Ruangan sudah dipinjam pada waktu tersebut.');

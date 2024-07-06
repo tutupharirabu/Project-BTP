@@ -10,6 +10,17 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
+        $peminjamans = Peminjaman::with('ruangan')->where('status','Disetujui')->get();
+
+        $events = array();
+        foreach($peminjamans as $peminjaman){
+            $events[] = [
+                'title' => $peminjaman->nama_peminjam.' '.$peminjaman->ruangan->nama_ruangan,
+                'start' => $peminjaman->tanggal_mulai,
+                'end' => $peminjaman->tanggal_selesai,
+            ];
+        }
+
         $peminjamanPerBulan = Peminjaman::select(
             DB::raw('MONTH(tanggal_mulai) as bulan'),
             DB::raw('COUNT(*) as total')
@@ -31,7 +42,7 @@ class DashboardAdminController extends Controller
             return (object) ['bulan' => $bulan, 'total' => $total];
         })->values();
 
-        return view('admin/adminDashboard', compact('peminjamanPerBulan'));
+        return view('admin/adminDashboard', compact('peminjamans','events','peminjamanPerBulan'));
     }
 
     /**
