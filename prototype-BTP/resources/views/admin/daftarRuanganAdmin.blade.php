@@ -42,8 +42,9 @@
                                 check_circle
                             </span>
                         </div>
-                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv" >
+                        <div
+                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                            <p class="text-center mt-1 mb-2 font-dv">
                                 Tersedia</p>
                             <p class="text-center count">
                                 @php
@@ -62,8 +63,9 @@
                                 cancel
                             </span>
                         </div>
-                        <div class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv" >
+                        <div
+                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                            <p class="text-center mt-1 mb-2 font-dv">
                                 Digunakan</p>
                             <p class="text-center count">
                                 @php
@@ -81,10 +83,11 @@
             <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <input type="text" class="form-control" placeholder="Cari Ruangan..."
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari ruangan..."
                             style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                        <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
+                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
                     <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center"
                         style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
@@ -109,7 +112,7 @@
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="dataRuangan">
                                     @foreach ($dataRuangan as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
@@ -158,8 +161,7 @@
                                                     <a class="btn text-dark status"
                                                         style=" background-color: #B0B0B0; ">Digunakan</a>
                                                 @else
-                                                    <a class="btn text-white status"
-                                                        style=" background-color: #61677A; ">
+                                                    <a class="btn text-white status" style=" background-color: #61677A; ">
                                                         - </a>
                                                 @endif
                                             </td>
@@ -177,6 +179,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center">
+                                {{ $dataRuangan->links('vendor.pagination.custom') }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,19 +194,54 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <div class="circle-add">
-                            <span class="material-symbols-outlined" style="font-size: 3.5em; color: #FFFFFF;">delete</span>
+                            <span class="material-symbols-outlined"
+                                style="font-size: 3.5em; color: #FFFFFF;">delete</span>
                         </div>
                         <p style="margin-top: 10px;">Apakah ruangan Multimedia ingin dihapus?</p>
-                        <button type="button" class="btn" style="background-color: #B0B0B0; color: white; margin-right: 30px;" onclick="closeConfirmationModal()">TIDAK</button>
-                        <button type="button" class="btn" style="background-color: #FF0000; color: white;" id="confirmDelete">YA</button>
+                        <button type="button" class="btn"
+                            style="background-color: #B0B0B0; color: white; margin-right: 30px;"
+                            onclick="closeConfirmationModal()">TIDAK</button>
+                        <button type="button" class="btn" style="background-color: #FF0000; color: white;"
+                            id="confirmDelete">YA</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-@endsection
+        <script>
+            function liveSearch() {
+                // Get the input field and its value
+                let input = document.getElementById('searchInput');
+                let filter = input.value.toLowerCase();
+                // Get the table and all table rows
+                let table = document.getElementById('dataRuangan');
+                let tr = table.getElementsByTagName('tr');
+                // Loop through all table rows, and hide those who don't match the search query
+                for (let i = 0; i < tr.length; i++) {
+                    let td = tr[i].getElementsByTagName('td');
+                    let rowContainsFilter = false;
+                    // Check each cell in the row
+                    for (let j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            let textValue = td[j].textContent || td[j].innerText;
+                            if (textValue.toLowerCase().indexOf(filter) > -1) {
+                                rowContainsFilter = true;
+                                break;
+                            }
+                        }
+                    }
+                    // Show or hide the row based on the filter
+                    if (rowContainsFilter) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
+        </script>
+    @endsection

@@ -11,13 +11,13 @@ class RiwayatController extends Controller
 {
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with('ruangan')->get();
+        $dataPeminjaman = Peminjaman::with('ruangan')->paginate(10);
         return view('riwayatRuangan', compact('dataPeminjaman'));
     }
 
     public function downloadCSV()
     {
-        $fileName = 'peminjaman.csv';
+        $fileName = 'riwayat_peminjaman_btp.csv';
         $peminjamanData = Peminjaman::with('ruangan')->get();
 
         $headers = array(

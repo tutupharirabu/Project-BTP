@@ -10,7 +10,7 @@ class AdminStatusPengajuanController extends Controller
 {
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with('ruangan')->get();
+        $dataPeminjaman = Peminjaman::with('ruangan')->paginate(10);
         return view('admin.statusPengajuanAdmin', compact('dataPeminjaman'));
     }
 

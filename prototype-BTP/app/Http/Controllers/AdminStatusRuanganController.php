@@ -11,7 +11,7 @@ class AdminStatusRuanganController extends Controller
 {
     public function index()
     {
-        $dataRuangan = Ruangan::with('gambar')->get();
+        $dataRuangan = Ruangan::with('gambar')->paginate(10);
         return view('admin.daftarRuanganAdmin',compact('dataRuangan'));
     }
 

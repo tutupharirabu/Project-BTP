@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                            placeholder="Cari Ruangan..."
+                            placeholder="Cari riwayat..."
                             style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
                         {{-- <button type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
@@ -91,6 +91,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center">
+                                {{ $dataPeminjaman->links('vendor.pagination.custom') }}
+                            </div>
                         </div>
                     </div>
                 </div>
