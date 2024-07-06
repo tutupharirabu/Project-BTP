@@ -18,12 +18,18 @@ class AdminStatusPengajuanController extends Controller
     {
         $dataPeminjaman = Peminjaman::find($id);
         $pilih = $request->input('pilihan');
+        $message = '';
+
+        if (!$dataPeminjaman) {
+            return redirect('/statusPengajuanAdmin')->with('error', 'Peminjaman tidak ditemukan!');
+        }
 
         if ($pilih == 'terima') {
-            // Check for existing approved bookings at the same time
+            // Check for conflicting bookings in the same room and time
             $conflictingBookings = Peminjaman::where('tanggal_mulai', '<=', $dataPeminjaman->tanggal_selesai)
                 ->where('tanggal_selesai', '>=', $dataPeminjaman->tanggal_mulai)
                 ->where('id_peminjaman', '!=', $id)
+                ->where('id_ruangan', $dataPeminjaman->id_ruangan)
                 ->where('status', 'Menunggu')
                 ->get();
 
@@ -35,50 +41,15 @@ class AdminStatusPengajuanController extends Controller
             foreach ($conflictingBookings as $booking) {
                 $booking->status = 'Ditolak';
                 $booking->save();
-                $message = 'Peminjaman ditolak!';
             }
         } elseif ($pilih == 'tolak') {
             $dataPeminjaman->status = 'Ditolak';
-            $dataPeminjaman->ruangan->save();
+            $dataPeminjaman->save();
             $message = 'Peminjaman ditolak!';
         }
 
-        $existingBookings = Peminjaman::where('tanggal_mulai', '<=', $dataPeminjaman->tanggal_selesai)
-            ->where('tanggal_selesai', '>=', $dataPeminjaman->tanggal_mulai)
-            ->where('id_peminjaman', '!=', $id)
-            ->where('id_ruangan', '!=', $dataPeminjaman->id_ruangan)
-            ->get();
-
-        if ($existingBookings->isNotEmpty()) {
-            $dataPeminjaman->status = 'Menunggu';
-            $dataPeminjaman->save();
-            $message = 'Peminjaman menunggu karena ruangan berbeda!';
-        }
-
-
-        // if ($conflictingBooking) {
-        //     return redirect()->back()->with('error', 'Ruangan sudah dipinjam pada waktu tersebut.');
-        // }
-        // else if($pilih == 'terima') {
-        //     $dataPeminjaman->status = 'Disetujui';
-        //     $dataPeminjaman->ruangan->tersedia = '0';
-        //     $dataPeminjaman->ruangan->save();
-        //     $message = 'Peminjaman diterima!';
-        // } else if ($pilih == 'tolak') {
-        //     $dataPeminjaman->status = 'Ditolak';
-        //     $dataPeminjaman->ruangan->save();
-        //     $message = 'Peminjaman ditolak!';
-        // }
-
-        // } else if ($pilih == 'tinjau ulang') {
-        //     $dataMeminjam->status = 'Meninjau Kembali Pengajuan';
-        //     $message = 'Mohon maaf, pengajuan sedang ditinjau kembali!';
-        // } else if ($pilih == 'ulang') {
-        //     $dataMeminjam->status = 'Sedang Menunggu';
-        // }
-
         $dataPeminjaman->save();
 
-        return redirect('/statusPengajuanAdmin');
+        return redirect('/statusPengajuanAdmin')->with('message', $message);
     }
 }
