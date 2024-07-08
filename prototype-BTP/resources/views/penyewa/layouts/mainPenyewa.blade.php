@@ -24,6 +24,7 @@
     <style>
         body {
             padding-top: 60px;
+            overflow-x: hidden;
         }
     </style>
 
@@ -58,32 +59,6 @@
 
 </body>
 
-
-
-{{-- Calendar JS --}}
-{{-- <script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    var calendarEl = document.getElementById('calendar');
-    var events = [];
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        initialView: 'dayGridMonth',
-        timeZone: 'UTC',
-        events: '/events',
-        editable: true,
-    });
-
-    calendar.render();
-</script> --}}
 <style>
     .footerstyle {
         position: fixed;

@@ -28,6 +28,7 @@
     <style>
         body {
             padding-top: 60px;
+            overflow-x: hidden;
         }
 
         .footerstyle {

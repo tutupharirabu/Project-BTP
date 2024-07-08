@@ -32,12 +32,22 @@
                 </div>
             </div>
         </div>
-        <center>
-            <h2>Jadwal</h2>
-        </center>
+        <div class="p-3 border mb-3"
+            style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
-        <div id="calendar" class="mx-3"></div>
+            {{-- daftar ruangan dsini --}}
 
+        </div>
+
+        <div class="p-3 border mb-3"
+            style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+
+            <center>
+                <h2>Jadwal</h2>
+            </center>
+
+            <div id="calendar" class="mx-3"></div>
+        </div>
         <br>
         {{-- <div class="container">
             <center>
