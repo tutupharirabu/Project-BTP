@@ -9,7 +9,6 @@ use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\PenyewaDaftarRuangan;
 use App\Http\Controllers\PenyewaDetailRuangan;
 use App\Http\Controllers\MeminjamRuanganController;
-
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\AdminDetailRuangan;
 use App\Http\Controllers\AdminStatusPengajuanController;

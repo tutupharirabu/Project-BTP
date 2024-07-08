@@ -82,7 +82,7 @@
                             </span>
                         </div>
                         <div
-                            class="status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                            class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
                             <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                 Menunggu</p>
                             <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
@@ -150,12 +150,11 @@
                                                             style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Setuju</button>
                                                         <button type="button" name="pilihan" value='tolak'
                                                             class="btn btn-outline-danger btn-styl"
-                                                            style="">Tolak</button>
+                                                            style="border: 2px solid black;border-color: #FF2E26;color: red">Tolak</button>
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a type="button" class="btn btn-warning btn-styl"
-                                                        style="">Menunggu</a>
+                                                    <a type="button" class="btn text-white btn-warning btn-styl warning" style="padding: 8px">Menunggu</a>
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
                                                 <td class="d-flex justify-content-between">
@@ -163,8 +162,8 @@
                                                         method="POST">
                                                         <a type="button" class="btn text-white"
                                                             style="background-color:#0EB100; border-radius:6px; width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
-                                                        <a type="button" class="btn btn-outline-danger"
-                                                            style="border-radius:6px;;width: 100px;font-size: 13px; text-transform: capitalize;">Tolak</a>
+                                                        <a type="button" class="btn text-white"
+                                                            style="background-color: #FF2E26; border-radius:6px;;width: 100px;font-size: 13px; text-transform: capitalize;">Tolak</a>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -177,13 +176,13 @@
                                                         method="POST">
                                                         <a type="button" class="btn btn-outline-success btn-styl"
                                                             style="">Setuju</a>
-                                                        <a type="button" class="btn btn-danger btn-styl"
-                                                            style="">Tolak</a>
+                                                        <a type="button" class="btn text-white btn-styl"
+                                                            style="background-color: #FF2E26;">Tolak</a>
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger"
-                                                        style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
+                                                    <a type="button" class="btn text-white"
+                                                        style="background-color: #FF2E26; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
                                                 </td>
                                             @endif
                                         </tr>
@@ -334,6 +333,11 @@
                     width: 100px;
                     font-size: 13px;
                     text-transform: capitalize;
+                }
+
+                .warning{
+                    border-color: #ff9800;
+                    color: orange;
                 }
             </style>
         @endsection

@@ -1,0 +1,32 @@
+.custom-img {
+    max-height: 200px;
+    width: auto;
+}
+.position-relative {
+    position: relative;
+}
+.title-overlay {
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    border-radius: 5px;
+}
+.detail-overlay {
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: black;
+    background: #FFFFFF;
+    padding: 5px 18px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+.status-overlay {
+    top: 10px;
+    right: 50px;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}

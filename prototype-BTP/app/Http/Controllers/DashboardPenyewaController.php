@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Ruangan;
 
 class DashboardPenyewaController extends Controller
 {
     public function index()
     {
+        $RuangDashboard = Ruangan::all();
+
         $peminjamans = Peminjaman::with('ruangan')->where('status','Disetujui')->get();
 
         $events = array();
@@ -20,7 +23,7 @@ class DashboardPenyewaController extends Controller
                 'end' => $peminjaman->tanggal_selesai,
             ];
         }
-        return view('penyewa/userDashboard', compact('peminjamans','events'));
+        return view('penyewa/userDashboard', compact('peminjamans','events','RuangDashboard'));
     }
 
     /**
