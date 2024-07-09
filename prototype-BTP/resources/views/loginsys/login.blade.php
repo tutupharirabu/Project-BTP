@@ -28,7 +28,6 @@
                 <div class="col-md-12">
                     <label for="email" class="form-label thicker">Email</label>
                     <div class="input-group">
-                        <!-- <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span> -->
                         <input type="email" name="email" id="email" class="form-control"
                             placeholder="Masukkan Email Anda" required style="border-radius: 5px;">
                         <div class="invalid-feedback">
