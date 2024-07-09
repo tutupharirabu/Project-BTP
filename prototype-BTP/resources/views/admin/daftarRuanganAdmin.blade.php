@@ -166,10 +166,10 @@
                                                 @endif
                                             </td> --}}
                                             <td style="display: flex; justify-content: center;">
-                                                @if ($data->status == 'Available')
+                                                @if ($data->status == 'Tersedia')
                                                     <a class="btn text-white status"
                                                         style=" background-color: #0EB100; ">Tersedia</a>
-                                                @elseif ($data->status == 'Booked')
+                                                @elseif ($data->status == 'Digunakan')
                                                     <a class="btn text-dark status"
                                                         style=" background-color: #B0B0B0; ">Digunakan</a>
                                                 @else

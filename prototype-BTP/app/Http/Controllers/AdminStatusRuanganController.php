@@ -25,7 +25,7 @@ class AdminStatusRuanganController extends Controller
     {
         $namaRuangan = $request->input('nama_ruangan');
         $exists = Ruangan::where('nama_ruangan', $namaRuangan)->exists();
-    
+
         return response()->json(['exists' => $exists]);
     }
 
@@ -49,7 +49,7 @@ class AdminStatusRuanganController extends Controller
             'harga_ruangan' => 'required',
             'status' => 'required',
             'url' => 'required|array',
-            'url.*' => 'required|image'
+            'url.*' => 'required|image:jpeg,png,jpg'
         ]);
 
         $pilih = $request->input('status');
