@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Riwayat Peminjaman Ruangan<h4>
+                    <h4>Riwayat Penyewaan Ruangan<h4>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="/riwayatRuangan" style="color: red;font-size:12px;font-weight: bold;">Riwayat</a>
+                    <a class="" href="/riwayatRuangan" style="color: red;font-size:12px;font-weight: bold;">Riwayat Penyewaan Ruangan</a>
                 </div>
             </div>
         </div>

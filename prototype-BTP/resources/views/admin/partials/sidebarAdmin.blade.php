@@ -40,7 +40,7 @@
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
                         <i class="material-symbols-outlined me-2">history</i>
-                        <span>Riwayat Peminjaman Ruangan</span>
+                        <span>Riwayat Penyewaan Ruangan</span>
                     </a>
                 </div>
                 <div class="m-1">
