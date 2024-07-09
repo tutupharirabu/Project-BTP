@@ -21,6 +21,14 @@ class AdminStatusRuanganController extends Controller
         // return response()->json($schedules);
     }
 
+    public function checkRoomName(Request $request)
+    {
+        $namaRuangan = $request->input('nama_ruangan');
+        $exists = Ruangan::where('nama_ruangan', $namaRuangan)->exists();
+    
+        return response()->json(['exists' => $exists]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -35,7 +43,7 @@ class AdminStatusRuanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_ruangan' => 'required|string',
+            'nama_ruangan' => 'required|string|unique:ruangan,nama_ruangan',
             'kapasitas_ruangan' => 'required',
             'lokasi' => 'required',
             'harga_ruangan' => 'required',

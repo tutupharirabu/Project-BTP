@@ -21,8 +21,8 @@
             </div>
 
             <h3 class="text-center pb-3">Masuk</h3>
-            <p class="text-center">Hi! selamat datang di website peminjaman Bandung Techno Park</p>
-            <form class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST" class="form-valid"
+            <p class="text-center">Halo! selamat datang di website peminjaman Bandung Techno Park</p>
+            <form class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST"
                 enctype="multipart/form-data" novalidate>
                 @csrf
                 <div class="col-md-12">
@@ -77,6 +77,28 @@
                 passwordIcon.classList.add('fa-eye');
             }
         });
+    </script>
+
+    <script>
+        (function() {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

@@ -7,7 +7,7 @@
             </div>
             <h3 class="text-center pb-3">Daftar</h3>
             <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST"
-                class="form-valid" enctype="multipart/form-data" novalidate onsubmit="return validateForm(event)">
+                enctype="multipart/form-data" novalidate onsubmit="return validateForm(event)">
                 @csrf
                 <div class="col-md-12">
                     <label for="nama_lengkap" class="form-label thicker">Nama Lengkap</label>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <label for="email" class="form-labe thicker">Email</label>
+                    <label for="email" class="form-label thicker">Email</label>
                     <input type="email" name="email" id="email" class="form-control"
                         placeholder="Masukkan email anda" required>
                     <div class="invalid-feedback" id="emailFeedback">
@@ -36,20 +36,20 @@
                 <div class="col-md-12">
                     <label for="password" class="form-label thicker">Kata Sandi</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" placeholder="Masukkan Password"
-                            name="password" required>
+                        <input type="password" class="form-control" id="password"
+                            placeholder="Masukkan Password (Min 8 Karakter)" name="password" required minlength="8">
                         <span class="input-group-text icon" id="password_toggle">
                             <i class="fa-regular fa-eye" id="password_icon"></i>
                         </span>
                     </div>
                     <div class="invalid-feedback">
-                        Masukkan password anda!
+                        Masukkan password anda (minimal 8 karakter)!
                     </div>
                 </div>
                 <div class="col-md-12">
                     <label for="confirm_password" class="form-label thicker">Konfirmasi Kata Sandi</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="confirm_password" placeholder="Masukkan Password"
+                        <input type="password" class="form-control" id="confirm_password" placeholder="Masuk Ulang Password"
                             name="confirm_password" required>
                         <span class="input-group-text icon" id="confirm_password_toggle">
                             <i class="fa-regular fa-eye" id="confirm_password_icon"></i>
@@ -189,5 +189,57 @@
                 confirmPasswordIcon.classList.add('fa-eye');
             }
         });
+    </script>
+
+    <script>
+        // JavaScript for custom Bootstrap validation
+        (function() {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Custom validation for password confirmation
+        function validateForm(event) {
+            var form = event.target;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var confirmPasswordField = document.getElementById('confirm_password');
+                confirmPasswordField.setCustomValidity('Passwords do not match');
+                confirmPasswordField.classList.add('is-invalid');
+                confirmPasswordField.nextElementSibling.textContent = 'Passwords do not match';
+            } else {
+                var confirmPasswordField = document.getElementById('confirm_password');
+                confirmPasswordField.setCustomValidity('');
+                confirmPasswordField.classList.remove('is-invalid');
+            }
+
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+            return form.checkValidity();
+        }
     </script>
 @endsection
