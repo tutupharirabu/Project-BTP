@@ -40,8 +40,12 @@
                     <label for="password" class="form-label thicker">Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control" id="inputpassword" placeholder="Masukkan Password"
-                            name="password">
-                        <span class="input-group-text icon" id="id_icon"><i class="fa-regular fa-eye"></i></span>
+                            name="password" required>
+                        <span class="input-group-text icon" id="password_toggle"><i class="fa-regular fa-eye"
+                                id="password_icon"></i></span>
+                        <div class="invalid-feedback">
+                            Masukkan Password Anda!
+                        </div>
                     </div>
                 </div>
 
@@ -58,6 +62,22 @@
     </div>
 
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+
+    <script>
+        document.getElementById('password_toggle').addEventListener('click', function() {
+            const passwordField = document.getElementById('inputpassword');
+            const passwordIcon = document.getElementById('password_icon');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

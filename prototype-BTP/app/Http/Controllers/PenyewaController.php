@@ -32,6 +32,16 @@ class PenyewaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function checkUnique(Request $request){
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $exists = Users::where($field, $value)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

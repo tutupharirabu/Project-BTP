@@ -39,6 +39,7 @@ Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'index'])->n
 Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name('admin.dashboard')->middleware('auth'); // Dashboard Admin
 
 // Register Penyewa
+Route::post('/check-unique', [PenyewaController::class, 'checkUnique'])->name('check.unique');
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
