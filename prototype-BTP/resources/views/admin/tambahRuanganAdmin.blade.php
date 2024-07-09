@@ -113,8 +113,8 @@
                     <span class="material-symbols-outlined text-white" style="font-size: 4em;">add</span>
                 </div>
                 <p style="margin-top: 10px;">Apakah anda ingin menambahkan ruangan?</p>
-                <button type="button" class="btn text-white" style="background-color: #FF3636; margin-right: 30px" onclick="closeConfirmationModal()">TIDAK</button>
-                <button type="button" class="btn text-white" style="background-color: #00DE09" onclick="submitForm()">YA</button>
+                <button type="button" class="btn text-white text-capitalize" style="background-color: #FF3636; margin-right: 30px" onclick="closeConfirmationModal()">TIDAK</button>
+                <button type="button" class="btn text-white text-capitalize" style="background-color: #00DE09" onclick="submitForm()">YA</button>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
                     <span class="material-symbols-outlined text-white" style="font-size: 4em;">check_circle</span>
                 </div>
                 <p>Ruangan Multimedia telah ditambahkan</p>
-                <button type="button" class="btn btn-primary" onclick="closeSuccessModal()">Oke</button>
+                <button type="button" class="btn text-white" style="background-color:#0066FF;" onclick="closeSuccessModal()">Oke</button>
             </div>
         </div>
     </div>

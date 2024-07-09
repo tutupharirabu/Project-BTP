@@ -37,7 +37,7 @@
         </div>
 
         
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="border-radius:5px;">
           <div class="carousel-item active">
             <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/07/profile-btp-03.jpg" alt="Los Angeles" class="d-block w-100 custom-carousel-img">
           </div>
@@ -49,10 +49,10 @@
           </div>
         </div>
         
-        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" style="color:#028391; left: -14%;">
+          <span class="carousel-control-prev-icon" style=""></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="color:#028391; right: -14%">
           <span class="carousel-control-next-icon"></span>
         </button>
       </div>
@@ -91,7 +91,7 @@
                             Tersedia
                         </div>
                         @elseif($ruangan->tersedia == '0')
-                        <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                        <div type="button boder" class="btn btn-sm text-white" style="font-size:16px;background-color: #555555; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
                             Digunakan
                         </div>
                         @endif
@@ -100,7 +100,7 @@
             </tbody>
         </table>
     </div>
-    <div class="container-fluid mt-4 mb-6 d-flex justify-content-between" style="width: 80%;">
+    <div class="container-fluid mt-4 mb-6 d-md-flex d-xl-flex d-lg-flex justify-content-between" style="width: 80%;">
         <div class="text-black">
             <p>Keterangan :</p>
             <p>*Harga Diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>

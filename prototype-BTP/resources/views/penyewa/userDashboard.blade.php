@@ -29,38 +29,50 @@
             </div>
         </div>
     </div>
-    <div class="p-3 border mb-3"
+    <div class="p-3 border mb-5"
         style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
-        <!-- <center>
-            <h2>Daftar Ruangan</h2>
-        </center> -->
-        
-        <!-- daftar ruangan -->
-        <div class="row justify-content-sm-center text-center text-dark mt-3">
-            @foreach ($RuangDashboard->take(3) as $ruangan)
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    @foreach ($ruangan->gambar as $gambar)
-                        <div class="position-relative">
-                            <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
-                                alt="Gambar Ruangan" style="border-radius: 5px;">
-                            <h6 class="card-title position-absolute title-overlay">{{ $ruangan->nama_ruangan }}</h6>
-                            <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
-                                class="btn btn-light shadow-none position-absolute detail-overlay text-capitalize"">Detail</a>
-                            @if ($ruangan->tersedia == '1')
-                                <span class="status-available position-absolute status-overlay">Tersedia</span>
-                            @else
-                                <span class="status-not-available position-absolute status-overlay">Digunakan</span>
-                            @endif
+        <!-- daftar ruangan sebagai carousel -->
+        <div id="ruanganCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($RuangDashboard->chunk(3) as $index => $chunk)
+                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <div class="row justify-content-sm-center text-center text-dark mt-3">
+                            @foreach ($chunk as $ruangan)
+                                <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                                    @foreach ($ruangan->gambar as $gambar)
+                                        <div class="position-relative">
+                                            <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
+                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px;">
+                                            <h6 class="card-title position-absolute title-overlay">{{ $ruangan->nama_ruangan }}</h6>
+                                            <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
+                                                class="btn btn-light shadow-none position-absolute detail-overlay text-capitalize">Detail</a>
+                                            @if ($ruangan->tersedia == '1')
+                                                <span class="status-available position-absolute status-overlay">Tersedia</span>
+                                            @else
+                                                <span class="status-not-available position-absolute status-overlay">Digunakan</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#ruanganCarousel" data-bs-slide="prev" style="color:#028391; left: -6%">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#ruanganCarousel" data-bs-slide="next" style="color:#028391; right: -6%;">
+                <span class="carousel-control-next-icon" aria-hidden="true" ></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
         
         <div class="row mt-4">
-            <div class="d-flex justify-content-center w-100">
-                <a type="button" class="btn btn-sm text-white text-capitalize" style="background-color: #2CA700; font-size: 16px; border-radius: 7px;" href="/daftarRuanganPenyewa" >Lihat Ruangan Lainnya</a>
+            <div class="d-md-flex justify-content-center w-100">
+                <a type="button" class="btn btn-sm text-white text-capitalize" style="background-color: #2CA700; font-size: 16px; border-radius: 7px;" href="/daftarRuanganPenyewa">Lihat Ruangan Lainnya</a>
             </div>
         </div>
     </div>
@@ -87,56 +99,5 @@
         });
     });
 </script>
-    {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
-
-    {{-- Chart JS --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const peminjamanData = @json($peminjamanPerBulan);
-
-            // Array nama bulan
-            const monthNames = [
-                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-            ];
-
-            const labels = monthNames;
-
-            // Hitung total keseluruhan peminjaman
-            const totalPeminjaman = peminjamanData.reduce((sum, item) => sum + item.total, 0);
-
-            // Ubah nilai peminjaman menjadi persentase
-            const values = peminjamanData.map(item => ((item.total / totalPeminjaman) * 100).toFixed(2));
-
-            const ctx = document.getElementById('myLineChart').getContext('2d');
-            const myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Persentase Peminjaman',
-                        data: values,
-                        fill: false,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value +
-                                        '%'; // Tambahkan simbol persentase ke setiap nilai pada sumbu y
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script> --}}
 
 @endsection

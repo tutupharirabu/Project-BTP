@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-md-12 d-flex justify-content-center">
-                <button type="submit" class="btn btnlog me-2">Submit</button>
+                <button type="submit" class="btn btnlog me-2">Daftar</button>
             </div>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="d-flex align-items-center">

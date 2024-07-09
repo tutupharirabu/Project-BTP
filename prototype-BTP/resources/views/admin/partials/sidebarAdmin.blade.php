@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 col-lg-2 sidebar d-none d-md-block d-flex flex-column"
-            style="background-color: #ed3c35; color: #FFFFFF;">
+            style="background-color: #028391; color: #FFFFFF;">
             <nav class="nav flex-column">
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/dashboardAdmin">

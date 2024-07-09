@@ -89,7 +89,7 @@
                         {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
-                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center"
+                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
                         style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                 </div>
             </div>
