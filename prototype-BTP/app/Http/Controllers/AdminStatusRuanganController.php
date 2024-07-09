@@ -61,7 +61,7 @@ class AdminStatusRuanganController extends Controller
                 'lokasi' => $request->lokasi,
                 'harga_ruangan' => $request->harga_ruangan,
                 'tersedia' => '1',
-                'status' => ''
+                'status' => $request->input('status'),
             ]);
         } else if ($pilih == 'Digunakan') {
             $ruangan = Ruangan::create([
@@ -70,7 +70,7 @@ class AdminStatusRuanganController extends Controller
                 'lokasi' => $request->lokasi,
                 'harga_ruangan' => $request->harga_ruangan,
                 'tersedia' => '0',
-                'status' => '-',
+                'status' => $request->input('status'),
             ]);
         }
 
