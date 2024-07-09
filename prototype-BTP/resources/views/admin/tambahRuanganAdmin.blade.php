@@ -2,6 +2,49 @@
 
 @section('containAdmin')
 
+<style>
+    .drop-zone.large{
+        width: 550px;
+        height: 300px;
+    }
+
+    .drop-zone__prompt {
+        color: #cccccc;
+    }
+
+    .drop-zone__thumb {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .drop-zone__thumb::after {
+        content: attr(data-label);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.75);
+        text-align: center;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .drop-zone--over {
+        border-color: #666;
+    }
+</style>
+
 <head>
     <link rel="stylesheet" href="assets/css/dragndrop.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
@@ -68,8 +111,13 @@
                             <div class="form-group row mb-2">
                                 <label for="harga_ruangan" class="text-color col-md-3 col-form-label text-md-right">Harga</label>
                                 <div class="col-md-7">
-                                    <input type="text" id="harga_ruangan" class="bordered-text form-control" name="harga_ruangan" required>
-                                    <div class="invalid-feedback">Silakan masukkan harga.</div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" id="harga_ruangan" class="bordered-text form-control" name="harga_ruangan" required>
+                                        <div class="invalid-feedback">Silakan masukkan harga.</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-2">
@@ -77,8 +125,8 @@
                                 <div class="col-md-7">
                                     <select id="status" class="form-control bordered-text" name="status" required>
                                         <option value="">Pilih Status</option>
-                                        <option value="Available">Available</option>
-                                        <option value="Booked">Booked</option>
+                                        <option value="Tersedia">Tersedia</option>
+                                        <option value="Digunakan">Digunakan</option>
                                     </select>
                                     <div class="invalid-feedback">Silakan pilih status.</div>
                                 </div>
@@ -88,13 +136,43 @@
                             <div class="form-group row mb-2">
                                 <label for="url" class="text-color col-md-4 col-form-label text-md-right">Gambar Ruangan</label>
                             </div>
-                            <div class="drop-zone">
-                                <span class="drop-zone__prompt" style="color: #717171;">Drop file here or click to upload</span>
-                                <input type="file" for="url" id="url" name="url[]" class="drop-zone__input" multiple required>
-                                <div class="invalid-feedback" style="margin-bottom: 50px;">Silakan upload gambar.</div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="drop-zone large">
+                                        <span class="drop-zone__prompt">Gambar Utama</span>
+                                        <input type="file" id="gambar_utama" name="url[]" class="drop-zone__input" accept="image/png, image/jpeg" required>
+                                        <div class="invalid-feedback">Silakan upload gambar utama.</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="drop-zone large">
+                                        <span class="drop-zone__prompt">Gambar 2</span>
+                                        <input type="file" id="gambar_2" name="url[]" class="drop-zone__input" accept="image/png, image/jpeg" required>
+                                        <div class="invalid-feedback">Silakan upload gambar kedua.</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="drop-zone large">
+                                        <span class="drop-zone__prompt">Gambar 3</span>
+                                        <input type="file" id="gambar_3" name="url[]" class="drop-zone__input" accept="image/png, image/jpeg" required>
+                                        <div class="invalid-feedback">Silakan upload gambar ketiga.</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="drop-zone large">
+                                        <span class="drop-zone__prompt">Gambar 4</span>
+                                        <input type="file" id="gambar_4" name="url[]" class="drop-zone__input" accept="image/png, image/jpeg" required>
+                                        <div class="invalid-feedback">Silakan upload gambar keempat.</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="drop-zone large">
+                                        <span class="drop-zone__prompt">Gambar 5</span>
+                                        <input type="file" id="gambar_5" name="url[]" class="drop-zone__input" accept="image/png, image/jpeg" required>
+                                        <div class="invalid-feedback">Silakan upload gambar kelima.</div>
+                                    </div>
+                                </div>
                             </div>
-                            <strong>Uploaded Files</strong>
-                            <p class="uploadedRooms"></p>
                             <button type="button" class="btn text-white capitalize-first-letter" style="background-color: #0C9300" onclick="showConfirmationModal()">Tambah</button>
                         </div>
                     </form>
@@ -128,7 +206,7 @@
                 <div class="circle-add">
                     <span class="material-symbols-outlined text-white" style="font-size: 4em;">check_circle</span>
                 </div>
-                <p>Ruangan Multimedia telah ditambahkan</p>
+                <p id="modalMessage">Ruangan telah ditambahkan</p>
                 <button type="button" class="btn text-white" style="background-color:#0066FF;" onclick="closeSuccessModal()">Oke</button>
             </div>
         </div>
@@ -137,4 +215,5 @@
 
 <script src="assets/js/admin/dragndrop.js"></script>
 <script src="{{ asset('assets/js/admin/tambahRuangan.js') }}"></script>
+
 @endsection

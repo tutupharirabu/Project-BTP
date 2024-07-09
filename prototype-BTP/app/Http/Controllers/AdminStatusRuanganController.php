@@ -46,7 +46,7 @@ class AdminStatusRuanganController extends Controller
 
         $pilih = $request->input('status');
 
-        if ($pilih == 'Available') {
+        if ($pilih == 'Tersedia') {
             $ruangan = Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas_ruangan' => $request->kapasitas_ruangan,
@@ -55,7 +55,7 @@ class AdminStatusRuanganController extends Controller
                 'tersedia' => '1',
                 'status' => ''
             ]);
-        } else if ($pilih == 'Booked') {
+        } else if ($pilih == 'Digunakan') {
             $ruangan = Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas_ruangan' => $request->kapasitas_ruangan,

@@ -1,16 +1,3 @@
-document.getElementById("status").addEventListener("change", function () {
-    var status = this.value;
-    var tersediaInput = document.getElementById("tersedia");
-
-    if (status === "Available") {
-        tersediaInput.value = 0;
-    } else if (status === "Booked") {
-        tersediaInput.value = 1;
-    } else {
-        tersediaInput.value = "";
-    }
-});
-
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const dropZoneElement = inputElement.closest(".drop-zone");
 
@@ -20,7 +7,30 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
     inputElement.addEventListener("change", (e) => {
         if (inputElement.files.length) {
-            updateThumbnail(dropZoneElement, inputElement.files[0]);
+            const file = inputElement.files[0];
+
+            // Check file type
+            if (!["image/jpeg", "image/png"].includes(file.type)) {
+                alert("File harus berupa gambar PNG atau JPG.");
+                inputElement.value = "";
+                return;
+            }
+
+            // Check file dimensions
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                    if (img.width < 600 || img.height < 300) {
+                        alert("Dimensi gambar harus minimal 600 x 300 piksel.");
+                        inputElement.value = "";
+                    } else {
+                        updateThumbnail(dropZoneElement, file);
+                    }
+                };
+            };
         }
     });
 
@@ -39,8 +49,29 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
         e.preventDefault();
 
         if (e.dataTransfer.files.length) {
-            inputElement.files = e.dataTransfer.files;
-            updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+            const file = e.dataTransfer.files[0];
+
+            // Check file type
+            if (!["image/jpeg", "image/png"].includes(file.type)) {
+                alert("File harus berupa gambar PNG atau JPG.");
+                return;
+            }
+
+            // Check file dimensions
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                    if (img.width < 600 || img.height < 300) {
+                        alert("Dimensi gambar harus minimal 600 x 300 piksel.");
+                    } else {
+                        inputElement.files = e.dataTransfer.files;
+                        updateThumbnail(dropZoneElement, file);
+                    }
+                };
+            };
         }
 
         dropZoneElement.classList.remove("drop-zone--over");
@@ -92,9 +123,7 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
  */
 function updateThumbnail(dropZoneElement, file) {
     let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-    const uploadedRoomsElement = document.querySelector(".uploadedRooms");
 
-    console.log(file);
     // First time - remove the prompt
     if (dropZoneElement.querySelector(".drop-zone__prompt")) {
         dropZoneElement.querySelector(".drop-zone__prompt").remove();
@@ -120,7 +149,4 @@ function updateThumbnail(dropZoneElement, file) {
     } else {
         thumbnailElement.style.backgroundImage = null;
     }
-
-    // Update the uploaded file names in a new line
-    uploadedRoomsElement.innerHTML += file.name + "<br>";
 }
