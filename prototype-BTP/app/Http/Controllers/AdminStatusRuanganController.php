@@ -116,6 +116,7 @@ class AdminStatusRuanganController extends Controller
     {
         $dataRuangan = Ruangan::find($id);
 
+        // Validasi input
         $request->validate([
             'nama_ruangan' => 'required|string',
             'kapasitas_ruangan' => 'required',
@@ -123,36 +124,48 @@ class AdminStatusRuanganController extends Controller
             'harga_ruangan' => 'required',
             'tersedia' => 'required',
             'status' => 'required',
-            // 'url' => 'required|array',
-            // 'url.*' => 'required|image'
+            'url.*' => 'image|mimes:jpeg,png,jpg'
         ]);
 
-        Ruangan::where('id_ruangan', $dataRuangan->id_ruangan)->update([
-            'nama_ruangan' => $request['nama_ruangan'],
-            'kapasitas_ruangan' => $request['kapasitas_ruangan'],
-            'lokasi' => $request['lokasi'],
-            'harga_ruangan' => $request['harga_ruangan'],
-            'tersedia' => $request['tersedia'],
-            'status' => $request['status'],
-        ]);
+        // Update data ruangan
+        $this->updateRuangan($dataRuangan, $request);
 
+        // Upload gambar jika ada
         if ($request->hasFile('url')) {
-            // Hapus gambar lama
-            foreach ($dataRuangan->gambar as $gambar) {
-                Storage::delete('assets/' . $gambar->url);
-                $gambar->delete();
-            }
-
-            // Tambahkan gambar baru
-            foreach ($request->file('url') as $file) {
-                $path = $file->store('ruangan', 'assets');
-                Gambar::create([
-                    'id_ruangan' => $dataRuangan->id_ruangan,
-                    'url' => $path
-                ]);
-            }
+            $this->uploadGambar($dataRuangan, $request);
         }
+
         return redirect('/statusRuanganAdmin')->with('success', 'Ruangan updated successfully~');
+    }
+
+    protected function updateRuangan($dataRuangan, $request)
+    {
+        $dataRuangan->nama_ruangan = $request->input('nama_ruangan');
+        $dataRuangan->kapasitas_ruangan = $request->input('kapasitas_ruangan');
+        $dataRuangan->lokasi = $request->input('lokasi');
+        $dataRuangan->harga_ruangan = $request->input('harga_ruangan');
+        $dataRuangan->tersedia = $request->input('tersedia');
+        $dataRuangan->status = $request->input('status');
+
+        $dataRuangan->save();
+    }
+
+    protected function uploadGambar($dataRuangan, $request)
+    {
+        // Hapus gambar lama
+        foreach ($dataRuangan->gambar as $gambar) {
+            Storage::delete('assets/' . $gambar->url);
+            $gambar->delete();
+        }
+
+        // Tambahkan gambar baru
+        foreach ($request->file('url') as $file) {
+            $path = $file->store('ruangan', 'assets');
+            Gambar::create([
+                'id_ruangan' => $dataRuangan->id_ruangan,
+                'url' => $path
+            ]);
+        }
     }
 
     /**

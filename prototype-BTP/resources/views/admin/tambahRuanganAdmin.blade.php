@@ -97,11 +97,11 @@
                             <!-- left from text field -->
                             <div class="col-md-7">
                                 <div class="form-group row mb-2">
-                                    <label for="id_ruangan" class="text-color col-md-3 col-form-label text-md-left-right">ID
-                                        Ruangan</label>
+                                    {{-- <label for="id_ruangan" class="text-color col-md-3 col-form-label text-md-left-right">ID
+                                        Ruangan</label> --}}
                                     <div class="col-md-7">
                                         <input type="text" id="id_ruangan" class="bordered-text form-control"
-                                            name="id_ruangan" disabled>
+                                            name="id_ruangan" hidden disabled>
                                         <div class="valid-feedback">Tampilan bagus!</div>
                                     </div>
                                 </div>

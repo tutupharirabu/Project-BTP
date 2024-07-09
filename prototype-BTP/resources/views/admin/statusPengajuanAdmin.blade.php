@@ -154,7 +154,8 @@
                                                     </form>
                                                 </td>
                                                 <td>
-                                                    <a type="button" class="btn text-white btn-warning btn-styl warning" style="padding: 8px">Menunggu</a>
+                                                    <a type="button" class="btn text-white btn-warning btn-styl warning"
+                                                        style="padding: 8px">Menunggu</a>
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
                                                 <td class="d-flex justify-content-between">
@@ -162,8 +163,8 @@
                                                         method="POST">
                                                         <a type="button" class="btn text-white"
                                                             style="background-color:#0EB100; border-radius:6px; width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
-                                                        <a type="button" class="btn text-white"
-                                                            style="background-color: #FF2E26; border-radius:6px;;width: 100px;font-size: 13px; text-transform: capitalize;">Tolak</a>
+                                                        <a type="button" class="btn btn-outline-danger btn-styl"
+                                                            style="">Tolak</a>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -335,7 +336,7 @@
                     text-transform: capitalize;
                 }
 
-                .warning{
+                .warning {
                     border-color: #ff9800;
                     color: orange;
                 }

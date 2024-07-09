@@ -35,6 +35,8 @@ class AdminStatusPengajuanController extends Controller
 
             $dataPeminjaman->status = 'Disetujui';
             $dataPeminjaman->ruangan->tersedia = '0';
+            $dataPeminjaman->ruangan->status = 'Digunakan';
+            $dataPeminjaman->ruangan->save();
             $dataPeminjaman->save();
             $message = 'Peminjaman diterima!';
 

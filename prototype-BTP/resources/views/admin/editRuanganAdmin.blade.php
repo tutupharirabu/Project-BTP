@@ -38,7 +38,7 @@
                             enctype="multipart/form-data" id="edit-form" class="row g-3 needs-validation" novalidate>
                             @csrf
                             @method('PUT')
-                            <!-- left from text field -->
+                            <!-- left form text field -->
                             <div class="col-md-7">
                                 <div class="form-group row mb-2">
                                     <label for="id_ruangan" class="col-md-3 col-form-label text-md-left-right text-color">ID
@@ -84,30 +84,33 @@
                                     <label for="harga_ruangan"
                                         class="col-md-3 col-form-label text-md-right text-color">Harga</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="harga_ruangan"
+                                        {{-- <input type="text" id="harga_ruangan"
                                             class="form-control bordered-text border-color" name="harga_ruangan"
                                             value="{{ $dataRuangan->harga_ruangan }}" required>
-                                        <div class="invalid-feedback">Silakan masukkan harga.</div>
+                                        <div class="invalid-feedback">Silakan masukkan harga.</div> --}}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="harga_ruangan" class="bordered-text form-control"
+                                                name="harga_ruangan" value="{{ $dataRuangan->harga_ruangan }}" required>
+                                            <div class="invalid-feedback">Silakan masukkan harga.</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
                                     <label for="status"
                                         class="col-md-3 col-form-label text-md-right text-color">Status</label>
                                     <div class="col-md-7">
-                                        <select id="status" class="form-control bordered-text" name="status" required>
-                                            @isset($dataRuangan->status)
-                                                <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}</option>
-                                                <option value="Available">Available</option>
-                                                <option value="Booked">Booked</option>
-                                            @else
-                                                <option value="">Pilih Status</option>
-                                                <option value="Available">Available</option>
-                                                <option value="Booked">Booked</option>
-                                            @endisset
+                                        <select id="status" class="form-control bordered-text" name="status" required
+                                            onchange="updateTersedia()">
+                                            <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}</option>
+                                            <option value="Tersedia">Tersedia</option>
+                                            <option value="Digunakan">Digunakan</option>
                                         </select>
                                         <div class="invalid-feedback">Silakan pilih status.</div>
                                         <input type="number" id="tersedia" class="form-control bordered-text"
-                                            name="tersedia" value="{{ $dataRuangan->tersedia }}" required hidden>
+                                            name="tersedia" placeholder="{{ $dataRuangan->tersedia }}" hidden>
                                     </div>
                                 </div>
                             </div>
@@ -119,24 +122,31 @@
                                         Ruangan</label>
                                 </div>
                                 <div class="drop-zone">
-                                    <span class="drop-zone__prompt" style="color: #717171"><img
-                                            src="{{ asset('assets/' . $dataRuangan->gambar->first()->url) }}"
-                                            alt="" width="150" height="100"></span>
-                                    <input type="file" for="url" id="url"
-                                        name="url[]"class="drop-zone__input"
-                                        value="{{ $dataRuangan->gambar->first()->url }}" multiple>
+                                    <span class="drop-zone__prompt" style="color: #717171;">
+                                        @if (!empty($dataRuangan->gambar) && $dataRuangan->gambar->isNotEmpty())
+                                            @foreach ($dataRuangan->gambar as $gambar)
+                                                <img src="{{ asset('assets/' . $gambar->url) }}" alt=""
+                                                    width="150" height="100">
+                                            @endforeach
+                                        @else
+                                            Drop file here or click to upload
+                                        @endif
+                                    </span>
+                                    <input type="file" for="url" id="url" name="url[]"
+                                        class="drop-zone__input" multiple>
+                                    <div class="invalid-feedback invalid-feedback-below">Silakan upload gambar utama.</div>
                                 </div>
 
                                 <strong>Uploaded Files</strong>
                                 <p class="uploadedRooms"></p>
 
-                                <!-- Menggunakan class col-auto agar kolom menyesuaikan dengan ukuran kontennya -->
                                 <button type="submit" class="btn text-white capitalize-first-letter"
                                     style="background-color: #0C9300">
                                     Edit
                                 </button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -180,4 +190,21 @@
 
     <script src="assets/js/admin/dragndrop.js"></script>
     <script src="{{ asset('assets/js/admin/editRuangan.js') }}"></script>
+    <script>
+        function updateTersedia() {
+            var status = document.getElementById('status').value;
+            var tersedia = document.getElementById('tersedia');
+
+            if (status === 'Tersedia') {
+                tersedia.value = 1;
+            } else if (status === 'Digunakan') {
+                tersedia.value = 0;
+            }
+            console.log('Tersedia value set to:', tersedia.value);
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', function() {
+            updateTersedia(); // Ensure tersedia is set correctly before submitting
+        });
+    </script>
 @endsection
