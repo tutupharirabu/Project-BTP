@@ -153,11 +153,23 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td style="display: flex; justify-content: center;">
+                                            {{-- <td style="display: flex; justify-content: center;">
                                                 @if ($data->tersedia == '1')
+                                                    <a class="btn text-dark status"
+                                                        style=" background-color: #B0B0B0; ">Digunakan</a>
+                                                @elseif ($data->tersedia != '1')
                                                     <a class="btn text-white status"
                                                         style=" background-color: #0EB100; ">Tersedia</a>
-                                                @elseif ($data->tersedia != '1')
+                                                @else
+                                                    <a class="btn text-white status" style=" background-color: #61677A; ">
+                                                        - </a>
+                                                @endif
+                                            </td> --}}
+                                            <td style="display: flex; justify-content: center;">
+                                                @if ($data->status == 'Available')
+                                                    <a class="btn text-white status"
+                                                        style=" background-color: #0EB100; ">Tersedia</a>
+                                                @elseif ($data->status == 'Booked')
                                                     <a class="btn text-dark status"
                                                         style=" background-color: #B0B0B0; ">Digunakan</a>
                                                 @else

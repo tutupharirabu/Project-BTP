@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->increments('id_peminjaman');
-            $table->string('nama_peminjam');
+            $table->string('nama_peminjam', 255);
+            $table->string('role', 255);
             $table->unsignedInteger('id_ruangan')->nullable();
             $table->unsignedInteger('id_barang')->nullable();
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
