@@ -60,12 +60,14 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <label for="role" class="form-label thicker">Role</label>
-                    <select name="role" id="role" class="form-select" required>
+                    {{-- <label for="role" class="form-label thicker">Role</label> --}}
+                    {{-- <select name="role" id="role" class="form-select" required>
                         <option selected disabled value="">Pilih role anda</option>
                         <option value="penyewa">Penyewa</option>
                         <option value="petugas">Petugas</option>
-                    </select>
+                    </select> --}}
+                    <input type="text" name="role" id="role" class="form-control" required value="penyewa" hidden
+                        required>
                     <div class="invalid-feedback">
                         Masukkan role anda!
                     </div>
