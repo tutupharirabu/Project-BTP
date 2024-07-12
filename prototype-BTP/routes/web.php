@@ -44,9 +44,9 @@ Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftar
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
 // Peminjaman Ruangan
-Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan')->middleware('auth');
-Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan')->middleware('auth');
-Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails'])->middleware('auth');
+Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan');
+Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
+Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails']);
 
 // Admin Lihat Status Ruangan
 Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');

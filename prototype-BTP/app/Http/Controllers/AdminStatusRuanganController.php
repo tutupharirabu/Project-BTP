@@ -44,8 +44,10 @@ class AdminStatusRuanganController extends Controller
     {
         $request->validate([
             'nama_ruangan' => 'required|string|unique:ruangan,nama_ruangan',
-            'kapasitas_ruangan' => 'required',
+            'kapasitas_minimal' => 'required',
+            'kapasitas_maksimal' => 'required',
             'lokasi' => 'required',
+            'satuan' => 'required',
             'harga_ruangan' => 'required',
             'status' => 'required',
             'url' => 'required|array',
@@ -57,8 +59,10 @@ class AdminStatusRuanganController extends Controller
         if ($pilih == 'Tersedia') {
             $ruangan = Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
-                'kapasitas_ruangan' => $request->kapasitas_ruangan,
+                'kapasitas_minimal' => $request->kapasitas_minimal,
+                'kapasitas_maksimal' => $request->kapasitas_maksimal,
                 'lokasi' => $request->lokasi,
+                'satuan' => $request->satuan,
                 'harga_ruangan' => $request->harga_ruangan,
                 'tersedia' => '1',
                 'status' => $request->input('status'),
@@ -66,7 +70,9 @@ class AdminStatusRuanganController extends Controller
         } else if ($pilih == 'Digunakan') {
             $ruangan = Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
-                'kapasitas_ruangan' => $request->kapasitas_ruangan,
+                'kapasitas_minimal' => $request->kapasitas_minimal,
+                'kapasitas_maksimal' => $request->kapasitas_maksimal,
+                'satuan' => $request->satuan,
                 'lokasi' => $request->lokasi,
                 'harga_ruangan' => $request->harga_ruangan,
                 'tersedia' => '0',
@@ -119,8 +125,10 @@ class AdminStatusRuanganController extends Controller
         // Validasi input
         $request->validate([
             'nama_ruangan' => 'required|string',
-            'kapasitas_ruangan' => 'required',
+            'kapasitas_minimal' => 'required',
+            'kapasitas_maksimal' => 'required',
             'lokasi' => 'required',
+            'satuan' => 'required',
             'harga_ruangan' => 'required',
             'tersedia' => 'required',
             'status' => 'required',
@@ -141,7 +149,9 @@ class AdminStatusRuanganController extends Controller
     protected function updateRuangan($dataRuangan, $request)
     {
         $dataRuangan->nama_ruangan = $request->input('nama_ruangan');
-        $dataRuangan->kapasitas_ruangan = $request->input('kapasitas_ruangan');
+        $dataRuangan->kapasitas_minimal = $request->input('kapasitas_minimal');
+        $dataRuangan->kapasitas_maksimal = $request->input('kapasitas_maksimal');
+        $dataRuangan->satuan = $request->input('satuan');
         $dataRuangan->lokasi = $request->input('lokasi');
         $dataRuangan->harga_ruangan = $request->input('harga_ruangan');
         $dataRuangan->tersedia = $request->input('tersedia');

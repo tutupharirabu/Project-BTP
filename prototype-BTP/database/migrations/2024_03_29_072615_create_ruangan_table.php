@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('ruangan', function (Blueprint $table) {
             $table->increments('id_ruangan');
             $table->string('nama_ruangan', 255);
-            $table->bigInteger('kapasitas_ruangan');
+            // $table->bigInteger('kapasitas_ruangan');
+            $table->bigInteger('kapasitas_minimal');
+            $table->bigInteger('kapasitas_maksimal');
+            $table->string('satuan', 255);
             $table->string('lokasi', 255);
             $table->string('harga_ruangan', 255);
             $table->boolean('tersedia');

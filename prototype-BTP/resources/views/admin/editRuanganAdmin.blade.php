@@ -62,13 +62,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="kapasitas_ruangan"
-                                        class="col-md-3 col-form-label text-md-right text-color">Kapasitas</label>
+                                    <label for="kapasitas_minimal"
+                                        class="col-md-3 col-form-label text-md-right text-color">Minimal kapasitas</label>
                                     <div class="col-md-7">
-                                        <input type="number" id="kapasitas_ruangan"
-                                            class="form-control bordered-text border-color" name="kapasitas_ruangan"
-                                            value="{{ $dataRuangan->kapasitas_ruangan }}" required>
-                                        <div class="invalid-feedback">Silakan masukkan kapasitas.</div>
+                                        <input type="number" id="kapasitas_minimal"
+                                            class="form-control bordered-text border-color" name="kapasitas_minimal"
+                                            value="{{ $dataRuangan->kapasitas_minimal }}" required>
+                                        <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="kapasitas_maksimal"
+                                        class="col-md-3 col-form-label text-md-right text-color">Maksimal kapasitas</label>
+                                    <div class="col-md-7">
+                                        <input type="number" id="kapasitas_maksimal"
+                                            class="form-control bordered-text border-color" name="kapasitas_maksimal"
+                                            value="{{ $dataRuangan->kapasitas_maksimal }}" required>
+                                        <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -84,10 +94,6 @@
                                     <label for="harga_ruangan"
                                         class="col-md-3 col-form-label text-md-right text-color">Harga</label>
                                     <div class="col-md-7">
-                                        {{-- <input type="text" id="harga_ruangan"
-                                            class="form-control bordered-text border-color" name="harga_ruangan"
-                                            value="{{ $dataRuangan->harga_ruangan }}" required>
-                                        <div class="invalid-feedback">Silakan masukkan harga.</div> --}}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
@@ -99,12 +105,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
+                                    <label for="satuan"
+                                        class="col-md-3 col-form-label text-md-right text-color">Satuan</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="satuan"
+                                            class="form-control bordered-text border-color" name="satuan"
+                                            value="{{ $dataRuangan->satuan }}" required>
+                                        <div class="invalid-feedback">Silakan masukkan satuan.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
                                     <label for="status"
                                         class="col-md-3 col-form-label text-md-right text-color">Status</label>
                                     <div class="col-md-7">
                                         <select id="status" class="form-control bordered-text" name="status" required
                                             onchange="updateTersedia()">
-                                            <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}</option>
+                                            <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}
+                                            </option>
                                             <option value="Tersedia">Tersedia</option>
                                             <option value="Digunakan">Digunakan</option>
                                         </select>

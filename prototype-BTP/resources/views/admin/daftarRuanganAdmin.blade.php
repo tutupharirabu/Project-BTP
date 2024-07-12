@@ -105,7 +105,8 @@
                                         <th scope="col">No</th>
                                         <th scope="col">No Ruangan</th>
                                         <th scope="col">Nama Ruangan</th>
-                                        <th scope="col">Kapasitas</th>
+                                        <th scope="col">Minimal Kapasitas</th>
+                                        <th scope="col">Maksimal Kapasitas</th>
                                         <th scope="col">Harga</th>
                                         <th scope="col">Gambar</th>
                                         <th scope="col">Status</th>
@@ -118,7 +119,8 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->id_ruangan }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
-                                            <td>{{ $data->kapasitas_ruangan }}</td>
+                                            <td>{{ $data->kapasitas_minimal }} {{ $data->satuan }}</td>
+                                            <td>{{ $data->kapasitas_maksimal }} {{ $data->satuan }}</td>
                                             <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }}</td>
                                             <td>
                                                 <a class="text-blue" href="#" data-toggle="modal"

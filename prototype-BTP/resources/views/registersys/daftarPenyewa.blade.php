@@ -66,7 +66,7 @@
                         <option value="penyewa">Penyewa</option>
                         <option value="petugas">Petugas</option>
                     </select> --}}
-                    <input type="text" name="role" id="role" class="form-control" required value="penyewa" hidden
+                    <input type="text" name="role" id="role" class="form-control" required value="petugas" hidden
                         required>
                     <div class="invalid-feedback">
                         Masukkan role anda!

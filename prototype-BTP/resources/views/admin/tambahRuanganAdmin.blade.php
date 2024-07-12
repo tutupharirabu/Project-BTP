@@ -116,12 +116,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="kapasitas_ruangan"
-                                        class="text-color col-md-3 col-form-label text-md-right">Kapasitas</label>
+                                    <label for="kapasitas_minimal" class="text-color col-md-3 col-form-label text-md-right">
+                                        Minimal kapasitas</label>
                                     <div class="col-md-7">
-                                        <input type="number" id="kapasitas_ruangan" class="bordered-text form-control"
-                                            name="kapasitas_ruangan" required>
-                                        <div class="invalid-feedback">Silakan masukkan kapasitas.</div>
+                                        <input type="number" id="kapasitas_minimal" class="bordered-text form-control"
+                                            name="kapasitas_minimal" required>
+                                        <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="kapasitas_maksimal"
+                                        class="text-color col-md-3 col-form-label text-md-right">Maksimal kapasitas</label>
+                                    <div class="col-md-7">
+                                        <input type="number" id="kapasitas_maksimal" class="bordered-text form-control"
+                                            name="kapasitas_maksimal" required>
+                                        <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -131,18 +140,6 @@
                                         <input type="text" id="lokasi" class="bordered-text form-control"
                                             name="lokasi" required>
                                         <div class="invalid-feedback">Silakan masukkan lokasi.</div>
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-2">
-                                    <label for="status"
-                                        class="text-color col-md-3 col-form-label text-md-right">Status</label>
-                                    <div class="col-md-7">
-                                        <select id="status" class="form-control bordered-text" name="status" required>
-                                            <option value="">Pilih Status</option>
-                                            <option value="Tersedia">Tersedia</option>
-                                            <option value="Digunakan">Digunakan</option>
-                                        </select>
-                                        <div class="invalid-feedback">Silakan pilih status.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -159,6 +156,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row mb-2">
+                                    <label for="satuan"
+                                        class="text-color col-md-3 col-form-label text-md-right">Satuan</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="satuan" class="bordered-text form-control"
+                                            name="satuan" required>
+                                        <div class="invalid-feedback">Silakan masukkan satuan.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="status"
+                                        class="text-color col-md-3 col-form-label text-md-right">Status</label>
+                                    <div class="col-md-7">
+                                        <select id="status" class="form-control bordered-text" name="status" required>
+                                            <option value="">Pilih Status</option>
+                                            <option value="Tersedia">Tersedia</option>
+                                            <option value="Digunakan">Digunakan</option>
+                                        </select>
+                                        <div class="invalid-feedback">Silakan pilih status.</div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group row mb-2">
@@ -168,7 +186,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__prompt" style="color: #717171;">Drop file here or click
+                                            <span class="drop-zone__prompt" style="color: #717171;">Drop file here or
+                                                click
                                                 to upload</span>
                                             <input type="file" for="url" id="url" name="url[]"
                                                 class="drop-zone__input" multiple required>
