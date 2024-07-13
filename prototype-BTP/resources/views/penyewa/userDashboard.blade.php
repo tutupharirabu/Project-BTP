@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
             <div class="container my-2 mx-2">
-                <a class="" href="" style="color: red;font-size:12px;font-weight: bold;">Dashboard</a>
+                <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                                     @foreach ($ruangan->gambar as $gambar)
                                         <div class="position-relative">
                                             <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
-                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px;">
+                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px; filter: brightness(70%);">
                                             <h6 class="card-title position-absolute title-overlay">{{ $ruangan->nama_ruangan }}</h6>
                                             <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
                                                 class="btn btn-light shadow-none position-absolute detail-overlay text-capitalize">Detail</a>

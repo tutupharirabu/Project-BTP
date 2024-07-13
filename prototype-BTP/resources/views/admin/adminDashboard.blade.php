@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="" style="color: red;font-size:12px;font-weight: bold;">Dashboard</a>
+                    <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
                 </div>
             </div>
         </div>

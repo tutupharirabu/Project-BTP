@@ -22,7 +22,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
                     <a href="/dashboardPenyewa" class="fw-bolder" style="color: #797979; font-size:12px;">Dashboard ></a>
-                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Form Peminjaman
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Form Peminjaman
                         Ruangan</a>
                 </div>
             </div>

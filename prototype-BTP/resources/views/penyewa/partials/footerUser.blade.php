@@ -1,7 +1,7 @@
-<footer class="footer">
-  <div class="container d-flex justify-content-center align-items-center" style="height: 56px;">
+<footer class="footer border-top">
+  <div class="container d-flex justify-content-center align-items-center">
     <div class="footer-logo d-flex align-items-center">
-      <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo Telkom University" class="footer-logo-img">
+      <img src="{{ asset('assets/img/logoSpaceRent.png') }}" alt="Logo Telkom University" class="footer-logo-img">
     </div>
     <div class="footer-copyright text-dark">
       © Copyrights 2024. All rights reserved
@@ -11,11 +11,11 @@
 
 <style>
   .footer {
-    background-color: #FFFFFFF;
+    background-color: #EDEDED;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px; /* Atur tinggi footer */
+    height: 56px; /* Atur tinggi footer */
   }
 
   .footer .container {
@@ -32,12 +32,12 @@
   }
 
   .footer-logo-img {
-    height: 40px;
+    height: 36px;
     margin-right: 10px;
   }
 
   .footer-logo-text {
-    font-size: 18px;
+    font-size: px;
     color: #333;
   }
 

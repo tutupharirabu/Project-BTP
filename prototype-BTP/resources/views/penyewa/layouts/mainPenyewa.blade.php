@@ -37,13 +37,18 @@
         <div class="col-sm-12 col-md-2 col-xl-2 col-lg-2">
             @include('penyewa.partials.sidebarUser')
         </div>
-        <div class="col-sm-12 col-md-10 col-xl-10" style="margin-bottom:70px">
-            @yield('containPenyewa')
+        <div class="col-sm-12 col-md-10 col-xl-10" >
+            <div>
+                @yield('containPenyewa')
+            </div>
+            <div>
+                @include('penyewa.partials.footerUser')
+            </div>
         </div>
     </div>
-    <div class="footerstyle  border-top">
-        @include('penyewa.partials.footerUser')
-    </div>
+    <!-- <div class="footerstyle  border-top">
+        
+    </div> -->
 
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -59,7 +64,7 @@
 
 </body>
 
-<style>
+<!-- <style>
     .footerstyle {
         position: fixed;
         bottom: 0;
@@ -70,4 +75,4 @@
         text-align: center;
         padding: 8px;
     }
-</style>
+</style> -->
