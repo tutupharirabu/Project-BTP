@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/overlaydashboard.css') }}">
 </head>
 
+
 <div class="container-fluid mt-4">
     <!-- Judul -->
     <div class="row">
@@ -89,15 +90,47 @@
     <br>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header " style="">
+        <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
+      </div>
+      <div class="modal-body">
+        <p><strong>Peminjam : </strong> <span id="modalTitle"></span></p>
+        <p><strong>Mulai    : </strong> <span id="modalStart"></span></p>
+        <p><strong>Selesai  :</strong> <span id="modalEnd"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn text-white" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     $(document).ready(function() {
         var bookings = @json($events);
         console.log(bookings);
 
         $('#calendar').fullCalendar({
-            events: bookings
+            events: bookings,
+            eventClick: function(event) {
+                $('#modalTitle').text(event.title);
+                $('#modalStart').text(event.start.format('YYYY-MM-DD HH:mm'));
+                if (event.end) {
+                    $('#modalEnd').text(event.end.format('YYYY-MM-DD HH:mm'));
+                } else {
+                    $('#modalEnd').text('N/A');
+                }
+                $('#eventModal').modal('show');
+            }
         });
     });
 </script>
+<style>
+
+</style>
 
 @endsection

@@ -17,7 +17,7 @@
             @endif
 
             <div class="text-center pb-3">
-                <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo" style="max-width: 150px;">
+                <img src="{{ asset('assets/img/logoSpaceRent.png') }}" alt="Logo" style="max-width: 150px;">
             </div>
 
             <h3 class="text-center pb-3">Masuk</h3>

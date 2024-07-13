@@ -3,7 +3,7 @@
     <div class="bg-image pt-5">
         <div class="login-container mt-5">
             <div class="text-center pb-3">
-                <img src="{{ asset('assets/img/logotelkombtp.png') }}" alt="Logo" style="max-width: 150px;">
+                <img src="{{ asset('assets/img/logoSpaceRent.png') }}" alt="Logo" style="max-width: 150px;">
             </div>
             <h3 class="text-center pb-3">Daftar</h3>
             <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST"

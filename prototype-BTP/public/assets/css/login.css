@@ -13,7 +13,7 @@ body, html {
 }
 
 .bg-image {
-    background-image: url('https://sdgs.telkomuniversity.ac.id/wp-content/uploads/2024/03/DCS-Telkom-University-2-scaled.jpg');
+    background-image: url('https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg');
     min-height: 100vh; 
     background-position: center;
     background-repeat: no-repeat;
@@ -25,7 +25,7 @@ body, html {
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 255);
+    background: rgba(255, 255, 255, 0.9);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -51,7 +51,7 @@ body, html {
 }
 
 .btnlog {
-    background-color: #FF0000;
+    background-color: #0C9300;
     color: white;
     width: 100px;
     font-weight: 600;
@@ -59,7 +59,7 @@ body, html {
 }
 
 .btnlog:hover {
-    background-color: #FF0000;
+    background-color: #0C9300;
     color: white;
     border: none;
 }
