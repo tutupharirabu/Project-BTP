@@ -55,7 +55,8 @@
                                             <option selected disabled value="">Pilih ruangan</option>
                                             @foreach ($dataRuangan as $dr)
                                                 <option value="{{ $dr->id_ruangan }}"
-                                                    data-max="{{ $dr->kapasitas_ruangan }}"
+                                                    data-min="{{ $dr->kapasitas_minimal }}"
+                                                    data-max="{{ $dr->kapasitas_maksimal }}"
                                                     data-type="{{ $dr->nama_ruangan }}">
                                                     {{ $dr->nama_ruangan }}</option>
                                             @endforeach
@@ -70,9 +71,9 @@
                                         <select name="role" id="role" class="form-control border-color"
                                             onchange="fetchRuanganDetails()" required>
                                             <option value="" disabled selected>Pilih Status</option>
-                                            <option value="Internal">Pegawai</option>
-                                            <option value="Eksternal">Mahasiswa</option>
-                                            <option value="Eksternal">Umum</option>
+                                            <option value="Pegawai">Pegawai</option>
+                                            <option value="Mahasiswa">Mahasiswa</option>
+                                            <option value="Umum">Umum</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             Pilih Status!
@@ -342,10 +343,10 @@
             function updatePrice(data) {
                 if (role) {
                     let hargaRuangan;
-                    if (role === 'Internal') {
+                    if (role === 'Pegawai') {
                         hargaRuangan = 0;
                         console.log("Internal role, setting price to 0");
-                    } else if (role === 'Eksternal') {
+                    } else if (role === 'Mahasiswa' || role === 'Umum') {
                         hargaRuangan = parseInt(data.harga_ruangan);
                         console.log("External role, setting price to:", hargaRuangan);
                     }
@@ -380,17 +381,8 @@
             var pesertaInput = document.getElementById("peserta");
 
             var selectedOption = select.options[select.selectedIndex];
+            var min = selectedOption.getAttribute("data-min");
             var max = selectedOption.getAttribute("data-max");
-            var type = selectedOption.getAttribute("data-type");
-
-            var min;
-            if (type === "Aula") {
-                min = 80;
-            } else if (type === "Training Room") {
-                min = 0;
-            } else {
-                min = 1;
-            }
 
             pesertaInput.max = max;
             pesertaInput.min = min;
