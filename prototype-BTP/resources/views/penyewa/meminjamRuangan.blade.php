@@ -22,7 +22,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
                     <a href="/dashboardPenyewa" class="fw-bolder" style="color: #797979; font-size:12px;">Dashboard ></a>
-                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Form Peminjaman
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Form Peminjaman
                         Ruangan</a>
                 </div>
             </div>
@@ -196,7 +196,7 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:#ED3C35;">
+                <div class="modal-header" style="background-color:#419343;">
                     <h5 class="modal-title text-white" id="confirmationModalLabel">Rincian Peminjaman Ruangan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

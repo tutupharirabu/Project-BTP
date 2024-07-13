@@ -21,7 +21,7 @@
 </style>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top" style="height:56px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
 
@@ -33,12 +33,12 @@
 
         <!-- Navbar brand -->
         <a class="navbar-brand mt-2 mt-lg-0" href="#" style="margin-left:20px;">
-            <img src="{{ asset('assets/img/logotelkombtp.png') }}" height="30" alt="MDB Logo" loading="lazy" />
+            <img src="{{ asset('assets/img/logoSpaceRent.png') }}" height="34" alt="MDB Logo" loading="lazy" />
         </a>
 
         <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="background-color: white; width:40px;">
+            <div class="navbar-nav" style="width:20px;">
                 <a class="nav-link" href="/dashboardPenyewa">Dashboard</a>
                 <a class="nav-link" href="/daftarRuanganPenyewa">Daftar Ruangan</a>
                 <a class="nav-link" href="/meminjamRuangan">Peminjaman</a>

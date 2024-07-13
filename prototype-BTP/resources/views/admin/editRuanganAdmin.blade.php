@@ -24,13 +24,13 @@
                 <div class="d-flex container my-2 mx-2">
                     <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar Ruangan
                         ></a>
-                    <a href="" class="fw-bolder" style="color: red; font-size:12px;">&nbsp;Edit Ruangan</a>
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Edit Ruangan</a>
                 </div>
             </div>
         </div>
 
         <!-- value -->
-        <div class="row justify-content-center mt-4">
+        <div class="row justify-content-center mt-4 mb-md-8 mb-lg-8 mb-xl-8 mb-sm-4">
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">

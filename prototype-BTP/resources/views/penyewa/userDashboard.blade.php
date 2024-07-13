@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/overlaydashboard.css') }}">
 </head>
 
+
 <div class="container-fluid mt-4">
     <!-- Judul -->
     <div class="row">
@@ -25,7 +26,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
             <div class="container my-2 mx-2">
-                <a class="" href="" style="color: red;font-size:12px;font-weight: bold;">Dashboard</a>
+                <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
             </div>
         </div>
     </div>
@@ -43,7 +44,7 @@
                                     @foreach ($ruangan->gambar as $gambar)
                                         <div class="position-relative">
                                             <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
-                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px;">
+                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px; filter: brightness(70%);">
                                             <h6 class="card-title position-absolute title-overlay">{{ $ruangan->nama_ruangan }}</h6>
                                             <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
                                                 class="btn btn-light shadow-none position-absolute detail-overlay text-capitalize">Detail</a>
@@ -89,15 +90,47 @@
     <br>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header " style="">
+        <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
+      </div>
+      <div class="modal-body">
+        <p><strong>Peminjam : </strong> <span id="modalTitle"></span></p>
+        <p><strong>Mulai    : </strong> <span id="modalStart"></span></p>
+        <p><strong>Selesai  :</strong> <span id="modalEnd"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn text-white" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     $(document).ready(function() {
         var bookings = @json($events);
         console.log(bookings);
 
         $('#calendar').fullCalendar({
-            events: bookings
+            events: bookings,
+            eventClick: function(event) {
+                $('#modalTitle').text(event.title);
+                $('#modalStart').text(event.start.format('YYYY-MM-DD HH:mm'));
+                if (event.end) {
+                    $('#modalEnd').text(event.end.format('YYYY-MM-DD HH:mm'));
+                } else {
+                    $('#modalEnd').text('N/A');
+                }
+                $('#eventModal').modal('show');
+            }
         });
     });
 </script>
+<style>
+
+</style>
 
 @endsection

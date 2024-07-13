@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 col-lg-2 sidebar d-none d-md-block d-flex flex-column"
-            style="background-color: #028391; color: #FFFFFF;">
+            style="background-color: #419343; color: #FFFFFF;">
             <nav class="nav flex-column">
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/dashboardAdmin">
@@ -56,7 +56,7 @@
 
 <style>
     .sidebar {
-        margin-top: 60px;
+        margin-top: 56px;
         position: fixed;
         top: 0;
         left: 0;
@@ -71,23 +71,23 @@
 
     .menu-item:hover {
         background-color: white !important;
-        color: #000 !important;
+        color: #028391 !important;
         border-radius: 5px;
     }
 
     .menu-item:hover .material-symbols-outlined {
-        color: #000 !important;
+        color: #028391 !important;
         border-radius: 5px;
     }
 
     .menu-item.active {
         background-color: white !important;
-        color: #000 !important;
+        color: #028391 !important;
         border-radius: 5px;
     }
 
     .menu-item.active .material-symbols-outlined {
-        color: #000 !important;
+        color: #028391 !important;
         border-radius: 5px;
     }
 </style>

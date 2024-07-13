@@ -27,7 +27,7 @@
 
     <style>
         body {
-            padding-top: 60px;
+            padding-top: 50px;
             overflow-x: hidden;
         }
 
@@ -50,12 +50,14 @@
         <div class="col">
             @include('admin.partials.sidebarAdmin')
         </div>
-        <div class="col col-sm-10 col-md-10 col-xl-10 col-lg-10" style="margin-bottom:70px">
-            @yield('containAdmin')
+        <div class="col col-sm-10 col-md-10 col-xl-10 col-lg-10" >
+            <div style="">
+                @yield('containAdmin')
+            </div>
+            <div>
+                @include('admin.partials.footerAdmin')
+            </div>
         </div>
-    </div>
-    <div class="footerstyle  border-top">
-        @include('admin.partials.footerAdmin')
     </div>
 
     {{-- bootstrap --}}
@@ -110,7 +112,7 @@
         /* Hide the progress bar */
     }
 
-    .footerstyle {
+    /* .footerstyle {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -119,7 +121,7 @@
         background-color: #f8f9fa;
         text-align: center;
         padding: 8px;
-    }
+    } */
 </style>
 {{-- <script type="text/javascript">
     var dropzone = new Dropzone("#my-dropzone", {

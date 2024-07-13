@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="container my-2 mx-2">
-                <h6 href="" style="color: red;font-size:12px;">Daftar Ruangan<h4>
+                <h6 href="" style="color: #028391;font-size:12px;">Daftar Ruangan<h4>
             </div>
         </div>
     </div>

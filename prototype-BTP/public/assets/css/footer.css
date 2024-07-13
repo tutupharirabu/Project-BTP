@@ -1,5 +1,6 @@
 
 .footer {
+    background: rgba(255, 255, 255, 0.9);
     background-color: #FFFFFFF;
     border-top: 1px solid #e7e7e7;
     display: flex;
