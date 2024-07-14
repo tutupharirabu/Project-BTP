@@ -94,6 +94,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                    <div class="container d-flex align-items-center">
+                        <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
+                            style="background-color: #03FC0C;">
+                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                                done_outline
+                            </span>
+                        </div>
+                        <div
+                            class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                Selesai</p>
+                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                                @php
+                                    $bookedCount = $dataPeminjaman->where('status', 'Selesai')->count();
+                                @endphp
+                                {{ $bookedCount }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Search and button add -->
@@ -158,13 +179,14 @@
                                                         style="padding: 8px">Menunggu</a>
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
-                                                <td class="d-flex justify-content-between">
-                                                    <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
+                                                <td class=" justify-content-between">
+                                                    <form action="{{ route('selesaiPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
-                                                        <a type="button" class="btn text-white"
-                                                            style="background-color:#0EB100; border-radius:6px; width: 100px; font-size: 13px;text-transform: capitalize;">Setuju</a>
-                                                        <a type="button" class="btn btn-outline-danger btn-styl"
-                                                            style="">Tolak</a>
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" value='selesai'
+                                                            class="btn btn-outline-warning"
+                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">Selesai</button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -184,6 +206,19 @@
                                                 <td>
                                                     <a type="button" class="btn text-white"
                                                         style="background-color: #FF2E26; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
+                                                </td>
+                                            @elseif($data->status == 'Selesai')
+                                                <td class=" justify-content-between">
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <button disabled type="button" name="pilihan" value='selesai'
+                                                            class="btn btn-outline-secondary"
+                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">Selesai</button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <a type="button" class="btn btn-light border"
+                                                        style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Selesai</a>
                                                 </td>
                                             @endif
                                         </tr>
@@ -276,6 +311,7 @@
                     }
                 }
             </script>
+
 
             <style>
                 .table td,

@@ -54,4 +54,20 @@ class AdminStatusPengajuanController extends Controller
 
         return redirect('/statusPengajuanAdmin')->with('message', $message);
     }
+
+    public function finish(string $id){
+        $dataPeminjaman = Peminjaman::find($id);
+
+        if (!$dataPeminjaman) {
+            return redirect('/statusPengajuanAdmin')->with('error', 'Peminjaman tidak ditemukan!');
+        }
+
+        $dataPeminjaman->status = 'Selesai';
+        $dataPeminjaman->ruangan->tersedia = '1';
+        $dataPeminjaman->ruangan->status = 'Tersedia';
+        $dataPeminjaman->ruangan->save();
+        $dataPeminjaman->save();
+
+        return redirect('/statusPengajuanAdmin')->with('message', 'Peminjaman selesai!');
+    }
 }

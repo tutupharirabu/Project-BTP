@@ -57,6 +57,7 @@ Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'ind
 Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan')->middleware('auth');
 Route::post('/check-room-name', [AdminStatusRuanganController::class, 'checkRoomName'])->name('check.room.name');
 Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
+Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('selesaiPengajuan')->middleware('auth');
 
 // Penyewa lihat status Ruangan
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index'])->name('daftarRuanganPenyewa');
