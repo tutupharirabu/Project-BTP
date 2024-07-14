@@ -32,14 +32,24 @@ class PenyewaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function checkUnique(Request $request){
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $exists = Users::where($field, $value)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required',
-            'email' => 'required',
+            'username' => 'required|unique:users,username',
+            'email' => 'required|unique:users,email',
             'role' => 'required',
             'nama_lengkap' => 'required|string|max:255',
-            'password' => 'required'
+            'password' => 'required|min:8'
         ]);
 
         $penyewa = new Users([
@@ -52,7 +62,7 @@ class PenyewaController extends Controller
 
         $penyewa->save();
 
-        return redirect('/')->with('success', 'Registration Successfull~ Please Login!');
+        return redirect('/login')->with('success', 'Registration Successfull~ Please Login!');
     }
 
     /**

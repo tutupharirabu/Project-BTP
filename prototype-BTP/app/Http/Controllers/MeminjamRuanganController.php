@@ -36,6 +36,7 @@ class MeminjamRuanganController extends Controller
     {
         $request->validate([
             'nama_peminjam' => 'required|string',
+            'role' => 'required',
             'id_ruangan' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
@@ -48,6 +49,7 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
+            'role' => $request->input('role'),
             'id_ruangan' => $request->input('id_ruangan'),
             'id_barang' => null,
             'tanggal_mulai' => $tanggal_mulai,
@@ -59,24 +61,24 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan->save();
 
-        return redirect('/meminjamRuangan')->with('success', 'Daftar Meminjam Ruangan Successfull');
+        return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Successfull');
 
     }
 
     public function getRuanganDetails(Request $request)
-{
-    $idRuangan = $request->query('id_ruangan');
-    $ruangan = Ruangan::find($idRuangan);
+    {
+        $idRuangan = $request->query('id_ruangan');
+        $ruangan = Ruangan::find($idRuangan);
 
-    if ($ruangan) {
-        return response()->json([
-            'lokasi' => $ruangan->lokasi,
-            'harga_ruangan' => $ruangan->harga_ruangan,
-        ]);
-    } else {
-        return response()->json(['error' => 'Ruangan not found'], 404);
+        if ($ruangan) {
+            return response()->json([
+                'lokasi' => $ruangan->lokasi,
+                'harga_ruangan' => $ruangan->harga_ruangan,
+            ]);
+        } else {
+            return response()->json(['error' => 'Ruangan not found'], 404);
+        }
     }
-}
 
     /**
      * Display the specified resource.

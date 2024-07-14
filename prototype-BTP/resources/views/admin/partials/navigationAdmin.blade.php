@@ -6,7 +6,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top" style="height:56px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
@@ -19,36 +19,45 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
             <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                <img src="https://btp.or.id/wp-content/uploads/2023/06/15072022_GSM-Logo-BTP-1.png" height="30"
-                    alt="MDB Logo" loading="lazy" />
+                <img src="{{ asset('assets/img/logoSpaceRent.png') }}" height="34" alt="MDB Logo" loading="lazy" />
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/dashboardPenyewa">Dashboard</a>
+                </li> --}}
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/peminjaman">Peminjaman</a>
+                </li> --}}
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        Assets
+                        Peminjaman
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/adminRuangan">Ruangan</a></li>
-                        <li><a class="dropdown-item" href="/adminBarang">Barang</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/pengajuan">Pengajuan</a>
-                </li>
+                    <!-- Left links -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Peminjaman
+                            </a> -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/meminjamRuangan">Peminjaman Ruangan</a></li>
+                            <li><a class="dropdown-item" href="#">Peminjaman Barang</a></li>
+                        </ul>
+                </li> --}}
             </ul>
-            <!-- Left links -->
+            </ul>
         </div>
         <!-- Collapsible wrapper -->
 
         <!-- Right elements -->
         <div class="d-flex align-items-center pe-5">
             <!-- Notifications -->
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <a data-mdb-dropdown-init class="text-reset me-3 dropdown-toggle hidden-arrow" href="#"
                     id="navbarDropdownMenuLink" role="button" aria-expanded="false">
                     <i class="fas fa-bell"></i>
@@ -65,25 +74,19 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
+
             <!-- Avatar -->
             <div class="dropdown">
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                        alt="Black and White Portrait of a Man" loading="lazy" />
+
+                    <span class="material-symbols-outlined"
+                        style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
+                    <p>
+                        <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
+                    </p>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                    <li>
-                        <a class="dropdown-item" href="#">My profile</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Settings</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/logout">Logout</a>
-                    </li>
-                </ul>
             </div>
         </div>
         <!-- Right elements -->
@@ -91,6 +94,10 @@
     <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EQBeqOJMW/xzPnfnvvQvORpLCzabw2aFUuHTI7sC9yXs5Ddq3HrLnGSs" crossorigin="anonymous"></script>
 
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>

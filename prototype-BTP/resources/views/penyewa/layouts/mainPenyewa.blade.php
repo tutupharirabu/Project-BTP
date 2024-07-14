@@ -15,9 +15,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-VoVp+Y7fE9gr/mq6+dL88UJ8RxmcrnhOHKAtMtTX/AriKVIyK/Bn0pNED0oGzUg0JeA7L+CK6XXNwOjf5eFpBQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dragndrop.css') }}">
+
     <style>
         body {
             padding-top: 60px;
+            overflow-x: hidden;
         }
     </style>
 
@@ -26,55 +33,46 @@
 <body>
 
     @include('penyewa.partials.navigationUser')
-
-    <div class="row d-flex min-vh-100">
-        @include('penyewa.partials.sidebarUser')
-        <div class="col-md-10">
-            @yield('containPenyewa')
+    <div class="row d-flex">
+        <div class="col-sm-12 col-md-2 col-xl-2 col-lg-2">
+            @include('penyewa.partials.sidebarUser')
+        </div>
+        <div class="col-sm-12 col-md-10 col-xl-10" >
+            <div>
+                @yield('containPenyewa')
+            </div>
+            <div>
+                @include('penyewa.partials.footerUser')
+            </div>
         </div>
     </div>
-    @include('penyewa.partials.footerUser')
-    
-
-
+    <!-- <div class="footerstyle  border-top">
+        
+    </div> -->
 
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     {{-- jquery --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
 
 </body>
 
-
-
-{{-- Calendar JS --}}
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    var calendarEl = document.getElementById('calendar');
-    var events = [];
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        initialView: 'dayGridMonth',
-        timeZone: 'UTC',
-        events: '/events',
-        editable: true,
-    });
-
-    calendar.render();
-</script>
+<!-- <style>
+    .footerstyle {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #f8f9fa;
+        text-align: center;
+        padding: 8px;
+    }
+</style> -->

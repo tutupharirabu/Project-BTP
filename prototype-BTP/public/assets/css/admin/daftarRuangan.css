@@ -1,0 +1,64 @@
+.icon-color{
+    height: 100px;width: 80px ;padding: 10px; border-right:5px; border-top-left-radius: 10px;border-bottom-left-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.anouncement{
+    height: 100px; background-color: #FFFFF; padding: 11.5px; width: 120px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.count{
+    font-size: 32px;margin-top: -4px;font-weight: bold;
+}
+.font-dv{
+    font-size: 18px; margin-top: 8px;font-weight: bold;
+}
+.status{
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    height: 30px; 
+    border-radius: 6px;
+    text-transform: capitalize; 
+    width:91px;
+}
+.modify{
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    width: 62px; 
+    height: 30px;
+    border-radius: 6px; 
+    text-transform: capitalize;
+}
+.table td,
+.table th {
+    padding: 10px;
+    /* Adjust the padding table */
+}
+
+.left-status {
+    border-left: 1px;
+    border-right: 0px;
+    border-bottom: 1px;
+    border-top: 1px;
+    border-style: solid;
+    border-color: rgb(187, 187, 187);
+}
+
+.right-status {
+    border-left: 0px;
+    border-right: 1px;
+    border-bottom: 1px;
+    border-top: 1px;
+    border-style: solid;
+    border-color: rgb(187, 187, 187);
+}
+.circle-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 80px;
+    background-color: #ED3C35;
+    border-radius: 50%;
+    margin: auto;
+    padding: 0;
+}

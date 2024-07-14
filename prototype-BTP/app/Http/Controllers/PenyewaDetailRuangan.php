@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class PenyewaDetailRuangan extends Controller
 {
-    public function index()
+    public function show($id)
     {
-        return view('penyewa.detailRuanganPenyewa');
+        $ruangan = Ruangan::findOrFail($id);
+        return view('penyewa.detailRuanganPenyewa', compact('ruangan'));
     }
 }

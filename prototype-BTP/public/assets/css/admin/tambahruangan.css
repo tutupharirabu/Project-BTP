@@ -1,0 +1,55 @@
+.circle-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 80px;
+    background-color: #00DE09;
+    border-radius: 50%;
+    margin: auto;
+    padding: 0;
+}
+
+.text-color {
+    color: #717171;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.button-style {
+    background-color: #0C9300;
+    width: 147px;
+    height: 41px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.button-style:hover {
+    background-color: #0A7A00;
+}
+
+.capitalize-first-letter {
+    text-transform: capitalize;
+}
+
+.bordered-text {
+    border: 1px solid #717171;
+    padding: 5px;
+    border-radius: 4px;
+    min-height: 35px;
+}
+
+.border-color {
+    border-color: #717171;
+}
+
+/* Modal centering and styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}

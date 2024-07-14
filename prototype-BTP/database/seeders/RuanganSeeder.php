@@ -18,41 +18,131 @@ class RuanganSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Office', 'Multimedia', 'Aula', 'R. Meeting', 'Training Room', 'Overtime Room'];
+        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Office', 'Multimedia Room', 'Aula', 'Meeting Room', 'Training Room', 'Overtime Room', 'Coworking Space (Shared Space)'];
         shuffle($rooms);
 
-        for ($i=1; $i <= 9 ; $i++) {
+        for ($i = 1; $i <= 10 ; $i++) {
             $namaRuangan = $rooms[$i-1];
-            $kapasitasRuangan = $faker->numberBetween(1, 100);
-            $hargaRuangan = $faker->numberBetween(10000, 1000000);
+            $kapasitasRuangan = $faker->numberBetween(10, 100);
 
-            if($namaRuangan == 'Rent Office (Private Space)'){
+            if ($namaRuangan == 'Rent Office (Private Space)') {
                 $lokasi = 'Gedung B dan C';
-            }elseif ($namaRuangan == 'Coworking Space (Shared Space)') {
-                $lokasi = 'Gedung B Lt. 1';
-            } elseif ($namaRuangan == 'Coworking Space (Shared Space)' || $namaRuangan == 'Coworking Space (Private Room)') {
-                $lokasi = 'Gedung D Lt. 2';
+                $hargaRuangan = 1000000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
             } elseif ($namaRuangan == 'Coworking Space (Private Room)') {
                 $lokasi = 'Gedung D Lt. 2';
-            } elseif ($namaRuangan == 'Multimedia') {
+                $hargaRuangan = 2350000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+            } elseif ($namaRuangan == 'Multimedia Room') {
                 $lokasi = 'Gedung A';
+                $hargaRuangan = 500000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
             } elseif ($namaRuangan == 'Aula') {
                 $lokasi = 'Gedung C Lt. 2';
-            } elseif ($namaRuangan == 'R. Meeting' || $namaRuangan == 'Training Room') {
+                $hargaRuangan = 650000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+            } elseif ($namaRuangan == 'Meeting Room') {
                 $lokasi = 'Gedung B Lt. 2';
-            } else {
+                $hargaRuangan = 500000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+            } elseif ($namaRuangan == 'Training Room') {
+                $lokasi = 'Gedung B Lt. 2';
+                $hargaRuangan = 300000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+            } elseif ($namaRuangan == 'Virtual Office') {
                 $lokasi = '-';
+                $hargaRuangan = 200000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+            } elseif ($namaRuangan == 'Overtime Room') {
+                $lokasi = '-';
+                $hargaRuangan = 200000;
+
+                DB::table('ruangan')->insert([
+                    'nama_ruangan'  => $namaRuangan,
+                    'kapasitas_ruangan' => $kapasitasRuangan,
+                    'lokasi' => $lokasi,
+                    'harga_ruangan' => $hargaRuangan,
+                    'tersedia' => true,
+                    'status' => '-',
+                ]);
+
+            } elseif ($namaRuangan == 'Coworking Space (Shared Space)') {
+                $dataruangan = [
+                    ['lokasi' => 'Gedung B Lt. 1', 'harga' => 350000],
+                    ['lokasi' => 'Gedung D Lt. 2', 'harga' => 500000]
+                ];
+
+                foreach ($dataruangan as $data) {
+                    $existingRoom = DB::table('ruangan')->where('lokasi', $data['lokasi'])->first();
+
+                    if (!$existingRoom) {
+                        DB::table('ruangan')->insert([
+                            'nama_ruangan' => $namaRuangan,
+                            'kapasitas_ruangan' => $kapasitasRuangan,
+                            'lokasi' => $data['lokasi'],
+                            'harga_ruangan' => $data['harga'],
+                            'tersedia' => true,
+                            'status' => '-',
+                        ]);
+                    }
+                }
             }
-
-
-            DB::table('ruangan')->insert([
-                'nama_ruangan'  => $namaRuangan,
-                'kapasitas_ruangan' => $kapasitasRuangan,
-                'lokasi' => $lokasi,
-                'harga_ruangan' => $hargaRuangan,
-                'tersedia' => true,
-                'status' => '-',
-            ]);
         }
     }
 }

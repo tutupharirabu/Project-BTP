@@ -21,42 +21,19 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        // if (Auth::guard('admin')->attempt($credentials)) {
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended('/adminRuangan');
-        // }
-
-        // if (Auth::guard('penyewa')->attempt($credentials)) {
-        //     $request->session()->regenerate();
-
-        //     $request->session()->put('id_users', Auth::guard('penyewa')->user()->id);
-        //     $request->session()->put('email', Auth::guard('penyewa')->user()->email);
-
-        //     return redirect()->intended('/dashboardPenyewa');
-        // }
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'petugas'))) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role == 'admin') {
-                $request->session()->put('id_users', Auth::user()->id);
-                $request->session()->put('email', Auth::user()->email);
+            return redirect()->intended('/dashboardAdmin');
+        }
 
-                return redirect()->intended('/dashboardPenyewa'); // jangan lupa dia harusnya /adminRuangan
+        if (Auth::attempt($credentials) && Auth::user()->role == 'penyewa') {
+            $request->session()->regenerate();
 
-            } else if (Auth::user()->role == 'Petugas') {
-                $request->session()->put('id_users', Auth::user()->id);
-                $request->session()->put('email', Auth::user()->email);
+            $request->session()->put('id_users', Auth::user()->id);
+            $request->session()->put('email', Auth::user()->email);
 
-                return redirect()->intended('/dashboardPenyewa'); // jangan lupa dia harusnya /adminRuangan
-
-            } else if (Auth::user()->role == 'penyewa') {
-                $request->session()->put('id_users', Auth::user()->id);
-                $request->session()->put('email', Auth::user()->email);
-
-                return redirect()->intended('/dashboardPenyewa');
-            }
+            return redirect()->intended('/');
         }
 
         return back()->with('loginError', 'Login Failed~');
@@ -71,6 +48,6 @@ class LoginController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->intended('/');
     }
 }

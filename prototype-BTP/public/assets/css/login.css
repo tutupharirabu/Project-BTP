@@ -1,0 +1,75 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.bg-image {
+    background-image: url('https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg');
+    min-height: 100vh; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto; /* Enable scrolling */
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ensure container has a maximum width */
+    max-width: 500px; /* Optional: Set a maximum width for larger screens */
+    margin: 20px; /* Add margin for spacing */
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+    }
+}
+
+@media (min-width: 769px) {
+    .login-container {
+        width: 40%;
+    }
+}
+
+.thicker {
+    font-weight: 700;
+}
+
+.btnlog {
+    background-color: #0C9300;
+    color: white;
+    width: 100px;
+    font-weight: 600;
+    border: none;
+}
+
+.btnlog:hover {
+    background-color: #0C9300;
+    color: white;
+    border: none;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000; /* Ensure footer is always on top */
+}
