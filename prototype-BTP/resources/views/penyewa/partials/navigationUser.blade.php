@@ -33,7 +33,7 @@
 
         <!-- Navbar brand -->
         <a class="navbar-brand mt-2 mt-lg-0" href="#" style="margin-left:20px;">
-            <img src="{{ asset('assets/img/logoSpaceRent.png') }}" height="34" alt="MDB Logo" loading="lazy" />
+            <img src="{{ asset('assets/img/logospacerentwobg.png') }}" height="34" alt="MDB Logo" loading="lazy" />
         </a>
 
         <!-- Collapsible wrapper -->

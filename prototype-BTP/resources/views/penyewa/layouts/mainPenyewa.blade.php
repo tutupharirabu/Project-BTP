@@ -19,6 +19,9 @@
         integrity="sha512-VoVp+Y7fE9gr/mq6+dL88UJ8RxmcrnhOHKAtMtTX/AriKVIyK/Bn0pNED0oGzUg0JeA7L+CK6XXNwOjf5eFpBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- font awsome -->
+    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dragndrop.css') }}">
 
     <style>

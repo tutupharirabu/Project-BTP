@@ -3,6 +3,7 @@
 @section('containPenyewa')
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -140,20 +141,72 @@
 
                                 <div class="row mt-4">
                                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="jam_mulai" class="form-label text-color">Jam Mulai
-                                            Peminjaman</label>
-                                        <input type="time" name="jam_mulai" id="jam_mulai"
-                                            class="form-control border-color" required>
+                                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Peminjaman</label>
+                                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
+                                            <option value="">Pilih Jam Mulai</option>
+                                            <!-- Loop through hours from 08:00 to 20:00 with 30-minute intervals -->
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="10:30">10:30</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="20:00">20:00</option>
+                                        </select>
                                         <div class="invalid-feedback">
                                             Masukkan Mulai Peminjaman!
                                         </div>
                                     </div>
 
                                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="jam_selesai" class="form-label text-color">Jam Selesai
-                                            Peminjaman</label>
-                                        <input type="time" name="jam_selesai" id="jam_selesai"
-                                            class="form-control border-color" required>
+                                        <label for="jam_selesai" class="form-label text-color">Jam Selesai Peminjaman</label>
+                                        <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required>
+                                            <option value="">Pilih Jam Selesai</option>
+                                            <!-- Loop through hours from 08:00 to 20:00 with 30-minute intervals -->
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="10:30">10:30</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="20:00">20:00</option>
+                                        </select>
                                         <div class="invalid-feedback">
                                             Masukkan Selesai Peminjaman!
                                         </div>
@@ -195,6 +248,36 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-auto">
+            <a href="https://wa.me/+6282127644368" target="_blank" style="text-decoration: none;">
+                <div class="whatsapp-button">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <style>
+        .whatsapp-button {
+            background-color: #25d366;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed; /* Make the position fixed */
+            bottom: 66px; /* Adjust the vertical position */
+            right: 20px; /* Adjust the horizontal position to the right */
+            z-index: 1000; /* Ensure it appears above other elements */
+        }
+        .whatsapp-button i {
+            color: #FFFFFF;
+            font-size: 42px; /* Adjust the icon size */
+        }
+    </style>
 </div>
 
 <!-- Confirmation Modal -->
