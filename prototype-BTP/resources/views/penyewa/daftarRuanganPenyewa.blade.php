@@ -1,5 +1,4 @@
 @extends('penyewa.layouts.mainPenyewa')
-
 @section('containPenyewa')
 
     <head>
@@ -30,33 +29,13 @@
                 @foreach ($dataRuangan as $ruangan)
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
-                            @foreach ($ruangan->gambar as $gambar)
-                                <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
-                                    alt="Gambar Ruangan">
-                            @endforeach
+                            @if ($ruangan->gambar->isNotEmpty())
+                                <img src="{{ asset('assets/' . $ruangan->gambar->first()->url) }}" class="card-img-top custom-img" alt="Gambar Ruangan">
+                            @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                                 <p class="card-text">
-                                    @if (
-                                        $ruangan->nama_ruangan == 'Rent Office (Private Space)' ||
-                                            $ruangan->nama_ruangan == 'Coworking Space (Shared Space)' ||
-                                            $ruangan->nama_ruangan == 'Coworking Space (Private Room)')
-                                        Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
-                                        {{ $ruangan->satuan }}
-                                    @elseif ($ruangan->nama_ruangan == 'Virtual Office')
-                                        Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
-                                        {{ $ruangan->satuan }}
-                                    @elseif (
-                                        $ruangan->nama_ruangan == 'Multimedia' ||
-                                            $ruangan->nama_ruangan == 'Aula' ||
-                                            $ruangan->nama_ruangan == 'R. Meeting' ||
-                                            $ruangan->nama_ruangan == 'Training Room')
-                                        Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
-                                        {{ $ruangan->satuan }}
-                                    @else
-                                        Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
-                                        {{ $ruangan->satuan }}
-                                    @endif
+                                    Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }} / {{ $ruangan->satuan }}
                                 </p>
                                 <div class="status-group">
                                     @if ($ruangan->tersedia == '1')

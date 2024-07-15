@@ -34,7 +34,7 @@ class AdminStatusRuanganController extends Controller
      */
     public function create()
     {
-        return view('admin.tambahRuanganAdmin');
+        return view('admin.crud.tambahRuanganAdmin');
     }
 
     /**
@@ -91,13 +91,6 @@ class AdminStatusRuanganController extends Controller
         return redirect('/statusRuanganAdmin')->with('success', 'Ruangan dan Gambar berhasil ditambahkan');
     }
 
-    public function dropzone(Request $req){
-        $image = $req->file('file');
-        $imageName = time().rand(1,100).'.'.$image->extension();
-        $image->move(public_path('image'),$imageName);
-        return response()->json(['success'=>$imageName]);
-    }
-
     /**
      * Display the specified resource.
      */
@@ -112,7 +105,7 @@ class AdminStatusRuanganController extends Controller
     public function edit(string $id)
     {
         $dataRuangan = Ruangan::with('gambar')->find($id);
-        return view('admin.editRuanganAdmin', ['dataRuangan' => $dataRuangan]);
+        return view('admin.crud.editRuanganAdmin', ['dataRuangan' => $dataRuangan]);
     }
 
     /**
@@ -162,14 +155,25 @@ class AdminStatusRuanganController extends Controller
 
     protected function uploadGambar($dataRuangan, $request)
     {
-        // Hapus gambar lama
+        // Hapus gambar lama dari penyimpanan
         foreach ($dataRuangan->gambar as $gambar) {
             Storage::delete('assets/' . $gambar->url);
-            $gambar->delete();
         }
 
-        // Tambahkan gambar baru
-        foreach ($request->file('url') as $file) {
+        // Perbarui gambar dengan yang baru
+        $files = $request->file('url');
+        foreach ($dataRuangan->gambar as $index => $gambar) {
+            if (isset($files[$index])) {
+                $file = $files[$index];
+                $path = $file->store('ruangan', 'assets');
+                $gambar->url = $path;
+                $gambar->save();
+            }
+        }
+
+        // Tambahkan gambar baru jika ada lebih banyak file daripada gambar yang ada
+        for ($i = count($dataRuangan->gambar); $i < count($files); $i++) {
+            $file = $files[$i];
             $path = $file->store('ruangan', 'assets');
             Gambar::create([
                 'id_ruangan' => $dataRuangan->id_ruangan,
@@ -184,7 +188,7 @@ class AdminStatusRuanganController extends Controller
     public function destroy(string $id)
     {
         $data = Ruangan::find($id);
-        \DB::table('gambar')->where('id_ruangan', $data->id_ruangan)->delete();
+        DB::table('gambar')->where('id_ruangan', $data->id_ruangan)->delete();
         $data -> delete();
         return redirect()->route('admin.status');
     }

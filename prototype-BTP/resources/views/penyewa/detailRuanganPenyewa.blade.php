@@ -17,7 +17,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
                     <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan
-                        ></a>
+                        > </a>
                     <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Detail Ruangan </a>
                 </div>
             </div>
@@ -31,35 +31,24 @@
 
                 <!-- Carousel -->
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
-
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                        @foreach ($ruangan->gambar as $index => $gambar)
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
+                        @endforeach
                     </div>
-
 
                     <div class="carousel-inner" style="border-radius:5px;">
-                        <div class="carousel-item active">
-                            <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/07/profile-btp-03.jpg"
-                                alt="Los Angeles" class="d-block w-100 custom-carousel-img">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://btp.telkomuniversity.ac.id/wp-content/uploads/2022/07/profile-btp-02.jpg"
-                                alt="Chicago" class="d-block w-100 custom-carousel-img">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg"
-                                alt="New York" class="d-block w-100 custom-carousel-img">
-                        </div>
+                        @foreach ($ruangan->gambar as $index => $gambar)
+                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('assets/' . $gambar->url) }}" alt="Gambar {{ $index + 1 }}" class="d-block w-100 custom-carousel-img">
+                            </div>
+                        @endforeach
                     </div>
 
-                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev"
-                        style="color:#028391; left: -14%;">
-                        <span class="carousel-control-prev-icon" style=""></span>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" style="color:#028391; left: -14%;">
+                        <span class="carousel-control-prev-icon"></span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next"
-                        style="color:#028391; right: -14%">
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="color:#028391; right: -14%">
                         <span class="carousel-control-next-icon"></span>
                     </button>
                 </div>
@@ -114,13 +103,13 @@
                 style="width: 80%;">
                 <div class="text-black">
                     <p>Keterangan :</p>
-                    <p>*Harga Diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Harap membaca Syarat & ketentuan yang berlaku </p>
+                    <p>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
+                    <p> **Harap membaca syarat & ketentuan yang berlaku </p>
                 </div>
                 <div class="">
                     <a type="button" class="btn btn-sm text-white"
-                        style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
-                        href="/meminjamRuangan">Pinjam Ruangan</a>
+                    style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                    href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam Ruangan</a>
                 </div>
             </div>
         </div>
