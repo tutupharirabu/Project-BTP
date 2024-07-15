@@ -1,3 +1,62 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const hargaInput = document.getElementById('harga_ruangan');
+
+    // Ensure initial value has "Rp. "
+    if (!hargaInput.value.startsWith('Rp. ')) {
+        hargaInput.value = 'Rp. ' + hargaInput.value;
+    }
+
+    hargaInput.addEventListener('input', function (e) {
+        let value = this.value.replace(/[^0-9]/g, '');
+
+        if (value === '') {
+            value = '0';
+        } else if (value.startsWith('0') && value.length > 1) {
+            value = value.substring(1);
+        }
+
+        this.value = 'Rp. ' + value;
+    });
+
+    hargaInput.addEventListener('focus', function (e) {
+        // Ensure cursor is always after "Rp. " on focus
+        if (e.target.selectionStart < 4) {
+            e.target.setSelectionRange(4, 4);
+        }
+
+        // If the current value is 'Rp. 0', clear it
+        if (this.value === 'Rp. 0') {
+            this.value = 'Rp. ';
+            e.target.setSelectionRange(4, 4);
+        }
+    });
+
+    hargaInput.addEventListener('blur', function (e) {
+        // If the input is empty when it loses focus, set it to 'Rp. 0'
+        if (this.value === 'Rp. ') {
+            this.value = 'Rp. 0';
+        }
+    });
+
+    hargaInput.addEventListener('keydown', function (e) {
+        // Prevent backspace and delete from removing "Rp. "
+        if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.selectionStart <= 4) {
+            e.preventDefault();
+        }
+    });
+
+    hargaInput.addEventListener('click', function (e) {
+        // Ensure cursor does not move before "Rp. "
+        if (e.target.selectionStart < 4) {
+            e.target.setSelectionRange(4, 4);
+        }
+    });
+});
+
+function removeRpPrefix() {
+    const hargaInput = document.getElementById('harga_ruangan');
+    hargaInput.value = hargaInput.value.replace(/^Rp\. /, '');
+}
 
 function showConfirmationModal() {
     const form = document.getElementById('edit-form');
@@ -21,8 +80,11 @@ function closeConfirmationModal() {
 }
 
 function submitForm() {
+    removeRpPrefix(); // Ensure prefix is removed before submission
     const form = document.getElementById('edit-form');
     const formData = new FormData(form);
+    const roomName = document.getElementById('nama_ruangan').value;
+    console.log('Room name before reset:', roomName); // Debug: Check the room name value before form reset
 
     fetch(form.action, {
         method: 'POST',
@@ -33,7 +95,7 @@ function submitForm() {
             closeConfirmationModal();
             form.reset();
             form.classList.remove('was-validated');
-            showSuccessModal();
+            showSuccessModal(roomName); // Pass the roomName to showSuccessModal
         } else {
             console.error('Form submission failed.');
         }
@@ -41,7 +103,15 @@ function submitForm() {
     .catch(error => console.error('Form submission error:', error));
 }
 
-function showSuccessModal() {
+function showSuccessModal(roomName) {
+    console.log('Room name in showSuccessModal:', roomName); // Debug: Check the room name value
+
+    // Update the modal message
+    const modalMessage = document.getElementById('modalMessage');
+    modalMessage.textContent = 'Ruangan ' + roomName + ' telah diperbarui';
+    console.log('Modal message:', modalMessage.textContent); // Debug: Check the modal message content
+
+    // Show and position the success modal
     const modal = document.getElementById('successModal');
     modal.style.display = 'block';
     modal.style.position = 'fixed';
@@ -57,8 +127,21 @@ function closeSuccessModal() {
 
 document.getElementById('edit-form').addEventListener('submit', function (e) {
     e.preventDefault();
+    updateTersedia(); // Ensure tersedia is set correctly before submitting
     showConfirmationModal();
 });
+
+function updateTersedia() {
+    var status = document.getElementById('status').value;
+    var tersedia = document.getElementById('tersedia');
+
+    if (status === 'Tersedia') {
+        tersedia.value = 1;
+    } else if (status === 'Digunakan') {
+        tersedia.value = 0;
+    }
+    console.log('Tersedia value set to:', tersedia.value);
+}
 
 // Bootstrap form validation
 (function () {
@@ -74,87 +157,3 @@ document.getElementById('edit-form').addEventListener('submit', function (e) {
         }, false);
     });
 })();
-
-document.getElementById("status").addEventListener("change", function() {
-    var status = this.value;
-    var tersediaInput = document.getElementById("tersedia");
-
-    if (status === "Available") {
-        tersediaInput.value = 0;
-    } else if (status === "Booked") {
-        tersediaInput.value = 1;
-    } else {
-        tersediaInput.value = "";
-    }
-});
-
-document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-    const dropZoneElement = inputElement.closest(".drop-zone");
-
-    dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-    });
-
-    inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-            updateThumbnail(dropZoneElement, inputElement.files[0]);
-        }
-    });
-
-    dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZoneElement.classList.add("drop-zone--over");
-    });
-
-    ["dragleave", "dragend"].forEach((type) => {
-        dropZoneElement.addEventListener(type, (e) => {
-            dropZoneElement.classList.remove("drop-zone--over");
-        });
-    });
-
-    dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        if (e.dataTransfer.files.length) {
-            inputElement.files = e.dataTransfer.files;
-            updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-        }
-
-        dropZoneElement.classList.remove("drop-zone--over");
-    });
-});
-
-function updateThumbnail(dropZoneElement, file) {
-    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-    const uploadedRoomsElement = document.querySelector(".uploadedRooms");
-
-    console.log(file);
-    // First time - remove the prompt
-    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-        dropZoneElement.querySelector(".drop-zone__prompt").remove();
-    }
-
-    // First time - there is no thumbnail element, so lets create it
-    if (!thumbnailElement) {
-        thumbnailElement = document.createElement("div");
-        thumbnailElement.classList.add("drop-zone__thumb");
-        dropZoneElement.appendChild(thumbnailElement);
-    }
-
-    thumbnailElement.dataset.label = file.name;
-
-    // Show thumbnail for image files
-    if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-        };
-    } else {
-        thumbnailElement.style.backgroundImage = null;
-    }
-
-    // Update the uploaded file names in a new line
-    uploadedRoomsElement.innerHTML += file.name + "<br>";
-}

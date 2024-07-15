@@ -41,20 +41,18 @@
                         <div class="row justify-content-sm-center text-center text-dark mt-3">
                             @foreach ($chunk as $ruangan)
                                 <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
-                                    @foreach ($ruangan->gambar as $gambar)
-                                        <div class="position-relative">
-                                            <img src="{{ asset('assets/' . $gambar->url) }}" class="card-img-top custom-img"
-                                                alt="Gambar Ruangan" style="border-radius: 5px; width: 300px; height:512px; filter: brightness(70%);">
-                                            <h6 class="card-title position-absolute title-overlay">{{ $ruangan->nama_ruangan }}</h6>
-                                            <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
-                                                class="btn btn-light shadow-none position-absolute detail-overlay text-capitalize">Detail</a>
-                                            @if ($ruangan->tersedia == '1')
-                                                <span class="status-available position-absolute status-overlay">Tersedia</span>
-                                            @else
-                                                <span class="status-not-available position-absolute status-overlay">Digunakan</span>
-                                            @endif
-                                        </div>
-                                    @endforeach
+                                    <div class="position-relative">
+                                        <img src="{{ asset('assets/' . $ruangan->gambar->first()->url) }}" class="card-img-top custom-img"
+                                            alt="Gambar Ruangan">
+                                        <h6 class="card-title title-overlay">{{ $ruangan->nama_ruangan }}</h6>
+                                        <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
+                                            class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
+                                        @if ($ruangan->tersedia == '1')
+                                            <span class="status-available status-overlay">Tersedia</span>
+                                        @else
+                                            <span class="status-not-available status-overlay">Digunakan</span>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -70,7 +68,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        
+
         <div class="row mt-4">
             <div class="d-md-flex justify-content-center w-100">
                 <a type="button" class="btn btn-sm text-white text-capitalize" style="background-color: #2CA700; font-size: 16px; border-radius: 7px;" href="/daftarRuanganPenyewa">Lihat Ruangan Lainnya</a>

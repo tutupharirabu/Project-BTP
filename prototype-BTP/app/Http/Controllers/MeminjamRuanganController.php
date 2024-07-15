@@ -25,8 +25,9 @@ class MeminjamRuanganController extends Controller
     {
         $dataPeminjaman = Peminjaman::all();
         $dataRuangan = Ruangan::all();
+        $origin = 'dashboard'; // Asumsi default asal dari dashboard
 
-        return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan'));
+        return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan', 'origin'));
     }
 
     /**
@@ -83,9 +84,16 @@ class MeminjamRuanganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showPinjamRuangan($id)
     {
-        //
+        $dataRuangan = Ruangan::all();
+        $ruangan = Ruangan::find($id);
+        if (!$ruangan) {
+            return redirect()->route('daftarRuanganPenyewa')->with('error', 'Ruangan tidak ditemukan.');
+        }
+        $origin = 'detailRuangan'; // Asumsi asal dari detail ruangan
+
+        return view('penyewa.meminjamRuangan', compact('ruangan', 'dataRuangan', 'origin'));
     }
 
     /**

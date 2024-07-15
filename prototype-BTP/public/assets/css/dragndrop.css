@@ -18,7 +18,7 @@
 /* batas */
 
 .drop-zone {
-    width: 95%;
+    width: 100%;
     height: 200px;
     padding: 25px;
     display: flex;
@@ -32,7 +32,9 @@
     color: #cccccc;
     border: 4px dashed #717171;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
+    position: relative;
+    flex-direction: column;
 }
 
 .drop-zone--over {
@@ -65,5 +67,3 @@
     font-size: 10px;
     text-align: center;
 }
-
-
