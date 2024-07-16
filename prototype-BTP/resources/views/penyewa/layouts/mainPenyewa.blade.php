@@ -19,15 +19,30 @@
         integrity="sha512-VoVp+Y7fE9gr/mq6+dL88UJ8RxmcrnhOHKAtMtTX/AriKVIyK/Bn0pNED0oGzUg0JeA7L+CK6XXNwOjf5eFpBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- font awsome -->
-    
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dragndrop.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dragndrop.css') }}">
 
     <style>
         body {
             padding-top: 60px;
             overflow-x: hidden;
+        }
+
+        .whatsapp-button {
+            background-color: #25d366;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed; /* Make the position fixed */
+            bottom: 20px; /* Adjust the vertical position */
+            right: 20px; /* Adjust the horizontal position to the right */
+            z-index: 1000; /* Ensure it appears above other elements */
+        }
+        .whatsapp-button i {
+            color: #FFFFFF;
+            font-size: 30px;
         }
     </style>
 
@@ -49,16 +64,23 @@
             </div>
         </div>
     </div>
-    <!-- <div class="footerstyle  border-top">
 
-    </div> -->
+    <div class="row">
+        <div class="col-auto">
+            <a href="https://wa.me/+6282127644368" target="_blank" style="text-decoration: none;">
+                <div class="whatsapp-button">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+            </a>
+        </div>
+    </div>
 
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    {{-- jquery --}}
 
+    {{-- jquery --}}
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
 

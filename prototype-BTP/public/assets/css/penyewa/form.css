@@ -71,3 +71,29 @@
 .invalid-feedback {
     color: red;
 }
+
+.btn-group {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.btn-group .btn-check:checked + .btn {
+    background-color: #419343;
+    color: #fff;
+    border-color: #419343;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+    position: relative;
+}
+
+.btn-group .btn:first-of-type {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.btn-group .btn:last-of-type {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

@@ -5,7 +5,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
-    <link rel="stylesheet" href="style.css">
+    {{-- <link rel="stylesheet" href="style.css"> --}}
 </head>
 
 <div class="container-fluid mt-4">
@@ -117,100 +117,16 @@
 
                             <!-- right form file -->
                             <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai
-                                            Peminjaman</label>
-                                        <input type="date" name="tanggal_mulai" id="tanggal_mulai"
-                                            class="date form-control border-color" required>
-                                        <div class="invalid-feedback">
-                                            Masukkan Mulai Peminjaman!
-                                        </div>
-                                    </div>
+                                <div class="col-12 btn-group btn-group-lg" role="group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="per_jam" autocomplete="off" checked>
+                                    <label class="btn btn-outline-black" for="btnradio1">Per Jam</label>
 
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai
-                                            Peminjaman</label>
-                                        <input type="date" name="tanggal_selesai" id="tanggal_selesai"
-                                            class="date form-control border-color" required>
-                                        <div class="invalid-feedback">
-                                            Masukkan Selesai Peminjaman!
-                                        </div>
-                                    </div>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="per_hari" autocomplete="off">
+                                    <label class="btn btn-outline-black" for="btnradio2">Per Hari</label>
                                 </div>
 
-                                <div class="row mt-4">
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Peminjaman</label>
-                                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
-                                            <option value="">Pilih Jam Mulai</option>
-                                            <!-- Loop through hours from 08:00 to 20:00 with 30-minute intervals -->
-                                            <option value="08:00">08:00</option>
-                                            <option value="08:30">08:30</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="09:30">09:30</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="10:30">10:30</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="11:30">11:30</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="12:30">12:30</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="18:30">18:30</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="19:30">19:30</option>
-                                            <option value="20:00">20:00</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Masukkan Mulai Peminjaman!
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <label for="jam_selesai" class="form-label text-color">Jam Selesai Peminjaman</label>
-                                        <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required>
-                                            <option value="">Pilih Jam Selesai</option>
-                                            <!-- Loop through hours from 08:00 to 20:00 with 30-minute intervals -->
-                                            <option value="08:00">08:00</option>
-                                            <option value="08:30">08:30</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="09:30">09:30</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="10:30">10:30</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="11:30">11:30</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="12:30">12:30</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="18:30">18:30</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="19:30">19:30</option>
-                                            <option value="20:00">20:00</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Masukkan Selesai Peminjaman!
-                                        </div>
-                                    </div>
+                                <div id="form-content">
+                                    <!-- Konten untuk Per Jam akan dimuat di sini secara default -->
                                 </div>
 
                                 <div class="col-md mt-4">
@@ -248,36 +164,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-auto">
-            <a href="https://wa.me/+6282127644368" target="_blank" style="text-decoration: none;">
-                <div class="whatsapp-button">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <style>
-        .whatsapp-button {
-            background-color: #25d366;
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed; /* Make the position fixed */
-            bottom: 66px; /* Adjust the vertical position */
-            right: 20px; /* Adjust the horizontal position to the right */
-            z-index: 1000; /* Ensure it appears above other elements */
-        }
-        .whatsapp-button i {
-            color: #FFFFFF;
-            font-size: 42px; /* Adjust the icon size */
-        }
-    </style>
 </div>
 
 <!-- Confirmation Modal -->
@@ -397,6 +283,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
     (function() {
         'use strict'
@@ -492,11 +379,27 @@
         const lokasi = document.getElementById('lokasi').value;
         const jumlahPeserta = document.getElementById('peserta').value;
         const tanggalMulai = document.getElementById('tanggal_mulai').value;
-        const tanggalSelesai = document.getElementById('tanggal_selesai').value;
         const jamMulai = document.getElementById('jam_mulai').value;
-        const jamSelesai = document.getElementById('jam_selesai').value;
         const harga = document.getElementById('harga_ruangan').value;
         const keterangan = document.getElementById('keterangan').value;
+
+        // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
+        if (document.getElementById('btnradio1').checked) { // Per Jam
+            const durasi = document.getElementById('durasi').value;
+            const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
+            const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
+            const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
+            const jamSelesaiFormatted = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+
+            document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
+            document.getElementById('confirm_jam_selesai').innerText = jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
+        } else if (document.getElementById('btnradio2').checked) { // Per Hari
+            const jamSelesai = document.getElementById('jam_selesai').value;
+            const tanggalSelesai = document.getElementById('tanggal_selesai').value;
+
+            document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(tanggalSelesai); // Tanggal selesai sesuai input
+            document.getElementById('confirm_jam_selesai').innerText = jamSelesai; // Jam selesai sesuai input
+        }
 
         // Debugging logs
         console.log("Selected status:", status);
@@ -507,7 +410,7 @@
         var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
         var priceAkhir;
 
-        if (status === 'Eksternal') {
+        if (status === 'Mahasiswa' || status === 'Umum') {
             priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
         } else {
             priceAkhir = 'Rp 0';
@@ -520,10 +423,8 @@
         document.getElementById('confirm_status').innerText = status;
         document.getElementById('confirm_lokasi').innerText = lokasi;
         document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
-        document.getElementById('confirm_tanggal_mulai').innerText = tanggalMulai;
-        document.getElementById('confirm_tanggal_selesai').innerText = tanggalSelesai;
+        document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
         document.getElementById('confirm_jam_mulai').innerText = jamMulai;
-        document.getElementById('confirm_jam_selesai').innerText = jamSelesai;
         document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
         document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
         document.getElementById('confirm_keterangan').innerText = keterangan;
@@ -532,6 +433,16 @@
             backdrop: 'static',
             keyboard: false
         }).modal('show');
+    }
+
+    function convertToDisplayFormat(dateStr) {
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        } else {
+            console.error("Invalid date format:", dateStr);
+            return dateStr;
+        }
     }
 
     function toggleConfirmButton() {
@@ -600,6 +511,190 @@
     // Redirect to dashboardPenyewa when the WhatsApp modal is closed
     document.querySelector('.whatsapp-close-button').addEventListener('click', function() {
         window.location.href = "/dashboardPenyewa";
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Fungsi untuk menampilkan form Per Jam
+        function showPerJamForm() {
+            $('#form-content').html(`
+                <div class="row">
+                    <div class="col-12">
+                        <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
+                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
+                        <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <i class="material-symbols-outlined me-2">calendar_month</i>
+                        <span>Ketersediaan Jam</span>
+                    </div>
+                    <div class="d-grid gap-2 col-8 mx-auto">
+                        <button type="button" class="btn btn-success active" data-bs-toggle="button" aria-pressed="true">Lihat Ketersediaan</button>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
+                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
+                            <option value="">Pilih Jam Mulai Penyewaan</option>
+                            <option value="08:00">08:00</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                        <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="durasi" class="form-label text-color">Durasi Penyewaan</label>
+                        <select name="durasi" id="durasi" class="form-control border-color" required disabled>
+                            <option value="">Pilih Durasi Penyewaan</option>
+                            <option value="00:30">30 Menit</option>
+                            <option value="01:00">60 Menit</option>
+                            <option value="01:30">90 Menit</option>
+                            <option value="02:00">120 Menit</option>
+                            <option value="02:30">150 Menit</option>
+                            <option value="03:00">180 Menit</option>
+                            <option value="03:30">210 Menit</option>
+                            <option value="04:00">240 Menit</option>
+                        </select>
+                        <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
+                    </div>
+                </div>
+            `);
+
+            $('#jam_mulai').on('change', function() {
+                var jamMulai = $(this).val();
+                if (jamMulai) {
+                    $('#durasi').prop('disabled', false);
+                } else {
+                    $('#durasi').prop('disabled', true);
+                }
+            });
+
+        }
+
+        // Fungsi untuk menampilkan form Seharian
+        function showPerHariForm() {
+            $('#form-content').html(`
+                <div class="row">
+                    <div class="col-12">
+                        <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
+                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
+                        <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai Penyewaan</label>
+                        <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required>
+                        <div class="invalid-feedback">Masukkan Tanggal Selesai Penyewaan!</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
+                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
+                            <option value="">Pilih Jam Mulai Penyewaan</option>
+                            <option value="08:00">08:00</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                        <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="jam_selesai" class="form-label text-color">Jam Selesai Penyewaan</label>
+                        <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required disabled>
+                            <option value="">Pilih Jam Selesai Penyewaan</option>
+                            <option value="08:00">08:00</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
+                        </select>
+                        <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
+                    </div>
+                </div>
+            `);
+
+            $('#jam_mulai').on('change', function() {
+                var jamMulai = $(this).val();
+                if (jamMulai) {
+                    $('#jam_selesai').prop('disabled', false);
+                } else {
+                    $('#jam_selesai').prop('disabled', true);
+                }
+            });
+        }
+
+        // Set default form
+        showPerJamForm();
+
+        // Event listener untuk radio button
+        $('input[name="btnradio"]').on('change', function() {
+            if ($('#btnradio1').is(':checked')) {
+                showPerJamForm();
+            } else if ($('#btnradio2').is(':checked')) {
+                showPerHariForm();
+            }
+        });
     });
 </script>
 
