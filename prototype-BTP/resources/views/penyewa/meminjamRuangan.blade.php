@@ -117,12 +117,12 @@
 
                             <!-- right form file -->
                             <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                                <div class="col-12 btn-group btn-group-lg" role="group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="per_jam" autocomplete="off" checked>
-                                    <label class="btn btn-outline-black" for="btnradio1">Per Jam</label>
+                                <div class="col-12 btn-group btn-group-md " role="group" style="">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="per_jam" autocomplete="off" checked style="height:20px; width:20px;">
+                                    <label class="btn btn-outline-black text-capitalize" for="btnradio1" style="font-size:13px;" >Per Jam</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="per_hari" autocomplete="off">
-                                    <label class="btn btn-outline-black" for="btnradio2">Per Hari</label>
+                                    <label class="btn btn-outline-black text-capitalize" for="btnradio2" style="font-size:13px;">Per Hari</label>
                                 </div>
 
                                 <div id="form-content">
@@ -280,6 +280,63 @@
         </div>
     </div>
 </div>
+
+@php
+    $days = [];
+    for ($i = 0; $i < 7; $i++) {
+        $date = \Carbon\Carbon::now()->addDays($i);
+        $days[] = [
+            'day' => $date->format('l'), // nama hari
+            'date' => $date->format('d M Y') // tanggal
+        ];
+    }
+    $hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+@endphp
+
+
+<!-- lihat Ketersediaan -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center align-items-center position-relative">
+            <h5 class="modal-title mx-auto" id="exampleModalLabel">Ketersediaan Ruangan</h5>
+            <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      <div class="modal-body">
+        <!-- iteration availability -->
+        <div class="d-flex justify-content-center flex-wrap">
+          @foreach($days as $day)
+            <div class="mx-2 text-center">
+                <!-- head date -->
+                <div>
+                    <p class="day-name">{{ $day['day'] }}</p>
+                    <p class="font-weight-bold date-available">{{ $day['date'] }}</p>
+                </div>
+                <!-- list jam -->
+                <div>
+                  @foreach($hours as $hour)
+                    <div class="available"><p>{{ $hour }}</p></div>
+                  @endforeach
+                </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+            <div class="d-flex align-items-center mr-4">
+                <div class="mark-available"></div>
+                <p class="my-auto">Tersedia</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="mark-notavailable"></div>
+                <p class="my-auto">Tidak tersedia</p>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -527,13 +584,15 @@
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-4 d-flex justify-content-center align-items-center">
+                    <div class="col-6 d-flex justify-content-center align-items-center">
                         <i class="material-symbols-outlined me-2">calendar_month</i>
                         <span>Ketersediaan Jam</span>
                     </div>
-                    <div class="d-grid gap-2 col-8 mx-auto">
-                        <button type="button" class="btn btn-success active" data-bs-toggle="button" aria-pressed="true">Lihat Ketersediaan</button>
-                    </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="button" class="btn active capitalize-first-letter text-white btn-md" style="background-color:#419343; font-size: 13px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Lihat Ketersediaan
+                    </button>
+                </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">

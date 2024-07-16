@@ -20,31 +20,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dragndrop.css') }}">
-
-    <style>
-        body {
-            padding-top: 60px;
-            overflow-x: hidden;
-        }
-
-        .whatsapp-button {
-            background-color: #25d366;
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed; /* Make the position fixed */
-            bottom: 20px; /* Adjust the vertical position */
-            right: 20px; /* Adjust the horizontal position to the right */
-            z-index: 1000; /* Ensure it appears above other elements */
-        }
-        .whatsapp-button i {
-            color: #FFFFFF;
-            font-size: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
 
 </head>
 
@@ -89,15 +65,10 @@
 
 </body>
 
-<!-- <style>
-    .footerstyle {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #f8f9fa;
-        text-align: center;
-        padding: 8px;
+<style>
+    body {
+        padding-top: 60px;
+        overflow-x: hidden;
     }
-</style> -->
+</style>
+
