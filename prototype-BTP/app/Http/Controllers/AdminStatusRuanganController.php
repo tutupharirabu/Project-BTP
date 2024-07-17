@@ -7,6 +7,7 @@ use App\Models\Gambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use DB;
 
 class AdminStatusRuanganController extends Controller
 {

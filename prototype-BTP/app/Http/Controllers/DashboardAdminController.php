@@ -10,7 +10,7 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
-        $peminjamans = Peminjaman::with('ruangan')->where('status','Disetujui')->get();
+        $peminjamans = Peminjaman::with('ruangan')->whereIn('status',['Disetujui', 'Selesai'])->get();
 
         $events = array();
         foreach($peminjamans as $peminjaman){
