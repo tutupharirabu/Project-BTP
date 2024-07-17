@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Users;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
-use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class MeminjamRuanganController extends Controller
 {
@@ -118,6 +119,40 @@ class MeminjamRuanganController extends Controller
         } else {
             return response()->json(['error' => 'Ruangan not found'], 404);
         }
+    }
+
+    public function getAvailableTimes(Request $request)
+    {
+        $tanggalMulai = Carbon::parse($request->input('tanggal_mulai'));
+
+        // Query untuk mendapatkan waktu yang digunakan pada tanggal_mulai dengan status Disetujui
+        $usedTimes = DB::table('peminjaman')
+            ->where(function($query) use ($tanggalMulai) {
+                $query->whereDate('tanggal_mulai', $tanggalMulai)
+                        ->orWhereDate('tanggal_selesai', $tanggalMulai)
+                        ->orWhereBetween('tanggal_mulai', [$tanggalMulai, $tanggalMulai->copy()->addDays(6)])
+                        ->orWhereBetween('tanggal_selesai', [$tanggalMulai, $tanggalMulai->copy()->addDays(6)]);
+            })
+            ->where('status', 'Disetujui')
+            ->get();
+
+        // Convert usedTimes to an array of time slots
+        $usedTimeSlots = [];
+            foreach ($usedTimes as $time) {
+                $start = Carbon::parse($time->tanggal_mulai);
+                $end = Carbon::parse($time->tanggal_selesai);
+                while ($start <= $end) {
+                    $usedTimeSlots[] = [
+                        'date' => $start->format('Y-m-d'),
+                        'time' => $start->format('H:i')
+                    ];
+                    $start->addMinutes(30);
+                }
+            }
+
+        return response()->json([
+            'usedTimeSlots' => $usedTimeSlots
+        ]);
     }
 
     /**

@@ -80,7 +80,7 @@
                             <td colspan="3" class="border border-secondary">Rp
                                 {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="border border-secondary">Status</td>
                             <td colspan="3" class="border border-secondary">
                                 @if ($ruangan->tersedia == '1')
@@ -95,7 +95,7 @@
                                     </div>
                                 @endif
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -103,7 +103,7 @@
                 style="width: 80%;">
                 <div class="text-black">
                     <p>Keterangan :</p>
-                    <p>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
+                    <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
                     <p> **Harap membaca syarat & ketentuan yang berlaku </p>
                 </div>
                 <div class="">

@@ -78,9 +78,9 @@
 }
 
 .btn-group .btn-check:checked + .btn {
-    background-color: #419343;
+    background-color: #0C9300;
     color: #fff;
-    border-color: #419343;
+    border-color: #0C9300;
 }
 
 .btn-group .btn {
@@ -116,7 +116,6 @@
     font-size: 30px;
 }
 
-
 /* modal ketersediaan ruangan */
 
 .available{
@@ -148,7 +147,7 @@
 }
 
 .mark-available {
-    background-color: #55a166;
+    background-color: #25d366;
     height: 10px;
     width: 10px;
     margin-right: 10px;
@@ -161,4 +160,33 @@
     width: 10px;
     margin-right: 10px;
     border-radius: 50%;
+}
+
+.button-style-ketersediaan {
+    background-color: #0C9300;
+    font-size: 14px;
+}
+
+.button-style-ketersediaan:hover {
+    background-color: #0A7A00;
+}
+
+.cek-available {
+    background-color: #25d366;
+    height:26px;
+    width:76px;
+    border-radius:5px;
+    color: #FFFFFF;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+.cek-notavailable {
+    background-color: #e3e3e3;
+    height:26px;
+    width:76px;
+    border-radius:5px;
+    color: #FFFFFF;
+    margin-bottom:10px;
+    text-align: center;
 }

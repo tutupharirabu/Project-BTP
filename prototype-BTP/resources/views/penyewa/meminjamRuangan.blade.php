@@ -282,61 +282,35 @@
 </div>
 
 @php
-    $days = [];
-    for ($i = 0; $i < 7; $i++) {
-        $date = \Carbon\Carbon::now()->addDays($i);
-        $days[] = [
-            'day' => $date->format('l'), // nama hari
-            'date' => $date->format('d M Y') // tanggal
-        ];
-    }
-    $hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+    Carbon\Carbon::setLocale('id');
 @endphp
 
-
 <!-- lihat Ketersediaan -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header d-flex justify-content-center align-items-center position-relative">
-            <h5 class="modal-title mx-auto" id="exampleModalLabel">Ketersediaan Ruangan</h5>
-            <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-      <div class="modal-body">
-        <!-- iteration availability -->
-        <div class="d-flex justify-content-center flex-wrap">
-          @foreach($days as $day)
-            <div class="mx-2 text-center">
-                <!-- head date -->
-                <div>
-                    <p class="day-name">{{ $day['day'] }}</p>
-                    <p class="font-weight-bold date-available">{{ $day['date'] }}</p>
-                </div>
-                <!-- list jam -->
-                <div>
-                  @foreach($hours as $hour)
-                    <div class="available"><p>{{ $hour }}</p></div>
-                  @endforeach
+<div class="modal fade" id="lihatKetersediaanModal" tabindex="-1" aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center align-items-center position-relative">
+                <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">Ketersediaan Ruangan</h5>
+                <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
+                    <!-- Dynamic days content will be inserted here -->
                 </div>
             </div>
-          @endforeach
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="d-flex align-items-center mr-4">
+                    <div class="mark-available"></div>
+                    <p class="my-auto">Tersedia</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="mark-notavailable"></div>
+                    <p class="my-auto">Tidak tersedia</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-            <div class="d-flex align-items-center mr-4">
-                <div class="mark-available"></div>
-                <p class="my-auto">Tersedia</p>
-            </div>
-            <div class="d-flex align-items-center">
-                <div class="mark-notavailable"></div>
-                <p class="my-auto">Tidak tersedia</p>
-            </div>
-      </div>
     </div>
-  </div>
 </div>
-
-
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -573,6 +547,76 @@
 
 <script>
     $(document).ready(function() {
+        var tanggalMulai;
+
+        $('#tanggal_mulai').on('change', function() {
+            tanggalMulai = $(this).val();
+            if (tanggalMulai) {
+                $('#ketersediaanRow').show();
+                updateDays(tanggalMulai);
+            } else {
+                $('#ketersediaanRow').hide();
+            }
+        });
+
+        function updateDays(startDate) {
+            $.ajax({
+                url: '/get-ketersediaan-details',
+                method: 'GET',
+                data: {
+                    tanggal_mulai: startDate
+                },
+                success: function(response) {
+                    var daysContainer = $('#daysContainer');
+                    daysContainer.empty();
+
+                    var startDateObj = new Date(startDate);
+                    for (var i = 0; i < 7; i++) {
+                        var currentDateObj = new Date(startDateObj);
+                        currentDateObj.setDate(startDateObj.getDate() + i);
+
+                        var dayName = currentDateObj.toLocaleDateString('id-ID', { weekday: 'long' });
+                        var dayDate = currentDateObj.toISOString().split('T')[0];
+
+                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+                        var dayHtml = `
+                            <div class="mx-2 text-center">
+                                <div>
+                                    <p class="day-name">${dayName}</p>
+                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                </div>
+                                <div>
+                                    ${hoursHtml}
+                                </div>
+                            </div>
+                        `;
+                        daysContainer.append(dayHtml);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function getHoursHtml(dayDate, usedTimeSlots) {
+            var hoursHtml = '';
+            var start = new Date(dayDate + 'T08:00:00');
+            var end = new Date(dayDate + 'T17:30:00');
+
+            while (start < end) {
+                var hour = start.toTimeString().substring(0, 5);
+                var isUsed = usedTimeSlots.some(function(slot) {
+                    return slot.date === dayDate && slot.time === hour;
+                });
+                var className = isUsed ? 'cek-notavailable' : 'cek-available';
+                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+                start.setMinutes(start.getMinutes() + 30);
+            }
+            return hoursHtml;
+        }
+
         // Fungsi untuk menampilkan form Per Jam
         function showPerJamForm() {
             $('#form-content').html(`
@@ -583,16 +627,16 @@
                         <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row mt-4" id="ketersediaanRow" style="display: none;">
                     <div class="col-6 d-flex justify-content-center align-items-center">
                         <i class="material-symbols-outlined me-2">calendar_month</i>
                         <span>Ketersediaan Jam</span>
                     </div>
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="button" class="btn active capitalize-first-letter text-white btn-md" style="background-color:#419343; font-size: 13px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Lihat Ketersediaan
-                    </button>
-                </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button type="button" class="btn button-style-ketersediaan text-white capitalize-first-letter btn-md" data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
+                            Lihat Ketersediaan
+                        </button>
+                    </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -618,8 +662,6 @@
                             <option value="16:00">16:00</option>
                             <option value="16:30">16:30</option>
                             <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
                         </select>
                         <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
                     </div>
@@ -641,6 +683,20 @@
                 </div>
             `);
 
+            if (tanggalMulai) {
+                $('#tanggal_mulai').val(tanggalMulai).trigger('change');
+            }
+
+            $('#tanggal_mulai').on('change', function() {
+                var tanggalMulai = $(this).val();
+                if (tanggalMulai) {
+                    $('#ketersediaanRow').show();
+                    updateDays(tanggalMulai);
+                } else {
+                    $('#ketersediaanRow').hide();
+                }
+            });
+
             $('#jam_mulai').on('change', function() {
                 var jamMulai = $(this).val();
                 if (jamMulai) {
@@ -649,7 +705,6 @@
                     $('#durasi').prop('disabled', true);
                 }
             });
-
         }
 
         // Fungsi untuk menampilkan form Seharian
@@ -663,8 +718,19 @@
                     </div>
                     <div class="col-12 mt-4">
                         <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai Penyewaan</label>
-                        <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required>
+                        <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required disabled>
                         <div class="invalid-feedback">Masukkan Tanggal Selesai Penyewaan!</div>
+                    </div>
+                </div>
+                <div class="row mt-4" id="ketersediaanRow" style="display: none;">
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        <i class="material-symbols-outlined me-2">calendar_month</i>
+                        <span>Ketersediaan Jam</span>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button type="button" class="btn button-style-ketersediaan text-white capitalize-first-letter btn-md" data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
+                            Lihat Ketersediaan
+                        </button>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -693,6 +759,12 @@
                             <option value="17:00">17:00</option>
                             <option value="17:30">17:30</option>
                             <option value="18:00">18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
                         </select>
                         <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
                     </div>
@@ -733,6 +805,22 @@
                 </div>
             `);
 
+            if (tanggalMulai) {
+                $('#tanggal_mulai').val(tanggalMulai).trigger('change');
+            }
+
+            $('#tanggal_mulai').on('change', function() {
+                var tanggalMulai = $(this).val();
+                if (tanggalMulai) {
+                    $('#ketersediaanRow').show();
+                    $('#tanggal_selesai').prop('disabled', false);
+                    updateDays(tanggalMulai);
+                } else {
+                    $('#ketersediaanRow').hide();
+                    $('#tanggal_selesai').prop('disabled', true);
+                }
+            });
+
             $('#jam_mulai').on('change', function() {
                 var jamMulai = $(this).val();
                 if (jamMulai) {
@@ -752,6 +840,15 @@
                 showPerJamForm();
             } else if ($('#btnradio2').is(':checked')) {
                 showPerHariForm();
+            }
+        });
+
+        // Event listener untuk tombol lihat ketersediaan
+        $('#lihatKetersediaanButton').on('click', function(event) {
+            var tanggalMulai = $('#tanggal_mulai').val();
+            if (!tanggalMulai) {
+                event.preventDefault();
+                alert('Harap isi Tanggal Mulai Penyewaan terlebih dahulu.');
             }
         });
     });
