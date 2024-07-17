@@ -10,7 +10,7 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
-        $peminjamans = Peminjaman::with('ruangan')->where('status','Disetujui')->get();
+        $peminjamans = Peminjaman::with('ruangan')->where('status','Selesai')->get();
 
         $events = array();
         foreach($peminjamans as $peminjaman){
@@ -25,7 +25,7 @@ class DashboardAdminController extends Controller
             DB::raw('MONTH(tanggal_mulai) as bulan'),
             DB::raw('COUNT(*) as total')
         )
-        ->where('status', 'Disetujui')
+        ->where('status', 'Selesai')
         ->groupBy('bulan')
         ->get();
 
