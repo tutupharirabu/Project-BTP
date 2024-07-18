@@ -71,3 +71,122 @@
 .invalid-feedback {
     color: red;
 }
+
+.btn-group {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.btn-group .btn-check:checked + .btn {
+    background-color: #0C9300;
+    color: #fff;
+    border-color: #0C9300;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+    position: relative;
+}
+
+.btn-group .btn:first-of-type {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.btn-group .btn:last-of-type {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.whatsapp-button {
+    background-color: #25d366;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed; /* Make the position fixed */
+    bottom: 20px; /* Adjust the vertical position */
+    right: 20px; /* Adjust the horizontal position to the right */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+.whatsapp-button i {
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+/* modal ketersediaan ruangan */
+
+.available{
+    background-color: #25d366;
+    height:26px;
+    width:76px;
+    border-radius:5px;
+    color: #FFFFFF;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+.modal-dialog {
+    max-width: 50%; /* Atur persentase sesuai kebutuhan */
+}
+
+@media (max-width: 767.98px) {
+    .modal-dialog {
+        max-width: 100%; /* Atur persentase sesuai kebutuhan */
+    }
+}
+
+.modal-body {
+    overflow-x: auto; /* Menambahkan penggulung horizontal jika konten terlalu lebar */
+}
+
+.modal-body .d-flex {
+    flex-wrap: wrap; /* Membungkus elemen jika terlalu lebar */
+}
+
+.mark-available {
+    background-color: #25d366;
+    height: 10px;
+    width: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.mark-notavailable {
+    background-color: #e3e3e3;
+    height: 10px;
+    width: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.button-style-ketersediaan {
+    background-color: #0C9300;
+    font-size: 14px;
+}
+
+.button-style-ketersediaan:hover {
+    background-color: #0A7A00;
+}
+
+.cek-available {
+    background-color: #25d366;
+    height:26px;
+    width:76px;
+    border-radius:5px;
+    color: #FFFFFF;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+.cek-notavailable {
+    background-color: #e3e3e3;
+    height:26px;
+    width:76px;
+    border-radius:5px;
+    color: #FFFFFF;
+    margin-bottom:10px;
+    text-align: center;
+}

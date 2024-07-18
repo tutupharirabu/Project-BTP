@@ -96,12 +96,12 @@
         <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
       </div>
       <div class="modal-body">
-        <p><strong>Peminjam : </strong> <span id="modalTitle"></span></p>
+        <p><strong>Nama Peminjam - Nama Ruangan : </strong> <span id="modalTitle"></span></p>
         <p><strong>Mulai    : </strong> <span id="modalStart"></span></p>
         <p><strong>Selesai  :</strong> <span id="modalEnd"></span></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn text-white" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200;">Close</button>
+        <button type="button" class="btn text-white text-capitalize" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200; font-size:15px;">Close</button>
       </div>
     </div>
   </div>
@@ -116,9 +116,9 @@
             events: bookings,
             eventClick: function(event) {
                 $('#modalTitle').text(event.title);
-                $('#modalStart').text(event.start.format('YYYY-MM-DD HH:mm'));
+                $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
                 if (event.end) {
-                    $('#modalEnd').text(event.end.format('YYYY-MM-DD HH:mm'));
+                    $('#modalEnd').text(event.end.format('DD-MM-YYYY | HH:mm'));
                 } else {
                     $('#modalEnd').text('N/A');
                 }

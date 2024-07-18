@@ -70,22 +70,6 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-
-
-    <script>
-        Dropzone.options.dropzone = {
-            url: '/upload',
-            maxFilesize: 2,
-            acceptedFiles: '.png, .jpg, .jpeg',
-            dictDefaultMessage: "Drop files disini",
-            init: function() {
-                this.on("removedfile", function(file) {
-                    console.log("File removed:", file.name);
-                });
-            }
-        };
-    </script>
-
 </body>
 
 <!-- drag drop zone -->

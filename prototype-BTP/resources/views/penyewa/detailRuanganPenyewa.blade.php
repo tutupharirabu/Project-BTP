@@ -111,8 +111,8 @@
                 style="width: 80%;">
                 <div class="text-black">
                     <p>Keterangan :</p>
-                    <p>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Harap membaca syarat & ketentuan yang berlaku </p>
+                    <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
+                    <p> **Harap membaca <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=drive_link" target="_blank">syarat & ketentuan</a> yang berlaku </p>
                 </div>
                 <div class="">
                     <a type="button" class="btn btn-sm text-white"
