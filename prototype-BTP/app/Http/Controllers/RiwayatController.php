@@ -11,7 +11,7 @@ class RiwayatController extends Controller
 {
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with('ruangan')->paginate(10);
+        $dataPeminjaman = Peminjaman::with('ruangan')->orderBy('tanggal_mulai', 'asc')->paginate(10);
         return view('riwayatRuangan', compact('dataPeminjaman'));
     }
 

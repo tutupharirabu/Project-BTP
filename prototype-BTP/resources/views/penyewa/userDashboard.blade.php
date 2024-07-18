@@ -96,7 +96,7 @@
         <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
       </div>
       <div class="modal-body">
-        <p><strong>Peminjam : </strong> <span id="modalTitle"></span></p>
+        <p><strong>Nama Peminjam - Nama Ruangan : </strong> <span id="modalTitle"></span></p>
         <p><strong>Mulai    : </strong> <span id="modalStart"></span></p>
         <p><strong>Selesai  :</strong> <span id="modalEnd"></span></p>
       </div>

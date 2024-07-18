@@ -33,22 +33,26 @@
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         @foreach ($ruangan->gambar as $index => $gambar)
-                            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}"
+                                class="{{ $index == 0 ? 'active' : '' }}"></button>
                         @endforeach
                     </div>
 
                     <div class="carousel-inner" style="border-radius:5px;">
                         @foreach ($ruangan->gambar as $index => $gambar)
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                <img src="{{ asset('assets/' . $gambar->url) }}" alt="Gambar {{ $index + 1 }}" class="d-block w-100 custom-carousel-img">
+                                <img src="{{ asset('assets/' . $gambar->url) }}" alt="Gambar {{ $index + 1 }}"
+                                    class="d-block w-100 custom-carousel-img">
                             </div>
                         @endforeach
                     </div>
 
-                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" style="color:#028391; left: -14%;">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev"
+                        style="color:#028391; left: -14%;">
                         <span class="carousel-control-prev-icon"></span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="color:#028391; right: -14%">
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next"
+                        style="color:#028391; right: -14%">
                         <span class="carousel-control-next-icon"></span>
                     </button>
                 </div>
@@ -80,10 +84,14 @@
                             <td colspan="3" class="border border-secondary">Rp
                                 {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td class="border border-secondary">Status</td>
                             <td colspan="3" class="border border-secondary">
-                                @if ($ruangan->tersedia == '1')
+                                <a href="/dashboardPenyewa" type="button boder" class="btn text-white"
+                                    style="font-size:16px;background-color: #419343; border-radius: 10px; height: 31.83px; width: 200px; display: flex; align-items: center; justify-content: center;">
+                                    Lihat ketersediaan
+                                </a>
+                                {{-- @if ($ruangan->tersedia == '1')
                                     <div type="button boder" class="btn btn-sm text-white"
                                         style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
                                         Tersedia
@@ -93,9 +101,9 @@
                                         style="font-size:16px;background-color: #555555; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
                                         Digunakan
                                     </div>
-                                @endif
+                                @endif --}}
                             </td>
-                        </tr> --}}
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -104,12 +112,13 @@
                 <div class="text-black">
                     <p>Keterangan :</p>
                     <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Harap membaca syarat & ketentuan yang berlaku </p>
+                    <p> **Harap membaca <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=drive_link" target="_blank">syarat & ketentuan</a> yang berlaku </p>
                 </div>
                 <div class="">
                     <a type="button" class="btn btn-sm text-white"
-                    style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
-                    href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam Ruangan</a>
+                        style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                        href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                        Ruangan</a>
                 </div>
             </div>
         </div>
