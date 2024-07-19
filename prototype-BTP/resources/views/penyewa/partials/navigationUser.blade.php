@@ -66,7 +66,7 @@
                             style="text-decoration: none; display: flex; align-items: center; color: #2F3645;">
                             <span class="material-symbols-outlined"
                                 style="margin-right: 5px; font-weight: 600;">person</span>
-                            <p style="margin: 0; font-weight: 600;">Login</p>
+                            <p style="margin: 0; font-weight: 600;">Login Khusus Untuk Petugas</p>
                         </a>
                     @endauth
                 </a>

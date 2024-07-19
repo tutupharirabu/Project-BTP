@@ -54,9 +54,9 @@
                         <button type="submit" class="btn btnlog mx-auto">Masuk</button>
                     </div>
                 </div>
-                <div class="col-md-12 text-center mt-3">
+                {{-- <div class="col-md-12 text-center mt-3">
                     <h6>Belum memiliki akun? <a href="/daftarPenyewa">Daftar</a></h6>
-                </div>
+                </div> --}}
             </form>
         </div>
     </div>
