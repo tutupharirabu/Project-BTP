@@ -58,11 +58,11 @@ function updateTable(data) {
             eventDiv.classList.add("mb-2");
             eventDiv.innerHTML = `
                 <strong>${event.ruangan.nama_ruangan}</strong><br>
-                ${new Date(event.tanggal_mulai).toLocaleTimeString("en-US", {
+                ${new Date(event.tanggal_mulai).toLocaleTimeString("id_ID", {
                     hour: "2-digit",
                     minute: "2-digit",
                 })} -
-                ${new Date(event.tanggal_selesai).toLocaleTimeString("en-US", {
+                ${new Date(event.tanggal_selesai).toLocaleTimeString("id_ID", {
                     hour: "2-digit",
                     minute: "2-digit",
                 })}<br>
