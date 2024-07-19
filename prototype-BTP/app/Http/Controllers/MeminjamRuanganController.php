@@ -63,29 +63,25 @@ class MeminjamRuanganController extends Controller
 
         $tanggal_mulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
 
-        if($mode_peminjaman == 'per_jam') {
+        if ($mode_peminjaman == 'per_jam') {
             $durasi = $request->input('durasi');
             $tanggalMulai = $request->input('tanggal_mulai');
             $jamMulai = $request->input('jam_mulai');
 
-            $durasiInMinutes = Carbon::parse($durasi)->diffInMinutes(Carbon::today());
+            // Mengonversi durasi menjadi menit
+            $durasiInMinutes = Carbon::parse($durasi)->diffInMinutes(Carbon::parse('00:00'));
 
             $startTime = Carbon::parse($jamMulai);
-
             $endTime = $startTime->addMinutes($durasiInMinutes);
-            $endTime->addHour();
 
+            // Menggunakan waktu akhir yang dihitung tanpa tambahan satu jam ekstra
             $tanggal_selesai_plus_one_hour = Carbon::parse($tanggalMulai . ' ' . $endTime->format('H:i:s'));
         } else {
-            $tanggal_selesai = $request->input('tanggal_selesai').' '.$request->input('jam_selesai');
-
-            // Membuat objek Carbon dari tanggal dan jam selesai
+            $tanggal_selesai = $request->input('tanggal_selesai') . ' ' . $request->input('jam_selesai');
             $datetime = Carbon::createFromFormat('Y-m-d H:i', $tanggal_selesai);
 
-            // Menambah 1 jam
+            // Menambah satu jam ke tanggal selesai
             $datetime->addHour();
-
-            // Mengubah kembali ke format string
             $tanggal_selesai_plus_one_hour = $datetime->format('Y-m-d H:i:s');
         }
 
