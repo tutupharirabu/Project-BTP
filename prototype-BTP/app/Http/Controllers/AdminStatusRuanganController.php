@@ -7,13 +7,14 @@ use App\Models\Gambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class AdminStatusRuanganController extends Controller
 {
     public function index()
     {
-        $dataRuangan = Ruangan::with('gambar')->paginate(10);
+        $dataRuangan = Ruangan::with('gambar')->orderBy('created_at', 'asc')->paginate(10);
         return view('admin.daftarRuanganAdmin',compact('dataRuangan'));
     }
 
@@ -51,36 +52,26 @@ class AdminStatusRuanganController extends Controller
             'lokasi' => 'required',
             'satuan' => 'required',
             'harga_ruangan' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
             'url' => 'required|array',
-            'url.*' => 'required|image:jpeg,png,jpg'
+            'url.*' => 'required|mimes:jpeg,png,jpg'
         ]);
 
         $pilih = $request->input('status');
 
-        if ($pilih == 'Tersedia') {
-            $ruangan = Ruangan::create([
-                'nama_ruangan' => $request->nama_ruangan,
-                'kapasitas_minimal' => $request->kapasitas_minimal,
-                'kapasitas_maksimal' => $request->kapasitas_maksimal,
-                'lokasi' => $request->lokasi,
-                'satuan' => $request->satuan,
-                'harga_ruangan' => $request->harga_ruangan,
-                'tersedia' => '1',
-                'status' => $request->input('status'),
-            ]);
-        } else if ($pilih == 'Digunakan') {
-            $ruangan = Ruangan::create([
-                'nama_ruangan' => $request->nama_ruangan,
-                'kapasitas_minimal' => $request->kapasitas_minimal,
-                'kapasitas_maksimal' => $request->kapasitas_maksimal,
-                'satuan' => $request->satuan,
-                'lokasi' => $request->lokasi,
-                'harga_ruangan' => $request->harga_ruangan,
-                'tersedia' => '0',
-                'status' => $request->input('status'),
-            ]);
-        }
+        $idUs = Auth::id();
+
+        $ruangan = Ruangan::create([
+            'nama_ruangan' => $request->nama_ruangan,
+            'kapasitas_minimal' => $request->kapasitas_minimal,
+            'kapasitas_maksimal' => $request->kapasitas_maksimal,
+            'lokasi' => $request->lokasi,
+            'satuan' => $request->satuan,
+            'harga_ruangan' => $request->harga_ruangan,
+            'tersedia' => '1',
+            'status' => 'Tersedia',
+            'id_users' => $idUs,
+        ]);
 
         foreach($request->file('url') as $file){
             $path = $file->store('ruangan', 'assets');
@@ -143,6 +134,8 @@ class AdminStatusRuanganController extends Controller
 
     protected function updateRuangan($dataRuangan, $request)
     {
+        $idUs = Auth::id();
+
         $dataRuangan->nama_ruangan = $request->input('nama_ruangan');
         $dataRuangan->kapasitas_minimal = $request->input('kapasitas_minimal');
         $dataRuangan->kapasitas_maksimal = $request->input('kapasitas_maksimal');
@@ -151,6 +144,7 @@ class AdminStatusRuanganController extends Controller
         $dataRuangan->harga_ruangan = $request->input('harga_ruangan');
         $dataRuangan->tersedia = $request->input('tersedia');
         $dataRuangan->status = $request->input('status');
+        $dataRuangan->id_users = $idUs;
 
         $dataRuangan->save();
     }

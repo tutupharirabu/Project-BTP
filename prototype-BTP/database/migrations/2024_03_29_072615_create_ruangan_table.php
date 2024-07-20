@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('harga_ruangan', 255);
             $table->boolean('tersedia');
             $table->string('status', 255);
+            $table->unsignedInteger('id_users');
+            $table->foreign('id_users')->references('id_users')->on('users')->nullable();
             $table->timestamps();
         });
     }

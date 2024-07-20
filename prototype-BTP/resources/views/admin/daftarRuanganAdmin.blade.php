@@ -103,15 +103,15 @@
                             <table class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
+                                        <th scope="col">No </th>
                                         <th scope="col">No Ruangan</th>
                                         <th scope="col">Nama Ruangan</th>
                                         <th scope="col">Minimal Kapasitas</th>
                                         <th scope="col">Maksimal Kapasitas</th>
-                                        <th scope="col">Harga</th>
-                                        <th scope="col">Gambar</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Harga </th>
+                                        <th scope="col">Gambar </th>
+                                        <th scope="col">Status </th>
+                                        <th scope="col">Action </th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataRuangan">
@@ -122,46 +122,65 @@
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>{{ $data->kapasitas_minimal }}</td>
                                             <td>{{ $data->kapasitas_maksimal }}</td>
-                                            <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }} / {{ $data->satuan }}</td>
+                                            <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }} /
+                                                {{ $data->satuan }}</td>
                                             <td>
-                                                <a class="text-blue" href="#" data-toggle="modal" data-target="#imageModal{{ $data->id_ruangan }}">
+                                                <a class="text-blue" href="#" data-toggle="modal"
+                                                    data-target="#imageModal{{ $data->id_ruangan }}">
                                                     <u>Gambar</u>
                                                 </a>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="imageModal{{ $data->id_ruangan }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="imageModal{{ $data->id_ruangan }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Gambar Ruangan</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Gambar
+                                                                    Ruangan</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <div id="carouselExampleIndicators{{ $data->id_ruangan }}" class="carousel slide" data-ride="carousel">
+                                                                <div id="carouselExampleIndicators{{ $data->id_ruangan }}"
+                                                                    class="carousel slide" data-ride="carousel">
                                                                     <div class="carousel-indicators">
                                                                         @foreach ($data->gambar as $index => $gambar)
-                                                                            <button type="button" data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
+                                                                            <button type="button"
+                                                                                data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}"
+                                                                                data-bs-slide-to="{{ $index }}"
+                                                                                class="{{ $index == 0 ? 'active' : '' }}"></button>
                                                                         @endforeach
                                                                     </div>
                                                                     <div class="carousel-inner" style="border-radius:5px;">
                                                                         @foreach ($data->gambar as $index => $gambar)
-                                                                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                                                <img src="{{ asset('assets/' . $gambar->url) }}" class="d-block w-100" alt="Gambar Ruangan" style="max-height: 300px;">
+                                                                            <div
+                                                                                class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                                                                <img src="{{ asset('assets/' . $gambar->url) }}"
+                                                                                    class="d-block w-100"
+                                                                                    alt="Gambar Ruangan"
+                                                                                    style="max-height: 300px;">
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
-                                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}" data-bs-slide="prev" style="color:#028391">
+                                                                    <button class="carousel-control-prev" type="button"
+                                                                        data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}"
+                                                                        data-bs-slide="prev" style="color:#028391">
                                                                         <span class="carousel-control-prev-icon"></span>
                                                                     </button>
-                                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}" data-bs-slide="next" style="color:#028391">
+                                                                    <button class="carousel-control-next" type="button"
+                                                                        data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}"
+                                                                        data-bs-slide="next" style="color:#028391">
                                                                         <span class="carousel-control-next-icon"></span>
                                                                     </button>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
                                                     </div>

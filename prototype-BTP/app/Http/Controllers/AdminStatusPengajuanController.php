@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class AdminStatusPengajuanController extends Controller
@@ -36,6 +37,8 @@ class AdminStatusPengajuanController extends Controller
             $dataPeminjaman->status = 'Disetujui';
             $dataPeminjaman->ruangan->tersedia = '0';
             $dataPeminjaman->ruangan->status = 'Digunakan';
+            $idUs = Auth::id();
+            $dataPeminjaman->id_users = $idUs;
             $dataPeminjaman->ruangan->save();
             $dataPeminjaman->save();
             $message = 'Peminjaman diterima!';
@@ -65,6 +68,8 @@ class AdminStatusPengajuanController extends Controller
         $dataPeminjaman->status = 'Selesai';
         $dataPeminjaman->ruangan->tersedia = '1';
         $dataPeminjaman->ruangan->status = 'Tersedia';
+        $idUs = Auth::id();
+        $dataPeminjaman->id_users = $idUs;
         $dataPeminjaman->ruangan->save();
         $dataPeminjaman->save();
 

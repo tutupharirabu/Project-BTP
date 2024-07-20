@@ -14,6 +14,7 @@
         .input-harga input {
             padding-left: 40px;
         }
+
         .input-harga::before {
             content: 'Rp. ';
             position: absolute;
@@ -112,22 +113,23 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Harga</label>
                                     <div class="col-md-7">
                                         <div class=input-harga>
-                                            <input type="text" id="harga_ruangan" class="bordered-text form-control rounded-end"
-                                            name="harga_ruangan" required>
-                                        <div class="invalid-feedback">Silakan masukkan harga.</div>
+                                            <input type="text" id="harga_ruangan"
+                                                class="bordered-text form-control rounded-end" name="harga_ruangan"
+                                                required>
+                                            <div class="invalid-feedback">Silakan masukkan harga.</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="satuan"
-                                        class="text-color col-md-3 col-form-label text-md-right">Satuan Waktu Penyewaan</label>
+                                    <label for="satuan" class="text-color col-md-3 col-form-label text-md-right">Satuan
+                                        Waktu Penyewaan</label>
                                     <div class="col-md-7">
                                         <input type="text" id="satuan" class="bordered-text form-control"
                                             name="satuan" required>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-2">
+                                {{-- <div class="form-group row mb-2">
                                     <label for="status"
                                         class="text-color col-md-3 col-form-label text-md-right">Status</label>
                                     <div class="col-md-7">
@@ -138,7 +140,7 @@
                                         </select>
                                         <div class="invalid-feedback">Silakan pilih status.</div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group row mb-2">
@@ -151,36 +153,42 @@
                                             <span class="drop-zone__label" style="color: #717171;">Gambar Utama</span>
                                             <input type="file" for="url" id="url" name="url[]"
                                                 class="drop-zone__input" required>
-                                            <div class="invalid-feedback" style="bottom:-15%">Silakan unggah gambar utama.</div>
+                                            <div class="invalid-feedback" style="bottom:-15%">Silakan unggah gambar utama.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
                                             <span class="drop-zone__label">Gambar 2</span>
-                                            <input type="file" id="gambar_2" name="url[]" class="drop-zone__input">
+                                            <input type="file" id="gambar_2" name="url[]"
+                                                class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
                                             <span class="drop-zone__label">Gambar 3</span>
-                                            <input type="file" id="gambar_3" name="url[]" class="drop-zone__input">
+                                            <input type="file" id="gambar_3" name="url[]"
+                                                class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
                                             <span class="drop-zone__label">Gambar 4</span>
-                                            <input type="file" id="gambar_4" name="url[]" class="drop-zone__input">
+                                            <input type="file" id="gambar_4" name="url[]"
+                                                class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
                                             <span class="drop-zone__label">Gambar 5</span>
-                                            <input type="file" id="gambar_5" name="url[]" class="drop-zone__input">
+                                            <input type="file" id="gambar_5" name="url[]"
+                                                class="drop-zone__input">
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-warna" style="margin-top: -20px">Pastikan ukuran gambar memiliki format .JPG / .PNG. Dimensi yang
+                                    <p class="text-warna" style="margin-top: -20px">Pastikan ukuran gambar memiliki format
+                                        .JPG / .PNG. Dimensi yang
                                         direkomendasikan adalah 600x300 pixels.</p>
                                     <button type="button" class="btn text-white capitalize-first-letter"
                                         style="background-color: #0C9300"

@@ -14,15 +14,7 @@ class Ruangan extends Model
     use HasFactory;
     protected $primaryKey = 'id_ruangan';
     protected $table = 'ruangan';
-    protected $fillable = ['nama_ruangan', 'kapasitas_minimal', 'kapasitas_maksimal', 'satuan', 'lokasi', 'harga_ruangan', 'tersedia', 'status'];
-
-    // public function meminjam() {
-    //     return $this->belongsTo(Meminjam::class, 'id_meminjam', 'id_meminjam');
-    // }
-
-    // public function meminjam_ruangan() {
-    //     return $this->belongsTo(MeminjamRuangan::class, 'id_meminjamRuangan', 'id_meminjamRuangan');
-    // }
+    protected $fillable = ['nama_ruangan', 'kapasitas_minimal', 'kapasitas_maksimal', 'satuan', 'lokasi', 'harga_ruangan', 'tersedia', 'status', 'id_users'];
 
     public function mengelola() {
         return $this->belongsTo(Mengelola::class, 'id_pengelola', 'id_pengelola');
