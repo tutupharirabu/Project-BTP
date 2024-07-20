@@ -31,7 +31,7 @@
             <!-- Status -->
 
             <div class="row">
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
                         <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
                             style="background-color: #03FC0C;">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
                         <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
                             style="background-color: #FF0000;">
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
                         <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
                             style="background-color: #FCE303;">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
                         <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
                             style="background-color: #03FC0C;">
@@ -119,6 +119,18 @@
 
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
+                <div class="row">
+                    <div class="col-12 col-md-4 d-flex align-items-center mb-2 mb-md-0">
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari pengajuan..."
+                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
@@ -128,7 +140,7 @@
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- table edit -->
             <div class="row">

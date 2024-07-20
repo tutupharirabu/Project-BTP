@@ -37,6 +37,23 @@
 
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
+                <div class="row">
+                    <div class="col-12 col-md-5 d-flex align-items-center mb-2 mb-md-0">
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari riwayat..."
+                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                        {{-- <button type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-12 col-md-2 d-flex justify-content-md-end align-items-center">
+                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center w-100 w-md-auto"
+                            style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
@@ -48,7 +65,7 @@
                     <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
                         style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                 </div>
-            </div>
+            </div> -->
 
             <!-- table edit -->
             <div class="row">

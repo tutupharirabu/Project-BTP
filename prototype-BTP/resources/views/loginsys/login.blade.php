@@ -41,7 +41,7 @@
                     <div class="input-group">
                         <input type="password" class="form-control" id="inputpassword" placeholder="Masukkan Password"
                             name="password" required>
-                        <span class="input-group-text icon" id="password_toggle"><i class="fa-regular fa-eye"
+                        <span class="input-group-text icon" id="password_toggle" style="border-top-right-radius:5px; border-bottom-right-radius:5px"><i class="fa-regular fa-eye"
                                 id="password_icon"></i></span>
                         <div class="invalid-feedback">
                             Masukkan Password Anda!

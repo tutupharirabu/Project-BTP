@@ -47,10 +47,10 @@
 <body>
     @include('admin.partials.navigationAdmin')
     <div class="row d-flex">
-        <div class="col">
+        <div class="col-sm-12 col-md-2 col-xl-2 col-lg-2">
             @include('admin.partials.sidebarAdmin')
         </div>
-        <div class="col col-sm-10 col-md-10 col-xl-10 col-lg-10" >
+        <div class="col-sm-12 col-md-10 col-xl-10" >
             <div style="">
                 @yield('containAdmin')
             </div>

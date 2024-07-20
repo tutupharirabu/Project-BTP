@@ -35,7 +35,7 @@
 
             <!-- Status -->
             <div class="row">
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
                     <div class="container d-flex justify-content-md-start justify-content-sm-start">
                         <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
                             style=" background-color: #071FF2;">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4" style="margin-right:98px;">
+                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
                     <div class="container d-flex align-items-center">
                         <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
                             style="background-color: #717171;">
@@ -82,6 +82,22 @@
 
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
+                <div class="row">
+                    <div class="col-12 col-md-8 col-lg-6 mb-3 mb-md-0 d-flex align-items-center">
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari ruangan..."
+                            style="border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                    </div>
+                    <div class="col-md-2 col-lg-4 "></div>
+                    <div class="col-sm-12 col-md-2 col-lg-2 d-flex justify-content-end">
+                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize w-100 w-md-auto"
+                            style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="container mt-4 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
@@ -93,7 +109,7 @@
                     <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
                         style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                 </div>
-            </div>
+            </div> -->
 
             <!-- table edit -->
             <div class="row">
