@@ -15,7 +15,8 @@ class DashboardAdminController extends Controller
         $events = array();
         foreach($peminjamans as $peminjaman){
             $events[] = [
-                'title' => $peminjaman->nama_peminjam.' - '.$peminjaman->ruangan->nama_ruangan,
+                'title' => $peminjaman->nama_peminjam.' '.$peminjaman->ruangan->nama_ruangan,
+                'ruangan' => $peminjaman->ruangan->nama_ruangan,
                 'start' => $peminjaman->tanggal_mulai,
                 'end' => $peminjaman->tanggal_selesai,
             ];

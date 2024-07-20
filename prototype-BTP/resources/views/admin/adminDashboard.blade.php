@@ -53,20 +53,23 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header " style="">
-                <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
-            </div>
-            <div class="modal-body">
-                <p><strong>Nama Peminjam - Nama Ruangan : </strong> <span id="modalTitle"></span></p>
-                <p><strong>Mulai    : </strong> <span id="modalStart"></span></p>
-                <p><strong>Selesai  :</strong> <span id="modalEnd"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn text-white" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200;">Close</button>
-            </div>
+                <div class="modal-header " style="">
+                    <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nama Peminjam : </strong> <span id="modalTitle"></span></p>
+                    <p><strong>Nama Ruangan : </strong> <span id="modalRuangan"></span></p>
+                    <p><strong>Mulai : </strong> <span id="modalStart"></span></p>
+                    <p><strong>Selesai :</strong> <span id="modalEnd"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-white" data-dismiss="modal" data-bs-dismiss="modal"
+                        style="background-color: #0DA200;">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -80,9 +83,10 @@
                 events: bookings,
                 eventClick: function(event) {
                     $('#modalTitle').text(event.title);
-                    $('#modalStart').text(event.start.format('YYYY-MM-DD HH:mm'));
+                    $('#modalRuangan').text(event.ruangan);
+                    $('#modalStart').text(event.start.format('YYYY-MM-DD | HH:mm'));
                     if (event.end) {
-                        $('#modalEnd').text(event.end.format('YYYY-MM-DD HH:mm'));
+                        $('#modalEnd').text(event.end.format('YYYY-MM-DD | HH:mm'));
                     } else {
                         $('#modalEnd').text('N/A');
                     }
