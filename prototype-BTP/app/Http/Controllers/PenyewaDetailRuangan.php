@@ -12,7 +12,8 @@ class PenyewaDetailRuangan extends Controller
     public function show($id)
     {
         $ruangan = Ruangan::findOrFail($id);
-        return view('penyewa.detailRuanganPenyewa', compact('ruangan'));
+        $dataRuangan = Ruangan::all();
+        return view('penyewa.detailRuanganPenyewa', compact('ruangan', 'dataRuangan'));
     }
 
     public function getAvailableTimes(Request $request)
@@ -32,20 +33,21 @@ class PenyewaDetailRuangan extends Controller
 
         // Convert usedTimes to an array of time slots
         $usedTimeSlots = [];
-            foreach ($usedTimes as $time) {
-                $start = Carbon::parse($time->tanggal_mulai);
-                $end = Carbon::parse($time->tanggal_selesai);
-                while ($start <= $end) {
-                    $usedTimeSlots[] = [
-                        'date' => $start->format('Y-m-d'),
-                        'time' => $start->format('H:i')
-                    ];
-                    $start->addMinutes(30);
-                }
+        foreach ($usedTimes as $time) {
+            $start = Carbon::parse($time->tanggal_mulai);
+            $end = Carbon::parse($time->tanggal_selesai);
+            while ($start <= $end) {
+                $usedTimeSlots[] = [
+                    'date' => $start->format('Y-m-d'),
+                    'time' => $start->format('H:i')
+                ];
+                $start->addMinutes(30);
             }
+        }
 
         return response()->json([
             'usedTimeSlots' => $usedTimeSlots
         ]);
     }
+
 }

@@ -106,6 +106,14 @@
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                                    @foreach ($dataRuangan as $dr)
+                                                        <button class="btn  btn-sm btn-primary room-select mx-2 mb-3"
+                                                            data-ruangan="{{ $dr->nama_ruangan }}">{{ $dr->nama_ruangan }}</button>
+                                                    @endforeach
+
+                                                    <!-- Add other room buttons as needed -->
+                                                </div>
                                                 <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
                                                     <!-- Dynamic days content will be inserted here -->
                                                 </div>
@@ -266,16 +274,23 @@
             // Get today's date
             let startDate = new Date().toISOString().split('T')[0];
 
-            // Call updateDays with today's date
-            updateDays(startDate);
+            // Initialize with the first room
+            updateDays(startDate, 'multimedia');
+
+            // Add event listener for room selection buttons
+            $('.room-select').click(function() {
+                let ruangan = $(this).data('ruangan');
+                updateDays(startDate, ruangan);
+            });
         });
 
-        function updateDays(startDate) {
+        function updateDays(startDate, ruangan) {
             $.ajax({
                 url: '/get-ketersediaan-details',
                 method: 'GET',
                 data: {
-                    tanggal_mulai: startDate
+                    tanggal_mulai: startDate,
+                    ruangan: ruangan
                 },
                 success: function(response) {
                     var daysContainer = $('#daysContainer');
@@ -294,16 +309,16 @@
                         var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                         var dayHtml = `
-                        <div class="mx-2 text-center">
-                            <div>
-                                <p class="day-name">${dayName}</p>
-                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                            </div>
-                            <div>
-                                ${hoursHtml}
-                            </div>
-                        </div>
-                    `;
+                <div class="mx-2 text-center">
+                    <div>
+                        <p class="day-name">${dayName}</p>
+                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                    </div>
+                    <div>
+                        ${hoursHtml}
+                    </div>
+                </div>
+                `;
                         daysContainer.append(dayHtml);
                     }
                 },
