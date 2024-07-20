@@ -87,10 +87,42 @@
                         <tr>
                             <td class="border border-secondary">Status</td>
                             <td colspan="3" class="border border-secondary">
-                                <a href="/dashboardPenyewa" type="button boder" class="btn text-white"
-                                    style="font-size:16px;background-color: #419343; border-radius: 10px; height: 31.83px; width: 200px; display: flex; align-items: center; justify-content: center;">
+                                {{-- btn ketersediaan --}}
+                                <button type="button boder" class="btn text-white"
+                                    style="font-size:16px;background-color: #419343; border-radius: 10px; height: 31.83px; width: 200px; display: flex; align-items: center; justify-content: center;"
+                                    data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
                                     Lihat ketersediaan
-                                </a>
+                                </button>
+                                {{-- modal ketersediaan --}}
+                                <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1"
+                                    aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div
+                                                class="modal-header d-flex justify-content-center align-items-center position-relative">
+                                                <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
+                                                    Ketersediaan Ruangan</h5>
+                                                <button type="button" class="btn-close position-absolute end-0 me-3"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
+                                                    <!-- Dynamic days content will be inserted here -->
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <div class="d-flex align-items-center mr-4">
+                                                    <div class="mark-available"></div>
+                                                    <p class="my-auto">Tersedia</p>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mark-notavailable"></div>
+                                                    <p class="my-auto">Tidak tersedia</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- @if ($ruangan->tersedia == '1')
                                     <div type="button boder" class="btn btn-sm text-white"
                                         style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
@@ -112,7 +144,9 @@
                 <div class="text-black">
                     <p>Keterangan :</p>
                     <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Harap membaca <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=drive_link" target="_blank">syarat & ketentuan</a> yang berlaku </p>
+                    <p> **Harap membaca <a
+                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=drive_link"
+                            target="_blank">syarat & ketentuan</a> yang berlaku </p>
                 </div>
                 <div class="">
                     <a type="button" class="btn btn-sm text-white"
@@ -146,5 +180,154 @@
             height: 400px;
             /* Height of the images */
         }
+
+        /* Modal ketersediaan ruangan */
+        .available {
+            background-color: #25d366;
+            height: 26px;
+            width: 76px;
+            border-radius: 5px;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .modal-dialog {
+            max-width: 70%;
+            /* Atur persentase sesuai kebutuhan */
+        }
+
+        @media (max-width: 767.98px) {
+            .modal-dialog {
+                max-width: 100%;
+                /* Atur persentase sesuai kebutuhan */
+            }
+        }
+
+        .modal-body {
+            overflow-x: auto;
+            /* Menambahkan penggulung horizontal jika konten terlalu lebar */
+        }
+
+        .modal-body .d-flex {
+            flex-wrap: wrap;
+            /* Membungkus elemen jika terlalu lebar */
+        }
+
+        .mark-available {
+            background-color: #25d366;
+            height: 10px;
+            width: 10px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .mark-notavailable {
+            background-color: #e3e3e3;
+            height: 10px;
+            width: 10px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .button-style-ketersediaan {
+            background-color: #0C9300;
+            font-size: 14px;
+        }
+
+        .button-style-ketersediaan:hover {
+            background-color: #0A7A00;
+        }
+
+        .cek-available {
+            background-color: #25d366;
+            height: 26px;
+            width: 76px;
+            border-radius: 5px;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .cek-notavailable {
+            background-color: #e3e3e3;
+            height: 26px;
+            width: 76px;
+            border-radius: 5px;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            // Get today's date
+            let startDate = new Date().toISOString().split('T')[0];
+
+            // Call updateDays with today's date
+            updateDays(startDate);
+        });
+
+        function updateDays(startDate) {
+            $.ajax({
+                url: '/get-ketersediaan-details',
+                method: 'GET',
+                data: {
+                    tanggal_mulai: startDate
+                },
+                success: function(response) {
+                    var daysContainer = $('#daysContainer');
+                    daysContainer.empty();
+
+                    var startDateObj = new Date(startDate);
+                    for (var i = 0; i < 7; i++) {
+                        var currentDateObj = new Date(startDateObj);
+                        currentDateObj.setDate(startDateObj.getDate() + i);
+
+                        var dayName = currentDateObj.toLocaleDateString('id-ID', {
+                            weekday: 'long'
+                        });
+                        var dayDate = currentDateObj.toISOString().split('T')[0];
+
+                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+                        var dayHtml = `
+                        <div class="mx-2 text-center">
+                            <div>
+                                <p class="day-name">${dayName}</p>
+                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                            </div>
+                            <div>
+                                ${hoursHtml}
+                            </div>
+                        </div>
+                    `;
+                        daysContainer.append(dayHtml);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function getHoursHtml(dayDate, usedTimeSlots) {
+            var hoursHtml = '';
+            var start = new Date(dayDate + 'T08:00:00');
+            var end = new Date(dayDate + 'T22:30:00');
+
+            while (start < end) {
+                var hour = start.toTimeString().substring(0, 5);
+                var isUsed = usedTimeSlots.some(function(slot) {
+                    return slot.date === dayDate && slot.time === hour;
+                });
+                var className = isUsed ? 'cek-notavailable' : 'cek-available';
+                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+                start.setMinutes(start.getMinutes() + 30);
+            }
+            return hoursHtml;
+        }
+    </script>
 @endsection

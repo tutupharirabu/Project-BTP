@@ -64,6 +64,7 @@ Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->n
 // Penyewa lihat status Ruangan
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index'])->name('daftarRuanganPenyewa');
 Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuangan::class, 'show'])->name('detailRuanganPenyewa');
+Route::get('/get-ketersediaan-details',  [PenyewaDetailRuangan::class, 'getAvailableTimes']);
 
 // Admin crud ruangan
 Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create'])->middleware('auth');
