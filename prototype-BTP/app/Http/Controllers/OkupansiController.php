@@ -163,7 +163,7 @@ class OkupansiController extends Controller
         $csvData[] = ['Okupansi pemakaian ruangan di BTP (dalam %)', number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) . '%'];
 
         // Create a CSV file
-        $fileName = 'riwayat.csv';
+        $fileName = 'Data Okupansi Peminjaman Ruangan BTP.csv';
         $file = fopen(storage_path('app/public/' . $fileName), 'w');
         foreach ($csvData as $line) {
             fputcsv($file, $line);
