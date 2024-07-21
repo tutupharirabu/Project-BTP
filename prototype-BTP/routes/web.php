@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminDetailRuangan;
 use App\Http\Controllers\AdminStatusPengajuanController;
 use App\Http\Controllers\AdminStatusRuanganController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\OkupansiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,3 +76,7 @@ Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'de
 // History
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
 Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');
+
+// okupansi
+Route::get('/okupansiRuangan', [OkupansiController::class, 'index'])->middleware('auth');
+Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi'])->name('download.okupansi');
