@@ -1,6 +1,8 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+
     @php
         use Carbon\Carbon;
     @endphp
@@ -19,7 +21,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status Ruangan</a>
+                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status
+                        Ruangan</a>
                 </div>
             </div>
         </div>
@@ -131,23 +134,23 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                            placeholder="Cari pengajuan..."
-                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                placeholder="Cari pengajuan..."
+                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                    </div>
-                </div>
-            </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div> -->
 
             <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-12">
                     <div class="container ml-4 mt-4">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered text-center"
+                            <table id="dataTPengajuan" class="table table-striped table-bordered text-center"
                                 style="padding: 0.5rem; vertical-align: middle;font-size: 13px;text-transform: capitalize;">
                                 <thead style="vertical-align: middle;">
                                     <tr>
@@ -270,6 +273,20 @@
                     </div>
                 </div>
             </div>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $('#dataTPengajuan').DataTable({
+                        "paging": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true
+                    });
+                });
+            </script>
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {

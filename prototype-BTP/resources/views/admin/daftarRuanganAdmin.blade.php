@@ -1,6 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
     @foreach ($dataRuangan as $data)
         {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
     @endforeach
@@ -92,31 +93,32 @@
                     </div>
                     <div class="col-md-2 col-lg-4 "></div>
                     <div class="col-sm-12 col-md-2 col-lg-2 d-flex justify-content-end">
-                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize w-100 w-md-auto"
+                        <a href="/tambahRuanganAdmin"
+                            class="btn btn-md text-white text-center text-capitalize w-100 w-md-auto"
                             style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                     </div>
                 </div>
             </div>
             <!-- <div class="container mt-4 mb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                            placeholder="Cari ruangan..."
-                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                placeholder="Cari ruangan..."
+                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                    </div>
-                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
-                        style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
-                </div>
-            </div> -->
+                                        </div>
+                                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
+                                            style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                                    </div>
+                                </div> -->
 
             <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
                     <div class="container ml-4 mt-4">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered text-center">
+                            <table id="dataTRuangan" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">No </th>
@@ -171,7 +173,8 @@
                                                                                 class="{{ $index == 0 ? 'active' : '' }}"></button>
                                                                         @endforeach
                                                                     </div>
-                                                                    <div class="carousel-inner" style="border-radius:5px;">
+                                                                    <div class="carousel-inner"
+                                                                        style="border-radius:5px;">
                                                                         @foreach ($data->gambar as $index => $gambar)
                                                                             <div
                                                                                 class="carousel-item {{ $index == 0 ? 'active' : '' }}">
@@ -274,6 +277,20 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#dataTRuangan').DataTable({
+                    "paging": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true
+                });
+            });
+        </script>
         <script>
             function liveSearch() {
                 // Get the input field and its value
