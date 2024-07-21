@@ -51,13 +51,13 @@ class OkupansiController extends Controller
                 }
 
                 $totalByDay[$day]++;
-            }
 
-            // Hitung total peminjaman per ruangan
-            if (!isset($totalByRoom[$room])) {
-                $totalByRoom[$room] = 0;
+                // Hitung total peminjaman per ruangan
+                if (!isset($totalByRoom[$room])) {
+                    $totalByRoom[$room] = 0;
+                }
+                $totalByRoom[$room]++;
             }
-            $totalByRoom[$room]++;
         }
 
         // Total peminjaman untuk seluruh hari
