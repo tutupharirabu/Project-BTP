@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // use App\Models\MeminjamRuangan;
 use App\Models\Mengelola;
 use App\Models\Gambar;
+use App\Models\Users;
 
 class Ruangan extends Model
 {
@@ -22,5 +23,9 @@ class Ruangan extends Model
 
     public function gambar(){
         return $this->hasMany(Gambar::class, 'id_ruangan', 'id_ruangan');
+    }
+
+    public function users(){
+        return $this->hasMany(Users::class , 'id_users', 'id_users');
     }
 }

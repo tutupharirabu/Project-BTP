@@ -2,7 +2,6 @@
 
 @section('containAdmin')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
-
     @php
         use Carbon\Carbon;
     @endphp
@@ -134,16 +133,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div class="d-flex align-items-center">
-                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                placeholder="Cari pengajuan..."
-                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                        <div class="d-flex align-items-center">
+                                                                                                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                placeholder="Cari pengajuan..."
+                                                                                                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -154,15 +153,16 @@
                                 style="padding: 0.5rem; vertical-align: middle;font-size: 13px;text-transform: capitalize;">
                                 <thead style="vertical-align: middle;">
                                     <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Peminjam</th>
-                                        <th scope="col">Nama Ruangan</th>
-                                        <th scope="col">Jam Mulai</th>
-                                        <th scope="col">Jam Selesai</th>
-                                        <th scope="col">Tanggal Mulai</th>
-                                        <th scope="col">Tanggal Selesai</th>
-                                        <th scope="col" style="width: 230px;">Aksi</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Nama Ruangan</th>
+                                        <th scope="col" class="text-center">Jam Mulai</th>
+                                        <th scope="col" class="text-center">Jam Selesai</th>
+                                        <th scope="col" class="text-center">Tanggal Mulai</th>
+                                        <th scope="col" class="text-center">Tanggal Selesai</th>
+                                        <th scope="col" class="text-center">Disetujui oleh</th>
+                                        <th scope="col" style="width: 230px;" class="text-center">Aksi</th>
+                                        <th scope="col" class="text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataPengajuan">
@@ -176,6 +176,12 @@
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
                                             @if ($data->status == 'Menunggu')
+                                                <td>
+                                                    @foreach ($data->users as $user)
+                                                        {{ $user->username }}
+                                                        <br>
+                                                    @endforeach
+                                                </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
@@ -183,10 +189,10 @@
                                                         <input type="hidden" name="pilihan" id="pilihan">
                                                         <button type="button" name="pilihan" value='terima'
                                                             class="btn btn-outline-success"
-                                                            style="border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Setuju</button>
+                                                            style="border-radius:6px;width: 75px;font-size: 12px;text-transform: capitalize;">Setuju</button>
                                                         <button type="button" name="pilihan" value='tolak'
                                                             class="btn btn-outline-danger btn-styl"
-                                                            style="border: 2px solid black;border-color: #FF2E26;color: red">Tolak</button>
+                                                            style="width: 75px;font-size: 12px;border: 2px solid black;border-color: #FF2E26;color: red">Tolak</button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -194,6 +200,12 @@
                                                         style="padding: 8px">Menunggu</a>
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
+                                                <td>
+                                                    @foreach ($data->users as $user)
+                                                        {{ $user->username }}
+                                                        <br>
+                                                    @endforeach
+                                                </td>
                                                 <td class=" justify-content-between">
                                                     <form action="{{ route('selesaiPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
@@ -209,13 +221,19 @@
                                                         style="background-color:#0EB100; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Disetujui</a>
                                                 </td>
                                             @elseif($data->status == 'Ditolak')
+                                                <td>
+                                                    @foreach ($data->users as $user)
+                                                        {{ $user->username }}
+                                                        <br>
+                                                    @endforeach
+                                                </td>
                                                 <td class="d-flex justify-content-between">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         <a type="button" class="btn btn-outline-success btn-styl"
-                                                            style="">Setuju</a>
+                                                            style="width: 75px;font-size: 12px;">Setuju</a>
                                                         <a type="button" class="btn text-white btn-styl"
-                                                            style="background-color: #FF2E26;">Tolak</a>
+                                                            style="width: 75px;font-size: 12px;border: 2px;background-color: #FF2E26;">Tolak</a>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -223,6 +241,12 @@
                                                         style="background-color: #FF2E26; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
                                                 </td>
                                             @elseif($data->status == 'Selesai')
+                                                <td>
+                                                    @foreach ($data->users as $user)
+                                                        {{ $user->username }}
+                                                        <br>
+                                                    @endforeach
+                                                </td>
                                                 <td class=" justify-content-between">
                                                     <form action="" method="POST">
                                                         @csrf

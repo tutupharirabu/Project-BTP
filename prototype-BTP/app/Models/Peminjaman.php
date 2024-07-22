@@ -23,4 +23,8 @@ class Peminjaman extends Model
     public function barang(){
         return $this->belongsTo(Barang::class, 'id_barang');
     }
+
+    public function users(){
+        return $this->hasMany(Users::class , 'id_users', 'id_users');
+    }
 }

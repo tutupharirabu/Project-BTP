@@ -101,19 +101,20 @@
                                             <div
                                                 class="modal-header d-flex justify-content-center align-items-center position-relative">
                                                 <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
-                                                    Ketersediaan Ruangan</h5>
+                                                    Ketersediaan Ruangan
+                                                    <select id="roomSelect" class="form-select">
+                                                        <option value="{{ $ruangan->id_ruangan }}">
+                                                            {{ $ruangan->nama_ruangan }}</option>
+                                                        @foreach ($dataRuangan as $dr)
+                                                            <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </h5>
                                                 <button type="button" class="btn-close position-absolute end-0 me-3"
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="d-flex flex-wrap justify-content-center mb-3">
-                                                    @foreach ($dataRuangan as $dr)
-                                                        <button class="btn  btn-sm btn-primary room-select mx-2 mb-3"
-                                                            data-ruangan="{{ $dr->nama_ruangan }}">{{ $dr->nama_ruangan }}</button>
-                                                    @endforeach
-
-                                                    <!-- Add other room buttons as needed -->
-                                                </div>
                                                 <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
                                                     <!-- Dynamic days content will be inserted here -->
                                                 </div>
@@ -258,7 +259,8 @@
         }
 
         .cek-notavailable {
-            background-color: #e3e3e3;
+            background-color: #d3d3d3;
+            color: #000;
             height: 26px;
             width: 76px;
             border-radius: 5px;
@@ -271,15 +273,14 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            // Get today's date
             let startDate = new Date().toISOString().split('T')[0];
 
             // Initialize with the first room
-            updateDays(startDate, 'multimedia');
+            updateDays(startDate, $('#roomSelect').val());
 
-            // Add event listener for room selection buttons
-            $('.room-select').click(function() {
-                let ruangan = $(this).data('ruangan');
+            // Add event listener for room selection dropdown
+            $('#roomSelect').change(function() {
+                let ruangan = $(this).val();
                 updateDays(startDate, ruangan);
             });
         });
@@ -290,16 +291,19 @@
                 method: 'GET',
                 data: {
                     tanggal_mulai: startDate,
-                    ruangan: ruangan
+                    ruangan: ruangan,
+                    tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6))
+                        .toISOString().split('T')[0] // Contoh menghitung tanggal selesai (6 hari kemudian)
                 },
                 success: function(response) {
+                    console.log(response); // Debugging response
                     var daysContainer = $('#daysContainer');
                     daysContainer.empty();
 
                     var startDateObj = new Date(startDate);
                     for (var i = 0; i < 7; i++) {
                         var currentDateObj = new Date(startDateObj);
-                        currentDateObj.setDate(startDateObj.getDate() + i);
+                        currentDateObj.setDate(currentDateObj.getDate() + i);
 
                         var dayName = currentDateObj.toLocaleDateString('id-ID', {
                             weekday: 'long'
@@ -309,21 +313,21 @@
                         var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                         var dayHtml = `
-                <div class="mx-2 text-center">
-                    <div>
-                        <p class="day-name">${dayName}</p>
-                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                    </div>
-                    <div>
-                        ${hoursHtml}
-                    </div>
-                </div>
-                `;
+                        <div class="mx-2 text-center">
+                            <div>
+                                <p class="day-name">${dayName}</p>
+                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                            </div>
+                            <div>
+                                ${hoursHtml}
+                            </div>
+                        </div>
+                    `;
                         daysContainer.append(dayHtml);
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error:', error);
+                    console.error('Error:', xhr.responseText); // Debugging error response
                 }
             });
         }

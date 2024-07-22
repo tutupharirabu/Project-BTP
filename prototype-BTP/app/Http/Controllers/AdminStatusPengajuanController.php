@@ -11,7 +11,7 @@ class AdminStatusPengajuanController extends Controller
 {
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with('ruangan')->orderBy('created_at', 'desc')->paginate(10);
+        $dataPeminjaman = Peminjaman::with(['ruangan', 'users'])->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.statusPengajuanAdmin', compact('dataPeminjaman'));
     }
 
@@ -45,10 +45,14 @@ class AdminStatusPengajuanController extends Controller
 
             foreach ($conflictingBookings as $booking) {
                 $booking->status = 'Ditolak';
+                $idUs = Auth::id();
+                $booking->id_users = $idUs;
                 $booking->save();
             }
         } elseif ($pilih == 'tolak') {
             $dataPeminjaman->status = 'Ditolak';
+            $idUs = Auth::id();
+            $dataPeminjaman->id_users = $idUs;
             $dataPeminjaman->save();
             $message = 'Peminjaman ditolak!';
         }

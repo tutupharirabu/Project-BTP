@@ -100,18 +100,18 @@
                 </div>
             </div>
             <!-- <div class="container mt-4 mb-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                placeholder="Cari ruangan..."
-                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                        placeholder="Cari ruangan..."
+                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                        </div>
-                                        <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
-                                            style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
-                                    </div>
-                                </div> -->
+                                                                                </div>
+                                                                                <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
+                                                                                    style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                                                                            </div>
+                                                                        </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -121,15 +121,16 @@
                             <table id="dataTRuangan" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No </th>
-                                        <th scope="col">No Ruangan</th>
-                                        <th scope="col">Nama Ruangan</th>
-                                        <th scope="col">Minimal Kapasitas</th>
-                                        <th scope="col">Maksimal Kapasitas</th>
-                                        <th scope="col">Harga </th>
-                                        <th scope="col">Gambar </th>
-                                        <th scope="col">Status </th>
-                                        <th scope="col">Action </th>
+                                        <th scope="col" class="text-center">No </th>
+                                        <th scope="col" class="text-center">No Ruangan</th>
+                                        <th scope="col" class="text-center">Nama Ruangan</th>
+                                        <th scope="col" class="text-center">Minimal Kapasitas</th>
+                                        <th scope="col" class="text-center">Maksimal Kapasitas</th>
+                                        <th scope="col" class="text-center">Harga </th>
+                                        <th scope="col" class="text-center">Gambar </th>
+                                        <th scope="col" class="text-center">Status </th>
+                                        <th scope="col" class="text-center">Perbaharui oleh</th>
+                                        <th scope="col" class="text-center">Action </th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataRuangan">
@@ -141,7 +142,8 @@
                                             <td>{{ $data->kapasitas_minimal }}</td>
                                             <td>{{ $data->kapasitas_maksimal }}</td>
                                             <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }} /
-                                                {{ $data->satuan }}</td>
+                                                {{ $data->satuan }}
+                                            </td>
                                             <td>
                                                 <a class="text-blue" href="#" data-toggle="modal"
                                                     data-target="#imageModal{{ $data->id_ruangan }}">
@@ -157,8 +159,8 @@
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Gambar
                                                                     Ruangan</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -217,7 +219,7 @@
                                                         - </a>
                                                 @endif
                                             </td> --}}
-                                            <td style="display: flex; justify-content: center;">
+                                            <td style="justify-content: center;">
                                                 @if ($data->status == 'Tersedia')
                                                     <a class="btn text-white status"
                                                         style=" background-color: #0EB100; ">Tersedia</a>
@@ -228,6 +230,12 @@
                                                     <a class="btn text-white status" style=" background-color: #61677A; ">
                                                         - </a>
                                                 @endif
+                                            </td>
+                                            <td>
+                                                @foreach ($data->users as $user)
+                                                    {{ $user->username }}
+                                                    <br>
+                                                @endforeach
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">

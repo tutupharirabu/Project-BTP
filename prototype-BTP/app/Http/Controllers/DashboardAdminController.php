@@ -59,8 +59,8 @@ class DashboardAdminController extends Controller
             $totalOverall += $totalOccupancy;
         }
 
-        $occupancyOverallPercentage = $totalCapacityMonthly > 0 
-            ? number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) 
+        $occupancyOverallPercentage = $totalCapacityMonthly > 0
+            ? number_format(($totalOverall / $totalCapacityMonthly) * 100, 2)
             : 0;
 
         return view('admin/adminDashboard', compact('peminjamans', 'events', 'peminjamanPerBulan', 'occupancyOverallPercentage'));
