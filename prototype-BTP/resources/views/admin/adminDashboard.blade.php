@@ -47,8 +47,8 @@
             <center>
                 <h2>Grafik Peminjaman Per Bulan</h2>
             </center>
-
-            <canvas id="myLineChart" width="200" height="100"></canvas>
+            <canvas id="occupancyChart" width="200" height="100"></canvas>
+            {{-- <canvas id="myLineChart" width="200" height="100"></canvas> --}}
         </div>
     </div>
 
@@ -98,6 +98,53 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('occupancyChart').getContext('2d');
+            const occupancyPercentage = {{ $occupancyOverallPercentage }};
+
+            const monthNames = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            const occupancyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    datasets: [{
+                        label: 'Persentase Okupansi',
+                        data: Array(12).fill(occupancyPercentage),
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Okupansi: ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const peminjamanData = @json($peminjamanPerBulan);
 
             // Array nama bulan
@@ -142,5 +189,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use App\Models\Ruangan;
 use DB;
 
 class DashboardAdminController extends Controller
 {
     public function index()
     {
-        $peminjamans = Peminjaman::with('ruangan')->whereIn('status',['Disetujui', 'Selesai'])->get();
+        $peminjamans = Peminjaman::with('ruangan')->whereIn('status', ['Disetujui', 'Selesai'])->get();
 
         $events = array();
-        foreach($peminjamans as $peminjaman){
+        foreach ($peminjamans as $peminjaman) {
             $events[] = [
-                'title' => $peminjaman->nama_peminjam.' '.$peminjaman->ruangan->nama_ruangan,
+                'title' => $peminjaman->nama_peminjam . ' ' . $peminjaman->ruangan->nama_ruangan,
                 'ruangan' => $peminjaman->ruangan->nama_ruangan,
                 'start' => $peminjaman->tanggal_mulai,
                 'end' => $peminjaman->tanggal_selesai,
@@ -26,9 +27,9 @@ class DashboardAdminController extends Controller
             DB::raw('MONTH(tanggal_mulai) as bulan'),
             DB::raw('COUNT(*) as total')
         )
-        ->where('status', 'Selesai')
-        ->groupBy('bulan')
-        ->get();
+            ->where('status', 'Selesai')
+            ->groupBy('bulan')
+            ->get();
 
         $defaultMonths = [
             1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0,
@@ -43,7 +44,27 @@ class DashboardAdminController extends Controller
             return (object) ['bulan' => $bulan, 'total' => $total];
         })->values();
 
-        return view('admin/adminDashboard', compact('peminjamans','events','peminjamanPerBulan'));
+        // Calculate occupancy percentage
+        $dataRuangan = Ruangan::all();
+        $totalOverall = 0;
+        $totalCapacityMonthly = 0;
+
+        foreach ($dataRuangan as $dr) {
+            $totalCapacity = $dr->kapasitas_maksimal * 3 * 31; // 3 sessions per day, 31 days
+            $totalCapacityMonthly += $totalCapacity;
+
+            $totalOccupancy = Peminjaman::where('id_ruangan', $dr->id)
+                ->whereIn('status', ['Disetujui', 'Selesai'])
+                ->count();
+
+            $totalOverall += $totalOccupancy;
+        }
+
+        $occupancyOverallPercentage = $totalCapacityMonthly > 0 
+            ? number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) 
+            : 0;
+
+        return view('admin/adminDashboard', compact('peminjamans', 'events', 'peminjamanPerBulan', 'occupancyOverallPercentage'));
     }
 
     /**
