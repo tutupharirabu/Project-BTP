@@ -53,8 +53,7 @@ class DashboardAdminController extends Controller
             $totalCapacity = $dr->kapasitas_maksimal * 3 * 31; // 3 sessions per day, 31 days
             $totalCapacityMonthly += $totalCapacity;
 
-            $totalOccupancy = Peminjaman::where('id_ruangan', $dr->id)
-                ->whereIn('status', ['Disetujui', 'Selesai'])
+            $totalOccupancy = Peminjaman::where('status', ['Disetujui', 'Selesai'])
                 ->count();
 
             $totalOverall += $totalOccupancy;
