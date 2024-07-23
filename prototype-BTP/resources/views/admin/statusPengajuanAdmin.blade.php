@@ -133,16 +133,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                        <div class="d-flex align-items-center">
-                                                                                                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                placeholder="Cari pengajuan..."
-                                                                                                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                        placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                </div> -->
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                        </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -161,6 +161,7 @@
                                         <th scope="col" class="text-center">Tanggal Mulai</th>
                                         <th scope="col" class="text-center">Tanggal Selesai</th>
                                         <th scope="col" class="text-center">Disetujui oleh</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" style="width: 230px;" class="text-center">Aksi</th>
                                         <th scope="col" class="text-center">Status</th>
                                     </tr>
@@ -181,6 +182,33 @@
                                                         {{ $user->username }}
                                                         <br>
                                                     @endforeach
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Catatan
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        Catatan Dari Pengguna</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $data->keterangan }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
@@ -206,6 +234,33 @@
                                                         <br>
                                                     @endforeach
                                                 </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Catatan
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        Catatan Dari Pengguna</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $data->keterangan }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td class=" justify-content-between">
                                                     <form action="{{ route('selesaiPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
@@ -227,7 +282,35 @@
                                                         <br>
                                                     @endforeach
                                                 </td>
-                                                <td class="d-flex justify-content-between">
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Catatan
+                                                    </button>
+
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        Catatan Dari Pengguna</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $data->keterangan }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="justify-content-between">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         <a type="button" class="btn btn-outline-success btn-styl"
@@ -246,6 +329,34 @@
                                                         {{ $user->username }}
                                                         <br>
                                                     @endforeach
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Catatan
+                                                    </button>
+
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        Catatan Dari Pengguna</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $data->keterangan }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td class=" justify-content-between">
                                                     <form action="" method="POST">
