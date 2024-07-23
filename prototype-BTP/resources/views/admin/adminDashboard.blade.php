@@ -114,8 +114,7 @@
                         label: 'Persentase Okupansi',
                         data: Array(12).fill(occupancyPercentage),
                         fill: false,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        tension: 0.1
+                        borderColor: '#0d9cad',
                     }]
                 },
                 options: {
@@ -130,7 +129,7 @@
                             }
                         }
                     },
-                    plugins: {
+                    plugins: { //utk klo di hover
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -143,51 +142,4 @@
             });
         });
     </script>
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const peminjamanData = @json($peminjamanPerBulan);
-
-            // Array nama bulan
-            const monthNames = [
-                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-            ];
-
-            const labels = monthNames;
-
-            // Hitung total keseluruhan peminjaman
-            const totalPeminjaman = peminjamanData.reduce((sum, item) => sum + item.total, 0);
-
-            // Ubah nilai peminjaman menjadi persentase
-            const values = peminjamanData.map(item => ((item.total / totalPeminjaman) * 100).toFixed(2));
-
-            const ctx = document.getElementById('myLineChart').getContext('2d');
-            const myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Persentase Peminjaman',
-                        data: values,
-                        fill: false,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value +
-                                        '%'; // Tambahkan simbol persentase ke setiap nilai pada sumbu y
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script> --}}
 @endsection
