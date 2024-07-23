@@ -123,9 +123,9 @@
             <div class="container mt-4 mb-2">
                 <div class="row">
                     <div class="col-12 col-md-4 d-flex align-items-center mb-2 mb-md-0">
-                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                        {{-- <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
                             placeholder="Cari pengajuan..."
-                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;"> --}}
                         {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
@@ -133,16 +133,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                <div class="d-flex align-items-center">
-                                                                                                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                        placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                            <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                    placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                    </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -169,7 +169,7 @@
                                 <tbody id="dataPengajuan">
                                     @foreach ($dataPeminjaman as $data)
                                         <tr>
-                                            <td>{{ $loop->iteration + $dataPeminjaman->firstItem() - 1 }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->nama_peminjam }}</td>
                                             <td>{{ $data->ruangan->nama_ruangan }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
@@ -185,30 +185,33 @@
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
                                                     </button>
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Catatan Dari Pengguna</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    {{ $data->keterangan }}
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                </div>
+                                                    <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
+                                                    tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5"
+                                                                    id="exampleModalLabel{{ $data->id_peminjaman }}">
+                                                                    Keterangan Ruangan</h1>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ $data->keterangan }}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
                                                 </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
@@ -375,9 +378,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="d-flex justify-content-center">
+                            {{-- <div class="d-flex justify-content-center">
                                 {{ $dataPeminjaman->links('vendor.pagination.custom') }}
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -415,8 +418,8 @@
             <script>
                 $(document).ready(function() {
                     $('#dataTPengajuan').DataTable({
-                        "paging": false,
-                        "searching": false,
+                        "paging": true,
+                        "searching": true,
                         "ordering": true,
                         "info": true
                     });

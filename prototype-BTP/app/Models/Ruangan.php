@@ -15,7 +15,7 @@ class Ruangan extends Model
     use HasFactory;
     protected $primaryKey = 'id_ruangan';
     protected $table = 'ruangan';
-    protected $fillable = ['nama_ruangan', 'kapasitas_minimal', 'kapasitas_maksimal', 'satuan', 'lokasi', 'harga_ruangan', 'tersedia', 'status', 'id_users'];
+    protected $fillable = ['nama_ruangan', 'ukuran', 'kapasitas_minimal', 'kapasitas_maksimal', 'satuan', 'lokasi', 'harga_ruangan', 'tersedia', 'status', 'keterangan', 'id_users'];
 
     public function mengelola() {
         return $this->belongsTo(Mengelola::class, 'id_pengelola', 'id_pengelola');

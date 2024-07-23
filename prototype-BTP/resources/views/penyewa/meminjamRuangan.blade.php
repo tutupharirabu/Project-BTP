@@ -112,7 +112,12 @@
                                     <div class="col-md mt-3">
                                         <label for="jumlah" class="form-label text-color">Jumlah Peserta</label>
                                         <input type="number" name="jumlah" id="peserta"
-                                            class="date form-control border-color" max="100" min="0" required>
+                                            class="date form-control border-color"
+                                            @foreach ($dataRuangan as $dr)
+                                                data-min="{{ $dr->kapasitas_minimal }}"
+                                                data-max="{{ $dr->kapasitas_maksimal }}"
+                                                value="{{ $dr->kapasitas_minimal }}" @endforeach
+                                            required>
                                         <div class="invalid-feedback">
                                             Masukkan Jumlah Peserta!
                                         </div>
@@ -299,7 +304,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center align-items-center position-relative">
-                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">Ketersediaan Ruangan</h5>
+                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
+                        Ketersediaan Ruangan
+                        <select id="roomSelect" class="form-select">
+                            {{-- <option value="{{ $ruangan->id_ruangan }}">{{ $ruangan->nama_ruangan }}</option> --}}
+                            @foreach ($dataRuangan as $dr)
+                                <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}</option>
+                            @endforeach
+                        </select>
+                    </h5>
                     <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -321,6 +334,9 @@
             </div>
         </div>
     </div>
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -560,54 +576,91 @@
 
     <script>
         $(document).ready(function() {
-            var tanggalMulai;
+            var tanggalMulai = null;
+            var ruangan = null;
+
+            // Update the days when the modal is shown
+            $('#lihatKetersediaanModal').on('shown.bs.modal', function() {
+                ruangan = $('#roomSelect').val();
+                if (tanggalMulai && ruangan) {
+                    updateDays(tanggalMulai, ruangan);
+                }
+            });
+
+            $('#roomSelect').on('change', function() {
+                ruangan = $(this).val();
+                if (tanggalMulai && ruangan) {
+                    updateDays(tanggalMulai, ruangan);
+                }
+            });
 
             $('#tanggal_mulai').on('change', function() {
                 tanggalMulai = $(this).val();
-                if (tanggalMulai) {
+                if (tanggalMulai && ruangan) {
                     $('#ketersediaanRow').show();
-                    updateDays(tanggalMulai);
+                    updateDays(tanggalMulai, ruangan);
                 } else {
                     $('#ketersediaanRow').hide();
                 }
             });
 
-            function updateDays(startDate) {
+
+
+            // function updateDays(startDate) {
+            //     $.ajax({
+            //         url: '/get-ketersediaan-details',
+            //         method: 'GET',
+            //         data: {
+            //             tanggal_mulai: startDate
+            //         },
+            //         success: function(response) {
+            //             var daysContainer = $('#daysContainer');
+            //             daysContainer.empty();
+
+            //             var startDateObj = new Date(startDate);
+            //             for (var i = 0; i < 7; i++) {
+            //                 var currentDateObj = new Date(startDateObj);
+            //                 currentDateObj.setDate(startDateObj.getDate() + i);
+
+            //                 var dayName = currentDateObj.toLocaleDateString('id-ID', {
+            //                     weekday: 'long'
+            //                 });
+            //                 var dayDate = currentDateObj.toISOString().split('T')[0];
+
+            //                 var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+            //                 var dayHtml = `
+        //                 <div class="mx-2 text-center">
+        //                     <div>
+        //                         <p class="day-name">${dayName}</p>
+        //                         <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+        //                     </div>
+        //                     <div>
+        //                         ${hoursHtml}
+        //                     </div>
+        //                 </div>
+        //             `;
+            //                 daysContainer.append(dayHtml);
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error('Error:', error);
+            //         }
+            //     });
+            // }
+            function updateDays(startDate, room) {
+                console.log("Updating days for", startDate, "and room", room);
                 $.ajax({
                     url: '/get-ketersediaan-details',
                     method: 'GET',
                     data: {
-                        tanggal_mulai: startDate
+                        tanggal_mulai: startDate,
+                        ruangan: room,
+                        tanggal_selesai: calculateEndDate(startDate)
                     },
                     success: function(response) {
-                        var daysContainer = $('#daysContainer');
-                        daysContainer.empty();
-
-                        var startDateObj = new Date(startDate);
-                        for (var i = 0; i < 7; i++) {
-                            var currentDateObj = new Date(startDateObj);
-                            currentDateObj.setDate(startDateObj.getDate() + i);
-
-                            var dayName = currentDateObj.toLocaleDateString('id-ID', {
-                                weekday: 'long'
-                            });
-                            var dayDate = currentDateObj.toISOString().split('T')[0];
-
-                            var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
-
-                            var dayHtml = `
-                            <div class="mx-2 text-center">
-                                <div>
-                                    <p class="day-name">${dayName}</p>
-                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                                </div>
-                                <div>
-                                    ${hoursHtml}
-                                </div>
-                            </div>
-                        `;
-                            daysContainer.append(dayHtml);
-                        }
+                        console.log("Response:", response);
+                        renderDays(response);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error:', error);
@@ -615,16 +668,72 @@
                 });
             }
 
+            function calculateEndDate(startDate) {
+                var start = new Date(startDate);
+                start.setDate(start.getDate() + 6);
+                return start.toISOString().split('T')[0];
+            }
+
+            function renderDays(response) {
+                var daysContainer = $('#daysContainer');
+                daysContainer.empty();
+
+                var startDate = new Date($('#tanggal_mulai').val());
+                for (var i = 0; i < 7; i++) {
+                    var currentDate = new Date(startDate);
+                    currentDate.setDate(startDate.getDate() + i);
+
+                    var dayName = currentDate.toLocaleDateString('id-ID', {
+                        weekday: 'long'
+                    });
+                    var dayDate = currentDate.toISOString().split('T')[0];
+
+                    var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+                    var dayHtml = `
+                <div class="mx-2 text-center">
+                    <div>
+                        <p class="day-name">${dayName}</p>
+                        <p class="font-weight-bold date-available">${currentDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                    </div>
+                    <div>
+                        ${hoursHtml}
+                    </div>
+                </div>
+                `;
+                    daysContainer.append(dayHtml);
+                }
+            }
+
+            // function getHoursHtml(dayDate, usedTimeSlots) {
+            //     var hoursHtml = '';
+            //     var start = new Date(dayDate + 'T08:00:00');
+            //     var end = new Date(dayDate + 'T22:30:00');
+
+            //     while (start < end) {
+            //         var hour = start.toTimeString().substring(0, 5);
+            //         var isUsed = usedTimeSlots.some(function(slot) {
+            //             return slot.date === dayDate && slot.time === hour;
+            //         });
+            //         var className = isUsed ? 'cek-notavailable' : 'cek-available';
+            //         hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+            //         start.setMinutes(start.getMinutes() + 30);
+            //     }
+            //     return hoursHtml;
+            // }
             function getHoursHtml(dayDate, usedTimeSlots) {
+                console.log("Generating hours for", dayDate, "with used slots", usedTimeSlots);
                 var hoursHtml = '';
                 var start = new Date(dayDate + 'T08:00:00');
                 var end = new Date(dayDate + 'T22:30:00');
 
                 while (start < end) {
                     var hour = start.toTimeString().substring(0, 5);
-                    var isUsed = usedTimeSlots.some(function(slot) {
-                        return slot.date === dayDate && slot.time === hour;
-                    });
+                    var isUsed = usedTimeSlots.some(slot =>
+                        slot.date === dayDate &&
+                        slot.time === hour &&
+                        (slot.status === 'Disetujui' || slot.status === 'Selesai')
+                    );
                     var className = isUsed ? 'cek-notavailable' : 'cek-available';
                     hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
                     start.setMinutes(start.getMinutes() + 30);

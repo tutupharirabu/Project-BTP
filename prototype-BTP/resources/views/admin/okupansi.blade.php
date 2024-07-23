@@ -67,7 +67,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center " rowspan="3">Hari</th>
-                                        <th scope="col" class="text-center text-wrap" colspan="8">
+                                        <th scope="col" class="text-center text-wrap"
+                                            colspan="{{ count($dataRuangan) }}">
                                             Bulan <br>
                                             @php
                                                 $bulan = Carbon::now()->translatedFormat('F');

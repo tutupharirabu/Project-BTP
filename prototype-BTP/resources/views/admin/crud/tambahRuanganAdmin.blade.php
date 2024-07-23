@@ -73,12 +73,22 @@
                                 </div>
                                 <div class="form-group row mb-2">
                                     <label for="nama_ruangan" class="text-color col-md-3 col-form-label text-md-right">Nama
-                                        Ruangan</label>
+                                        dan Nomor Ruangan</label>
                                     <div class="col-md-7">
                                         <input type="text" id="nama_ruangan" class="bordered-text form-control"
                                             name="nama_ruangan" required>
                                         <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
-                                            ruangan.</div>
+                                            dan nomor ruangan.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="ukuran" class="text-color col-md-3 col-form-label text-md-right">Ukuran
+                                        Ruangan</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="ukuran" class="bordered-text form-control"
+                                            name="ukuran" required>
+                                        <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
+                                            dan nomor ruangan.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -127,6 +137,15 @@
                                         <input type="text" id="satuan" class="bordered-text form-control"
                                             name="satuan" required>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="keterangan"
+                                        class="text-color col-md-3 col-form-label text-md-right">Keterangan Ruangan</label>
+                                    {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
+                                    <div class="col-md-7">
+                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control"></textarea>
+                                        <div class="invalid-feedback">Silakan masukkan keterangan ruangan.</div>
                                     </div>
                                 </div>
                                 {{-- <div class="form-group row mb-2">

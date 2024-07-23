@@ -84,14 +84,14 @@
             <!-- Search and button add -->
             <div class="container mt-4 mb-2">
                 <div class="row">
-                    <div class="col-12 col-md-8 col-lg-6 mb-3 mb-md-0 d-flex align-items-center">
-                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                    {{-- <div class="col-12 col-md-8 col-lg-6 mb-3 mb-md-0 d-flex align-items-center"> --}}
+                    {{-- <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
                             placeholder="Cari ruangan..."
-                            style="border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;"> --}}
+                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                    </div>
-                    <div class="col-md-2 col-lg-4 "></div>
+                    {{-- </div> --}}
+                    {{-- <div class="col-md-2 col-lg-4 "></div> --}}
                     <div class="col-sm-12 col-md-2 col-lg-2 d-flex justify-content-end">
                         <a href="/tambahRuanganAdmin"
                             class="btn btn-md text-white text-center text-capitalize w-100 w-md-auto"
@@ -100,18 +100,18 @@
                 </div>
             </div>
             <!-- <div class="container mt-4 mb-2">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                        placeholder="Cari ruangan..."
-                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                        placeholder="Cari ruangan..."
+                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                </div>
-                                                                                <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
-                                                                                    style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
-                                                                            </div>
-                                                                        </div> -->
+                                                                                                                                </div>
+                                                                                                                                <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
+                                                                                                                                    style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                                                                                                                            </div>
+                                                                                                                        </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -122,12 +122,14 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No </th>
-                                        <th scope="col" class="text-center">No Ruangan</th>
+                                        {{-- <th scope="col" class="text-center">No Ruangan</th> --}}
                                         <th scope="col" class="text-center">Nama Ruangan</th>
+                                        <th scope="col" class="text-center">Ukuran Ruangan</th>
                                         <th scope="col" class="text-center">Minimal Kapasitas</th>
                                         <th scope="col" class="text-center">Maksimal Kapasitas</th>
                                         <th scope="col" class="text-center">Harga </th>
                                         <th scope="col" class="text-center">Gambar </th>
+                                        <th scope="col" class="text-center">Keterangan </th>
                                         <th scope="col" class="text-center">Status </th>
                                         <th scope="col" class="text-center">Perbaharui oleh</th>
                                         <th scope="col" class="text-center">Action </th>
@@ -136,11 +138,12 @@
                                 <tbody id="dataRuangan">
                                     @foreach ($dataRuangan as $data)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->id_ruangan }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            {{-- <td>{{ $data->id_ruangan }}</td> --}}
                                             <td>{{ $data->nama_ruangan }}</td>
-                                            <td>{{ $data->kapasitas_minimal }}</td>
-                                            <td>{{ $data->kapasitas_maksimal }}</td>
+                                            <td>{{ $data->ukuran }}</td>
+                                            <td class="text-center">{{ $data->kapasitas_minimal }}</td>
+                                            <td class="text-center">{{ $data->kapasitas_maksimal }}</td>
                                             <td>Rp {{ number_format((int) $data->harga_ruangan, 0, ',', '.') }} /
                                                 {{ $data->satuan }}
                                             </td>
@@ -207,6 +210,37 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{ $data->id_ruangan }}">
+                                                    Keterangan
+                                                </button>
+
+                                                <div class="modal fade" id="exampleModal{{ $data->id_ruangan }}"
+                                                    tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel{{ $data->id_ruangan }}"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5"
+                                                                    id="exampleModalLabel{{ $data->id_ruangan }}">
+                                                                    Keterangan Ruangan</h1>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ $data->keterangan }}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             {{-- <td style="display: flex; justify-content: center;">
                                                 @if ($data->tersedia == '1')
                                                     <a class="btn text-dark status"
@@ -251,9 +285,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="d-flex justify-content-center">
+                            {{-- <div class="d-flex justify-content-center">
                                 {{ $dataRuangan->links('vendor.pagination.custom') }}
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -292,8 +326,8 @@
         <script>
             $(document).ready(function() {
                 $('#dataTRuangan').DataTable({
-                    "paging": false,
-                    "searching": false,
+                    "paging": true,
+                    "searching": true,
                     "ordering": true,
                     "info": true
                 });
