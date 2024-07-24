@@ -51,7 +51,7 @@
             @include('admin.partials.sidebarAdmin')
         </div>
         <div class="col-sm-12 col-md-10 col-xl-10" >
-            <div style="">
+            <div class="">
                 @yield('containAdmin')
             </div>
             <div>

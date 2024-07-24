@@ -92,10 +92,10 @@
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     {{-- </div> --}}
                     {{-- <div class="col-md-2 col-lg-4 "></div> --}}
-                    <div class="col-sm-12 col-md-2 col-lg-2 d-flex justify-content-end">
+                    <div class="col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end">
                         <a href="/tambahRuanganAdmin"
-                            class="btn btn-md text-white text-center text-capitalize w-100 w-md-auto"
-                            style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                            class="btn btn-md text-white text-center text-capitalize w-22 w-md-auto"
+                            style="background-color: #0EB100; border-radius: 6px;"> Tambah Ruangan +</a>
                     </div>
                 </div>
             </div>
@@ -111,13 +111,13 @@
                                                                                                                                 <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
                                                                                                                                     style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                                                                                                                             </div>
-                                                                                                                        </div> -->
 
+        
             <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
                     <div class="container ml-4 mt-4">
-                        <div class="table-responsive">
+                        <div class="table-responsive ">
                             <table id="dataTRuangan" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
@@ -211,7 +211,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-success btn-sm"
+                                                <button type="button" class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal{{ $data->id_ruangan }}">
                                                     Keterangan

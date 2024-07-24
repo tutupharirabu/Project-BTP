@@ -62,3 +62,7 @@
     margin: auto;
     padding: 0;
 }
+
+.table td, .table th {
+    vertical-align: middle;
+}

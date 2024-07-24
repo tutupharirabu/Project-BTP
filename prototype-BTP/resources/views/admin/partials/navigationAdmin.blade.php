@@ -22,10 +22,11 @@
 
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="background-color: white;">
-            <div class="navbar-nav">
+            <div class="navbar-nav" style="margin-left:10px;">
                 <a class="nav-link" href="/dashboardAdmin">Dashboard</a>
                 <a class="nav-link" href="/statusRuanganAdmin">Daftar Ruangan</a>
                 <a class="nav-link" href="/statusPengajuanAdmin">Status Pengajuan</a>
+                <a class="nav-link" href="/okupansiRuangan">Okupansi Ruangan</a>
                 <a class="nav-link" href="/riwayatRuangan">Riwayat Ruangan</a>
                 <a class="nav-link" href="/logout">Logout</a>
             </div>

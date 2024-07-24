@@ -48,8 +48,8 @@
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     {{-- </div> --}}
                     {{-- <div class="col-md-5"></div> --}}
-                    <div class="col-12 col-md-2 d-flex justify-content-md-end align-items-center">
-                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center w-100 w-md-auto"
+                    <div class="col-12 col-md-12 d-flex justify-content-end align-items-center">
+                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center w-23 w-md-auto"
                             style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                     </div>
                 </div>

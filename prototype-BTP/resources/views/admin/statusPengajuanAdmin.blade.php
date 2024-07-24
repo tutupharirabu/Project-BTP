@@ -184,7 +184,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm"
+                                                    <button type="button" class="btn btn-success btn-sm text-capitalize"style=""
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
@@ -230,7 +230,7 @@
                                                     <a type="button" class="btn text-white btn-warning btn-styl warning"
                                                         style="padding: 8px">Menunggu</a>
                                                 </td>
-                                            @elseif($data->status == 'Disetujui')
+                                                    @elseif($data->status == 'Disetujui')
                                                 <td>
                                                     @foreach ($data->users as $user)
                                                         {{ $user->username }}
@@ -238,7 +238,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm"
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;" 
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
@@ -286,7 +286,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm"
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;" 
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>

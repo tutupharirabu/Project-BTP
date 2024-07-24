@@ -1,4 +1,4 @@
-<footer class="footer border-top">
+<footer class="footer border-top" style="margin-left:-10px; margin-right:-10px;">
     <div class="container d-flex justify-content-center align-items-center">
         <div class="footer-logo d-flex align-items-center">
             <img src="{{ asset('assets/img/logospacerentwobg.png') }}" alt="Logo Telkom University"
