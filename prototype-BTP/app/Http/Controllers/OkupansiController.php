@@ -6,19 +6,23 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
 class OkupansiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil peminjaman yang disetujui dan selesai
+        // Get the current month or the month from the request
+        $selectedMonth = $request->input('month', Carbon::now()->format('Y-m'));
+
+        // Parse the start and end dates of the selected month
+        $startOfMonth = Carbon::parse($selectedMonth)->startOfMonth();
+        $endOfMonth = Carbon::parse($selectedMonth)->endOfMonth();
+
+        // Fetch approved or completed bookings within the selected month
         $dataOkupansi = Peminjaman::with('ruangan')
             ->whereIn('status', ['Disetujui', 'Selesai'])
+            ->whereBetween('tanggal_mulai', [$startOfMonth, $endOfMonth])
             ->get();
 
         $dataRuangan = Ruangan::all();
@@ -26,7 +30,7 @@ class OkupansiController extends Controller
         $totalByRoom = [];
         $totalByDay = [];
 
-        // Iterasi setiap peminjaman untuk menghitung jumlah peminjaman per ruangan per hari
+        // Iterate through each booking to count the bookings per room per day
         foreach ($dataOkupansi as $peminjaman) {
             $startDate = Carbon::parse($peminjaman->tanggal_mulai);
             $endDate = Carbon::parse($peminjaman->tanggal_selesai);
@@ -45,14 +49,11 @@ class OkupansiController extends Controller
 
                 $dataByDayAndRoom[$day][$room]++;
 
-                // Hitung total peminjaman per hari
                 if (!isset($totalByDay[$day])) {
                     $totalByDay[$day] = 0;
                 }
-
                 $totalByDay[$day]++;
 
-                // Hitung total peminjaman per ruangan
                 if (!isset($totalByRoom[$room])) {
                     $totalByRoom[$room] = 0;
                 }
@@ -60,17 +61,22 @@ class OkupansiController extends Controller
             }
         }
 
-        // Total peminjaman untuk seluruh hari
         $totalOverall = array_sum($totalByDay);
 
-        return view('admin.okupansi', compact('dataByDayAndRoom', 'dataRuangan', 'totalByDay', 'totalOverall', 'totalByRoom'));
+        return view('admin.okupansi', compact('dataByDayAndRoom', 'dataRuangan', 'totalByDay', 'totalOverall', 'totalByRoom', 'selectedMonth'));
     }
 
-    public function downloadOkupansi()
+    public function downloadOkupansi(Request $request)
     {
-        // Ambil peminjaman yang disetujui dan selesai
+        // Similar logic as the index method, adjusted for CSV generation
+        $selectedMonth = $request->input('month', Carbon::now()->format('Y-m'));
+        $startOfMonth = Carbon::parse($selectedMonth)->startOfMonth();
+        $endOfMonth = Carbon::parse($selectedMonth)->endOfMonth();
+
+        // Fetch approved or completed bookings within the selected month
         $dataOkupansi = Peminjaman::with('ruangan')
             ->whereIn('status', ['Disetujui', 'Selesai'])
+            ->whereBetween('tanggal_mulai', [$startOfMonth, $endOfMonth])
             ->get();
 
         $dataRuangan = Ruangan::all();
@@ -78,52 +84,40 @@ class OkupansiController extends Controller
         $totalByRoom = [];
         $totalByDay = [];
 
-        // Define the start and end of the current month
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
-
-        // Generate a list of all dates in the month
-        $datesInMonth = [];
-        $currentDay = $startOfMonth->copy();
-        while ($currentDay->lte($endOfMonth)) {
-            $datesInMonth[] = $currentDay->format('d-m-Y'); // Store dates in YYYY-MM-DD format
-            $currentDay->addDay();
-        }
-
-        // Initialize data structures
-        foreach ($dataRuangan as $room) {
-            $totalByRoom[$room->nama_ruangan] = 0;
-            foreach ($datesInMonth as $date) {
-                $dataByDayAndRoom[$date][$room->nama_ruangan] = 0;
-            }
-        }
-
-        // Iterasi setiap peminjaman untuk menghitung jumlah peminjaman per ruangan per hari
+        // Similar iteration logic to the index method, adjusted for CSV generation
         foreach ($dataOkupansi as $peminjaman) {
             $startDate = Carbon::parse($peminjaman->tanggal_mulai);
             $endDate = Carbon::parse($peminjaman->tanggal_selesai);
             $room = $peminjaman->ruangan->nama_ruangan;
 
             for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
-                $dateStr = $date->format('d-m-Y');
+                $day = $date->translatedFormat('l');
 
-                if (isset($dataByDayAndRoom[$dateStr][$room])) {
-                    $dataByDayAndRoom[$dateStr][$room]++;
-                    $totalByRoom[$room]++;
+                if (!isset($dataByDayAndRoom[$day])) {
+                    $dataByDayAndRoom[$day] = [];
                 }
 
-                // Hitung total peminjaman per hari
-                if (!isset($totalByDay[$dateStr])) {
-                    $totalByDay[$dateStr] = 0;
+                if (!isset($dataByDayAndRoom[$day][$room])) {
+                    $dataByDayAndRoom[$day][$room] = 0;
                 }
-                $totalByDay[$dateStr]++;
+
+                $dataByDayAndRoom[$day][$room]++;
+
+                if (!isset($totalByDay[$day])) {
+                    $totalByDay[$day] = 0;
+                }
+                $totalByDay[$day]++;
+
+                if (!isset($totalByRoom[$room])) {
+                    $totalByRoom[$room] = 0;
+                }
+                $totalByRoom[$room]++;
             }
         }
 
-        // Total peminjaman untuk seluruh hari
         $totalOverall = array_sum($totalByDay);
 
-        // Prepare data for CSV
+        // CSV generation logic, similar to the original method but adjusted for the selected month
         $csvData = [];
         $headers = ['Tanggal'];
         foreach ($dataRuangan as $dr) {
@@ -131,16 +125,14 @@ class OkupansiController extends Controller
         }
         $csvData[] = $headers;
 
-        // Fill in the CSV rows with booking data
-        foreach ($datesInMonth as $date) {
+        foreach ($dataByDayAndRoom as $date => $rooms) {
             $row = [$date];
             foreach ($dataRuangan as $dr) {
-                $row[] = $dataByDayAndRoom[$date][$dr->nama_ruangan] ?? 0;
+                $row[] = $rooms[$dr->nama_ruangan] ?? 0;
             }
             $csvData[] = $row;
         }
 
-        // Add totals
         $csvData[] = array_merge(['Jumlah'], array_values($totalByRoom));
         $csvData[] = ['Total', $totalOverall];
         $csvData[] = array_merge(['Kapasitas penggunaan per ruangan (jumlah orang)'], array_column($dataRuangan->toArray(), 'kapasitas_maksimal'));
@@ -151,7 +143,6 @@ class OkupansiController extends Controller
         }, 0);
         $csvData[] = array_merge(['Kapasitas maksimum semua ruangan'], [$totalCapacityMonthly]);
 
-        // Occupancy percentages
         $occupancyData = ['Okupansi pemakaian per ruangan di BTP (dalam %)'];
         foreach ($dataRuangan as $dr) {
             $totalCapacity = $dr->kapasitas_maksimal * 3 * 31;
@@ -162,7 +153,6 @@ class OkupansiController extends Controller
         $csvData[] = $occupancyData;
         $csvData[] = ['Okupansi pemakaian ruangan di BTP (dalam %)', number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) . '%'];
 
-        // Create a CSV file
         $fileName = 'Data Okupansi Peminjaman Ruangan BTP.csv';
         $file = fopen(storage_path('app/public/' . $fileName), 'w');
         foreach ($csvData as $line) {
@@ -170,55 +160,6 @@ class OkupansiController extends Controller
         }
         fclose($file);
 
-        // Return the CSV file for download
         return Response::download(storage_path('app/public/' . $fileName));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
