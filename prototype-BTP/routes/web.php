@@ -78,5 +78,5 @@ Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwaya
 Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');
 
 // okupansi
-Route::get('/okupansiRuangan', [OkupansiController::class, 'index'])->middleware('auth');
+Route::get('/okupansiRuangan', [OkupansiController::class, 'index'])->name('admin.okupansi.index')->middleware('auth');
 Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi'])->name('download.okupansi');
