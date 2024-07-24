@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2 col-lg-2 sidebar d-none d-md-block d-flex flex-column"
             style="background-color: #419343; color: #FFFFFF;">
-            <nav class="nav flex-column">
+            <nav class="nav flex-column mt-2">
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/dashboardAdmin">
                         <i class="material-symbols-outlined me-2">space_dashboard</i>
