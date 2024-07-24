@@ -40,7 +40,7 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 <h5 class="text-center">
-                    Data for: {{ Carbon::parse($selectedMonth)->translatedFormat('F Y') }}
+                    Bulan {{ Carbon::parse($selectedMonth)->translatedFormat('F Y') }}
                 </h5>
             </div>
         </div>
@@ -96,13 +96,12 @@
                         </tr>
                         <tr>
                             <td>Kapasitas maksimum semua ruangan</td>
-                            <td colspan="{{ count($dataRuangan) }}">
-                                @php
-                                    $totalCapacityMonthly = $dataRuangan->reduce(function ($carry, $dr) {
-                                        return $carry + $dr->kapasitas_maksimal * 3 * 31;
-                                    }, 0);
-                                @endphp
-                            </td>
+                            @php
+                                $totalCapacityMonthly = $dataRuangan->reduce(function ($carry, $dr) {
+                                    return $carry + $dr->kapasitas_maksimal * 3 * 31;
+                                }, 0);
+                            @endphp
+                            <td colspan="{{ count($dataRuangan) }}">{{ $totalCapacityMonthly }}</td>
                         </tr>
                         <tr>
                             <td>Okupansi pemakaian per ruangan di BTP (dalam %)</td>
@@ -127,4 +126,8 @@
             </div>
         </div>
     </div>
+    <script>
+        const aaa = {{ $totalOverall }};
+        console.log(aaa);
+    </script>
 @endsection
