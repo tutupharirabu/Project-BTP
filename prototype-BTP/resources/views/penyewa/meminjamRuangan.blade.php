@@ -573,173 +573,88 @@
             window.location.href = "/dashboardPenyewa";
         });
     </script>
-
     <script>
         $(document).ready(function() {
-            var tanggalMulai = null;
-            var ruangan = null;
+            let startDate = new Date().toISOString().split('T')[0];
 
-            // Update the days when the modal is shown
-            $('#lihatKetersediaanModal').on('shown.bs.modal', function() {
-                ruangan = $('#roomSelect').val();
-                if (tanggalMulai && ruangan) {
-                    updateDays(tanggalMulai, ruangan);
-                }
+            // Initialize with the first room
+            updateDays(startDate, $('#roomSelect').val());
+
+            // Add event listener for room selection dropdown
+            $('#roomSelect').change(function() {
+                let ruangan = $(this).val();
+                updateDays(startDate, ruangan);
             });
+        });
 
-            $('#roomSelect').on('change', function() {
-                ruangan = $(this).val();
-                if (tanggalMulai && ruangan) {
-                    updateDays(tanggalMulai, ruangan);
-                }
-            });
+        function updateDays(startDate, ruangan) {
+            $.ajax({
+                url: '/get-ketersediaan-details',
+                method: 'GET',
+                data: {
+                    tanggal_mulai: startDate,
+                    ruangan: ruangan,
+                    tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6))
+                        .toISOString().split('T')[0] // Contoh menghitung tanggal selesai (6 hari kemudian)
+                },
+                success: function(response) {
+                    console.log(response); // Debugging response
+                    var daysContainer = $('#daysContainer');
+                    daysContainer.empty();
 
-            $('#tanggal_mulai').on('change', function() {
-                tanggalMulai = $(this).val();
-                if (tanggalMulai && ruangan) {
-                    $('#ketersediaanRow').show();
-                    updateDays(tanggalMulai, ruangan);
-                } else {
-                    $('#ketersediaanRow').hide();
-                }
-            });
+                    var startDateObj = new Date(startDate);
+                    for (var i = 0; i < 7; i++) {
+                        var currentDateObj = new Date(startDateObj);
+                        currentDateObj.setDate(currentDateObj.getDate() + i);
 
+                        var dayName = currentDateObj.toLocaleDateString('id-ID', {
+                            weekday: 'long'
+                        });
+                        var dayDate = currentDateObj.toISOString().split('T')[0];
 
+                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
-            // function updateDays(startDate) {
-            //     $.ajax({
-            //         url: '/get-ketersediaan-details',
-            //         method: 'GET',
-            //         data: {
-            //             tanggal_mulai: startDate
-            //         },
-            //         success: function(response) {
-            //             var daysContainer = $('#daysContainer');
-            //             daysContainer.empty();
-
-            //             var startDateObj = new Date(startDate);
-            //             for (var i = 0; i < 7; i++) {
-            //                 var currentDateObj = new Date(startDateObj);
-            //                 currentDateObj.setDate(startDateObj.getDate() + i);
-
-            //                 var dayName = currentDateObj.toLocaleDateString('id-ID', {
-            //                     weekday: 'long'
-            //                 });
-            //                 var dayDate = currentDateObj.toISOString().split('T')[0];
-
-            //                 var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
-
-            //                 var dayHtml = `
-        //                 <div class="mx-2 text-center">
-        //                     <div>
-        //                         <p class="day-name">${dayName}</p>
-        //                         <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-        //                     </div>
-        //                     <div>
-        //                         ${hoursHtml}
-        //                     </div>
-        //                 </div>
-        //             `;
-            //                 daysContainer.append(dayHtml);
-            //             }
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.error('Error:', error);
-            //         }
-            //     });
-            // }
-            function updateDays(startDate, room) {
-                console.log("Updating days for", startDate, "and room", room);
-                $.ajax({
-                    url: '/get-ketersediaan-details',
-                    method: 'GET',
-                    data: {
-                        tanggal_mulai: startDate,
-                        ruangan: room,
-                        tanggal_selesai: calculateEndDate(startDate)
-                    },
-                    success: function(response) {
-                        console.log("Response:", response);
-                        renderDays(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            }
-
-            function calculateEndDate(startDate) {
-                var start = new Date(startDate);
-                start.setDate(start.getDate() + 6);
-                return start.toISOString().split('T')[0];
-            }
-
-            function renderDays(response) {
-                var daysContainer = $('#daysContainer');
-                daysContainer.empty();
-
-                var startDate = new Date($('#tanggal_mulai').val());
-                for (var i = 0; i < 7; i++) {
-                    var currentDate = new Date(startDate);
-                    currentDate.setDate(startDate.getDate() + i);
-
-                    var dayName = currentDate.toLocaleDateString('id-ID', {
-                        weekday: 'long'
-                    });
-                    var dayDate = currentDate.toISOString().split('T')[0];
-
-                    var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
-
-                    var dayHtml = `
+                        var dayHtml = `
                 <div class="mx-2 text-center">
                     <div>
                         <p class="day-name">${dayName}</p>
-                        <p class="font-weight-bold date-available">${currentDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                     </div>
                     <div>
                         ${hoursHtml}
                     </div>
                 </div>
-                `;
-                    daysContainer.append(dayHtml);
+            `;
+                        daysContainer.append(dayHtml);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', xhr.responseText); // Debugging error response
                 }
+            });
+        }
+
+        function getHoursHtml(dayDate, usedTimeSlots) {
+            var hoursHtml = '';
+            var start = new Date(dayDate + 'T08:00:00');
+            var end = new Date(dayDate + 'T22:30:00');
+
+            while (start < end) {
+                var hour = start.toTimeString().substring(0, 5);
+                var isUsed = usedTimeSlots.some(function(slot) {
+                    return slot.date === dayDate && slot.time === hour;
+                });
+                var className = isUsed ? 'cek-notavailable' : 'cek-available';
+                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+                start.setMinutes(start.getMinutes() + 30);
             }
-
-            // function getHoursHtml(dayDate, usedTimeSlots) {
-            //     var hoursHtml = '';
-            //     var start = new Date(dayDate + 'T08:00:00');
-            //     var end = new Date(dayDate + 'T22:30:00');
-
-            //     while (start < end) {
-            //         var hour = start.toTimeString().substring(0, 5);
-            //         var isUsed = usedTimeSlots.some(function(slot) {
-            //             return slot.date === dayDate && slot.time === hour;
-            //         });
-            //         var className = isUsed ? 'cek-notavailable' : 'cek-available';
-            //         hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
-            //         start.setMinutes(start.getMinutes() + 30);
-            //     }
-            //     return hoursHtml;
-            // }
-            function getHoursHtml(dayDate, usedTimeSlots) {
-                console.log("Generating hours for", dayDate, "with used slots", usedTimeSlots);
-                var hoursHtml = '';
-                var start = new Date(dayDate + 'T08:00:00');
-                var end = new Date(dayDate + 'T22:30:00');
-
-                while (start < end) {
-                    var hour = start.toTimeString().substring(0, 5);
-                    var isUsed = usedTimeSlots.some(slot =>
-                        slot.date === dayDate &&
-                        slot.time === hour &&
-                        (slot.status === 'Disetujui' || slot.status === 'Selesai')
-                    );
-                    var className = isUsed ? 'cek-notavailable' : 'cek-available';
-                    hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
-                    start.setMinutes(start.getMinutes() + 30);
-                }
-                return hoursHtml;
-            }
+            return hoursHtml;
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var tanggalMulai = null;
+            var ruangan = null;
 
             // Fungsi untuk menampilkan form Per Jam
             function showPerJamForm() {
