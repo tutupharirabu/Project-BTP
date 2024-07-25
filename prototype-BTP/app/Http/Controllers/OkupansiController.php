@@ -25,45 +25,54 @@ class OkupansiController extends Controller
             ->whereBetween('tanggal_mulai', [$startOfMonth, $endOfMonth])
             ->get();
 
+        // Debugging dataOkupansi
+        // dd($dataOkupansi);
+
         $dataRuangan = Ruangan::all();
         $dataByDayAndRoom = [];
         $totalByRoom = [];
         $totalByDay = [];
 
-        // Iterate through each booking to count the bookings per room per day
+        // Define the order of days from Monday to Sunday
+        $dayOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+        // Initialize dataByDayAndRoom with the day order
+        foreach ($dayOrder as $day) {
+            $dataByDayAndRoom[$day] = [];
+        }
+
+        // Iterate through each booking to count the participants per room per day
         foreach ($dataOkupansi as $peminjaman) {
             $startDate = Carbon::parse($peminjaman->tanggal_mulai);
             $endDate = Carbon::parse($peminjaman->tanggal_selesai);
             $room = $peminjaman->ruangan->nama_ruangan;
+            $jumlahPeserta = $peminjaman->jumlah;
 
             for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
                 $day = $date->translatedFormat('l');
-
-                if (!isset($dataByDayAndRoom[$day])) {
-                    $dataByDayAndRoom[$day] = [];
-                }
 
                 if (!isset($dataByDayAndRoom[$day][$room])) {
                     $dataByDayAndRoom[$day][$room] = 0;
                 }
 
-                $dataByDayAndRoom[$day][$room]++;
+                $dataByDayAndRoom[$day][$room] += $jumlahPeserta;
 
                 if (!isset($totalByDay[$day])) {
                     $totalByDay[$day] = 0;
                 }
-                $totalByDay[$day]++;
+                $totalByDay[$day] += $jumlahPeserta;
 
                 if (!isset($totalByRoom[$room])) {
                     $totalByRoom[$room] = 0;
                 }
-                $totalByRoom[$room]++;
+                $totalByRoom[$room] += $jumlahPeserta;
             }
         }
 
         $totalOverall = array_sum($totalByDay);
 
-        return view('admin.okupansi', compact('dataByDayAndRoom', 'dataRuangan', 'totalByDay', 'totalOverall', 'totalByRoom', 'selectedMonth'));
+        return view('admin.okupansi', compact('dataByDayAndRoom', 'dataRuangan', 'totalByDay', 'totalOverall', 'totalByRoom', 'selectedMonth', 'dayOrder'));
+
     }
 
     public function downloadOkupansi(Request $request)
