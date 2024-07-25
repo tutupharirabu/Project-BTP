@@ -14,15 +14,13 @@
         <!-- Judul -->
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
-                <div class="container ml-4">
-                    <h4>Data Okupansi Peminjaman Ruangan</h4>
-                </div>
+                <h4>Data Okupansi Peminjaman Ruangan</h4>
             </div>
         </div>
 
         <!-- Month Navigation -->
         <div class="row mt-3">
-            <div class="col-md-4">
+            <div class="col-md-10">
                 <form action="{{ route('admin.okupansi.index') }}" method="GET" class="d-inline">
                     <input type="hidden" name="month"
                         value="{{ Carbon::parse($selectedMonth)->subMonth()->format('Y-m') }}">
@@ -34,7 +32,7 @@
                     <button type="submit" class="btn btn-outline-primary">Bulan Selanjutnya</button>
                 </form>
             </div>
-            <div class="col col-md-2 d-flex justify-content-md-end align-items-center">
+            <div class="col-md-2 justify-content-md-end">
                 <a href="{{ route('download.okupansi') }}" class="btn btn-md text-white text-center w-100 w-md-auto"
                     style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
             </div>
@@ -51,11 +49,11 @@
 
         <!-- Tabel -->
         <div class="row mt-3 justify-content-center">
-            <div class="col-md-11">
+            <div class="col-md-12">
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
+                            <th>Hari</th>
                             @foreach ($dataRuangan as $dr)
                                 <th>{{ $dr->nama_ruangan }}</th>
                             @endforeach
@@ -78,7 +76,7 @@
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td colspan="{{ count($dataRuangan) }}">{{ $totalOverall }}</td>
+                            <td colspan="{{ count($dataRuangan) }}" class="text-center">{{ $totalOverall }}</td>
                         </tr>
                         <tr>
                             <td>Kapasitas penggunaan per ruangan (jumlah orang)</td>
@@ -105,7 +103,7 @@
                                     return $carry + $dr->kapasitas_maksimal * 3 * 31;
                                 }, 0);
                             @endphp
-                            <td colspan="{{ count($dataRuangan) }}">{{ $totalCapacityMonthly }}</td>
+                            <td colspan="{{ count($dataRuangan) }}" class="text-center">{{ $totalCapacityMonthly }}</td>
                         </tr>
                         <tr>
                             <td>Okupansi pemakaian per ruangan di BTP (dalam %)</td>
@@ -121,7 +119,7 @@
                         </tr>
                         <tr>
                             <td>Okupansi pemakaian ruangan di BTP (dalam %)</td>
-                            <td colspan="{{ count($dataRuangan) }}">
+                            <td colspan="{{ count($dataRuangan) }}" class="text-center">
                                 {{ number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) }}%
                             </td>
                         </tr>

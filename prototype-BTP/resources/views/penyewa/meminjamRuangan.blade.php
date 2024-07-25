@@ -637,7 +637,7 @@
         function getHoursHtml(dayDate, usedTimeSlots) {
             var hoursHtml = '';
             var start = new Date(dayDate + 'T08:00:00');
-            var end = new Date(dayDate + 'T22:30:00');
+            var end = new Date(dayDate + 'T21:30:00');
 
             while (start < end) {
                 var hour = start.toTimeString().substring(0, 5);
