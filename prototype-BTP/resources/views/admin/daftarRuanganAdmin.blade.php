@@ -100,20 +100,20 @@
                 </div>
             </div>
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                <div class="d-flex align-items-center">
-                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                        placeholder="Cari ruangan..."
-                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                            placeholder="Cari ruangan..."
+                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                    </div>
+                                                                                                                                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
+                                                                                                                                        style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
                                                                                                                                 </div>
-                                                                                                                                <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
-                                                                                                                                    style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
-                                                                                                                            </div>
 
-        
-            <!-- table edit -->
+
+                <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
                     <div class="container ml-4 mt-4">
@@ -211,7 +211,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
+                                                <button type="button"
+                                                    class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal{{ $data->id_ruangan }}">
                                                     Keterangan
@@ -303,7 +304,7 @@
                             <span class="material-symbols-outlined"
                                 style="font-size: 3.5em; color: #FFFFFF;">delete</span>
                         </div>
-                        <p style="margin-top: 10px;">Apakah ruangan Multimedia ingin dihapus?</p>
+                        <p style="margin-top: 10px;">Apakah ruangan ini ingin dihapus?</p>
                         <button type="button" class="btn"
                             style="background-color: #B0B0B0; color: white; margin-right: 30px;"
                             onclick="closeConfirmationModal()">TIDAK</button>
