@@ -99,12 +99,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('occupancyChart').getContext('2d');
             const occupancyData = @json(array_values($occupancyPerMonth));
-            const aaa = {{ $totalCapacityPerRoom }};
-
-            console.log(occupancyData);
-            console.log('aa');
-            console.log(aaa);
-
 
             const monthNames = [
                 "Januari", "Februari", "Maret", "April", "Mei", "Juni",
