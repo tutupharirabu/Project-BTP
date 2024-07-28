@@ -19,23 +19,23 @@ class PenyewaDetailRuangan extends Controller
     public function getAvailableTimes(Request $request)
     {
         $tanggalMulai = Carbon::parse($request->input('tanggal_mulai'));
-        $ruangan = $request->input('ruangan');
         $tanggalSelesai = Carbon::parse($request->input('tanggal_selesai', $tanggalMulai->copy()->addDays(6)->toDateString())); // Default to 6 days after start date
+        $ruanganId = $request->input('ruangan_id');
 
         try {
             // Debugging log
-            \Log::info("Tanggal Mulai: $tanggalMulai, Tanggal Selesai: $tanggalSelesai, Ruangan: $ruangan");
+            \Log::info("Tanggal Mulai: $tanggalMulai, Tanggal Selesai: $tanggalSelesai, Ruangan ID: $ruanganId");
 
             $usedTimes = DB::table('peminjaman')
-                ->where('id_ruangan', $ruangan)
+                ->where('id_ruangan', $ruanganId)
                 ->where(function($query) use ($tanggalMulai, $tanggalSelesai) {
                     $query->whereDate('tanggal_mulai', '<=', $tanggalSelesai)
-                          ->whereDate('tanggal_selesai', '>=', $tanggalMulai);
+                        ->whereDate('tanggal_selesai', '>=', $tanggalMulai);
                 })
                 ->whereIn('status', ['Disetujui', 'Selesai'])
                 ->get();
 
-            \Log::info("Used Times: ", $usedTimes->toArray());
+            \Log::info("Used Times for Ruangan $ruanganId: ", $usedTimes->toArray());
 
             $usedTimeSlots = [];
             foreach ($usedTimes as $time) {
@@ -44,7 +44,8 @@ class PenyewaDetailRuangan extends Controller
                 while ($start <= $end) {
                     $usedTimeSlots[] = [
                         'date' => $start->format('Y-m-d'),
-                        'time' => $start->format('H:i')
+                        'time' => $start->format('H:i'),
+                        'ruangan' => $ruanganId
                     ];
                     $start->addMinutes(30);
                 }

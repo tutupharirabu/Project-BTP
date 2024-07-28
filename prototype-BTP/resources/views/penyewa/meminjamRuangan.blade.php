@@ -746,7 +746,7 @@
                         durasiSelect.prop('disabled', false);
 
                         // Tentukan waktu tutup, misalnya 21:00
-                        var closingTime = '21:00';
+                        var closingTime = '22:00';
                         var closingDate = new Date(`1970-01-01T${closingTime}:00`);
 
                         // Reset visibilitas opsi durasi

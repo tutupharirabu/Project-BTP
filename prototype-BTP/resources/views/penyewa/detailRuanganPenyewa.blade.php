@@ -24,6 +24,8 @@
         </div>
 
         <!-- value -->
+        <input type="hidden" id="roomId" value="{{ $ruangan->id_ruangan }}">
+
         <div class="row justify-content-center mt-4">
             <div class="col-lg-6">
 
@@ -93,45 +95,6 @@
                                     data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
                                     Lihat ketersediaan
                                 </button>
-                                {{-- modal ketersediaan --}}
-                                <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1"
-                                    aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div
-                                                class="modal-header d-flex justify-content-center align-items-center position-relative">
-                                                <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
-                                                    Ketersediaan Ruangan
-                                                    <select id="roomSelect" class="form-select">
-                                                        <option value="{{ $ruangan->id_ruangan }}">
-                                                            {{ $ruangan->nama_ruangan }}</option>
-                                                        @foreach ($dataRuangan as $dr)
-                                                            <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </h5>
-                                                <button type="button" class="btn-close position-absolute end-0 me-3"
-                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
-                                                    <!-- Dynamic days content will be inserted here -->
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-center">
-                                                <div class="d-flex align-items-center mr-4">
-                                                    <div class="mark-available"></div>
-                                                    <p class="my-auto">Tersedia</p>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="mark-notavailable"></div>
-                                                    <p class="my-auto">Tidak tersedia</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 {{-- @if ($ruangan->tersedia == '1')
                                     <div type="button boder" class="btn btn-sm text-white"
                                         style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
@@ -153,9 +116,9 @@
                 <div class="text-black">
                     <p>Keterangan :</p>
                     <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Harap membaca <a
-                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=drive_link"
-                            target="_blank">syarat & ketentuan</a> yang berlaku </p>
+                    <p> **Untuk informasi lebih lengkap lihat <a
+                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing"
+                            target="_blank">disini</a></p>
                 </div>
                 <div class="">
                     <a type="button" class="btn btn-sm text-white"
@@ -166,6 +129,38 @@
             </div>
         </div>
     </div>
+    </div>
+
+    {{-- modal ketersediaan --}}
+    <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1"
+    aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div
+                    class="modal-header d-flex justify-content-center align-items-center position-relative">
+                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
+                        Ketersediaan Ruangan
+                    </h5>
+                    <button type="button" class="btn-close position-absolute end-0 me-3"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
+                        <!-- Dynamic days content will be inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="d-flex align-items-center mr-4">
+                        <div class="mark-available"></div>
+                        <p class="my-auto">Tersedia</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="mark-notavailable"></div>
+                        <p class="my-auto">Tidak tersedia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <style>
@@ -269,50 +264,53 @@
             text-align: center;
         }
     </style>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+    </script>
+
     <script>
         $(document).ready(function() {
-            let startDate = new Date().toISOString().split('T')[0];
+        let startDate = new Date().toISOString().split('T')[0];
+        let ruanganId = $('#roomId').val();
 
-            // Initialize with the first room
-            updateDays(startDate, $('#roomSelect').val());
-
-            // Add event listener for room selection dropdown
-            $('#roomSelect').change(function() {
-                let ruangan = $(this).val();
-                updateDays(startDate, ruangan);
-            });
+        $('#lihatKetersediaanModal').on('show.bs.modal', function() {
+            updateDays(startDate, ruanganId);
         });
 
-        function updateDays(startDate, ruangan) {
-            $.ajax({
-                url: '/get-ketersediaan-details',
-                method: 'GET',
-                data: {
-                    tanggal_mulai: startDate,
-                    ruangan: ruangan,
-                    tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6))
-                        .toISOString().split('T')[0] // Contoh menghitung tanggal selesai (6 hari kemudian)
-                },
-                success: function(response) {
-                    console.log(response); // Debugging response
-                    var daysContainer = $('#daysContainer');
-                    daysContainer.empty();
+        $('#roomSelect').change(function() {
+            ruanganId = $(this).val(); // Update the room ID if the room selection changes
+            updateDays(startDate, ruanganId);
+        });
+    });
 
-                    var startDateObj = new Date(startDate);
-                    for (var i = 0; i < 7; i++) {
-                        var currentDateObj = new Date(startDateObj);
-                        currentDateObj.setDate(currentDateObj.getDate() + i);
+    function updateDays(startDate, ruanganId) {
+        $.ajax({
+            url: '/get-sediaan-details',
+            method: 'GET',
+            data: {
+                tanggal_mulai: startDate,
+                tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6)).toISOString().split('T')[0], // Example to calculate the end date (6 days later)
+                ruangan_id: ruanganId
+            },
+            success: function(response) {
+                console.log(response); // Debugging response
+                var daysContainer = $('#daysContainer');
+                daysContainer.empty();
 
-                        var dayName = currentDateObj.toLocaleDateString('id-ID', {
-                            weekday: 'long'
-                        });
-                        var dayDate = currentDateObj.toISOString().split('T')[0];
+                var startDateObj = new Date(startDate);
+                for (var i = 0; i < 7; i++) {
+                    var currentDateObj = new Date(startDateObj);
+                    currentDateObj.setDate(currentDateObj.getDate() + i);
 
-                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+                    var dayName = currentDateObj.toLocaleDateString('id-ID', {
+                        weekday: 'long'
+                    });
+                    var dayDate = currentDateObj.toISOString().split('T')[0];
 
-                        var dayHtml = `
+                    var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+                    var dayHtml = `
                         <div class="mx-2 text-center">
                             <div>
                                 <p class="day-name">${dayName}</p>
@@ -323,30 +321,30 @@
                             </div>
                         </div>
                     `;
-                        daysContainer.append(dayHtml);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', xhr.responseText); // Debugging error response
+                    daysContainer.append(dayHtml);
                 }
-            });
-        }
-
-        function getHoursHtml(dayDate, usedTimeSlots) {
-            var hoursHtml = '';
-            var start = new Date(dayDate + 'T08:00:00');
-            var end = new Date(dayDate + 'T22:30:00');
-
-            while (start < end) {
-                var hour = start.toTimeString().substring(0, 5);
-                var isUsed = usedTimeSlots.some(function(slot) {
-                    return slot.date === dayDate && slot.time === hour;
-                });
-                var className = isUsed ? 'cek-notavailable' : 'cek-available';
-                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
-                start.setMinutes(start.getMinutes() + 30);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText); // Debugging error response
             }
-            return hoursHtml;
+        });
+    }
+
+    function getHoursHtml(dayDate, usedTimeSlots) {
+        var hoursHtml = '';
+        var start = new Date(dayDate + 'T08:00:00');
+        var end = new Date(dayDate + 'T22:30:00');
+
+        while (start < end) {
+            var hour = start.toTimeString().substring(0, 5);
+            var isUsed = usedTimeSlots.some(function(slot) {
+                return slot.date === dayDate && slot.time === hour;
+            });
+            var className = isUsed ? 'cek-notavailable' : 'cek-available';
+            hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+            start.setMinutes(start.getMinutes() + 30);
         }
+        return hoursHtml;
+    }
     </script>
 @endsection
