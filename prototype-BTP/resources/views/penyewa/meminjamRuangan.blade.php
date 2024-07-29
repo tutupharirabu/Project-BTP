@@ -655,6 +655,12 @@
         $(document).ready(function() {
             var tanggalMulai = null;
             var ruangan = null;
+            var selectedRole = null;
+
+            $('#role').on('change', function() {
+                selectedRole = $(this).val();
+                updateDurasiOptions();
+            });
 
             // Fungsi untuk menampilkan form Per Jam
             function showPerJamForm() {
@@ -724,6 +730,23 @@
                 </div>
             `);
 
+                updateDurasiOptions();
+                $('#jam_mulai').on('change', function() {
+                    var jamMulai = $(this).val();
+                    var durasiSelect = $('#durasi');
+
+                    if (jamMulai) {
+                        durasiSelect.prop('disabled', false);
+
+                        // Only apply time restrictions for Pegawai role
+                        if (selectedRole === 'Pegawai') {
+                            // ... (keep the existing time restriction logic)
+                        }
+                    } else {
+                        durasiSelect.prop('disabled', true);
+                    }
+                });
+
                 if (tanggalMulai) {
                     $('#tanggal_mulai').val(tanggalMulai).trigger('change');
                 }
@@ -779,6 +802,28 @@
                     }
                 });
 
+            }
+
+            function updateDurasiOptions() {
+                var durasiSelect = $('#durasi');
+                durasiSelect.empty(); // Clear existing options
+
+                if (selectedRole === 'Pegawai') {
+                    // Add all options for Pegawai
+                    durasiSelect.append('<option value="">Pilih Durasi Penyewaan</option>');
+                    durasiSelect.append('<option value="00:30">30 Menit</option>');
+                    durasiSelect.append('<option value="01:00">60 Menit</option>');
+                    durasiSelect.append('<option value="01:30">90 Menit</option>');
+                    durasiSelect.append('<option value="02:00">120 Menit</option>');
+                    durasiSelect.append('<option value="02:30">150 Menit</option>');
+                    durasiSelect.append('<option value="03:00">180 Menit</option>');
+                    durasiSelect.append('<option value="03:30">210 Menit</option>');
+                    durasiSelect.append('<option value="04:00">240 Menit</option>');
+                } else {
+                    // Only add 240 minutes option for other roles
+                    durasiSelect.append('<option value="">Pilih Durasi Penyewaan</option>');
+                    durasiSelect.append('<option value="04:00">240 Menit</option>');
+                }
             }
 
             // Fungsi untuk menampilkan form Seharian
