@@ -1,6 +1,9 @@
 @extends('penyewa.layouts.mainPenyewa')
 
 @section('containPenyewa')
+    <head>
+        <link rel="stylesheet" href="{{ asset('assets/css/penyewa/detailRuangan.css') }}">
+    </head>
     <div class="container-fluid mt-4">
         <!-- title -->
         <div class="row">
@@ -115,7 +118,7 @@
                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
+                                                <div class="d-flex justify-content-center flex-wrap text-center" id="daysContainer">
                                                     <!-- Dynamic days content will be inserted here -->
                                                 </div>
                                             </div>
@@ -167,108 +170,6 @@
         </div>
     </div>
     </div>
-
-    <style>
-        .table td,
-        .table th {
-            font-size: 20px;
-            /* Mengubah ukuran teks */
-            padding: 0.5rem;
-            /* Mengurangi padding */
-        }
-
-        .btn {
-            font-size: 20px;
-            /* Ukuran teks pada tombol */
-            text-transform: capitalize;
-        }
-
-        .custom-carousel-img {
-            width: 600px;
-            /* Width of the images */
-            height: 400px;
-            /* Height of the images */
-        }
-
-        /* Modal ketersediaan ruangan */
-        .available {
-            background-color: #25d366;
-            height: 26px;
-            width: 76px;
-            border-radius: 5px;
-            color: #FFFFFF;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .modal-dialog {
-            max-width: 70%;
-            /* Atur persentase sesuai kebutuhan */
-        }
-
-        @media (max-width: 767.98px) {
-            .modal-dialog {
-                max-width: 100%;
-                /* Atur persentase sesuai kebutuhan */
-            }
-        }
-
-        .modal-body {
-            overflow-x: auto;
-            /* Menambahkan penggulung horizontal jika konten terlalu lebar */
-        }
-
-        .modal-body .d-flex {
-            flex-wrap: wrap;
-            /* Membungkus elemen jika terlalu lebar */
-        }
-
-        .mark-available {
-            background-color: #25d366;
-            height: 10px;
-            width: 10px;
-            margin-right: 10px;
-            border-radius: 50%;
-        }
-
-        .mark-notavailable {
-            background-color: #e3e3e3;
-            height: 10px;
-            width: 10px;
-            margin-right: 10px;
-            border-radius: 50%;
-        }
-
-        .button-style-ketersediaan {
-            background-color: #0C9300;
-            font-size: 14px;
-        }
-
-        .button-style-ketersediaan:hover {
-            background-color: #0A7A00;
-        }
-
-        .cek-available {
-            background-color: #25d366;
-            height: 26px;
-            width: 76px;
-            border-radius: 5px;
-            color: #FFFFFF;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .cek-notavailable {
-            background-color: #d3d3d3;
-            color: #000;
-            height: 26px;
-            width: 76px;
-            border-radius: 5px;
-            color: #FFFFFF;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>

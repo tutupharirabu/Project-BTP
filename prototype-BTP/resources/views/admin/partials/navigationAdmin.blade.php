@@ -35,16 +35,17 @@
         <!-- Right elements -->
         <div class="fixed-right d-flex align-items-center pe-5" id="navbarRightElements">
             <!-- Avatar -->
-            <div class="dropdown">
-                <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
-                    id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                    <span class="material-symbols-outlined"
+            <span class="material-symbols-outlined"
                         style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
                     <p>
                         <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
                     </p>
+            <!-- <div class="dropdown">
+                <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                    id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Container wrapper -->
