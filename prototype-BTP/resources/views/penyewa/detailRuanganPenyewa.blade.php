@@ -10,8 +10,6 @@
                 </div>
             </div>
         </div>
-
-
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
@@ -120,11 +118,23 @@
                             href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing"
                             target="_blank">disini</a></p>
                 </div>
-                <div class="">
+                <!-- <div class="">
                     <a type="button" class="btn btn-sm text-white"
                         style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
                         href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
                         Ruangan</a>
+                </div> -->
+                <div class="">
+                    @if ($ruangan->tersedia == '1')
+                        <a type="button" class="btn btn-sm text-white"
+                            style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                            href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                            Ruangan</a>
+                    @else
+                        <a type="button" class="btn btn-sm text-white disabled"
+                            style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                            href="#">Pinjam Ruangan</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -144,7 +154,7 @@
                     <button type="button" class="btn-close position-absolute end-0 me-3"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body ">
                     <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
                         <!-- Dynamic days content will be inserted here -->
                     </div>
@@ -316,7 +326,7 @@
                                 <p class="day-name">${dayName}</p>
                                 <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                             </div>
-                            <div>
+                            <div class="mx-2 text-center">
                                 ${hoursHtml}
                             </div>
                         </div>

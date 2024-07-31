@@ -87,8 +87,7 @@
                                     <div class="col-md-7">
                                         <input type="text" id="ukuran" class="bordered-text form-control"
                                             name="ukuran" required>
-                                        <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
-                                            dan nomor ruangan.</div>
+                                        <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan ukuran ruangan.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -96,11 +95,19 @@
                                         Minimal kapasitas</label>
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_minimal" class="bordered-text form-control"
-                                            name="kapasitas_minimal" required>
+                                            name="kapasitas_minimal" required min="1">
                                         <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
+                                    <label for="kapasitas_maksimal" class="text-color col-md-3 col-form-label text-md-right">Maksimal kapasitas</label>
+                                    <div class="col-md-7">
+                                        <input type="number" id="kapasitas_maksimal" class="bordered-text form-control"
+                                            name="kapasitas_maksimal" required min="1">
+                                        <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group row mb-2">
                                     <label for="kapasitas_maksimal"
                                         class="text-color col-md-3 col-form-label text-md-right">Maksimal kapasitas</label>
                                     <div class="col-md-7">
@@ -108,8 +115,15 @@
                                             name="kapasitas_maksimal" required>
                                         <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group row mb-2">
+                                <label for="lokasi" class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
+                                <div class="col-md-7">
+                                    <input type="text" id="lokasi" class="bordered-text form-control" name="lokasi" required pattern="[^#@,.\-=+\\]+">
+                                    <div class="invalid-feedback">Silahkan Masukkan lokasi atau tanpa karakter(#@,.-=+\).</div>
+                                </div>
+                            </div>
+                                <!-- <div class="form-group row mb-2">
                                     <label for="lokasi"
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
@@ -117,19 +131,15 @@
                                             name="lokasi" required>
                                         <div class="invalid-feedback">Silakan masukkan lokasi.</div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group row mb-2">
-                                    <label for="harga_ruangan"
-                                        class="text-color col-md-3 col-form-label text-md-right">Harga</label>
+                                    <label for="harga_ruangan" class="text-color col-md-3 col-form-label text-md-right">Harga Ruangan</label>
                                     <div class="col-md-7">
-                                        <div class=input-harga>
-                                            <input type="text" id="harga_ruangan"
-                                                class="bordered-text form-control rounded-end" name="harga_ruangan"
-                                                required>
-                                            <div class="invalid-feedback">Silakan masukkan harga.</div>
-                                        </div>
+                                        <input type="number" id="harga_ruangan" class="bordered-text form-control rounded-end" name="harga_ruangan" required min="1">
+                                        <div class="invalid-feedback">Silakan masukkan harga yang lebih dari Rp 0.</div>
                                     </div>
                                 </div>
+
                                 <div class="form-group row mb-2">
                                     <label for="satuan" class="text-color col-md-3 col-form-label text-md-right">Satuan
                                         Waktu Penyewaan</label>
