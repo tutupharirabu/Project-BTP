@@ -17,7 +17,8 @@
 
         <!-- Navbar brand -->
         <a class="navbar-brand mt-2 mt-lg-0" href="#" style="margin-left:20px;">
-            <img src="{{ asset('assets/img/logospacerentwobg.png') }}" height="34" alt="MDB Logo" loading="lazy" />
+            <img src="{{ asset('assets/img/logo_nav.png') }}" height="34" alt="MDB Logo" loading="lazy" />
+            <span class="logo-style">SpaceRent BTP</span>
         </a>
 
         <!-- Collapsible wrapper -->
@@ -54,6 +55,10 @@
 
 <!-- Custom CSS -->
 <style>
+    .logo-style{
+        font-size:15px; color:#0B3932; font-weight: bold;
+    }
+
     @media (min-width: 768px) {
         #navbarNavAltMarkup .navbar-nav {
             display: none;
