@@ -164,7 +164,6 @@
         </div>
     </div>
 
-
     <!-- Modal for event details -->
     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -340,7 +339,7 @@
 
         function getRoomSatuan(ruanganId) {
             // Mencari ruangan dalam array dataRuangan yang memiliki id_ruangan sesuai dengan ruanganId
-            let room = dataRuangan.find(room => room.id_ruangan == ruanganId);
+            let room = dataRuangan.find(dataRuangan => dataRuangan.id_ruangan == ruanganId);
             return room ? room.satuan : '';
         }
 
@@ -386,26 +385,27 @@
 
                         var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
-                    var dayHtml = `
-                        <div class="mx-2 text-center">
-                            <div>
-                                <p class="day-name">${dayName}</p>
-                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                        var dayHtml = `
+                            <div class="mx-2 text-center">
+                                <div>
+                                    <p class="day-name">${dayName}</p>
+                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                </div>
+                                <div>
+                                    ${hoursHtml}
+                                </div>
                             </div>
-                            <div>
-                            <div>
-                                ${hoursHtml}
-                            </div>
-                        </div>
-                    `;
-                    daysContainer.append(dayHtml);
+                        `;
+                        content += dayHtml;
+                    }
+                    content += '</div>';
+                    $('#form-content').html(content);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', xhr.responseText);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', xhr.responseText); // Debugging error response
-            }
-        });
-    }
+            });
+        }
 
         function getHoursHtml(dayDate, usedTimeSlots) {
             var hoursHtml = '';
@@ -422,6 +422,48 @@
                 start.setMinutes(start.getMinutes() + 30);
             }
             return hoursHtml;
+        }
+
+        function showMonthlyView() {
+            let ruanganId = $('#roomId').val();
+            console.log('Room ID:', ruanganId);  // Log the room ID to verify its value
+
+            var content = '<div id="calendarContainer"><div id="calendar"></div></div>';
+            $('#form-content').html(content);
+
+            // Check the structure of the bookings array
+            console.log('Bookings:', bookings);
+
+            var filteredBookings = bookings.filter(function(booking) {
+                console.log('Booking Room ID:', booking.ruangan_id);  // Log each booking's room ID
+                return booking.ruangan_id == ruanganId;
+            });
+
+            // Log the filtered bookings to verify
+            console.log('Filtered Bookings:', filteredBookings);
+
+            // Initialize FullCalendar
+            if ($('#calendar').hasClass('fc')) {
+                // If calendar is already initialized, remove existing events and add new source
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('addEventSource', filteredBookings);
+            } else {
+                $('#calendar').fullCalendar({
+                    locale: 'id',
+                    events: filteredBookings,
+                    eventClick: function(event) {
+                        $('#modalNamaP').text(event.peminjam);
+                        $('#modalRuangan').text(event.ruangan);
+                        $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
+                        if (event.end) {
+                            $('#modalEnd').text(event.end.format('DD-MM-YYYY | HH:mm'));
+                        } else {
+                            $('#modalEnd').text('N/A');
+                        }
+                        $('#eventModal').modal('show');
+                    }
+                });
+            }
         }
 
         // Initialize default view
