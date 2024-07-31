@@ -83,7 +83,7 @@
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_minimal"
                                             class="form-control bordered-text border-color" name="kapasitas_minimal"
-                                            value="{{ $dataRuangan->kapasitas_minimal }}" required min="1">
+                                            value="{{ $dataRuangan->kapasitas_minimal }}" required>
                                         <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -93,15 +93,17 @@
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_maksimal"
                                             class="form-control bordered-text border-color" name="kapasitas_maksimal"
-                                            value="{{ $dataRuangan->kapasitas_maksimal }}" required min="1" >
+                                            value="{{ $dataRuangan->kapasitas_maksimal }}" required>
                                         <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="lokasi" class="col-md-3 col-form-label text-md-right text-color">Lokasi</label>
+                                    <label for="lokasi"
+                                        class="col-md-3 col-form-label text-md-right text-color">Lokasi</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="lokasi" class="form-control bordered-text border-color" name="lokasi" value="{{ $dataRuangan->lokasi }}" required pattern="[^#@,.\-=+\\]+">
-                                        <div class="invalid-feedback">Silakan masukkan lokasi tanpa karakter khusus (#@,.-=+\).</div>
+                                        <input type="text" id="lokasi" class="form-control bordered-text border-color"
+                                            name="lokasi" value="{{ $dataRuangan->lokasi }}" required>
+                                        <div class="invalid-feedback">Silakan masukkan lokasi.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">

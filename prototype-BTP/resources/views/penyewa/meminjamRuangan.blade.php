@@ -617,7 +617,7 @@
                         <p class="day-name">${dayName}</p>
                         <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                     </div>
-                    <div class="mx-2 text-center">
+                    <div>
                         ${hoursHtml}
                     </div>
                 </div>

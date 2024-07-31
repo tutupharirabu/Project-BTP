@@ -157,24 +157,3 @@ function updateTersedia() {
         }, false);
     });
 })();
-
-document.getElementById('lokasi').addEventListener('input', function () {
-    const invalidChars = ['#', '@', ',', '.', '-', '=', '+', '\\'];
-    let value = this.value;
-
-    invalidChars.forEach(char => {
-        if (value.includes(char)) {
-            this.setCustomValidity('Lokasi tidak boleh mengandung karakter khusus seperti #@,.-=+\\');
-        } else {
-            this.setCustomValidity('');
-        }
-    });
-});
-
-document.getElementById('harga_ruangan').addEventListener('input', function () {
-    if (this.value <= 0) {
-        this.setCustomValidity('Harga tidak boleh 0 atau kurang.');
-    } else {
-        this.setCustomValidity('');
-    }
-});
