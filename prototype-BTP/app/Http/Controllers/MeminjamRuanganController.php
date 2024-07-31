@@ -38,24 +38,24 @@ class MeminjamRuanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'btnradio' => 'required',
             'nama_peminjam' => 'required|string',
-            'role' => 'required',
+            'nomor_induk' => 'required',
+            'nomor_telepon' => 'required',
             'id_ruangan' => 'required',
+            'role' => 'required',
             'tanggal_mulai' => 'required|date',
             'jam_mulai' => 'required', // Pastikan 'jam_mulai' di-validasi
             'jumlah' => 'required|integer',
             // 'keterangan' => 'required|string',
         ]);
 
-        $mode_peminjaman = $request->input('btnradio') == 'per_jam' ? 'per_jam' : 'per_hari';
-
         $keterangan = $request->input('keterangan');
         if($keterangan == NULL){
             $keterangan = '~';
         }
 
-        if ($mode_peminjaman == 'per_jam') {
+        $status = $request->input('role');
+        if ($status == 'Mahasiswa' || $status == 'Umum') {
             $request->validate([
                 'durasi' => 'required',
             ]);
@@ -65,10 +65,9 @@ class MeminjamRuanganController extends Controller
                 'jam_selesai' => 'required', // Pastikan 'jam_selesai' di-validasi
             ]);
         }
-
         $tanggal_mulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
 
-        if ($mode_peminjaman == 'per_jam') {
+        if ($status == 'Mahasiswa' || $status == 'Umum') {
             $durasi = $request->input('durasi');
             $tanggalMulai = $request->input('tanggal_mulai');
             $jamMulai = $request->input('jam_mulai');
@@ -92,9 +91,10 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
-            'role' => $request->input('role'),
+            'nomor_induk' => $request->input('nomor_induk'),
+            'nomor_telepon' => $request->input('nomor_telepon'),
             'id_ruangan' => $request->input('id_ruangan'),
-            'id_barang' => null,
+            'role' => $request->input('role'),
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai_plus_one_hour,
             'jumlah' => $request->input('jumlah'),
@@ -122,48 +122,6 @@ class MeminjamRuanganController extends Controller
         }
     }
 
-    public function getAvailableTimes(Request $request)
-    {
-        $tanggalMulai = Carbon::parse($request->input('tanggal_mulai'));
-        $ruangan = $request->input('ruangan');
-        $tanggalSelesai = Carbon::parse($request->input('tanggal_selesai', $tanggalMulai->copy()->addDays(6)->toDateString())); // Default to 6 days after start date
-
-        try {
-            // Debugging log
-            \Log::info("Tanggal Mulai: $tanggalMulai, Tanggal Selesai: $tanggalSelesai, Ruangan: $ruangan");
-
-            $usedTimes = DB::table('peminjaman')
-                ->where('id_ruangan', $ruangan)
-                ->where(function($query) use ($tanggalMulai, $tanggalSelesai) {
-                    $query->whereDate('tanggal_mulai', '<=', $tanggalSelesai)
-                          ->whereDate('tanggal_selesai', '>=', $tanggalMulai);
-                })
-                ->whereIn('status', ['Disetujui', 'Selesai'])
-                ->get();
-
-            \Log::info("Used Times: ", $usedTimes->toArray());
-
-            $usedTimeSlots = [];
-            foreach ($usedTimes as $time) {
-                $start = Carbon::parse($time->tanggal_mulai);
-                $end = Carbon::parse($time->tanggal_selesai);
-                while ($start <= $end) {
-                    $usedTimeSlots[] = [
-                        'date' => $start->format('Y-m-d'),
-                        'time' => $start->format('H:i')
-                    ];
-                    $start->addMinutes(30);
-                }
-            }
-
-            return response()->json([
-                'usedTimeSlots' => $usedTimeSlots
-            ]);
-        } catch (\Exception $e) {
-            \Log::error("Error: " . $e->getMessage());
-            return response()->json(['error' => 'An error occurred'], 500);
-        }
-    }
     /**
      * Display the specified resource.
      */

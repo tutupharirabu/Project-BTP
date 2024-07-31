@@ -49,7 +49,6 @@ Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->na
 Route::get('/meminjamRuangan/{id}', [MeminjamRuanganController::class, 'showPinjamRuangan'])->name('penyewa.peminjamanRuanganDariDetail');
 Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
 Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails']);
-Route::get('/get-ketersediaan-details',  [MeminjamRuanganController::class, 'getAvailableTimes']);
 
 // Admin Lihat Status Ruangan
 Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');

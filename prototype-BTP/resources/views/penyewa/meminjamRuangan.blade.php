@@ -54,7 +54,24 @@
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
                                             class="date form-control border-color" required>
                                         <div class="invalid-feedback">
-                                            Masukkan Nama Peminjam!
+                                            Masukkan nama Anda!
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md mt-4">
+                                        <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
+                                        <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan NIM / NIP Anda!
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md mt-4">
+                                        <label for="nomor_telepon" class="form-label text-color">Nomor Telepon</label>
+                                        <input type="text" name="nomor_telepon" id="nomor_telepon"
+                                            class="date form-control border-color" maxlength="13" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan nomor telepon Anda!
                                         </div>
                                     </div>
 
@@ -73,11 +90,11 @@
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
-                                            Masukkan ruangan anda!
+                                            Masukkan pilihan ruangan Anda!
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-3">
+                                    <div class="col-md mt-4">
                                         <label for="role" class="form-label text-color">Status</label>
                                         <select name="role" id="role" class="form-control border-color"
                                             onchange="fetchRuanganDetails()" required>
@@ -87,11 +104,11 @@
                                             <option value="Umum">Umum</option>
                                         </select>
                                         <div class="invalid-feedback">
-                                            Pilih Status!
+                                            Pilih status Anda!
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-3">
+                                    <div class="col-md mt-4">
                                         <label for="lokasi" class="form-label text-color">Lokasi</label>
                                         <input type="text" name="lokasi" id="lokasi"
                                             class="date form-control border-color" disabled required>
@@ -100,7 +117,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-3">
+                                    <div class="col-md mt-4">
                                         <label for="harga_ruangan" class="form-label text-color">Harga</label>
                                         <input type="text" name="harga_ruangan" id="harga_ruangan"
                                             class="date form-control border-color" disabled required>
@@ -109,7 +126,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-3">
+                                    <div class="col-md mt-4">
                                         <label for="jumlah" class="form-label text-color">Jumlah Peserta</label>
                                         <input type="number" name="jumlah" id="peserta"
                                             class="date form-control border-color"
@@ -117,32 +134,19 @@
                                                 data-min="{{ $dr->kapasitas_minimal }}"
                                                 data-max="{{ $dr->kapasitas_maksimal }}"
                                                 value="{{ $dr->kapasitas_minimal }}" @endforeach
-                                            required>
+                                            required min="0">
                                         <div class="invalid-feedback">
-                                            Masukkan Jumlah Peserta!
+                                            Masukkan jumlah peserta!
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- right form file -->
                                 <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                                    <div class="col-12 btn-group btn-group-md " role="group" style="">
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                            value="per_jam" autocomplete="off" checked style="height:20px; width:20px;">
-                                        <label class="btn btn-outline-black text-capitalize" for="btnradio1"
-                                            style="font-size:13px;">Per Jam</label>
-
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                            value="per_hari" autocomplete="off">
-                                        <label class="btn btn-outline-black text-capitalize" for="btnradio2"
-                                            style="font-size:13px;">Per Hari</label>
-                                    </div>
-
                                     <div id="form-content">
-                                        <!-- Konten untuk Per Jam akan dimuat di sini secara default -->
+                                        <!-- Konten untuk Isi Tanggal Sewa akan dimuat di sini secara default -->
                                     </div>
-
-                                    <div class="col-md mt-4">
+                                    <div class="col-md">
                                         <div class="form-group">
                                             <label for="keterangan" class="mb-2 text-color">Catatan</label>
                                             <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="254"></textarea>
@@ -154,7 +158,7 @@
                             <div class="col-md mt-4">
                                 <div class="d-grid gap-2 d-flex justify-content-end">
                                     <button type="submit"
-                                        class="btn text-white button-style capitalize-first-letter">Ajukan</button>
+                                        id="submitBtn" class="btn text-white button-style capitalize-first-letter">Ajukan</button>
                                 </div>
                             </div>
                         </form>
@@ -163,8 +167,8 @@
                 <br>
                 <div>
                     Keterangan<br>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang
-                    berlaku)<br>**Harap
-                    membaca <a href="https://www.google.co.id/webhp?hl=en">syarat & ketentuan</a> yang berlaku
+                    berlaku)<br>**Untuk informasi
+                    lebih lengkap lihat  <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
 
                     @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
@@ -192,6 +196,14 @@
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Peminjam</label>
                         <p id="confirm_nama_peminjam" name="nama_peminjam" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">NIM / NIP</label>
+                        <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">Nomor Telepon</label>
+                        <p id="confirm_nomor_telepon" name="nomor_telepon" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Ruangan</label>
@@ -294,47 +306,6 @@
         </div>
     </div>
 
-    @php
-        Carbon\Carbon::setLocale('id');
-    @endphp
-
-    <!-- lihat Ketersediaan -->
-    <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1" aria-labelledby="lihatKetersediaanModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center align-items-center position-relative">
-                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
-                        Ketersediaan Ruangan
-                        <select id="roomSelect" class="form-select">
-                            {{-- <option value="{{ $ruangan->id_ruangan }}">{{ $ruangan->nama_ruangan }}</option> --}}
-                            @foreach ($dataRuangan as $dr)
-                                <option value="{{ $dr->id_ruangan }}">{{ $dr->nama_ruangan }}</option>
-                            @endforeach
-                        </select>
-                    </h5>
-                    <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
-                        <!-- Dynamic days content will be inserted here -->
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <div class="d-flex align-items-center mr-4">
-                        <div class="mark-available"></div>
-                        <p class="my-auto">Tersedia</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="mark-notavailable"></div>
-                        <p class="my-auto">Tidak tersedia</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -421,13 +392,34 @@
             // Display validation message based on room capacity
             var feedback = pesertaInput.nextElementSibling;
             feedback.textContent = "Masukkan Jumlah Peserta antara " + min + " dan " + max + "!";
+
+            // Initial check for submit button state
+            validateParticipantInput();
+        }
+
+        function validateParticipantInput() {
+            var pesertaInput = document.getElementById("peserta");
+            var submitBtn = document.getElementById("submitBtn");
+            var min = parseInt(pesertaInput.min);
+            var max = parseInt(pesertaInput.max);
+            var value = parseInt(pesertaInput.value);
+
+            if (value >= min && value <= max && value >= 0) {
+                submitBtn.disabled = false;
+            } else {
+                pesertaInput.value = 1; // Reset value to 1 if out of bounds
+                submitBtn.disabled = true;
+            }
         }
 
         document.getElementById('id_ruangan').addEventListener('change', adjustParticipantLimits);
+        document.getElementById('peserta').addEventListener('input', validateParticipantInput);
 
         function showConfirmationModal(event) {
             event.preventDefault();
             const namaPeminjam = document.getElementById('nama_peminjam').value;
+            const nomorInduk = document.getElementById('nomor_induk').value;
+            const nomorTelepon = document.getElementById('nomor_telepon').value;
             const namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
             const status = document.getElementById('role').value;
             const lokasi = document.getElementById('lokasi').value;
@@ -438,7 +430,7 @@
             const keterangan = document.getElementById('keterangan').value;
 
             // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
-            if (document.getElementById('btnradio1').checked) { // Per Jam
+            if (status === 'Mahasiswa' || status === 'Umum') { // Per Jam
                 const durasi = document.getElementById('durasi').value;
                 const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
                 const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
@@ -449,7 +441,7 @@
                     tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
                 document.getElementById('confirm_jam_selesai').innerText =
                     jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
-            } else if (document.getElementById('btnradio2').checked) { // Per Hari
+            } else if (status === 'Pegawai') { // Per Hari
                 const jamSelesai = document.getElementById('jam_selesai').value;
                 const tanggalSelesai = document.getElementById('tanggal_selesai').value;
 
@@ -477,6 +469,8 @@
 
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
+            document.getElementById('confirm_nomor_induk').innerText = nomorInduk;
+            document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
             document.getElementById('confirm_status').innerText = status;
             document.getElementById('confirm_lokasi').innerText = lokasi;
             document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
@@ -568,357 +562,166 @@
         document.querySelector('.whatsapp-close-button').addEventListener('click', function() {
             window.location.href = "/dashboardPenyewa";
         });
-    </script>
 
-    <script>
-        $(document).ready(function() {
-            let startDate = new Date().toISOString().split('T')[0];
-
-            // Initialize with the first room
-            updateDays(startDate, $('#roomSelect').val());
-
-            // Add event listener for room selection dropdown
-            $('#roomSelect').change(function() {
-                let ruangan = $(this).val();
-                updateDays(startDate, ruangan);
-            });
+        document.getElementById('nomor_induk').addEventListener('input', function (e) {
+            // Remove non-digit characters
+            e.target.value = e.target.value.replace(/\D/g, '');
         });
 
-        function updateDays(startDate, ruangan) {
-            $.ajax({
-                url: '/get-ketersediaan-details',
-                method: 'GET',
-                data: {
-                    tanggal_mulai: startDate,
-                    ruangan: ruangan,
-                    tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6))
-                        .toISOString().split('T')[0] // Contoh menghitung tanggal selesai (6 hari kemudian)
-                },
-                success: function(response) {
-                    console.log(response); // Debugging response
-                    var daysContainer = $('#daysContainer');
-                    daysContainer.empty();
-
-                    var startDateObj = new Date(startDate);
-                    for (var i = 0; i < 7; i++) {
-                        var currentDateObj = new Date(startDateObj);
-                        currentDateObj.setDate(currentDateObj.getDate() + i);
-
-                        var dayName = currentDateObj.toLocaleDateString('id-ID', {
-                            weekday: 'long'
-                        });
-                        var dayDate = currentDateObj.toISOString().split('T')[0];
-
-                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
-
-                        var dayHtml = `
-                <div class="mx-2 text-center">
-                    <div>
-                        <p class="day-name">${dayName}</p>
-                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                    </div>
-                    <div>
-                        ${hoursHtml}
-                    </div>
-                </div>
-            `;
-                        daysContainer.append(dayHtml);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', xhr.responseText); // Debugging error response
-                }
-            });
-        }
-
-        function getHoursHtml(dayDate, usedTimeSlots) {
-            var hoursHtml = '';
-            var start = new Date(dayDate + 'T08:00:00');
-            var end = new Date(dayDate + 'T21:30:00');
-
-            while (start < end) {
-                var hour = start.toTimeString().substring(0, 5);
-                var isUsed = usedTimeSlots.some(function(slot) {
-                    return slot.date === dayDate && slot.time === hour;
-                });
-                var className = isUsed ? 'cek-notavailable' : 'cek-available';
-                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
-                start.setMinutes(start.getMinutes() + 30);
-            }
-            return hoursHtml;
-        }
+        document.getElementById('nomor_telepon').addEventListener('input', function (e) {
+            // Remove non-digit characters
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
     </script>
+
     <script>
-        $(document).ready(function() {
-            var tanggalMulai = null;
-            var ruangan = null;
+    $(document).ready(function() {
+        $('#role').change(function() {
+            updateFormContent();
+        });
+    });
 
-            // Fungsi untuk menampilkan form Per Jam
-            function showPerJamForm() {
-                $('#form-content').html(`
-                <div class="row">
-                    <div class="col-12">
-                        <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
-                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
-                        <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
-                    </div>
-                </div>
-                <div class="row mt-4" id="ketersediaanRow" style="display: none;">
-                    <div class="col-6 d-flex justify-content-center align-items-center">
-                        <i class="material-symbols-outlined me-2">calendar_month</i>
-                        <span>Ketersediaan Jam</span>
-                    </div>
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button type="button" class="btn button-style-ketersediaan text-white capitalize-first-letter btn-md" data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
-                            Lihat Ketersediaan
-                        </button>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
-                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
-                            <option value="">Pilih Jam Mulai Penyewaan</option>
-                            <option value="08:00">08:00</option>
-                            <option value="08:30">08:30</option>
-                            <option value="09:00">09:00</option>
-                            <option value="09:30">09:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                        </select>
-                        <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="durasi" class="form-label text-color">Durasi Penyewaan</label>
-                        <select name="durasi" id="durasi" class="form-control border-color" required disabled>
-                            <option value="">Pilih Durasi Penyewaan</option>
-                            <option value="00:30">30 Menit</option>
-                            <option value="01:00">60 Menit</option>
-                            <option value="01:30">90 Menit</option>
-                            <option value="02:00">120 Menit</option>
-                            <option value="02:30">150 Menit</option>
-                            <option value="03:00">180 Menit</option>
-                            <option value="03:30">210 Menit</option>
-                            <option value="04:00">240 Menit</option>
-                        </select>
-                        <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
-                    </div>
-                </div>
-            `);
-
-                if (tanggalMulai) {
-                    $('#tanggal_mulai').val(tanggalMulai).trigger('change');
-                }
-
-                $('#tanggal_mulai').on('change', function() {
-                    var tanggalMulai = $(this).val();
-                    if (tanggalMulai) {
-                        $('#ketersediaanRow').show();
-                        updateDays(tanggalMulai);
-                    } else {
-                        $('#ketersediaanRow').hide();
-                    }
-                });
-
-                $('#jam_mulai').on('change', function() {
-                    var jamMulai = $(this).val();
-                    var durasiSelect = $('#durasi');
-
-                    if (jamMulai) {
-                        durasiSelect.prop('disabled', false);
-
-                        // Tentukan waktu tutup, misalnya 21:00
-                        var closingTime = '22:00';
-                        var closingDate = new Date(`1970-01-01T${closingTime}:00`);
-
-                        // Reset visibilitas opsi durasi
-                        durasiSelect.find('option').show();
-
-                        // Iterasi setiap opsi durasi
-                        durasiSelect.find('option').each(function() {
-                            var optionValue = $(this).val();
-                            if (optionValue) {
-                                var durationInMinutes = parseInt(optionValue.split(':')[0]) * 60 +
-                                    parseInt(optionValue.split(':')[1]);
-                                var startDate = new Date(`1970-01-01T${jamMulai}:00`);
-                                var endDate = new Date(startDate.getTime() + durationInMinutes *
-                                    60000);
-
-                                // Jika waktu akhir melebihi waktu tutup, sembunyikan opsi
-                                if (endDate > closingDate) {
-                                    // Tampilkan durasi yang valid (misalnya 30 menit dan 60 menit)
-                                    if (durationInMinutes <= 60) {
-                                        $(this).show();
-                                    } else {
-                                        $(this).hide();
-                                    }
-                                }
-                            }
-                        });
-                    } else {
-                        durasiSelect.prop('disabled', true);
-                        durasiSelect.find('option').show(); // Tampilkan semua opsi jika jam mulai kosong
-                    }
-                });
-
-            }
-
-            // Fungsi untuk menampilkan form Seharian
-            function showPerHariForm() {
-                $('#form-content').html(`
-                <div class="row">
-                    <div class="col-12">
-                        <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
-                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
-                        <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
-                    </div>
-                    <div class="col-12 mt-4">
-                        <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai Penyewaan</label>
-                        <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required disabled>
-                        <div class="invalid-feedback">Masukkan Tanggal Selesai Penyewaan!</div>
-                    </div>
-                </div>
-                <div class="row mt-4" id="ketersediaanRow" style="display: none;">
-                    <div class="col-6 d-flex justify-content-center align-items-center">
-                        <i class="material-symbols-outlined me-2">calendar_month</i>
-                        <span>Ketersediaan Jam</span>
-                    </div>
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button type="button" class="btn button-style-ketersediaan text-white capitalize-first-letter btn-md" data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
-                            Lihat Ketersediaan
-                        </button>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
-                        <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
-                            <option value="">Pilih Jam Mulai Penyewaan</option>
-                            <option value="08:00">08:00</option>
-                            <option value="08:30">08:30</option>
-                            <option value="09:00">09:00</option>
-                            <option value="09:30">09:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                        </select>
-                        <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="jam_selesai" class="form-label text-color">Jam Selesai Penyewaan</label>
-                        <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required disabled>
-                            <option value="">Pilih Jam Selesai Penyewaan</option>
-                            <option value="08:00">08:00</option>
-                            <option value="08:30">08:30</option>
-                            <option value="09:00">09:00</option>
-                            <option value="09:30">09:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
-                            <option value="20:30">20:30</option>
-                            <option value="21:00">21:00</option>
-                            <option value="21:30">21:30</option>
-                            <option value="22:00">22:00</option>
-                        </select>
-                        <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
-                    </div>
-                </div>
-            `);
-
-                if (tanggalMulai) {
-                    $('#tanggal_mulai').val(tanggalMulai).trigger('change');
-                }
-
-                $('#tanggal_mulai').on('change', function() {
-                    var tanggalMulai = $(this).val();
-                    if (tanggalMulai) {
-                        $('#ketersediaanRow').show();
-                        $('#tanggal_selesai').prop('disabled', false);
-                        updateDays(tanggalMulai);
-                    } else {
-                        $('#ketersediaanRow').hide();
-                        $('#tanggal_selesai').prop('disabled', true);
-                    }
-                });
-
-                $('#jam_mulai').on('change', function() {
-                    var jamMulai = $(this).val();
-                    if (jamMulai) {
-                        $('#jam_selesai').prop('disabled', false);
-                    } else {
-                        $('#jam_selesai').prop('disabled', true);
-                    }
-                });
-            }
-
-            // Set default form
+    function updateFormContent() {
+        const role = $('#role').val();
+        if (role === 'Pegawai') {
+            showPerHariForm();
+        } else if (role === 'Mahasiswa' || role === 'Umum') {
             showPerJamForm();
+        }
+    }
 
-            // Event listener untuk radio button
-            $('input[name="btnradio"]').on('change', function() {
-                if ($('#btnradio1').is(':checked')) {
-                    showPerJamForm();
-                } else if ($('#btnradio2').is(':checked')) {
-                    showPerHariForm();
-                }
-            });
+    function showPerJamForm() {
+        $('#form-content').html(`
+            <div class="row">
+                <div class="col-12">
+                    <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
+                    <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
+                    <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
+                    <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
+                        <option value="">Pilih Jam Mulai Penyewaan</option>
+                        <option value="08:00">08:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="18:00">18:00</option>
+                    </select>
+                    <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="durasi" class="form-label text-color">Durasi Penyewaan</label>
+                    <select name="durasi" id="durasi" class="form-control border-color" disabled>
+                        <option value="04:00">240 Menit</option>
+                    </select>
+                    <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
+                </div>
+            </div>
+            <br>
+        `);
+    }
 
-            // Event listener untuk tombol lihat ketersediaan
-            $('#lihatKetersediaanButton').on('click', function(event) {
-                var tanggalMulai = $('#tanggal_mulai').val();
-                if (!tanggalMulai) {
-                    event.preventDefault();
-                    alert('Harap isi Tanggal Mulai Penyewaan terlebih dahulu.');
-                }
-            });
+    function showPerHariForm() {
+        $('#form-content').html(`
+            <div class="row">
+                <div class="col-12">
+                    <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
+                    <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="date form-control border-color" required>
+                    <div class="invalid-feedback">Masukkan Tanggal Mulai Penyewaan!</div>
+                </div>
+                <div class="col-12 mt-4">
+                    <label for="tanggal_selesai" class="form-label text-color">Tanggal Selesai Penyewaan</label>
+                    <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="date form-control border-color" required disabled>
+                    <div class="invalid-feedback">Masukkan Tanggal Selesai Penyewaan!</div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
+                    <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
+                        <option value="">Pilih Jam Mulai Penyewaan</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                    </select>
+                    <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="jam_selesai" class="form-label text-color">Jam Selesai Penyewaan</label>
+                    <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required disabled>
+                        <option value="">Pilih Jam Selesai Penyewaan</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                        <option value="22:00">22:00</option>
+                    </select>
+                    <div class="invalid-feedback">Masukkan Jam Selesai Peminjaman!</div>
+                </div>
+            </div>
+            <br>
+        `);
+
+        $('#tanggal_mulai, #jam_mulai').on('change', function() {
+            var tanggalMulai = $('#tanggal_mulai').val();
+            var jamMulai = $('#jam_mulai').val();
+
+            if (tanggalMulai) {
+                $('#tanggal_selesai').prop('disabled', false);
+            } else {
+                $('#tanggal_selesai').prop('disabled', true);
+            }
+
+            if (jamMulai) {
+                $('#jam_selesai').prop('disabled', false);
+            } else {
+                $('#jam_selesai').prop('disabled', true);
+            }
         });
+    }
     </script>
 
 @endsection

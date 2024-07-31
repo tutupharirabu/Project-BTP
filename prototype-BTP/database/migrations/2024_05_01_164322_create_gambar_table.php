@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('gambar', function (Blueprint $table) {
             $table->increments('id_gambar');
             $table->unsignedInteger('id_ruangan')->nullable();
-            $table->unsignedInteger('id_barang')->nullable();
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->string('url', 255);
             $table->timestamps();
         });

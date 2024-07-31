@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->increments('id_peminjaman');
+            $table->unsignedInteger('id_users')->nullable();
             $table->string('nama_peminjam', 255);
             $table->string('role', 255);
-            $table->unsignedInteger('id_users')->nullable();
+            $table->string('nomor_induk',255);
+            $table->string('nomor_telepon',255);
             $table->unsignedInteger('id_ruangan')->nullable();
-            $table->unsignedInteger('id_barang')->nullable();
             $table->foreign('id_users')->references('id_users')->on('users');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
