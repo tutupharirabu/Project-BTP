@@ -161,11 +161,23 @@
                             target="_blank">syarat & ketentuan</a> yang berlaku </p>
                 </div>
                 <div class="">
+                    @if ($ruangan->tersedia == '1')
+                        <a type="button" class="btn btn-sm text-white"
+                            style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                            href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                            Ruangan</a>
+                    @else
+                        <a type="button" class="btn btn-sm text-white disabled"
+                            style="background-color: #717171; font-size: 16px; border-radius: 7px;"
+                            href="#">Pinjam Ruangan</a>
+                    @endif
+                </div>
+                <!-- <div class="">
                     <a type="button" class="btn btn-sm text-white"
                         style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
                         href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
                         Ruangan</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
