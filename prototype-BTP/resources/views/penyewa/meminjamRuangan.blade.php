@@ -335,9 +335,6 @@
         </div>
     </div>
 
-
-
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -528,7 +525,6 @@
             }).modal('show'); // Show the confirmation popup modal
         }
 
-
         function confirmSubmission() {
             const rentalForm = document.getElementById('rentalForm');
             const formData = new FormData(rentalForm);
@@ -573,6 +569,7 @@
             window.location.href = "/dashboardPenyewa";
         });
     </script>
+
     <script>
         $(document).ready(function() {
             let startDate = new Date().toISOString().split('T')[0];

@@ -142,32 +142,54 @@
     </div>
 
     {{-- modal ketersediaan --}}
-    <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1"
-    aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="lihatKetersediaanModal" tabindex="-1" aria-labelledby="lihatKetersediaanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
+            <div class="modal-content" style="text-align: center;">
+                <div class="modal-header d-flex justify-content-center align-items-center position-relative">
+                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">Ketersediaan Ruangan</h5>
+                    <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="d-flex justify-content-center my-3">
+                        <div class="w-50">
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="per_minggu" autocomplete="off" checked>
+                                <label class="btn btn-outline-black text-capitalize w-50" for="btnradio1" style="font-size:13px;">Per Minggu</label>
+
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="per_bulan" autocomplete="off">
+                                <label class="btn btn-outline-black text-capitalize w-50" for="btnradio2" style="font-size:13px;">Per Bulan</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="form-content">
+                            <!-- Default content for Per Minggu or Per Bulan will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center" id="modal-footer-content">
+                        <!-- Default content for Footer will be loaded here -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for event details -->
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div
-                    class="modal-header d-flex justify-content-center align-items-center position-relative">
-                    <h5 class="modal-title mx-auto" id="lihatKetersediaanModalLabel">
-                        Ketersediaan Ruangan
-                    </h5>
-                    <button type="button" class="btn-close position-absolute end-0 me-3"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header " style="">
+                    <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
                 </div>
-                <div class="modal-body ">
-                    <div class="d-flex justify-content-center flex-wrap" id="daysContainer">
-                        <!-- Dynamic days content will be inserted here -->
-                    </div>
+                <div class="modal-body">
+                    <p><strong>Nama Peminjam : </strong> <span id="modalNamaP"></span></p>
+                    <p><strong>Nama Ruangan : </strong> <span id="modalRuangan"></span></p>
+                    <p><strong>Mulai : </strong> <span id="modalStart"></span></p>
+                    <p><strong>Selesai :</strong> <span id="modalEnd"></span></p>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <div class="d-flex align-items-center mr-4">
-                        <div class="mark-available"></div>
-                        <p class="my-auto">Tersedia</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="mark-notavailable"></div>
-                        <p class="my-auto">Tidak tersedia</p>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-white text-capitalize" data-dismiss="modal" data-bs-dismiss="modal" style="background-color: #0DA200; font-size:15px;">Close</button>
                 </div>
             </div>
         </div>
@@ -256,7 +278,7 @@
         .cek-available {
             background-color: #25d366;
             height: 26px;
-            width: 76px;
+            width: 96px;
             border-radius: 5px;
             color: #FFFFFF;
             margin-bottom: 10px;
@@ -267,12 +289,13 @@
             background-color: #d3d3d3;
             color: #000;
             height: 26px;
-            width: 76px;
+            width: 96px;
             border-radius: 5px;
             color: #FFFFFF;
             margin-bottom: 10px;
             text-align: center;
         }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -280,45 +303,98 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+      $(document).ready(function() {
         let startDate = new Date().toISOString().split('T')[0];
         let ruanganId = $('#roomId').val();
 
+        // Bookings data for the calendar (assuming this is passed from your backend)
+        var bookings = @json($events);
+        var dataRuangan = @json($dataRuangan);
+        console.log(bookings);
+
+        // Event listener for radio button changes
+        $('input[name="btnradio"]').change(function() {
+            updateView();
+        });
+
+        // Initialize view on modal show
         $('#lihatKetersediaanModal').on('show.bs.modal', function() {
-            updateDays(startDate, ruanganId);
+            updateView();
         });
 
-        $('#roomSelect').change(function() {
-            ruanganId = $(this).val(); // Update the room ID if the room selection changes
-            updateDays(startDate, ruanganId);
+        $('#lihatKetersediaanModal').on('shown.bs.modal', function() {
+            if ($('#calendar').hasClass('fc')) {
+                $('#calendar').fullCalendar('render');
+            }
         });
-    });
 
-    function updateDays(startDate, ruanganId) {
-        $.ajax({
-            url: '/get-sediaan-details',
-            method: 'GET',
-            data: {
-                tanggal_mulai: startDate,
-                tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6)).toISOString().split('T')[0], // Example to calculate the end date (6 days later)
-                ruangan_id: ruanganId
-            },
-            success: function(response) {
-                console.log(response); // Debugging response
-                var daysContainer = $('#daysContainer');
-                daysContainer.empty();
+        function updateView() {
+            let selectedView = $('input[name="btnradio"]:checked').val();
+            let satuan = getRoomSatuan(ruanganId);
 
-                var startDateObj = new Date(startDate);
-                for (var i = 0; i < 7; i++) {
-                    var currentDateObj = new Date(startDateObj);
-                    currentDateObj.setDate(currentDateObj.getDate() + i);
+            if (satuan === 'Halfday / 4 Jam') { // Nanti ini sesuaikan dengan satuan yang dah pasti
+                if (selectedView === 'per_minggu') {
+                    showWeeklyView();
+                    showFooter(); // Show the footer content
+                } else if (selectedView === 'per_bulan') {
+                    showMonthlyView();
+                    hideFooter(); // Clear the footer content
+                }
+            } else if (satuan === 'Seat / Bulan') { // Ini juga sesuaikan dengan satuan yang dah pasti
+                showMonthlyView();
+                hideFooter(); // Clear the footer content
+                $('input[name="btnradio"][value="per_bulan"]').prop('checked', true);
+                $('input[name="btnradio"][value="per_minggu"]').prop('disabled', true);
+            }
+        }
 
-                    var dayName = currentDateObj.toLocaleDateString('id-ID', {
-                        weekday: 'long'
-                    });
-                    var dayDate = currentDateObj.toISOString().split('T')[0];
+        function getRoomSatuan(ruanganId) {
+            // Mencari ruangan dalam array dataRuangan yang memiliki id_ruangan sesuai dengan ruanganId
+            let room = dataRuangan.find(room => room.id_ruangan == ruanganId);
+            return room ? room.satuan : '';
+        }
 
-                    var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+        function showFooter() {
+            var footerContent = `
+                <div class="d-flex align-items-center mr-4">
+                    <div class="mark-available"></div>
+                    <p class="my-auto">Tersedia</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="mark-notavailable"></div>
+                    <p class="my-auto">Tidak tersedia</p>
+                </div>
+            `;
+            $('#modal-footer-content').html(footerContent);
+        }
+
+        function hideFooter() {
+            $('#modal-footer-content').empty();
+        }
+
+        function showWeeklyView() {
+            let startDate = new Date().toISOString().split('T')[0];
+            let ruanganId = $('#roomId').val();
+
+            $.ajax({
+                url: '/get-sediaan-details',
+                method: 'GET',
+                data: {
+                    tanggal_mulai: startDate,
+                    tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6)).toISOString().split('T')[0],
+                    ruangan_id: ruanganId
+                },
+                success: function(response) {
+                    var content = '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
+                    var startDateObj = new Date(startDate);
+                    for (var i = 0; i < 7; i++) {
+                        var currentDateObj = new Date(startDateObj);
+                        currentDateObj.setDate(currentDateObj.getDate() + i);
+
+                        var dayName = currentDateObj.toLocaleDateString('id-ID', { weekday: 'long' });
+                        var dayDate = currentDateObj.toISOString().split('T')[0];
+
+                        var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                     var dayHtml = `
                         <div class="mx-2 text-center">
@@ -326,7 +402,7 @@
                                 <p class="day-name">${dayName}</p>
                                 <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                             </div>
-                            <div class="mx-2 text-center">
+                            <div>
                                 ${hoursHtml}
                             </div>
                         </div>
@@ -340,21 +416,32 @@
         });
     }
 
-    function getHoursHtml(dayDate, usedTimeSlots) {
-        var hoursHtml = '';
-        var start = new Date(dayDate + 'T08:00:00');
-        var end = new Date(dayDate + 'T22:30:00');
+        function getHoursHtml(dayDate, usedTimeSlots) {
+            var hoursHtml = '';
+            var start = new Date(dayDate + 'T08:00:00');
+            var end = new Date(dayDate + 'T22:30:00');
 
-        while (start < end) {
-            var hour = start.toTimeString().substring(0, 5);
-            var isUsed = usedTimeSlots.some(function(slot) {
-                return slot.date === dayDate && slot.time === hour;
-            });
-            var className = isUsed ? 'cek-notavailable' : 'cek-available';
-            hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
-            start.setMinutes(start.getMinutes() + 30);
+            while (start < end) {
+                var hour = start.toTimeString().substring(0, 5);
+                var isUsed = usedTimeSlots.some(function(slot) {
+                    return slot.date === dayDate && slot.time === hour;
+                });
+                var className = isUsed ? 'cek-notavailable' : 'cek-available';
+                hoursHtml += `<div class="${className}"><p>${hour}</p></div>`;
+                start.setMinutes(start.getMinutes() + 30);
+            }
+            return hoursHtml;
         }
-        return hoursHtml;
-    }
+
+        // Initialize default view
+        updateView();
+    });
     </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale/id.js"></script>
 @endsection

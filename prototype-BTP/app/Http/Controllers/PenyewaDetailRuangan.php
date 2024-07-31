@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ruangan;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Ruangan;
+use App\Models\Peminjaman;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PenyewaDetailRuangan extends Controller
@@ -13,7 +14,22 @@ class PenyewaDetailRuangan extends Controller
     {
         $ruangan = Ruangan::findOrFail($id);
         $dataRuangan = Ruangan::all();
-        return view('penyewa.detailRuanganPenyewa', compact('ruangan', 'dataRuangan'));
+
+        $peminjamans = Peminjaman::with('ruangan')->where('id_ruangan', $id)->whereIn('status', ['Disetujui', 'Selesai'])->get();
+
+        $events = array();
+        foreach($peminjamans as $peminjaman){
+            $events[] = [
+                'title' => $peminjaman->nama_peminjam . " " . $peminjaman->ruangan->nama_ruangan,
+                'peminjam' => $peminjaman->nama_peminjam,
+                'ruangan' => $peminjaman->ruangan->nama_ruangan,
+                'start' => $peminjaman->tanggal_mulai,
+                'end' => $peminjaman->tanggal_selesai,
+                'ruangan_id' => $peminjaman->id_ruangan, // Add the ruangan_id field
+            ];
+        }
+
+        return view('penyewa.detailRuanganPenyewa', compact('ruangan', 'dataRuangan', 'events'));
     }
 
     public function getAvailableTimes(Request $request)
