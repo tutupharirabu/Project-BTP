@@ -184,7 +184,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm text-capitalize"style=""
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
@@ -420,7 +420,7 @@
                     $('#dataTPengajuan').DataTable({
                         "paging": true,
                         "searching": true,
-                        "ordering": true,
+                        "ordering": false,
                         "info": true
                     });
                 });
