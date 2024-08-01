@@ -20,7 +20,7 @@ class PenyewaDetailRuangan extends Controller
         $events = array();
         foreach($peminjamans as $peminjaman){
             $events[] = [
-                'title' => $peminjaman->nama_peminjam . " " . $peminjaman->ruangan->nama_ruangan,
+                'title' => $peminjaman->nama_peminjam." - ".$peminjaman->ruangan->nama_ruangan,
                 'peminjam' => $peminjaman->nama_peminjam,
                 'ruangan' => $peminjaman->ruangan->nama_ruangan,
                 'start' => $peminjaman->tanggal_mulai,
