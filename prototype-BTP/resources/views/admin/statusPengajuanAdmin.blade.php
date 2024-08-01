@@ -340,7 +340,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm"
+                                                    <button type="button" class="btn btn-success btn-md" style="background-color:#0C9300"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
