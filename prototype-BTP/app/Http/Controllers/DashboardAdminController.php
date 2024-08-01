@@ -20,6 +20,7 @@ class DashboardAdminController extends Controller
         foreach ($peminjamans as $peminjaman) {
             $events[] = [
                 'title' => $peminjaman->nama_peminjam . ' ' . $peminjaman->ruangan->nama_ruangan,
+                'nama' => $peminjaman->nama_peminjam,
                 'ruangan' => $peminjaman->ruangan->nama_ruangan,
                 'start' => $peminjaman->tanggal_mulai,
                 'end' => $peminjaman->tanggal_selesai,

@@ -133,16 +133,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                        <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                            <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                    placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                                                                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                            placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                            </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -155,6 +155,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Nomor Telepon</th>
                                         <th scope="col" class="text-center">Nama Ruangan</th>
                                         <th scope="col" class="text-center">Jam Mulai</th>
                                         <th scope="col" class="text-center">Jam Selesai</th>
@@ -171,6 +172,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->nama_peminjam }}</td>
+                                            <td>{{ $data->nomor_telepon }}</td>
                                             <td>{{ $data->ruangan->nama_ruangan }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
@@ -184,34 +186,36 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
+                                                    <button type="button"
+                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
                                                     </button>
                                                     <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
-                                                    tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="exampleModalLabel{{ $data->id_peminjaman }}">
-                                                                    Keterangan Ruangan</h1>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {{ $data->keterangan }}
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
+                                                        tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5"
+                                                                        id="exampleModalLabel{{ $data->id_peminjaman }}">
+                                                                        Keterangan Ruangan</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $data->keterangan }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                 </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
                                                     <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
@@ -230,7 +234,7 @@
                                                     <a type="button" class="btn text-white btn-warning btn-styl warning"
                                                         style="padding: 8px">Menunggu</a>
                                                 </td>
-                                                    @elseif($data->status == 'Disetujui')
+                                            @elseif($data->status == 'Disetujui')
                                                 <td>
                                                     @foreach ($data->users as $user)
                                                         {{ $user->username }}
@@ -238,7 +242,8 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;" 
+                                                    <button type="button"
+                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
@@ -286,7 +291,8 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;" 
+                                                    <button type="button"
+                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>

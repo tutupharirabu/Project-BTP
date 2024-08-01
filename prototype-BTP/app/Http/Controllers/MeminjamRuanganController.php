@@ -41,6 +41,8 @@ class MeminjamRuanganController extends Controller
             'btnradio' => 'required',
             'nama_peminjam' => 'required|string',
             'role' => 'required',
+            'nomor_induk' => 'required',
+            'nomor_telepon' => 'required',
             'id_ruangan' => 'required',
             'tanggal_mulai' => 'required|date',
             'jam_mulai' => 'required', // Pastikan 'jam_mulai' di-validasi
@@ -93,6 +95,8 @@ class MeminjamRuanganController extends Controller
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
             'role' => $request->input('role'),
+            'nomor_induk' => $request->input('nomor_induk'),
+            'nomor_telepon' => $request->input('nomor_telepon'),
             'id_ruangan' => $request->input('id_ruangan'),
             'id_barang' => null,
             'tanggal_mulai' => $tanggal_mulai,

@@ -57,7 +57,22 @@
                                             Masukkan Nama Peminjam!
                                         </div>
                                     </div>
-
+                                    <div class="col-md mt-4">
+                                        <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
+                                        <input type="number" name="nomor_induk" id="nomor_induk"
+                                            class="date form-control border-color" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Nomor induk!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4">
+                                        <label for="nomor_telepon" class="form-label text-color">Nomor Telepon</label>
+                                        <input type="number" name="nomor_telepon" id="nomor_telepon"
+                                            class="date form-control border-color" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan Nomor Telepon!
+                                        </div>
+                                    </div>
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
@@ -196,6 +211,14 @@
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Ruangan</label>
                         <p id="confirm_nama_ruangan" name="id_ruangan" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">NIP / NIM</label>
+                        <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">Nomor Telepon</label>
+                        <p id="confirm_nomor_telepon" name="nomor_telepon" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Status</label>
@@ -433,6 +456,8 @@
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
             const status = document.getElementById('role').value;
+            const nomor_induk = document.getElementById('nomor_induk').value;
+            const nomor_telepon = document.getElementById('nomor_telepon').value;
             const lokasi = document.getElementById('lokasi').value;
             const jumlahPeserta = document.getElementById('peserta').value;
             const tanggalMulai = document.getElementById('tanggal_mulai').value;
@@ -481,6 +506,8 @@
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
             document.getElementById('confirm_status').innerText = status;
+            document.getElementById('confirm_nomor_induk').innerText = nomor_induk;
+            document.getElementById('confirm_nomor_telepon').innerText = nomor_telepon;
             document.getElementById('confirm_lokasi').innerText = lokasi;
             document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
             document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
