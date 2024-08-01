@@ -55,20 +55,17 @@ class MeminjamRuanganController extends Controller
         }
 
         $status = $request->input('role');
-        if ($status == 'Mahasiswa' || $status == 'Umum') {
-            $request->validate([
-                'durasi' => 'required',
-            ]);
-        } else {
+        if ($status == 'Pegawai') {
             $request->validate([
                 'tanggal_selesai' => 'required|date',
                 'jam_selesai' => 'required', // Pastikan 'jam_selesai' di-validasi
             ]);
         }
+
         $tanggal_mulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
 
         if ($status == 'Mahasiswa' || $status == 'Umum') {
-            $durasi = $request->input('durasi');
+            $durasi = '04:00';
             $tanggalMulai = $request->input('tanggal_mulai');
             $jamMulai = $request->input('jam_mulai');
 
