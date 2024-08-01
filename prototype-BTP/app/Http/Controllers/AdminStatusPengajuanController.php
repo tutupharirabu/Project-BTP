@@ -35,8 +35,8 @@ class AdminStatusPengajuanController extends Controller
                 ->get();
 
             $dataPeminjaman->status = 'Disetujui';
-            $dataPeminjaman->ruangan->tersedia = '0';
-            $dataPeminjaman->ruangan->status = 'Digunakan';
+            $dataPeminjaman->ruangan->tersedia = '1';
+            $dataPeminjaman->ruangan->status = 'Tersedia';
             $idUs = Auth::id();
             $dataPeminjaman->id_users = $idUs;
             $dataPeminjaman->ruangan->save();

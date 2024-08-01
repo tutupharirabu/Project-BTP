@@ -59,7 +59,7 @@
                     <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Nama Peminjam : </strong> <span id="modalTitle"></span></p>
+                    <p><strong>Nama Peminjam : </strong> <span id="modalNama"></span></p>
                     <p><strong>Nama Ruangan : </strong> <span id="modalRuangan"></span></p>
                     <p><strong>Mulai : </strong> <span id="modalStart"></span></p>
                     <p><strong>Selesai :</strong> <span id="modalEnd"></span></p>
@@ -82,10 +82,11 @@
                 events: bookings,
                 eventClick: function(event) {
                     $('#modalTitle').text(event.title);
+                    $('#modalNama').text(event.nama);
                     $('#modalRuangan').text(event.ruangan);
-                    $('#modalStart').text(event.start.format('YYYY-MM-DD | HH:mm'));
+                    $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
                     if (event.end) {
-                        $('#modalEnd').text(event.end.format('YYYY-MM-DD | HH:mm'));
+                        $('#modalEnd').text(event.end.format('DD-MM-YYYY | HH:mm'));
                     } else {
                         $('#modalEnd').text('N/A');
                     }
@@ -99,12 +100,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('occupancyChart').getContext('2d');
             const occupancyData = @json(array_values($occupancyPerMonth));
-            const aaa = {{ $totalCapacityPerRoom }};
-
-            console.log(occupancyData);
-            console.log('aa');
-            console.log(aaa);
-
 
             const monthNames = [
                 "Januari", "Februari", "Maret", "April", "Mei", "Juni",

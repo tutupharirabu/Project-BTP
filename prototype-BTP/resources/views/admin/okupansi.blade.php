@@ -60,11 +60,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($dataByDayAndRoom as $date => $rooms)
+                        @foreach ($dayOrder as $day)
                             <tr>
-                                <td>{{ $date }}</td>
+                                <td>{{ $day }}</td>
                                 @foreach ($dataRuangan as $dr)
-                                    <td>{{ $rooms[$dr->nama_ruangan] ?? 0 }}</td>
+                                    <td>{{ $dataByDayAndRoom[$day][$dr->nama_ruangan] ?? 0 }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
@@ -79,7 +79,7 @@
                             <td colspan="{{ count($dataRuangan) }}" class="text-center">{{ $totalOverall }}</td>
                         </tr>
                         <tr>
-                            <td>Kapasitas penggunaan per ruangan (jumlah orang)</td>
+                            <td>Kapasitas ruangan</td>
                             @foreach ($dataRuangan as $dr)
                                 <td>{{ $dr->kapasitas_maksimal }}</td>
                             @endforeach

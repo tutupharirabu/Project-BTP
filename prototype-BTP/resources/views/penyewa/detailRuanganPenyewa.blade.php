@@ -1,6 +1,9 @@
 @extends('penyewa.layouts.mainPenyewa')
 
 @section('containPenyewa')
+    <head>
+        <link rel="stylesheet" href="{{ asset('assets/css/penyewa/detailRuangan.css') }}">
+    </head>
     <div class="container-fluid mt-4">
         <!-- title -->
         <div class="row">
@@ -121,6 +124,18 @@
                             target="_blank">disini</a></p>
                 </div>
                 <div class="">
+                    @if ($ruangan->tersedia == '1')
+                        <a type="button" class="btn btn-sm text-white"
+                            style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                            href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                            Ruangan</a>
+                    @else
+                        <a type="button" class="btn btn-sm text-white disabled"
+                            style="background-color: #717171; font-size: 16px; border-radius: 7px;"
+                            href="#">Pinjam Ruangan</a>
+                    @endif
+                </div>
+                <!-- <div class="">
                     <a type="button" class="btn btn-sm text-white"
                         style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
                         href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam

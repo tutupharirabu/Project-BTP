@@ -75,6 +75,9 @@
                                     <label for="nama_ruangan" class="text-color col-md-3 col-form-label text-md-right">Nama
                                         dan Nomor Ruangan</label>
                                     <div class="col-md-7">
+                                        <div id="" class="form-text">
+                                            Contoh: Coworking space (B02)
+                                        </div>
                                         <input type="text" id="nama_ruangan" class="bordered-text form-control"
                                             name="nama_ruangan" required>
                                         <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
@@ -85,10 +88,13 @@
                                     <label for="ukuran" class="text-color col-md-3 col-form-label text-md-right">Ukuran
                                         Ruangan</label>
                                     <div class="col-md-7">
+                                        <div id="" class="form-text">
+                                            Contoh: 5 x 5
+                                        </div>
                                         <input type="text" id="ukuran" class="bordered-text form-control"
                                             name="ukuran" required>
-                                        <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
-                                            dan nomor ruangan.</div>
+                                        <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan ukuran
+                                            ruangan.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -96,7 +102,7 @@
                                         Minimal kapasitas</label>
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_minimal" class="bordered-text form-control"
-                                            name="kapasitas_minimal" required>
+                                            name="kapasitas_minimal" min="1" max="120" required>
                                         <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -105,7 +111,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Maksimal kapasitas</label>
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_maksimal" class="bordered-text form-control"
-                                            name="kapasitas_maksimal" required>
+                                            name="kapasitas_maksimal" min="1" max="120" required>
                                         <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -140,8 +146,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="keterangan"
-                                        class="text-color col-md-3 col-form-label text-md-right">Keterangan Ruangan</label>
+                                    <label for="keterangan" class="text-color col-md-3 col-form-label text-md-right">
+                                        Keterangan Ruangan
+                                        <span class="form-text">
+                                            (Opsional)
+                                        </span>
+                                    </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
                                         <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control"></textarea>
@@ -280,6 +290,33 @@
                             document.getElementById('nama_ruangan').setCustomValidity('');
                         }
                     });
+            }
+        });
+
+        function formatRoomSize(input) {
+            let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
+            if (value.length >= 2) {
+                const mid = Math.ceil(value.length / 2);
+                value = value.slice(0, mid) + ' x ' + value.slice(mid);
+            }
+            input.value = value;
+        }
+
+        document.getElementById('ukuran').addEventListener('input', function() {
+            formatRoomSize(this);
+        });
+
+        document.getElementById('kapasitas_minimal').addEventListener('input', function() {
+            let value = this.value;
+            if (value <= 0) {
+                this.value = '';
+            }
+        });
+
+        document.getElementById('kapasitas_maksimal').addEventListener('input', function() {
+            let value = this.value;
+            if (value <= 0) {
+                this.value = '';
             }
         });
     </script>

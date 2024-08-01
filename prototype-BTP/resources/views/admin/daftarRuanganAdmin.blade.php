@@ -329,7 +329,7 @@
                 $('#dataTRuangan').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": true,
+                    "ordering": false,
                     "info": true
                 });
             });

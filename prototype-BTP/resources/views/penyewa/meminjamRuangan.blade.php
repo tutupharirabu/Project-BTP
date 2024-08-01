@@ -210,6 +210,14 @@
                         <p id="confirm_nama_ruangan" name="id_ruangan" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label text-color">NIP / NIM</label>
+                        <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">Nomor Telepon</label>
+                        <p id="confirm_nomor_telepon" name="nomor_telepon" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label text-color">Status</label>
                         <p id="confirm_status" name="role" class="bordered-text"></p>
                     </div>
@@ -422,6 +430,8 @@
             const nomorTelepon = document.getElementById('nomor_telepon').value;
             const namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
             const status = document.getElementById('role').value;
+            const nomor_induk = document.getElementById('nomor_induk').value;
+            const nomor_telepon = document.getElementById('nomor_telepon').value;
             const lokasi = document.getElementById('lokasi').value;
             const jumlahPeserta = document.getElementById('peserta').value;
             const tanggalMulai = document.getElementById('tanggal_mulai').value;
@@ -472,6 +482,8 @@
             document.getElementById('confirm_nomor_induk').innerText = nomorInduk;
             document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
             document.getElementById('confirm_status').innerText = status;
+            document.getElementById('confirm_nomor_induk').innerText = nomor_induk;
+            document.getElementById('confirm_nomor_telepon').innerText = nomor_telepon;
             document.getElementById('confirm_lokasi').innerText = lokasi;
             document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
             document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);

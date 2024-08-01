@@ -62,6 +62,9 @@
                                     <label for="nama_ruangan" class="col-md-3 col-form-label text-md-right text-color">Nama
                                         dan Nomor Ruangan</label>
                                     <div class="col-md-7">
+                                        <div id="" class="form-text">
+                                            Contoh: Coworking space (B02)
+                                        </div>
                                         <input type="text" id="nama_ruangan"
                                             class="form-control bordered-text border-color" name="nama_ruangan"
                                             value="{{ $dataRuangan->nama_ruangan }}" required>
@@ -72,6 +75,9 @@
                                     <label for="ukuran"
                                         class="col-md-3 col-form-label text-md-right text-color">Ukuran</label>
                                     <div class="col-md-7">
+                                        <div id="" class="form-text">
+                                            Contoh: 5 x 5
+                                        </div>
                                         <input type="text" id="ukuran" class="form-control bordered-text border-color"
                                             name="ukuran" value="{{ $dataRuangan->ukuran }}" required>
                                         <div class="invalid-feedback">Silakan masukkan ukuran ruangan.</div>
@@ -144,8 +150,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label for="keterangan"
-                                        class="col-md-3 col-form-label text-md-right text-color">Keterangan</label>
+                                    <label for="keterangan" class="col-md-3 col-form-label text-md-right text-color">
+                                        Keterangan Ruangan
+                                        <span class="form-text">
+                                            (Opsional)
+                                        </span>
+                                    </label>
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="nama_ruangan" class="form-control bordered-text border-color" name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required> --}}
                                         <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control">
@@ -250,4 +260,19 @@
 
     <script src="{{ asset('assets/js/admin/dragndrop-editRuangan.js') }}"></script>
     <script src="{{ asset('assets/js/admin/editRuangan.js') }}"></script>
+
+    <script>
+        function formatRoomSize(input) {
+            let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
+            if (value.length >= 2) {
+                const mid = Math.ceil(value.length / 2);
+                value = value.slice(0, mid) + ' x ' + value.slice(mid);
+            }
+            input.value = value;
+        }
+
+        document.getElementById('ukuran').addEventListener('input', function() {
+            formatRoomSize(this);
+        });
+    </script>
 @endsection
