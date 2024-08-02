@@ -73,30 +73,34 @@
                             <td colspan="3" class="border border-secondary">{{ $ruangan->nama_ruangan }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Kapasitas Minimal</td>
+                            <td class="border border-secondary">Kapasitas Minimal Ruangan</td>
                             <td colspan="3" class="border border-secondary">{{ $ruangan->kapasitas_minimal }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Kapasitas Maksimal</td>
+                            <td class="border border-secondary">Kapasitas Maksimal Ruangan</td>
                             <td colspan="3" class="border border-secondary">{{ $ruangan->kapasitas_maksimal }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Lokasi</td>
+                            <td class="border border-secondary">Lokasi Ruangan</td>
                             <td colspan="3" class="border border-secondary">{{ $ruangan->lokasi }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Harga</td>
+                            <td class="border border-secondary">Ukuran Ruangan</td>
+                            <td colspan="3" class="border border-secondary">{{ $ruangan->ukuran }} Meter</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-secondary">Harga Ruangan</td>
                             <td colspan="3" class="border border-secondary">Rp
                                 {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Status</td>
+                            <td class="border border-secondary">Status Ruangan</td>
                             <td colspan="3" class="border border-secondary">
                                 {{-- btn ketersediaan --}}
                                 <button type="button boder" class="btn text-white"
-                                    style="font-size:16px;background-color: #419343; border-radius: 10px; height: 31.83px; width: 200px; display: flex; align-items: center; justify-content: center;"
+                                    style="font-size:16px;background-color: #419343; border-radius: 10px; height: 31.83px; width: 250px; display: flex; align-items: center; justify-content: center;"
                                     data-bs-toggle="modal" data-bs-target="#lihatKetersediaanModal">
-                                    Lihat ketersediaan
+                                    Informasi ketersediaan
                                 </button>
                                 {{-- @if ($ruangan->tersedia == '1')
                                     <div type="button boder" class="btn btn-sm text-white"
