@@ -50,6 +50,14 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
+                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label> --}}
+                                        <input type="text" name="invoice" id="invoice"
+                                            class="date form-control border-color" required hidden>
+                                        <div class="invalid-feedback">
+                                            Masukkan Invoice anda!
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
                                         <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
                                             class="date form-control border-color" required>
@@ -60,7 +68,8 @@
 
                                     <div class="col-md mt-4">
                                         <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
-                                        <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
+                                        <input type="text" name="nomor_induk" id="nomor_induk"
+                                            class="date form-control border-color" maxlength="15" required>
                                         <div class="invalid-feedback">
                                             Masukkan NIM / NIP Anda!
                                         </div>
@@ -127,6 +136,15 @@
                                     </div>
 
                                     <div class="col-md mt-4">
+                                        {{-- <label for="harga_ppn" class="form-label text-color">Harga PPN</label> --}}
+                                        <input type="text" name="harga_ppn" id="harga_ppn"
+                                            class="date form-control border-color" required hidden>
+                                        <div class="invalid-feedback">
+                                            Masukkan Harga PPN!
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md mt-4">
                                         <label for="jumlah" class="form-label text-color">Jumlah Peserta</label>
                                         <input type="number" name="jumlah" id="peserta"
                                             class="date form-control border-color"
@@ -157,8 +175,8 @@
 
                             <div class="col-md mt-4">
                                 <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <button type="submit"
-                                        id="submitBtn" class="btn text-white button-style capitalize-first-letter">Ajukan</button>
+                                    <button type="submit" id="submitBtn"
+                                        class="btn text-white button-style capitalize-first-letter">Ajukan</button>
                                 </div>
                             </div>
                         </form>
@@ -168,7 +186,8 @@
                 <div>
                     Keterangan<br>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang
                     berlaku)<br>**Untuk informasi
-                    lebih lengkap lihat  <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
+                    lebih lengkap lihat <a
+                        href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
 
                     @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
@@ -193,6 +212,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-color">Nomor Invoice</label>
+                        <p id="confirm_invoice" name="invoice" class="bordered-text"></p>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Peminjam</label>
                         <p id="confirm_nama_peminjam" name="nama_peminjam" class="bordered-text"></p>
@@ -243,7 +266,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Harga (Termasuk PPN 11% dan biaya Virtual Account)</label>
-                        <p id="confirm_harga_dengan_ppn" class="bordered-text"></p>
+                        <p id="confirm_harga_dengan_ppn" class="bordered-text" name="harga_ppn"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Catatan Peminjaman</label>
@@ -336,6 +359,7 @@
             const idRuangan = document.getElementById('id_ruangan').value;
             const role = document.getElementById('role').value;
             const hargaInput = document.getElementById('harga_ruangan');
+            const ppnInput = document.getElementById('harga_ppn');
             const lokasiInput = document.getElementById('lokasi');
 
             console.log("Selected role:", role);
@@ -355,8 +379,17 @@
                     const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
                     hargaInput.value = formattedHargaRuangan;
                     console.log("Final formatted price:", formattedHargaRuangan);
+
+                    // Calculate PPN and total price
+                    const ppnRate = 0.11; // Assuming PPN is 10%
+                    const ppnAmount = hargaRuangan * ppnRate;
+                    const totalHarga = hargaRuangan + ppnAmount;
+                    const formattedTotalHarga = 'Rp ' + totalHarga.toLocaleString('id-ID');
+                    ppnInput.value = formattedTotalHarga;
+                    console.log("Calculated total price including PPN:", formattedTotalHarga);
                 } else {
                     hargaInput.value = '';
+                    ppnInput.value = '';
                     console.log("Role not selected, price not set");
                 }
             }
@@ -373,6 +406,7 @@
             } else {
                 lokasiInput.value = '';
                 hargaInput.value = '';
+                ppnInput.value = '';
                 console.log("No ruangan selected, clearing inputs");
             }
         }
@@ -415,8 +449,40 @@
         document.getElementById('id_ruangan').addEventListener('change', adjustParticipantLimits);
         document.getElementById('peserta').addEventListener('input', validateParticipantInput);
 
+        function generateInvoice() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+            const invoiceNumber = `BTP${year}${month}${day}${hours}${minutes}${seconds}${randomNumber}`;
+
+            document.getElementById('invoice').value = invoiceNumber;
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            generateInvoice();
+        });
+
+        function generateInvoiceNumber() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Random 3-digit number
+
+            return `BTP${year}${month}${day}${hours}${minutes}${seconds}${randomNumber}`;
+        }
+
         function showConfirmationModal(event) {
             event.preventDefault();
+            const invoiceNumber = document.getElementById('invoice').value;
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const nomorInduk = document.getElementById('nomor_induk').value;
             const nomorTelepon = document.getElementById('nomor_telepon').value;
@@ -427,6 +493,7 @@
             const tanggalMulai = document.getElementById('tanggal_mulai').value;
             const jamMulai = document.getElementById('jam_mulai').value;
             const harga = document.getElementById('harga_ruangan').value;
+            const hargaPPN = document.getElementById('harga_ruangan').value;
             const keterangan = document.getElementById('keterangan').value;
 
             // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
@@ -465,8 +532,9 @@
                 priceAkhir = 'Rp 0';
             }
 
-            console.log("Final price:", priceAkhir);
+            // console.log("Final price:", priceAkhir);
 
+            document.getElementById('confirm_invoice').innerText = invoiceNumber;
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
             document.getElementById('confirm_status').innerText = status;
@@ -563,35 +631,35 @@
             window.location.href = "/dashboardPenyewa";
         });
 
-        document.getElementById('nomor_induk').addEventListener('input', function (e) {
+        document.getElementById('nomor_induk').addEventListener('input', function(e) {
             // Remove non-digit characters
             e.target.value = e.target.value.replace(/\D/g, '');
         });
 
-        document.getElementById('nomor_telepon').addEventListener('input', function (e) {
+        document.getElementById('nomor_telepon').addEventListener('input', function(e) {
             // Remove non-digit characters
             e.target.value = e.target.value.replace(/\D/g, '');
         });
     </script>
 
     <script>
-    $(document).ready(function() {
-        $('#role').change(function() {
-            updateFormContent();
+        $(document).ready(function() {
+            $('#role').change(function() {
+                updateFormContent();
+            });
         });
-    });
 
-    function updateFormContent() {
-        const role = $('#role').val();
-        if (role === 'Pegawai') {
-            showPerHariForm();
-        } else if (role === 'Mahasiswa' || role === 'Umum') {
-            showPerJamForm();
+        function updateFormContent() {
+            const role = $('#role').val();
+            if (role === 'Pegawai') {
+                showPerHariForm();
+            } else if (role === 'Mahasiswa' || role === 'Umum') {
+                showPerJamForm();
+            }
         }
-    }
 
-    function showPerJamForm() {
-        $('#form-content').html(`
+        function showPerJamForm() {
+            $('#form-content').html(`
             <div class="row">
                 <div class="col-12">
                     <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
@@ -620,10 +688,10 @@
             </div>
             <br>
         `);
-    }
+        }
 
-    function showPerHariForm() {
-        $('#form-content').html(`
+        function showPerHariForm() {
+            $('#form-content').html(`
             <div class="row">
                 <div class="col-12">
                     <label for="tanggal_mulai" class="form-label text-color">Tanggal Mulai Penyewaan</label>
@@ -705,23 +773,23 @@
             <br>
         `);
 
-        $('#tanggal_mulai, #jam_mulai').on('change', function() {
-            var tanggalMulai = $('#tanggal_mulai').val();
-            var jamMulai = $('#jam_mulai').val();
+            $('#tanggal_mulai, #jam_mulai').on('change', function() {
+                var tanggalMulai = $('#tanggal_mulai').val();
+                var jamMulai = $('#jam_mulai').val();
 
-            if (tanggalMulai) {
-                $('#tanggal_selesai').prop('disabled', false);
-            } else {
-                $('#tanggal_selesai').prop('disabled', true);
-            }
+                if (tanggalMulai) {
+                    $('#tanggal_selesai').prop('disabled', false);
+                } else {
+                    $('#tanggal_selesai').prop('disabled', true);
+                }
 
-            if (jamMulai) {
-                $('#jam_selesai').prop('disabled', false);
-            } else {
-                $('#jam_selesai').prop('disabled', true);
-            }
-        });
-    }
+                if (jamMulai) {
+                    $('#jam_selesai').prop('disabled', false);
+                } else {
+                    $('#jam_selesai').prop('disabled', true);
+                }
+            });
+        }
     </script>
 
 @endsection

@@ -22,18 +22,6 @@
                         <span>Dashboard</span>
                     </a>
                 </div>
-                {{-- <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusRuanganAdmin">
-                        <i class="material-symbols-outlined me-2">view_list</i>
-                        <span>Daftar Ruangan</span>
-                    </a>
-                </div> --}}
-                {{-- <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPengajuanAdmin">
-                        <i class="material-symbols-outlined me-2">check_circle</i>
-                        <span>Status Pengajuan</span>
-                    </a>
-                </div> --}}
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganPenyewa">
                         <i class="material-symbols-outlined me-2">view_list</i>
@@ -46,12 +34,12 @@
                         <span>Peminjaman Ruangan</span>
                     </a>
                 </div>
-                {{-- <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
-                        <i class="material-symbols-outlined me-2">history</i>
-                        <span>Riwayat</span>
+                <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPenyewa">
+                        <i class="material-symbols-outlined me-2">checklist</i>
+                        <span>Lihat Status Peminjaman Ruangan</span>
                     </a>
-                </div> --}}
+                </div>
                 @auth
                     <div class="m-1">
                         <a class="text-white nav-link d-flex align-items-center menu-item" href="/logout">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class PeminjamanSeeder extends Seeder
 {
@@ -20,6 +21,9 @@ class PeminjamanSeeder extends Seeder
         $roles = ['Pegawai', 'Mahasiswa', 'Umum'];
         $ruanganList = Ruangan::all();
 
+
+
+
         // $namaIndonesia = [
         //     'Budi', 'Siti', 'Agus', 'Ani', 'Eko', 'Sri', 'Yanto', 'Dewi',
         //     'Indra', 'Rina', 'Andi', 'Mira', 'Wawan', 'Nina', 'Arif', 'Reni',
@@ -27,12 +31,17 @@ class PeminjamanSeeder extends Seeder
         // ];
 
         foreach (range(1, 50) as $index) {
+            $invoice = 'BTP' . strtoupper(Str::random(8));
             $ruangan = $ruanganList->random();
             $tanggalMulai = Carbon::now()->subDays(rand(1, 30));
             $tanggalSelesai = (clone $tanggalMulai)->addHours(rand(1, 10));
             $jumlah = rand($ruangan->kapasitas_minimal, $ruangan->kapasitas_maksimal);
 
+            $harga = $ruangan->harga_ruangan; // Harga total untuk peminjaman
+            $hargaPpn = $harga * 0.11;
+
             DB::table('peminjaman')->insert([
+                'invoice' => $invoice,
                 'nama_peminjam' => $faker->name,
                 'role' => $faker->randomElement($roles),
                 'nomor_induk' => $faker->unique()->numerify('##########'),
@@ -41,6 +50,7 @@ class PeminjamanSeeder extends Seeder
                 'tanggal_mulai' => $tanggalMulai,
                 'tanggal_selesai' => $tanggalSelesai,
                 'jumlah' => $jumlah,
+                'harga_ppn' => $hargaPpn,
                 'status' => 'Menunggu',
                 'keterangan' => '',
                 'created_at' => now(),

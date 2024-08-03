@@ -87,6 +87,7 @@ class MeminjamRuanganController extends Controller
         }
 
         $meminjamRuangan = new Peminjaman([
+            'invoice' => $request->input('invoice'),
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nomor_induk' => $request->input('nomor_induk'),
             'nomor_telepon' => $request->input('nomor_telepon'),
@@ -95,6 +96,7 @@ class MeminjamRuanganController extends Controller
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai_plus_one_hour,
             'jumlah' => $request->input('jumlah'),
+            'harga_ppn' => $request->input('harga_ppn'),
             'status' => 'Menunggu',
             'keterangan' => $keterangan,
         ]);

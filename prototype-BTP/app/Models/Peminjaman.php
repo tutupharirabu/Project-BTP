@@ -12,7 +12,7 @@ class Peminjaman extends Model
     use HasFactory;
     protected $table = 'peminjaman';
     protected $primaryKey = 'id_peminjaman';
-    protected $fillable = ['nama_peminjam', 'role', 'id_users', 'id_ruangan', 'nomor_induk', 'nomor_telepon', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'status', 'keterangan'];
+    protected $fillable = ['invoice', 'nama_peminjam', 'role', 'id_users', 'id_ruangan', 'nomor_induk', 'nomor_telepon', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'harga_ppn', 'status', 'keterangan'];
     protected $dates = ['tanggal_mulai', 'tanggal_selesai'];
 
     public function ruangan(){

@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminStatusPengajuanController;
 use App\Http\Controllers\AdminStatusRuanganController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\OkupansiController;
+use App\Http\Controllers\StatusPenyewaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +80,7 @@ Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name
 // okupansi
 Route::get('/okupansiRuangan', [OkupansiController::class, 'index'])->name('admin.okupansi.index')->middleware('auth');
 Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi'])->name('download.okupansi');
+
+// status penyewa
+Route::get('/statusPenyewa', [StatusPenyewaController::class, 'index']);
+Route::get('/invoice/{id}', [StatusPenyewaController::class, 'generateInvoice'])->name('generateInvoice');

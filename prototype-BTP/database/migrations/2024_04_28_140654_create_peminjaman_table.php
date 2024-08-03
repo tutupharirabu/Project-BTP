@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->increments('id_peminjaman');
             $table->unsignedInteger('id_users')->nullable();
+            $table->string('invoice', 255);
             $table->string('nama_peminjam', 255);
             $table->string('role', 255);
             $table->string('nomor_induk',255);
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
+            $table->string('harga_ppn', 255);
             $table->string('status', 255);
             $table->string('keterangan', 255);
             $table->timestamps();
