@@ -77,33 +77,33 @@
                             <table id="dataTHistory" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Peminjam</th>
-                                        <th scope="col">Tanggal Mulai</th>
-                                        <th scope="col">Tanggal Selesai</th>
-                                        <th scope="col">Ruangan</th>
-                                        <th scope="col">Kapasitas</th>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Tanggal Mulai</th>
+                                        <th scope="col" class="text-center">Tanggal Selesai</th>
+                                        <th scope="col" class="text-center">Ruangan</th>
+                                        <th scope="col" class="text-center">Kapasitas</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataHistory">
                                     @foreach ($dataPeminjaman as $data)
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 {{ $loop->iteration }}
                                             </td>
                                             <td>
                                                 {{ $data->nama_peminjam }}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {{ Carbon::parse($data->tanggal_mulai)->format('d-m-y') }}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {{ Carbon::parse($data->tanggal_selesai)->format('d-m-y') }}
                                             </td>
                                             <td>
                                                 {{ $data->ruangan->nama_ruangan }}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {{ $data->jumlah }}
                                             </td>
                                         </tr>
@@ -152,7 +152,7 @@
                 $('#dataTHistory').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": true,
+                    "ordering": false,
                     "info": true
                 });
             });

@@ -13,7 +13,9 @@ body, html {
 }
 
 .bg-image {
-    background-image: url('https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg');
+    /* background-image: url('https://cdnpt01.viewbug.com/media/mediafiles/2020/07/28/90338160_large.jpg'); */
+    background-image: url('https://apps-soc.telkomuniversity.ac.id/static/assets/img/gd_tult.jpg');
+    /* background-image: src={{ asset('assets/img/gd_tult.jpg')}}; */
     min-height: 100vh; 
     background-position: center;
     background-repeat: no-repeat;

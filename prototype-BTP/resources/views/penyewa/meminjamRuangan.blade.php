@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="container mx-2">
-                    <h4>Form Sewa Ruangan</h4>
+                    <h4>Formulir Peminjaman Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
-                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Form Peminjaman
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman 
                         Ruangan</a>
                 </div>
             </div>
@@ -139,9 +139,6 @@
                                         {{-- <label for="harga_ppn" class="form-label text-color">Harga PPN</label> --}}
                                         <input type="text" name="harga_ppn" id="harga_ppn"
                                             class="date form-control border-color" required hidden>
-                                        <div class="invalid-feedback">
-                                            Masukkan Harga PPN!
-                                        </div>
                                     </div>
 
                                     <div class="col-md mt-4">
@@ -175,7 +172,7 @@
 
                             <div class="col-md mt-4">
                             <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <button type="submit" id="submitBtn" class=" text-white button-style capitalize-first-letter">Ajukan</button>
+                                    <button type="submit" id="submitBtn" class=" text-white button-style capitalize-first-letter" style="font-weight:800">Ajukan</button>
                                 </div>
 
                             </div>
@@ -222,16 +219,16 @@
                         <p id="confirm_nama_peminjam" name="nama_peminjam" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">NIM / NIP</label>
-                        <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label text-color">Nomor Telepon</label>
                         <p id="confirm_nomor_telepon" name="nomor_telepon" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Ruangan</label>
                         <p id="confirm_nama_ruangan" name="id_ruangan" class="bordered-text"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">NIM / NIP</label>
+                        <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Status</label>
