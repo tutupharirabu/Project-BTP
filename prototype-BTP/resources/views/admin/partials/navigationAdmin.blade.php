@@ -23,13 +23,13 @@
 
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="background-color: white;">
-            <div class="navbar-nav" style="margin-left:10px;">
-                <a class="nav-link" href="/dashboardAdmin">Dashboard</a>
-                <a class="nav-link" href="/statusRuanganAdmin">Daftar Ruangan</a>
-                <a class="nav-link" href="/statusPengajuanAdmin">Status Pengajuan</a>
-                <a class="nav-link" href="/okupansiRuangan">Okupansi Ruangan</a>
-                <a class="nav-link" href="/riwayatRuangan">Riwayat Ruangan</a>
-                <a class="nav-link" href="/logout">Logout</a>
+            <div class="navbar-nav" style="margin-left:20px;">
+                <a class="nav-link" href="/dashboardAdmin" style="font-weight: 900;">Dashboard</a>
+                <a class="nav-link" href="/statusRuanganAdmin" style="font-weight: 900;">Daftar Ruangan</a>
+                <a class="nav-link" href="/statusPengajuanAdmin" style="font-weight: 900;">Status Pengajuan</a>
+                <a class="nav-link" href="/okupansiRuangan" style="font-weight: 900;">Okupansi Ruangan</a>
+                <a class="nav-link" href="/riwayatRuangan" style="font-weight: 900;">Riwayat Ruangan</a>
+                <a class="nav-link" href="/logout" style="font-weight: 900;">Logout</a>
             </div>
         </div>
 

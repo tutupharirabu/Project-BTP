@@ -118,18 +118,42 @@
                     </tbody>
                 </table>
             </div>
-            <div class="container-fluid mt-4 mb-6 d-md-flex d-xl-flex d-lg-flex justify-content-between"
-                style="width: 80%;">
-                <div class="text-black">
-                    <p>Keterangan :</p>
-                    <p>*Harga di atas belum termasuk PPN 11% (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p> **Untuk informasi lebih lengkap lihat <a
-                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing"
-                            target="_blank">disini</a></p>
+            <div class="container-fluid mt-4 mb-6 d-md-flex d-xl-flex d-lg-flex justify-content-between" style="width: 80%;">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="text-black">
+                            Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku</p>
+                            <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
+                            Fasilitas<p style="margin-left:20px">*Full AC, Toilet, Free Parking, Sound System (Speaker & 2 Mic), Screen, LCD Projector, Whiteboard,
+                            Listrik standar (penggunaan listrik di luar yang telah disediakan wajib melaporkan kepada manajemen
+                            BTP dan menambahkan daya menggunakan genset dengan biaya yang ditanggung oleh penyewa).</p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="">
+                            @if ($ruangan->tersedia == '1')
+                                <a type="button" class="btn btn-md text-white"
+                                    style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                                    href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                                    Ruangan</a>
+                            @else
+                                <a type="button" class="btn btn-sm text-white disabled"
+                                    style="background-color: #717171; font-size: 16px; border-radius: 7px;"
+                                    href="#">Pinjam Ruangan</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="text-black">
+                    Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku</p>
+                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
+                    Fasilitas<p style="margin-left:20px">*Full AC, Toilet, Free Parking, Sound System (Speaker & 2 Mic), Screen, LCD Projector, Whiteboard,
+                    Listrik standar (penggunaan listrik di luar yang telah disediakan wajib melaporkan kepada manajemen
+                    BTP dan menambahkan daya menggunakan genset dengan biaya yang ditanggung oleh penyewa).</p>
                 </div>
                 <div class="">
                     @if ($ruangan->tersedia == '1')
-                        <a type="button" class="btn btn-sm text-white"
+                        <a type="button" class="btn btn-md text-white"
                             style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
                             href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
                             Ruangan</a>
@@ -138,7 +162,7 @@
                             style="background-color: #717171; font-size: 16px; border-radius: 7px;"
                             href="#">Pinjam Ruangan</a>
                     @endif
-                </div>
+                </div> -->
                  {{-- <div class="">
                     <a type="button" class="btn btn-sm text-white"
                         style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"

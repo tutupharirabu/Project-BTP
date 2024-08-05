@@ -68,11 +68,11 @@
         </a>
 
         <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="background-color: white; width:30px;">
-            <div class="navbar-nav" style="width:20px;">
-                <a class="nav-link" href="/dashboardPenyewa">Dashboard</a>
-                <a class="nav-link" href="/daftarRuanganPenyewa">Daftar Ruangan</a>
-                <a class="nav-link" href="/meminjamRuangan">Peminjaman</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="background-color: white; width:30px;" >
+            <div class="navbar-nav" style="width:20px; margin-left:20px; text-bold ">
+                <a class="nav-link" href="/dashboardPenyewa" style="font-weight: 900;">Dashboard</a>
+                <a class="nav-link" href="/daftarRuanganPenyewa" style="font-weight: 900;">Daftar Ruangan</a>
+                <a class="nav-link" href="/meminjamRuangan" style="font-weight: 900;">Peminjaman</a>
             </div>
         </div>
         

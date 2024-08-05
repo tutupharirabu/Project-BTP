@@ -214,7 +214,7 @@
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ $data->status }}</td>
                                             <td><a href="{{ route('generateInvoice', $data->id_peminjaman) }}"
-                                                    class="btn btn-success">Lihat Invoice</a></td>
+                                                    class="btn btn-md text-white text-capitalize" style="background-color:#0C9300">Lihat Invoice</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

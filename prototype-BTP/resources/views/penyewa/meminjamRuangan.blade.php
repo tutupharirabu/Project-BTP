@@ -174,20 +174,21 @@
                             </div>
 
                             <div class="col-md mt-4">
-                                <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <button type="submit" id="submitBtn"
-                                        class="btn text-white button-style capitalize-first-letter">Ajukan</button>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                    <button type="submit" id="submitBtn" class=" text-white button-style capitalize-first-letter">Ajukan</button>
                                 </div>
+
                             </div>
                         </form>
                     </div>
                 </div>
                 <br>
                 <div>
-                    Keterangan<br>*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang
-                    berlaku)<br>**Untuk informasi
-                    lebih lengkap lihat <a
-                        href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
+                    Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku</p>
+                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
+                    Fasilitas<p style="margin-left:20px">*Full AC, Toilet, Free Parking, Sound System (Speaker & 2 Mic), Screen, LCD Projector, Whiteboard,
+                    Listrik standar (penggunaan listrik di luar yang telah disediakan wajib melaporkan kepada manajemen
+                    BTP dan menambahkan daya menggunakan genset dengan biaya yang ditanggung oleh penyewa).</p>
 
                     @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
@@ -282,7 +283,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn text-white capitalize-first-letter" data-bs-dismiss="modal"
                         style="height: 41px; background-color:#717171;font-size: 14px;">Batal</button>
-                    <button type="button" class="btn button-style text-white capitalize-first-letter"
+                    <button type="button" class=" button-style text-white capitalize-first-letter"
                         onclick="showConfirmationPopup()">Konfirmasi</button>
                 </div>
             </div>

@@ -10,12 +10,24 @@
     height: 41px;
     border-radius: 6px;
     font-size: 14px;
+    color: white; /* Ensure the text color is white */
+    border: none; /* Remove any default border */
+    cursor: pointer; /* Change cursor to pointer for better UX */
+    outline: none; /* Remove outline on focus */
 }
 
 .button-style:hover {
-    background-color: #0A7A00;
-    /* Slightly darker green for hover effect */
+    background-color: #0A8200; /* Slightly darker green for hover effect */
+    color: white; /* Keep text color white */
 }
+
+.button-style:active, 
+.button-style:focus {
+    background-color: #086700; /* Even darker green for active state */
+    color: white; /* Ensure the text color is white */
+}
+
+
 
 .capitalize-first-letter {
     text-transform: capitalize;
