@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class StatusPenyewaController extends Controller
 {
