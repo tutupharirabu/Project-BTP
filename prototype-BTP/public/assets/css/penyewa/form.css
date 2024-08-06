@@ -202,3 +202,7 @@
     margin-bottom:10px;
     text-align: center;
 }
+
+#nomorIndukDiv {
+    display: block; /* Ensure it is displayed by default */
+}
