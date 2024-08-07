@@ -76,41 +76,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-4" id="nomorIndukDiv">
-    <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
-    <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
-    <div class="invalid-feedback">
-        Masukkan NIM / NIP Anda!
-    </div>
-</div>
-
-<div class="col-md mt-4">
-    <label for="role" class="form-label text-color">Status</label>
-    <select name="role" id="role" class="form-control border-color" onchange="handleRoleChange()" required>
-        <option value="" disabled selected>Pilih Status</option>
-        <option value="Pegawai">Pegawai</option>
-        <option value="Mahasiswa">Mahasiswa</option>
-        <option value="Umum">Umum</option>
-    </select>
-    <div class="invalid-feedback">
-        Pilih status Anda!
-    </div>
-</div>
-
-
-                                    <!-- <div class="col-md mt-4">
-                                        <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
-                                        <input type="text" name="nomor_induk" id="nomor_induk"
-                                            class="date form-control border-color" maxlength="15" required>
-                                        <div class="invalid-feedback">
-                                            Masukkan NIM / NIP Anda!
-                                        </div>
-                                    </div>
-
                                     <div class="col-md mt-4">
                                         <label for="role" class="form-label text-color">Status</label>
-                                        <select name="role" id="role" class="form-control border-color"
-                                            onchange="fetchRuanganDetails()" required>
+                                        <select name="role" id="role" class="form-control border-color" onchange="handleRoleChange()" required>
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="Pegawai">Pegawai</option>
                                             <option value="Mahasiswa">Mahasiswa</option>
@@ -119,7 +87,15 @@
                                         <div class="invalid-feedback">
                                             Pilih status Anda!
                                         </div>
-                                    </div> -->
+                                    </div>
+
+                                    <div class="col-md mt-4" id="nomorIndukDiv">
+                                        <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
+                                        <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
+                                        <div class="invalid-feedback">
+                                            Masukkan NIM / NIP Anda!
+                                        </div>
+                                    </div>
                                     
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
