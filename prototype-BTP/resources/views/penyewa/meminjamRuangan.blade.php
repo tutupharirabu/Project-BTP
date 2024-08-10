@@ -88,7 +88,6 @@
                                             Pilih status Anda!
                                         </div>
                                     </div>
-
                                     <div class="col-md mt-4" id="nomorIndukDiv">
                                         <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
                                         <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
@@ -96,7 +95,7 @@
                                             Masukkan NIM / NIP Anda!
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
@@ -221,7 +220,7 @@
                         <label class="form-label text-color">Nama Ruangan</label>
                         <p id="confirm_nama_ruangan" name="id_ruangan" class="bordered-text"></p>
                     </div>
-                    <div class="mb-3">
+                    <div id="nomorIndukDisplayDiv" class="mb-3">
                         <label class="form-label text-color">NIM / NIP</label>
                         <p id="confirm_nomor_induk" name="nomor_induk" class="bordered-text"></p>
                     </div>
