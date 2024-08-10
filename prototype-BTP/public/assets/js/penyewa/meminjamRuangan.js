@@ -3,7 +3,7 @@ function handleRoleChange() {
     const role = document.getElementById('role').value;
     const nomorIndukDiv = document.getElementById('nomorIndukDiv');
     const nomorIndukInput = document.getElementById('nomor_induk');
-    
+
     // if (role === 'Umum') {
     //     nomorIndukDiv.style.display = 'none';
     //     nomorIndukInput.value = '0';
@@ -21,6 +21,34 @@ function handleRoleChange() {
         nomorIndukDiv.style.display = 'none';
         nomorIndukInput.value = '0';
         nomorIndukInput.required = false;
+    }
+}
+
+
+function filterRuanganOptions() {
+    const role = document.getElementById('role').value;
+    const ruanganSelect = document.getElementById('id_ruangan');
+    const options = ruanganSelect.getElementsByTagName('option');
+
+    for (let i = 0; i < options.length; i++) {
+        const option = options[i];
+        const ruanganType = option.getAttribute('data-type');
+
+        if (option.value === "") {
+            option.style.display = 'block';
+            continue;
+        }
+
+        if (role === 'Mahasiswa' || role === 'Umum') {
+            // Cek apakah ruanganType adalah 'Multimedia' atau 'R Training'
+            if (ruanganType === 'Multimedia (A)' || ruanganType === 'R Training (B204)') {
+                option.style.display = 'block';  // Tampilkan ruangan yang sesuai
+            } else {
+                option.style.display = 'none';   // Sembunyikan ruangan yang tidak sesuai
+            }
+        } else {
+            option.style.display = 'block';  // Tampilkan semua untuk role lain
+        }
     }
 }
 

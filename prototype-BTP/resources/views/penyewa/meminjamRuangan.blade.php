@@ -31,7 +31,7 @@
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
-                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman 
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman
                         Ruangan</a>
                 </div>
             </div>
@@ -78,7 +78,7 @@
 
                                     <div class="col-md mt-4">
                                         <label for="role" class="form-label text-color">Status</label>
-                                        <select name="role" id="role" class="form-control border-color" onchange="handleRoleChange()" required>
+                                        <select name="role" id="role" class="form-select border-color" onchange="handleRoleChange(); filterRuanganOptions();" required>
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="Pegawai">Pegawai</option>
                                             <option value="Mahasiswa">Mahasiswa</option>
@@ -88,6 +88,7 @@
                                             Pilih status Anda!
                                         </div>
                                     </div>
+
                                     <div class="col-md mt-4" id="nomorIndukDiv">
                                         <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
                                         <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
@@ -100,16 +101,17 @@
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
                                         <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
                                             onchange="fetchRuanganDetails(); adjustParticipantLimits()" required>
-                                            <option selected disabled value="">Pilih ruangan</option>
-                                            @foreach ($dataRuangan as $dr)
-                                                <option value="{{ $dr->id_ruangan }}"
-                                                    data-min="{{ $dr->kapasitas_minimal }}"
-                                                    data-max="{{ $dr->kapasitas_maksimal }}"
-                                                    data-type="{{ $dr->nama_ruangan }}"
-                                                    {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
-                                                    {{ $dr->nama_ruangan }}</option>
-                                            @endforeach
-                                        </select>
+                                        <option selected disabled value="">Pilih ruangan</option>
+                                        @foreach ($dataRuangan as $dr)
+                                            <option value="{{ $dr->id_ruangan }}"
+                                                data-min="{{ $dr->kapasitas_minimal }}"
+                                                data-max="{{ $dr->kapasitas_maksimal }}"
+                                                data-type="{{ $dr->nama_ruangan }}"
+                                                {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
+                                                {{ $dr->nama_ruangan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                         <div class="invalid-feedback">
                                             Masukkan pilihan ruangan Anda!
                                         </div>
