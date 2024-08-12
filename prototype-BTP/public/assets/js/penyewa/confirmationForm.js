@@ -231,7 +231,7 @@ function showConfirmationModal(event) {
 
     const cleanedHarga = harga.replace(/[^\d]/g, '');
     var hargaAwal = parseFloat(cleanedHarga);
-    var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11);
+    var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11) + 2500;
     var priceAkhir;
 
     if (status === 'Mahasiswa' || status === 'Umum') {

@@ -99,19 +99,19 @@
 
                                     <div class="col-md mt-4">
                                         <label for="ruang" class="form-label text-color">Ruangan</label>
-                                        <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
+                                        <select name="id_ruangan" id="id_ruangan" class="form-select border-color" disabled
                                             onchange="fetchRuanganDetails(); adjustParticipantLimits()" required>
-                                        <option selected disabled value="">Pilih ruangan</option>
-                                        @foreach ($dataRuangan as $dr)
-                                            <option value="{{ $dr->id_ruangan }}"
-                                                data-min="{{ $dr->kapasitas_minimal }}"
-                                                data-max="{{ $dr->kapasitas_maksimal }}"
-                                                data-type="{{ $dr->nama_ruangan }}"
-                                                {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
-                                                {{ $dr->nama_ruangan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                            <option selected disabled value="">Pilih ruangan</option>
+                                            @foreach ($dataRuangan as $dr)
+                                                <option value="{{ $dr->id_ruangan }}"
+                                                    data-min="{{ $dr->kapasitas_minimal }}"
+                                                    data-max="{{ $dr->kapasitas_maksimal }}"
+                                                    data-type="{{ $dr->nama_ruangan }}"
+                                                    {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
+                                                    {{ $dr->nama_ruangan }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         <div class="invalid-feedback">
                                             Masukkan pilihan ruangan Anda!
                                         </div>

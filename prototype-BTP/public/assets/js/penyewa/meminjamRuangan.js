@@ -1,27 +1,30 @@
 
 function handleRoleChange() {
     const role = document.getElementById('role').value;
+    const ruanganSelect = document.getElementById('id_ruangan');
     const nomorIndukDiv = document.getElementById('nomorIndukDiv');
     const nomorIndukInput = document.getElementById('nomor_induk');
 
-    // if (role === 'Umum') {
-    //     nomorIndukDiv.style.display = 'none';
-    //     nomorIndukInput.value = '0';
-    //     nomorIndukInput.required = false;
-    // } else {
-    //     nomorIndukDiv.style.display = 'block';
-    //     nomorIndukInput.value = '';
-    //     nomorIndukInput.required = true;
-    // }
-    if(role === 'Pegawai' || role === 'Mahasiswa'){
-        nomorIndukDiv.style.display = 'block';
-        nomorIndukInput.value = '';
-        nomorIndukInput.required = true;
-    }else{
-        nomorIndukDiv.style.display = 'none';
-        nomorIndukInput.value = '0';
-        nomorIndukInput.required = false;
+    // Enable ruangan select if a valid role is selected
+    if (role) {
+        ruanganSelect.removeAttribute('disabled');
+    } else {
+        ruanganSelect.setAttribute('disabled', true);
     }
+
+    // Display or hide nomorIndukDiv based on the selected role
+    if (role === 'Pegawai' || role === 'Mahasiswa') {
+        nomorIndukDiv.style.display = 'block';
+        nomorIndukInput.value = ''; // Clear the input value
+        nomorIndukInput.required = true; // Make the input required
+    } else {
+        nomorIndukDiv.style.display = 'none';
+        nomorIndukInput.value = '0'; // Set the default value to 0
+        nomorIndukInput.required = false; // Make the input not required
+    }
+
+    // Call additional functions like filterRuanganOptions()
+    filterRuanganOptions();
 }
 
 

@@ -97,7 +97,7 @@
                                 {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
-                            <td class="border border-secondary">Status Ruangan</td>
+                            <td class="border border-secondary">Status Ketersediaan Ruangan</td>
                             <td colspan="3" class="border border-secondary">
                                 {{-- btn ketersediaan --}}
                                 <button type="button boder" class="btn text-white"
