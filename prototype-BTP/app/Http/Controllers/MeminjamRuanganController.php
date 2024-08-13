@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Users;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class MeminjamRuanganController extends Controller
 {

@@ -1,15 +1,18 @@
 
 function handleRoleChange() {
+    const origin = "{{ $origin }}";  // Asumsi variabel ini dikirim dari controller
     const role = document.getElementById('role').value;
     const ruanganSelect = document.getElementById('id_ruangan');
     const nomorIndukDiv = document.getElementById('nomorIndukDiv');
     const nomorIndukInput = document.getElementById('nomor_induk');
 
-    // Enable ruangan select if a valid role is selected
-    if (role) {
-        ruanganSelect.removeAttribute('disabled');
-    } else {
-        ruanganSelect.setAttribute('disabled', true);
+    if (origin !== 'detailRuangan') {
+        // Enable ruangan select if a valid role is selected
+        if (role) {
+            ruanganSelect.removeAttribute('disabled');
+        } else {
+            ruanganSelect.setAttribute('disabled', true);
+        }
     }
 
     // Display or hide nomorIndukDiv based on the selected role
@@ -27,11 +30,22 @@ function handleRoleChange() {
     filterRuanganOptions();
 }
 
-
 function filterRuanganOptions() {
     const role = document.getElementById('role').value;
     const ruanganSelect = document.getElementById('id_ruangan');
+    const lokasiInput = document.getElementById('lokasi');
+    const hargaInput = document.getElementById('harga_ruangan');
+    const jumlahPesertaInput = document.getElementById('peserta');
     const options = ruanganSelect.getElementsByTagName('option');
+
+    // Aktifkan select ruangan jika disabled
+    ruanganSelect.disabled = false;
+
+    // Reset pilihan ruangan sebelumnya
+    ruanganSelect.value = "";
+    lokasiInput.value = "";
+    hargaInput.value = "";
+    jumlahPesertaInput.value ="";
 
     for (let i = 0; i < options.length; i++) {
         const option = options[i];
