@@ -24,12 +24,12 @@
                 <form action="{{ route('admin.okupansi.index') }}" method="GET" class="d-inline">
                     <input type="hidden" name="month"
                         value="{{ Carbon::parse($selectedMonth)->subMonth()->format('Y-m') }}">
-                    <button type="submit" class="btn btn-outline-primary">Bulan Sebelumnya</button>
+                    <button type="submit" class="btn btn-outline-primary text-capitalize">Bulan Sebelumnya</button>
                 </form>
                 <form action="{{ route('admin.okupansi.index') }}" method="GET" class="d-inline">
                     <input type="hidden" name="month"
                         value="{{ Carbon::parse($selectedMonth)->addMonth()->format('Y-m') }}">
-                    <button type="submit" class="btn btn-outline-primary">Bulan Selanjutnya</button>
+                    <button type="submit" class="btn btn-outline-primary text-capitalize">Bulan Selanjutnya</button>
                 </form>
             </div>
             <div class="col-md-2 justify-content-md-end">
