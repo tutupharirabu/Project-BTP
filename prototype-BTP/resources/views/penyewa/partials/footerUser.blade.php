@@ -1,7 +1,9 @@
 <footer class="footer border-top" style="margin-left:-10px; margin-right:-10px;">
     <div class="container d-flex justify-content-center align-items-center">
         <div class="footer-logo d-flex align-items-center">
-            <img src="{{ asset('assets/img/logospacerentwobg.png') }}" alt="Logo Telkom University"
+            <img src="{{ asset('assets/img/logo_nav.png') }}" alt="Logo Telkom University"
+                class="footer-logo-img">
+                <img src="{{ asset('assets/img/BTP-Telkom.png') }}" alt="Logo Telkom University"
                 class="footer-logo-img">
         </div>
         <div class="footer-copyright text-dark">
