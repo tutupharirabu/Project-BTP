@@ -1,10 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
-    @foreach ($dataRuangan as $data)
-        {{-- <h1>{{ $data->id_ruangan }}</h1> --}}
-    @endforeach
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css"/>
 
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
@@ -36,46 +33,48 @@
 
             <!-- Status -->
             <div class="row">
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex justify-content-md-start justify-content-sm-start">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
-                            style=" background-color: #071FF2;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
-                                check_circle
-                            </span>
-                        </div>
-                        <div
-                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv">
-                                Tersedia</p>
-                            <p class="text-center count">
-                                @php
-                                    $bookedCount = $dataRuangan->where('tersedia', '1')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
+                <div class="col-12 d-flex justify-content-start" style="margin-left:54px;">
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex justify-content-md-start justify-content-sm-start">
+                            <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
+                                style=" background-color: #071FF2;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
+                                    check_circle
+                                </span>
+                            </div>
+                            <div
+                                class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                                <p class="text-center mt-1 mb-2 font-dv">
+                                    Tersedia</p>
+                                <p class="text-center count">
+                                    @php
+                                        $bookedCount = $dataRuangan->where('tersedia', '1')->count();
+                                    @endphp
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
-                            style="background-color: #717171;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
-                                cancel
-                            </span>
-                        </div>
-                        <div
-                            class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
-                            <p class="text-center mt-1 mb-2 font-dv">
-                                Digunakan</p>
-                            <p class="text-center count">
-                                @php
-                                    $bookedCount = $dataRuangan->where('tersedia', '0')->count();
-                                @endphp
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex align-items-center">
+                            <div class="left-status text-black d-flex align-items-center justify-content-center shadow icon-color"
+                                style="background-color: #717171;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;color:#FFFFFF;">
+                                    cancel
+                                </span>
+                            </div>
+                            <div
+                                class="right-status text-black text-justify shadow d-flex flex-column justify-content-center anouncement">
+                                <p class="text-center mt-1 mb-2 font-dv">
+                                    Digunakan</p>
+                                <p class="text-center count">
+                                    @php
+                                        $bookedCount = $dataRuangan->where('tersedia', '0')->count();
+                                    @endphp
 
-                                {{ $bookedCount }}
-                            </p>
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,25 +98,25 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="container mt-4 mb-2">
-                                                                                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                    <div class="d-flex align-items-center">
-                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                            placeholder="Cari ruangan..."
-                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                    </div>
-                                                                                                                                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
-                                                                                                                                        style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
-                                                                                                                                </div>
+            {{-- <div class="container mt-4 mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                            placeholder="Cari ruangan..."
+                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                            <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
+                    </div>
+                    <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
+                        style="background-color: #0EB100; border-radius: 6px"> Tambah Ruangan +</a>
+                </div>
+            </div> --}}
 
-
-                <!-- table edit -->
+            <!-- table edit -->
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-xxl-12 col-md-12 col-sm-6">
                     <div class="container ml-4 mt-4">
-                        <div class="table-responsive ">
+                        <div class="table-responsive">
                             <table id="dataTRuangan" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
@@ -315,14 +314,10 @@
             </div>
         </div>
 
-
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
         <script>
             $(document).ready(function() {
