@@ -46,12 +46,12 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
-                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label> --}}
+                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label>
                                         <input type="text" name="invoice" id="invoice"
                                             class="date form-control border-color" required hidden>
                                         <div class="invalid-feedback">
                                             Masukkan Invoice anda!
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="col-md">
                                         <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
@@ -74,7 +74,8 @@
 
                                     <div class="col-md mt-4">
                                         <label for="role" class="form-label text-color">Status</label>
-                                        <select name="role" id="role" class="form-select border-color" onchange="handleRoleChange(); filterRuanganOptions();" required>
+                                        <select name="role" id="role" class="form-select border-color"
+                                            onchange="handleRoleChange(); filterRuanganOptions();" required>
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="Pegawai">Pegawai</option>
                                             <option value="Mahasiswa">Mahasiswa</option>
@@ -87,18 +88,21 @@
 
                                     <div class="col-md mt-4" id="nomorIndukDiv">
                                         <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
-                                        <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
+                                        <input type="text" name="nomor_induk" id="nomor_induk"
+                                            class="date form-control border-color" maxlength="15" required>
                                         <div class="invalid-feedback">
                                             Masukkan NIM / NIP Anda!
                                         </div>
                                     </div>
 
-                                    @if(isset($origin) && $origin == 'detailRuangan')
+                                    @if (isset($origin) && $origin == 'detailRuangan')
                                         <div class="col-md mt-4">
                                             <label for="ruang" class="form-label text-color">Ruangan</label>
-                                            <input type="hidden" name="id_ruangan" value="{{ $ruangan->id_ruangan }}" data-min="{{ $ruangan->kapasitas_minimal }}" data-max="{{ $ruangan->kapasitas_maksimal }}">
+                                            <input type="hidden" name="id_ruangan" value="{{ $ruangan->id_ruangan }}"
+                                                data-min="{{ $ruangan->kapasitas_minimal }}"
+                                                data-max="{{ $ruangan->kapasitas_maksimal }}">
                                             <input type="text" name="nama_ruangan" value="{{ $ruangan->nama_ruangan }}"
-                                            class="form-control border-color" disabled>
+                                                class="form-control border-color" disabled>
                                             <div class="invalid-feedback">
                                                 Masukkan pilihan ruangan Anda!
                                             </div>
@@ -145,7 +149,7 @@
 
                                     <div class="col-md mt-4">
                                         {{-- <label for="harga_ppn" class="form-label text-color">Harga PPN</label> --}}
-                                        <input type="text" name="harga_ppn" id="harga_ppn"
+                                        <input type="text" name="total_harga" id="total_harga"
                                             class="date form-control border-color" required hidden>
                                     </div>
 
@@ -175,8 +179,10 @@
                             </div>
 
                             <div class="col-md mt-4">
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <button type="submit" id="submitBtn" class=" text-white button-style capitalize-first-letter" style="font-weight:800">Ajukan</button>
+                                <div class="d-grid gap-2 d-flex justify-content-end">
+                                    <button type="submit" id="submitBtn"
+                                        class=" text-white button-style capitalize-first-letter"
+                                        style="font-weight:800">Ajukan</button>
                                 </div>
 
                             </div>
@@ -185,8 +191,12 @@
                 </div>
                 <br>
                 <div>
-                    Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
-                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
+                    Keterangan<br>
+                    <p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang
+                        berlaku)</p>
+                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a
+                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
+                    </p>
 
                     @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
@@ -211,10 +221,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label text-color">Nomor Invoice</label>
                         <p id="confirm_invoice" name="invoice" class="bordered-text"></p>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Peminjam</label>
                         <p id="confirm_nama_peminjam" name="nama_peminjam" class="bordered-text"></p>
@@ -265,7 +275,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Harga (Termasuk PPN 11% dan biaya Virtual Account)</label>
-                        <p id="confirm_harga_dengan_ppn" class="bordered-text" name="harga_ppn"></p>
+                        <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Catatan Peminjaman</label>
@@ -335,8 +345,8 @@
     <script src="{{ asset('assets/js/penyewa/meminjamRuangan.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var origin = "{{ $origin }}";  // Variabel ini diterima dari controller
+        document.addEventListener('DOMContentLoaded', function() {
+            var origin = "{{ $origin }}"; // Variabel ini diterima dari controller
 
             if (origin === 'detailRuangan') {
                 console.log("Running fetchRuanganDetails and adjustParticipantLimits");
@@ -366,7 +376,7 @@
         });
 
         function fetchRuanganDetails() {
-            const origin = "{{ $origin }}";  // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
             let idRuangan;
 
             if (origin === 'detailRuangan') {
@@ -392,7 +402,7 @@
 
             const role = document.getElementById('role').value;
             const hargaInput = document.getElementById('harga_ruangan');
-            const ppnInput = document.getElementById('harga_ppn');
+            const ppnInput = document.getElementById('total_harga');
             const lokasiInput = document.getElementById('lokasi');
 
             console.log("Selected role:", role);
@@ -452,7 +462,7 @@
         }
 
         function adjustParticipantLimits() {
-            const origin = "{{ $origin }}";  // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
             let select, min, max;
 
             if (origin === 'detailRuangan') {
@@ -518,7 +528,7 @@
 
         function showConfirmationModal(event) {
             event.preventDefault();
-            const invoiceNumber = document.getElementById('invoice').value;
+            //const invoiceNumber = document.getElementById('invoice').value;
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const nomorInduk = document.getElementById('nomor_induk').value;
             const nomorTelepon = document.getElementById('nomor_telepon').value;
@@ -530,7 +540,7 @@
             const harga = document.getElementById('harga_ruangan').value;
             const keterangan = document.getElementById('keterangan').value;
 
-            let namaRuangan;  // Mendefinisikan variabel di luar blok if-else
+            let namaRuangan; // Mendefinisikan variabel di luar blok if-else
 
             const origin = "{{ $origin }}";
             if (origin === 'detailRuangan') {
@@ -579,7 +589,7 @@
 
             // console.log("Final price:", priceAkhir);
 
-            document.getElementById('confirm_invoice').innerText = invoiceNumber;
+            //document.getElementById('confirm_invoice').innerText = invoiceNumber;
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
             document.getElementById('confirm_status').innerText = status;
