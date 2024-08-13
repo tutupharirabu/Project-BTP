@@ -1,7 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css"/>
     @php
         use Carbon\Carbon;
     @endphp
@@ -32,88 +32,90 @@
 
             <!-- Status -->
 
-            <div class="row">
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="background-color: #03FC0C;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
-                                check_circle
-                            </span>
-                        </div>
-                        <div class="status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center"
-                            style="">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
-                                Disetujui</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                                @php
-                                    $bookedCount = $dataPeminjaman->where('status', 'Disetujui')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="background-color: #FF0000;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
-                                cancel
-                            </span>
-                        </div>
-                        <div class="status-count left-status text-black text-justify shadow d-flex flex-column justify-content-center"
-                            style="">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
-                                Ditolak</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                                @php
-                                    $bookedCount = $dataPeminjaman->where('status', 'Ditolak')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-between" style="margin-left:54px;">
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex align-items-center">
+                            <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
+                                style="background-color: #03FC0C;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                                    check_circle
+                                </span>
+                            </div>
+                            <div class="status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center"
+                                style="">
+                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                    Disetujui</p>
+                                <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                                    @php
+                                        $bookedCount = $dataPeminjaman->where('status', 'Disetujui')->count();
+                                    @endphp
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="background-color: #FCE303;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
-                                schedule
-                            </span>
-                        </div>
-                        <div
-                            class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
-                                Menunggu</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                                @php
-                                    $bookedCount = $dataPeminjaman->where('status', 'Menunggu')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex align-items-center">
+                            <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
+                                style="background-color: #FF0000;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                                    cancel
+                                </span>
+                            </div>
+                            <div class="status-count left-status text-black text-justify shadow d-flex flex-column justify-content-center"
+                                style="">
+                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                    Ditolak</p>
+                                <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                                    @php
+                                        $bookedCount = $dataPeminjaman->where('status', 'Ditolak')->count();
+                                    @endphp
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
-                    <div class="container d-flex align-items-center">
-                        <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
-                            style="background-color: #03FC0C;">
-                            <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
-                                done_outline
-                            </span>
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex align-items-center">
+                            <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
+                                style="background-color: #FCE303;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                                    schedule
+                                </span>
+                            </div>
+                            <div
+                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                    Menunggu</p>
+                                <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                                    @php
+                                        $bookedCount = $dataPeminjaman->where('status', 'Menunggu')->count();
+                                    @endphp
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
-                        <div
-                            class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                            <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
-                                Selesai</p>
-                            <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
-                                @php
-                                    $bookedCount = $dataPeminjaman->where('status', 'Selesai')->count();
-                                @endphp
-                                {{ $bookedCount }}
-                            </p>
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-4 col-sm-2 ml-4 mt-2" style="margin-right:98px;">
+                        <div class="container d-flex align-items-center">
+                            <div class="status-icon left-status text-black d-flex align-items-center justify-content-center shadow"
+                                style="background-color: #03FC0C;">
+                                <span class="material-symbols-outlined my-0" style="font-size: 3.5em;">
+                                    done_outline
+                                </span>
+                            </div>
+                            <div
+                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                    Selesai</p>
+                                <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
+                                    @php
+                                        $bookedCount = $dataPeminjaman->where('status', 'Selesai')->count();
+                                    @endphp
+                                    {{ $bookedCount }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -417,9 +419,11 @@
                     </div>
                 </div>
             </div>
-            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-            <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
             <script>
                 $(document).ready(function() {

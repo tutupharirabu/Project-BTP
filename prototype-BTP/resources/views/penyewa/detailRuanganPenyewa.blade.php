@@ -17,7 +17,6 @@
             </div>
         </div>
 
-
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
@@ -125,7 +124,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="text-black">
-                            Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku</p>
+                            Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku)</p>
                             <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
                             Fasilitas<p style="margin-left:20px">*Full AC, Toilet, Free Parking, Sound System (Speaker & 2 Mic), Screen, LCD Projector, Whiteboard,
                             Listrik standar (penggunaan listrik di luar yang telah disediakan wajib melaporkan kepada manajemen

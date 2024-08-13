@@ -22,10 +22,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
-                    @if ($origin == 'dashboard')
-                        <a href="/dashboardPenyewa" class="fw-bolder" style="color: #797979; font-size:12px;">Dashboard
-                            ></a>
-                    @elseif ($origin == 'detailRuangan')
+                    @if ($origin == 'detailRuangan')
                         <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar
                             Ruangan > </a>
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
@@ -36,7 +33,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- value -->
         <div class="row justify-content-center mt-2">
@@ -50,12 +46,12 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
-                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label> --}}
+                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label>
                                         <input type="text" name="invoice" id="invoice"
                                             class="date form-control border-color" required hidden>
                                         <div class="invalid-feedback">
                                             Masukkan Invoice anda!
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="col-md">
                                         <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
@@ -78,7 +74,8 @@
 
                                     <div class="col-md mt-4">
                                         <label for="role" class="form-label text-color">Status</label>
-                                        <select name="role" id="role" class="form-select border-color" onchange="handleRoleChange(); filterRuanganOptions();" required>
+                                        <select name="role" id="role" class="form-select border-color"
+                                            onchange="handleRoleChange(); filterRuanganOptions();" required>
                                             <option value="" disabled selected>Pilih Status</option>
                                             <option value="Pegawai">Pegawai</option>
                                             <option value="Mahasiswa">Mahasiswa</option>
@@ -91,31 +88,46 @@
 
                                     <div class="col-md mt-4" id="nomorIndukDiv">
                                         <label for="nomor_induk" class="form-label text-color">NIM / NIP</label>
-                                        <input type="text" name="nomor_induk" id="nomor_induk" class="date form-control border-color" maxlength="15" required>
+                                        <input type="text" name="nomor_induk" id="nomor_induk"
+                                            class="date form-control border-color" maxlength="15" required>
                                         <div class="invalid-feedback">
                                             Masukkan NIM / NIP Anda!
                                         </div>
                                     </div>
 
-                                    <div class="col-md mt-4">
-                                        <label for="ruang" class="form-label text-color">Ruangan</label>
-                                        <select name="id_ruangan" id="id_ruangan" class="form-select border-color" disabled
-                                            onchange="fetchRuanganDetails(); adjustParticipantLimits()" required>
-                                            <option selected disabled value="">Pilih ruangan</option>
-                                            @foreach ($dataRuangan as $dr)
-                                                <option value="{{ $dr->id_ruangan }}"
-                                                    data-min="{{ $dr->kapasitas_minimal }}"
-                                                    data-max="{{ $dr->kapasitas_maksimal }}"
-                                                    data-type="{{ $dr->nama_ruangan }}"
-                                                    {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
-                                                    {{ $dr->nama_ruangan }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Masukkan pilihan ruangan Anda!
+                                    @if (isset($origin) && $origin == 'detailRuangan')
+                                        <div class="col-md mt-4">
+                                            <label for="ruang" class="form-label text-color">Ruangan</label>
+                                            <input type="hidden" name="id_ruangan" value="{{ $ruangan->id_ruangan }}"
+                                                data-min="{{ $ruangan->kapasitas_minimal }}"
+                                                data-max="{{ $ruangan->kapasitas_maksimal }}">
+                                            <input type="text" name="nama_ruangan" value="{{ $ruangan->nama_ruangan }}"
+                                                class="form-control border-color" disabled>
+                                            <div class="invalid-feedback">
+                                                Masukkan pilihan ruangan Anda!
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="col-md mt-4">
+                                            <label for="ruang" class="form-label text-color">Ruangan</label>
+                                            <select name="id_ruangan" id="id_ruangan" class="form-select border-color"
+                                                onchange="fetchRuanganDetails(); adjustParticipantLimits()" required>
+                                                <option selected disabled value="">Pilih ruangan</option>
+                                                @foreach ($dataRuangan as $dr)
+                                                    <option value="{{ $dr->id_ruangan }}"
+                                                        data-min="{{ $dr->kapasitas_minimal }}"
+                                                        data-max="{{ $dr->kapasitas_maksimal }}"
+                                                        data-type="{{ $dr->nama_ruangan }}"
+                                                        {{ isset($ruangan) && $ruangan->id_ruangan == $dr->id_ruangan ? 'selected' : '' }}>
+                                                        {{ $dr->nama_ruangan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Masukkan pilihan ruangan Anda!
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="col-md mt-4">
                                         <label for="lokasi" class="form-label text-color">Lokasi</label>
@@ -137,7 +149,7 @@
 
                                     <div class="col-md mt-4">
                                         {{-- <label for="harga_ppn" class="form-label text-color">Harga PPN</label> --}}
-                                        <input type="text" name="harga_ppn" id="harga_ppn"
+                                        <input type="text" name="total_harga" id="total_harga"
                                             class="date form-control border-color" required hidden>
                                     </div>
 
@@ -167,8 +179,10 @@
                             </div>
 
                             <div class="col-md mt-4">
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <button type="submit" id="submitBtn" class=" text-white button-style capitalize-first-letter" style="font-weight:800">Ajukan</button>
+                                <div class="d-grid gap-2 d-flex justify-content-end">
+                                    <button type="submit" id="submitBtn"
+                                        class=" text-white button-style capitalize-first-letter"
+                                        style="font-weight:800">Ajukan</button>
                                 </div>
 
                             </div>
@@ -177,11 +191,12 @@
                 </div>
                 <br>
                 <div>
-                    Keterangan<br><p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang berlaku</p>
-                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a></p>
-                    Fasilitas<p style="margin-left:20px">*Full AC, Toilet, Free Parking, Sound System (Speaker & 2 Mic), Screen, LCD Projector, Whiteboard,
-                    Listrik standar (penggunaan listrik di luar yang telah disediakan wajib melaporkan kepada manajemen
-                    BTP dan menambahkan daya menggunakan genset dengan biaya yang ditanggung oleh penyewa).</p>
+                    Keterangan<br>
+                    <p style="margin-left:20px">*Harga diatas belum termasuk PPN (sesuai dengan ketentuan regulasi yang
+                        berlaku)</p>
+                    <p style="margin-left:20px">**Untuk informasi lebih lengkap lihat <a
+                            href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
+                    </p>
 
                     @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
@@ -206,10 +221,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label text-color">Nomor Invoice</label>
                         <p id="confirm_invoice" name="invoice" class="bordered-text"></p>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label class="form-label text-color">Nama Peminjam</label>
                         <p id="confirm_nama_peminjam" name="nama_peminjam" class="bordered-text"></p>
@@ -260,7 +275,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Harga (Termasuk PPN 11% dan biaya Virtual Account)</label>
-                        <p id="confirm_harga_dengan_ppn" class="bordered-text" name="harga_ppn"></p>
+                        <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Catatan Peminjaman</label>
@@ -328,5 +343,271 @@
     <script src="{{ asset('assets/js/penyewa/confirmationForm.js') }}"></script>
     <script src="{{ asset('assets/js/penyewa/ketersediaanJam.js') }}"></script>
     <script src="{{ asset('assets/js/penyewa/meminjamRuangan.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var origin = "{{ $origin }}"; // Variabel ini diterima dari controller
+
+            if (origin === 'detailRuangan') {
+                console.log("Running fetchRuanganDetails and adjustParticipantLimits");
+                fetchRuanganDetails();
+                adjustParticipantLimits();
+
+                document.getElementById('role').addEventListener('change', function() {
+                    fetchRuanganDetails(); // Refresh seluruh fungsi saat role berubah
+                });
+            } else {
+                // Pasang event listener untuk perubahan ruangan (id_ruangan) hanya jika tidak dari detailRuangan
+                const idRuanganElement = document.getElementById('id_ruangan');
+                if (idRuanganElement) {
+                    idRuanganElement.addEventListener('change', adjustParticipantLimits);
+                } else {
+                    console.error("Element with id 'id_ruangan' not found");
+                }
+            }
+
+            // Pasang event listener untuk perubahan jumlah peserta, terlepas dari asal
+            const pesertaElement = document.getElementById('peserta');
+            if (pesertaElement) {
+                pesertaElement.addEventListener('change', validateParticipantInput);
+            } else {
+                console.error("Element with id 'peserta' not found");
+            }
+        });
+
+        function fetchRuanganDetails() {
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
+            let idRuangan;
+
+            if (origin === 'detailRuangan') {
+                const idRuanganElement = document.querySelector('input[name="id_ruangan"]');
+                if (idRuanganElement) {
+                    idRuangan = idRuanganElement.value;
+                    console.log("ID Ruangan Dari Detail Ruangan:", idRuangan);
+                } else {
+                    console.error("ID Ruangan tidak ditemukan");
+                    return;
+                }
+            } else {
+                // Menggunakan id_ruangan dari select input jika bukan dari detailRuangan
+                const idRuanganElement = document.getElementById('id_ruangan');
+                if (idRuanganElement) {
+                    idRuangan = idRuanganElement.value;
+                    console.log("ID Ruangan dipilih:", idRuangan);
+                } else {
+                    console.error("Element with id 'id_ruangan' not found");
+                    return;
+                }
+            }
+
+            const role = document.getElementById('role').value;
+            const hargaInput = document.getElementById('harga_ruangan');
+            const ppnInput = document.getElementById('total_harga');
+            const lokasiInput = document.getElementById('lokasi');
+
+            console.log("Selected role:", role);
+            console.log("Selected ruangan ID:", idRuangan);
+
+            function updatePrice(data) {
+                if (role) {
+                    let hargaRuangan;
+                    if (role === 'Pegawai') {
+                        hargaRuangan = 0;
+                        console.log("Internal role, setting price to 0");
+                    } else if (role === 'Mahasiswa' || role === 'Umum') {
+                        hargaRuangan = parseInt(data.harga_ruangan);
+                        console.log("External role, setting price to:", hargaRuangan);
+                    }
+
+                    const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+                    hargaInput.value = formattedHargaRuangan;
+                    console.log("Final formatted price:", formattedHargaRuangan);
+
+                    // Calculate PPN and total price
+                    const ppnRate = 0.11; // Assuming PPN is 11%
+                    const ppnAmount = hargaRuangan * ppnRate;
+                    const totalHarga = hargaRuangan + ppnAmount + 2500;
+                    const formattedTotalHarga = 'Rp ' + totalHarga.toLocaleString('id-ID');
+                    ppnInput.value = formattedTotalHarga;
+                    console.log("Calculated total price including PPN:", formattedTotalHarga);
+                } else {
+                    hargaInput.value = '';
+                    ppnInput.value = '';
+                    console.log("Role not selected, price not set");
+                }
+            }
+
+            if (idRuangan) {
+                fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Fetched data:", data);
+                        lokasiInput.value = data.lokasi;
+                        updatePrice(data); // Mengisi harga dan lokasi saat pertama kali data di-fetch
+
+                        // Pasang event listener untuk mengupdate harga saat role berubah
+                        if (origin === 'detailRuangan') {
+                            document.getElementById('role').addEventListener('change', function() {
+                                fetchRuanganDetails(); // Refresh seluruh fungsi saat role berubah
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error fetching ruangan details:', error));
+            } else {
+                lokasiInput.value = '';
+                hargaInput.value = '';
+                ppnInput.value = '';
+                console.log("No ruangan selected, clearing inputs");
+            }
+        }
+
+        function adjustParticipantLimits() {
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
+            let select, min, max;
+
+            if (origin === 'detailRuangan') {
+                // Handle case where the room is pre-selected
+                select = document.querySelector('input[name="id_ruangan"]');
+                if (select) {
+                    min = parseInt(select.getAttribute("data-min")) || 0;
+                    max = parseInt(select.getAttribute("data-max")) || 0;
+                } else {
+                    console.error("Ruangan input not found or missing attributes");
+                    return;
+                }
+            } else {
+                // Handle case where the user selects the room
+                select = document.getElementById("id_ruangan");
+                if (select && select.options[select.selectedIndex]) {
+                    const selectedOption = select.options[select.selectedIndex];
+                    min = parseInt(selectedOption.getAttribute("data-min")) || 0;
+                    max = parseInt(selectedOption.getAttribute("data-max")) || 0;
+                } else {
+                    console.error("Ruangan select not found or no option selected");
+                    return;
+                }
+            }
+
+            const pesertaSelect = document.getElementById("peserta");
+            if (pesertaSelect) {
+                // Clear existing options
+                pesertaSelect.innerHTML = '<option selected disabled value="">Pilih jumlah peserta</option>';
+
+                // Populate new options based on selected room's capacity
+                for (let i = min; i <= max; i++) {
+                    const option = document.createElement("option");
+                    option.value = i;
+                    option.text = i;
+                    pesertaSelect.appendChild(option);
+                }
+
+                // Display validation message based on room capacity
+                const feedback = pesertaSelect.nextElementSibling;
+                if (feedback) {
+                    feedback.textContent = "Masukkan Jumlah Peserta antara " + min + " dan " + max + "!";
+                }
+            } else {
+                console.error("Peserta select element not found");
+            }
+
+            // Initial check for submit button state
+            validateParticipantInput();
+        }
+
+        function validateParticipantInput() {
+            var pesertaSelect = document.getElementById("peserta");
+            var submitBtn = document.getElementById("submitBtn");
+            var value = parseInt(pesertaSelect.value);
+
+            if (!isNaN(value) && pesertaSelect.selectedIndex > 0) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        function showConfirmationModal(event) {
+            event.preventDefault();
+            //const invoiceNumber = document.getElementById('invoice').value;
+            const namaPeminjam = document.getElementById('nama_peminjam').value;
+            const nomorInduk = document.getElementById('nomor_induk').value;
+            const nomorTelepon = document.getElementById('nomor_telepon').value;
+            const status = document.getElementById('role').value;
+            const lokasi = document.getElementById('lokasi').value;
+            const jumlahPeserta = document.getElementById('peserta').value;
+            const tanggalMulai = document.getElementById('tanggal_mulai').value;
+            const jamMulai = document.getElementById('jam_mulai').value;
+            const harga = document.getElementById('harga_ruangan').value;
+            const keterangan = document.getElementById('keterangan').value;
+
+            let namaRuangan; // Mendefinisikan variabel di luar blok if-else
+
+            const origin = "{{ $origin }}";
+            if (origin === 'detailRuangan') {
+                namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
+                console.log("Nama Ruangan Dari Detail Ruangan:", namaRuangan);
+            } else {
+                namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
+                console.log("Nama Ruangan Tidak Dari Detail Ruangan:", namaRuangan);
+            }
+
+            // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
+            if (status === 'Mahasiswa' || status === 'Umum') { // Per Jam
+                const durasi = document.getElementById('durasi').value;
+                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
+                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
+                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
+                const jamSelesaiFormatted = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+
+                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
+                    tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
+                document.getElementById('confirm_jam_selesai').innerText =
+                    jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
+            } else if (status === 'Pegawai') { // Per Hari
+                const jamSelesai = document.getElementById('jam_selesai').value;
+                const tanggalSelesai = document.getElementById('tanggal_selesai').value;
+
+                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
+                    tanggalSelesai); // Tanggal selesai sesuai input
+                document.getElementById('confirm_jam_selesai').innerText = jamSelesai; // Jam selesai sesuai input
+            }
+
+            // Debugging logs
+            console.log("Selected status:", status);
+            console.log("Input Harga:", harga);
+
+            const cleanedHarga = harga.replace(/[^\d]/g, '');
+            var hargaAwal = parseFloat(cleanedHarga);
+            var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11) + 2500;
+            var priceAkhir;
+
+            if (status === 'Mahasiswa' || status === 'Umum') {
+                priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
+            } else {
+                priceAkhir = 'Rp 0';
+            }
+
+            // console.log("Final price:", priceAkhir);
+
+            //document.getElementById('confirm_invoice').innerText = invoiceNumber;
+            document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
+            document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
+            document.getElementById('confirm_status').innerText = status;
+            document.getElementById('confirm_nomor_induk').innerText = nomorInduk;
+            document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
+            document.getElementById('confirm_lokasi').innerText = lokasi;
+            document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
+            document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
+            document.getElementById('confirm_jam_mulai').innerText = jamMulai;
+            document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
+            document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
+            document.getElementById('confirm_keterangan').innerText = keterangan;
+
+            $('#confirmationModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            }).modal('show');
+        }
+    </script>
 
 @endsection

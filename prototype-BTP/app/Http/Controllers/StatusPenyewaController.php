@@ -21,7 +21,7 @@ class StatusPenyewaController extends Controller
     {
         $data = Peminjaman::findOrFail($id);
 
-        $pdf = PDF::loadView('penyewa.invoices.invoice', compact('data'));
+        $pdf = PDF::loadView('penyewa.invoices.invoice', compact('data'))->setPaper([0, 0, 595.28, 566.93], 'portrait');
 
         return $pdf->stream('invoice.pdf');
     }

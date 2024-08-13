@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Users;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class MeminjamRuanganController extends Controller
 {
@@ -87,7 +84,7 @@ class MeminjamRuanganController extends Controller
         }
 
         $meminjamRuangan = new Peminjaman([
-            'invoice' => $request->input('invoice'),
+            // 'invoice' => $request->input('invoice'),
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nomor_induk' => $request->input('nomor_induk'),
             'nomor_telepon' => $request->input('nomor_telepon'),
@@ -96,7 +93,7 @@ class MeminjamRuanganController extends Controller
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai_plus_one_hour,
             'jumlah' => $request->input('jumlah'),
-            'harga_ppn' => $request->input('harga_ppn'),
+            'total_harga' => $request->input('total_harga'),
             'status' => 'Menunggu',
             'keterangan' => $keterangan,
         ]);
