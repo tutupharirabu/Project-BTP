@@ -129,7 +129,7 @@
                                         <th scope="col" class="text-center">Maksimal Kapasitas</th>
                                         <th scope="col" class="text-center">Harga </th>
                                         <th scope="col" class="text-center">Gambar </th>
-                                        <th scope="col" class="text-center">Keterangan </th>
+                                        <th scope="col" class="text-center">Fasilitas</th>
                                         <th scope="col" class="text-center">Status </th>
                                         <th scope="col" class="text-center">Perbaharui oleh</th>
                                         <th scope="col" class="text-center">Action </th>
@@ -216,7 +216,7 @@
                                                     class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal{{ $data->id_ruangan }}">
-                                                    Keterangan
+                                                    Fasilitas
                                                 </button>
 
                                                 <div class="modal fade" id="exampleModal{{ $data->id_ruangan }}"
@@ -228,12 +228,12 @@
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5"
                                                                     id="exampleModalLabel{{ $data->id_ruangan }}">
-                                                                    Keterangan Ruangan</h1>
+                                                                    Fasilitas Ruangan</h1>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                {{ $data->keterangan }}
+                                                                {!! nl2br(e($data->keterangan)) !!}
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"

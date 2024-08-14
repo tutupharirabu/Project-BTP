@@ -167,7 +167,7 @@
                                     </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
-                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan : - Internet\n - Wifi"></textarea>
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" ></textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -280,6 +280,30 @@
     </div>
 
     <script>
+        //buat bullet 
+        const bullet = "\u2022";
+        const bulletWithSpace = `${bullet} `;
+        const enter = 13;
+
+        const handleInput = (event) => {
+            const { keyCode, target } = event;
+            const { selectionStart, value } = target;
+
+            if (keyCode === enter) {
+                const lines = value.split('\n');
+                const currentLine = value.substr(0, selectionStart).split('\n').length - 1;
+                
+                lines[currentLine] = `${bulletWithSpace}${lines[currentLine].trim()}`;
+                
+                target.value = lines.join('\n');
+                
+                target.selectionStart = target.selectionEnd = selectionStart + bulletWithSpace.length;
+            }
+
+            if (value[0] !== bullet) {
+                target.value = `${bulletWithSpace}${value}`;
+            }
+        }
         document.getElementById('nama_ruangan').addEventListener('blur', function() {
             var namaRuangan = this.value;
             if (namaRuangan) {

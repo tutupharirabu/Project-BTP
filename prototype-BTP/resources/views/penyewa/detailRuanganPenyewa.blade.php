@@ -96,6 +96,17 @@
                                 {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
+                            <td class="border border-secondary">Fasilitas</td>
+                            <td colspan="3" class="border border-secondary">
+                                @php
+                                    $keterangan = str_replace('• ', '• ', $ruangan->keterangan); 
+                                    $keterangan = str_replace("\n", '<br>', $keterangan); 
+                                @endphp
+                                {!! $keterangan !!}
+                            </td>
+                        </tr>
+                        </tr>
+                        <tr>
                             <td class="border border-secondary">Status Ketersediaan Ruangan</td>
                             <td colspan="3" class="border border-secondary">
                                 {{-- btn ketersediaan --}}
