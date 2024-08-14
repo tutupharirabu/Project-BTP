@@ -122,7 +122,7 @@
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
                                             name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
-                                            <option selected disabled>Pilih Lokasi Gedung</option>
+                                            <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>
                                             <option value="Gedung B">Gedung B</option>
                                             <option value="Gedung C">Gedung C</option>
@@ -150,7 +150,7 @@
                                         {{-- <input type="text" id="satuan" class="bordered-text form-control"
                                             name="satuan" required> --}}
                                             <select class="bordered-text form-control" name="satuan" id="satuan" required>
-                                                <option selected disabled>Pilih Satuan Waktu</option>
+                                                <option value="" selected disabled>Pilih Satuan Waktu</option>
                                                 <option value="Seat / Bulan">Seat / Bulan</option>
                                                 <option value="Seat / Hari">Seat / Hari</option>
                                                 <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
@@ -167,7 +167,7 @@
                                     </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
-                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" ></textarea>
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" required></textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
