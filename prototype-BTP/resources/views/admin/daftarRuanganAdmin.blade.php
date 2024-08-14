@@ -123,6 +123,7 @@
                                         <th scope="col" class="text-center">No </th>
                                         {{-- <th scope="col" class="text-center">No Ruangan</th> --}}
                                         <th scope="col" class="text-center">Nama Ruangan</th>
+                                        <th scope="col" class="text-center">Nama Gedung</th>
                                         <th scope="col" class="text-center">Ukuran Ruangan</th>
                                         <th scope="col" class="text-center">Minimal Kapasitas</th>
                                         <th scope="col" class="text-center">Maksimal Kapasitas</th>
@@ -140,6 +141,7 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             {{-- <td>{{ $data->id_ruangan }}</td> --}}
                                             <td>{{ $data->nama_ruangan }}</td>
+                                            <td>{{ $data->lokasi}}</td>
                                             <td>{{ $data->ukuran }}</td>
                                             <td class="text-center">{{ $data->kapasitas_minimal }}</td>
                                             <td class="text-center">{{ $data->kapasitas_maksimal }}</td>

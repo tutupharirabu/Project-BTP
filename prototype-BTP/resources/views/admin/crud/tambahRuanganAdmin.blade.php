@@ -119,8 +119,15 @@
                                     <label for="lokasi"
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="lokasi" class="bordered-text form-control"
-                                            name="lokasi" required>
+                                        <!-- <input type="text" id="lokasi" class="bordered-text form-control"
+                                            name="lokasi" required> -->
+                                        <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
+                                            <option selected disabled>Pilih Lokasi Gedung</option>
+                                            <option value="Gedung A">Gedung A</option>
+                                            <option value="Gedung B">Gedung B</option>
+                                            <option value="Gedung C">Gedung C</option>
+                                            <option value="Gedung D">Gedung D</option>
+                                        </select>
                                         <div class="invalid-feedback">Silakan masukkan lokasi.</div>
                                     </div>
                                 </div>

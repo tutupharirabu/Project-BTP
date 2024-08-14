@@ -107,8 +107,23 @@
                                     <label for="lokasi"
                                         class="col-md-3 col-form-label text-md-right text-color">Lokasi</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="lokasi" class="form-control bordered-text border-color"
-                                            name="lokasi" value="{{ $dataRuangan->lokasi }}" required>
+                                        {{-- <input type="text" id="lokasi" class="form-control bordered-text border-color"
+                                            name="lokasi" value="{{ $dataRuangan->lokasi }}" required>  --}}
+                                        <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
+                                            <option >{{ $dataRuangan->lokasi }}</option>
+                                            @if ($dataRuangan->lokasi != 'Gedung A')
+                                                <option value="Gedung A">Gedung A</option>
+                                            @endif
+                                            @if ($dataRuangan->lokasi != 'Gedung B')
+                                                <option value="Gedung B">Gedung B</option>
+                                            @endif
+                                            @if ($dataRuangan->lokasi != 'Gedung C')
+                                                <option value="Gedung C">Gedung C</option>
+                                            @endif
+                                            @if ($dataRuangan->lokasi != 'Gedung D')
+                                                <option value="Gedung D">Gedung D</option>
+                                            @endif
+                                        </select>
                                         <div class="invalid-feedback">Silakan masukkan lokasi.</div>
                                     </div>
                                 </div>
@@ -141,8 +156,12 @@
                                             onchange="updateTersedia()">
                                             <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}
                                             </option>
-                                            <option value="Tersedia">Tersedia</option>
-                                            <option value="Digunakan">Digunakan</option>
+                                            @if ($dataRuangan->status != 'Tersedia')
+                                                <option value="Tersedia">Tersedia</option>          
+                                            @endif
+                                            @if ($dataRuangan->status != 'Digunakan')
+                                                <option value="Digunakan">Digunakan</option>
+                                            @endif
                                         </select>
                                         <div class="invalid-feedback">Silakan pilih status.</div>
                                         <input type="number" id="tersedia" class="form-control bordered-text"
