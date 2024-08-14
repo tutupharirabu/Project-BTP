@@ -189,7 +189,7 @@
                                     </label>
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="nama_ruangan" class="form-control bordered-text border-color" name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required> --}}
-                                        <textarea name="fasilitas" id="fasilitas" cols="30" rows="10" class="bordered-text form-control" onkeyup="handleInput(event)">{{$dataRuangan->keterangan}}</textarea>
+                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control">{{$dataRuangan->keterangan}}</textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>

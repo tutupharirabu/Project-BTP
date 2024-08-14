@@ -167,7 +167,7 @@
                                     </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
-                                        <textarea name="fasilitas" id="fasilitas" cols="30" rows="10" class="bordered-text form-control" onkeyup="handleInput(event)" placeholder="Masukkan Fasilitas ruangan misalkan - Internet" required></textarea>
+                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan : - Internet\n - Wifi"></textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -280,34 +280,6 @@
     </div>
 
     <script>
-        const bullet = "\u2022";
-        const bulletWithSpace = `${bullet} `;
-        const enter = 13;
-
-
-        const handleInput = (event) => {
-        const { keyCode, target } = event;
-        const { selectionStart, value } = target;
-        
-        if (keyCode === enter) {
-            console.log('a');
-            target.value = [...value]
-            .map((c, i) => i === selectionStart - 1
-                ? `\n${bulletWithSpace}`
-                : c
-            )
-            .join('');
-            console.log(target.value);
-            
-            target.selectionStart = selectionStart+bulletWithSpace.length;
-            target.selectionEnd = selectionStart+bulletWithSpace.length;
-        }
-        
-        if (value[0] !== bullet) {
-            target.value = `${bulletWithSpace}${value}`;
-        }
-        }
-        
         document.getElementById('nama_ruangan').addEventListener('blur', function() {
             var namaRuangan = this.value;
             if (namaRuangan) {
@@ -333,6 +305,7 @@
                     });
             }
         });
+
         function formatRoomSize(input) {
             let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
             if (value.length >= 2) {
