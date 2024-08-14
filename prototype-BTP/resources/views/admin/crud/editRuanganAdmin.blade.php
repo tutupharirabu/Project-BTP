@@ -110,7 +110,7 @@
                                         {{-- <input type="text" id="lokasi" class="form-control bordered-text border-color"
                                             name="lokasi" value="{{ $dataRuangan->lokasi }}" required>  --}}
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
-                                            <option >{{ $dataRuangan->lokasi }}</option>
+                                            <option>{{ $dataRuangan->lokasi }}</option>
                                             @if ($dataRuangan->lokasi != 'Gedung A')
                                                 <option value="Gedung A">Gedung A</option>
                                             @endif
@@ -142,9 +142,21 @@
                                     <label for="satuan" class="col-md-3 col-form-label text-md-right text-color">Satuan
                                         Waktu Penyewaan</label>
                                     <div class="col-md-7">
-                                        <input type="text" id="satuan"
+                                        {{-- <input type="text" id="satuan"
                                             class="form-control bordered-text border-color" name="satuan"
-                                            value="{{ $dataRuangan->satuan }}" required>
+                                            value="{{ $dataRuangan->satuan }}" required> --}}
+                                            <select class="bordered-text form-control" name="satuan" id="satuan" required>
+                                                <option>{{ $dataRuangan->satuan }}</option>
+                                                @if ($dataRuangan->satuan != 'Seat / Bulan')
+                                                    <option value="Seat / Bulan">Seat / Bulan</option>  
+                                                @endif
+                                                @if ($dataRuangan->satuan != 'Seat / Hari')
+                                                    <option value="Seat / Hari">Seat / Hari</option>
+                                                @endif
+                                                @if ($dataRuangan->satuan != 'Halfday / 4 Jam')
+                                                    <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
+                                                @endif
+                                            </select>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>
                                     </div>
                                 </div>
@@ -170,17 +182,15 @@
                                 </div>
                                 <div class="form-group row mb-2">
                                     <label for="keterangan" class="col-md-3 col-form-label text-md-right text-color">
-                                        Keterangan Ruangan
-                                        <span class="form-text">
+                                        Fasilitas Ruangan
+                                        {{-- <span class="form-text">
                                             (Opsional)
-                                        </span>
+                                        </span> --}}
                                     </label>
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="nama_ruangan" class="form-control bordered-text border-color" name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required> --}}
-                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="bordered-text form-control">
-                                            {{ $dataRuangan->keterangan }}
-                                        </textarea>
-                                        <div class="invalid-feedback">Silakan masukkan keterangan ruangan.</div>
+                                        <textarea name="fasilitas" id="fasilitas" cols="30" rows="10" class="bordered-text form-control" onkeyup="handleInput(event)">{{$dataRuangan->keterangan}}</textarea>
+                                        <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
                             </div>
@@ -281,6 +291,33 @@
     <script src="{{ asset('assets/js/admin/editRuangan.js') }}"></script>
 
     <script>
+        const bullet = "\u2022";
+        const bulletWithSpace = `${bullet} `;
+        const enter = 13;
+
+
+        const handleInput = (event) => {
+        const { keyCode, target } = event;
+        const { selectionStart, value } = target;
+        
+        if (keyCode === enter) {
+            console.log('a');
+            target.value = [...value]
+            .map((c, i) => i === selectionStart - 1
+                ? `\n${bulletWithSpace}`
+                : c
+            )
+            .join('');
+            console.log(target.value);
+            
+            target.selectionStart = selectionStart+bulletWithSpace.length;
+            target.selectionEnd = selectionStart+bulletWithSpace.length;
+        }
+        
+        if (value[0] !== bullet) {
+            target.value = `${bulletWithSpace}${value}`;
+        }
+        }
         function formatRoomSize(input) {
             let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
             if (value.length >= 2) {
