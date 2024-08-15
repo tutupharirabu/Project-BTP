@@ -13,7 +13,10 @@ class StatusPenyewaController extends Controller
      */
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with('ruangan')->orderBy('created_at', 'desc')->get();
+        $dataPeminjaman = Peminjaman::with('ruangan')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
         return view('penyewa.statusPenyewa', compact('dataPeminjaman'));
     }
 
