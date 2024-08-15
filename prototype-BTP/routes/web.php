@@ -52,7 +52,7 @@ Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'
 Route::get('/get-ruangan-details',  [MeminjamRuanganController::class, 'getRuanganDetails']);
 
 // Admin Lihat Status Ruangan
-Route::get('/statusRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
+Route::get('/daftarRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
 Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index'])->middleware('auth');
 
 // Status Pengajuan

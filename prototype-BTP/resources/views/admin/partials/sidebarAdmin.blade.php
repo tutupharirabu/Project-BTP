@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusRuanganAdmin">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganAdmin">
                         <i class="material-symbols-outlined me-2">view_list</i>
                         <span>Daftar Ruangan</span>
                     </a>

@@ -149,10 +149,16 @@
                                                 {{ $data->satuan }}
                                             </td>
                                             <td>
-                                                <a class="text-blue" href="#" data-toggle="modal"
+                                                {{-- <a class="text-blue" href="#" data-toggle="modal"
                                                     data-target="#imageModal{{ $data->id_ruangan }}">
                                                     <u>Gambar</u>
-                                                </a>
+                                                </a> --}}
+                                                <button type="button"
+                                                    class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#imageModal{{ $data->id_ruangan }}">
+                                                    Gambar
+                                                </button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="imageModal{{ $data->id_ruangan }}"
@@ -164,7 +170,7 @@
                                                                 <h5 class="modal-title" id="exampleModalLabel">Gambar
                                                                     Ruangan</h5>
                                                                 <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    data-bs-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -205,7 +211,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
+                                                                    data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
                                                     </div>

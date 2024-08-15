@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
-                    <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar Ruangan
+                    <a href="/daftarRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar Ruangan
                         ></a>
                     <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Tambah Ruangan</a>
                 </div>
@@ -192,7 +192,10 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__label" style="color: #717171;">Gambar Utama</span>
+                                            <span class="material-symbols-outlined" style="color: #717171; font-size: 48px;">
+                                                add_circle
+                                            </span>
+                                            <span class="drop-zone__label fw-bold" style="color: #717171;">Gambar Utama</span>
                                             <input type="file" for="url" id="url" name="url[]"
                                                 class="drop-zone__input" required>
                                             <div class="invalid-feedback" style="bottom:-15%">Silakan unggah gambar utama.
@@ -201,28 +204,40 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__label">Gambar 2</span>
+                                            <span class="material-symbols-outlined" style="font-size: 36px;">
+                                                add_circle
+                                                </span>
+                                            <span class="drop-zone__label fw-normal">Gambar 2</span>
                                             <input type="file" id="gambar_2" name="url[]"
                                                 class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__label">Gambar 3</span>
+                                            <span class="material-symbols-outlined" style="font-size: 36px;">
+                                                add_circle
+                                                </span>
+                                            <span class="drop-zone__label fw-normal">Gambar 3</span>
                                             <input type="file" id="gambar_3" name="url[]"
                                                 class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__label">Gambar 4</span>
+                                            <span class="material-symbols-outlined" style="font-size: 36px;">
+                                                add_circle
+                                                </span>
+                                            <span class="drop-zone__label fw-normal">Gambar 4</span>
                                             <input type="file" id="gambar_4" name="url[]"
                                                 class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="drop-zone">
-                                            <span class="drop-zone__label">Gambar 5</span>
+                                            <span class="material-symbols-outlined" style="font-size: 36px;">
+                                                add_circle
+                                                </span>
+                                            <span class="drop-zone__label fw-normal">Gambar 5</span>
                                             <input type="file" id="gambar_5" name="url[]"
                                                 class="drop-zone__input">
                                         </div>
@@ -280,7 +295,7 @@
     </div>
 
     <script>
-        //buat bullet 
+        //buat bullet
         const bullet = "\u2022";
         const bulletWithSpace = `${bullet} `;
         const enter = 13;
@@ -292,11 +307,11 @@
             if (keyCode === enter) {
                 const lines = value.split('\n');
                 const currentLine = value.substr(0, selectionStart).split('\n').length - 1;
-                
+
                 lines[currentLine] = `${bulletWithSpace}${lines[currentLine].trim()}`;
-                
+
                 target.value = lines.join('\n');
-                
+
                 target.selectionStart = target.selectionEnd = selectionStart + bulletWithSpace.length;
             }
 

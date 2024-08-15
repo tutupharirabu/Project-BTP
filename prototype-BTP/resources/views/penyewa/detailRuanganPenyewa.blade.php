@@ -99,8 +99,8 @@
                             <td class="border border-secondary">Fasilitas</td>
                             <td colspan="3" class="border border-secondary">
                                 @php
-                                    $keterangan = str_replace('• ', '• ', $ruangan->keterangan); 
-                                    $keterangan = str_replace("\n", '<br>', $keterangan); 
+                                    $keterangan = str_replace('• ', '• ', $ruangan->keterangan);
+                                    $keterangan = str_replace("\n", '<br>', $keterangan);
                                 @endphp
                                 {!! $keterangan !!}
                             </td>

@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
-                    <a href="/statusRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar Ruangan
+                    <a href="/daftarRuanganAdmin" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar Ruangan
                         ></a>
                     <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Edit Ruangan</a>
                 </div>
@@ -148,7 +148,7 @@
                                             <select class="bordered-text form-control" name="satuan" id="satuan" required>
                                                 <option>{{ $dataRuangan->satuan }}</option>
                                                 @if ($dataRuangan->satuan != 'Seat / Bulan')
-                                                    <option value="Seat / Bulan">Seat / Bulan</option>  
+                                                    <option value="Seat / Bulan">Seat / Bulan</option>
                                                 @endif
                                                 @if ($dataRuangan->satuan != 'Seat / Hari')
                                                     <option value="Seat / Hari">Seat / Hari</option>
@@ -169,7 +169,7 @@
                                             <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}
                                             </option>
                                             @if ($dataRuangan->status != 'Tersedia')
-                                                <option value="Tersedia">Tersedia</option>          
+                                                <option value="Tersedia">Tersedia</option>
                                             @endif
                                             @if ($dataRuangan->status != 'Digunakan')
                                                 <option value="Digunakan">Digunakan</option>
@@ -210,6 +210,9 @@
                                                         alt="" width="150" height="100">
                                                     @php $gambarExists = true; @endphp
                                                 @else
+                                                    <span class="material-symbols-outlined" style="color: #717171; font-size: 48px;">
+                                                        add_circle
+                                                    </span>
                                                     Gambar Utama
                                                     @php $gambarExists = false; @endphp
                                                 @endif
@@ -224,12 +227,15 @@
                                     @for ($i = 1; $i <= 4; $i++)
                                         <div class="col-6">
                                             <div class="drop-zone">
-                                                <span class="drop-zone__prompt">
+                                                <span class="drop-zone__prompt" style="display: flex; flex-direction: column; align-items: center;">
                                                     @if (!empty($dataRuangan->gambar) && $dataRuangan->gambar->count() > $i)
                                                         <img src="{{ asset('assets/' . $dataRuangan->gambar[$i]->url) }}"
                                                             alt="" width="150" height="100">
                                                     @else
-                                                        Gambar {{ $i + 1 }}
+                                                        <span class="material-symbols-outlined" style="font-size: 36px;">
+                                                            add_circle
+                                                         </span>
+                                                        <span>Gambar {{ $i + 1 }}</span>
                                                     @endif
                                                 </span>
                                                 <input type="file" id="gambar_{{ $i + 1 }}" name="url[]"
@@ -291,7 +297,7 @@
     <script src="{{ asset('assets/js/admin/editRuangan.js') }}"></script>
 
     <script>
-        //buat bullet  
+        //buat bullet
         const bullet = "\u2022";
         const bulletWithSpace = `${bullet} `;
         const enter = 13;
@@ -303,11 +309,11 @@
             if (keyCode === enter) {
                 const lines = value.split('\n');
                 const currentLine = value.substr(0, selectionStart).split('\n').length - 1;
-                
+
                 lines[currentLine] = `${bulletWithSpace}${lines[currentLine].trim()}`;
-                
+
                 target.value = lines.join('\n');
-                
+
                 target.selectionStart = target.selectionEnd = selectionStart + bulletWithSpace.length;
             }
 
