@@ -10,7 +10,7 @@
 
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
         <script src="assets/js/admin/daftarRuangan.js"></script>
     </head>
     <div class="container-fluid mt-4">
@@ -56,18 +56,18 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                        placeholder="Cari riwayat..."
-                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                    {{-- <button type="button" class="btn btn-md text-white text-center"
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div class="d-flex align-items-center">
+                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                    placeholder="Cari riwayat..."
+                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                {{-- <button type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                </div>
-                                                <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
-                                                    style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
-                                            </div>
-                                        </div> -->
+                                                            </div>
+                                                            <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
+                                                                style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
+                                                        </div>
+                                                    </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -145,7 +145,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
         <script>
             $(document).ready(function() {
