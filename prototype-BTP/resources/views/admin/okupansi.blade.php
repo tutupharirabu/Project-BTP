@@ -53,7 +53,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Hari</th>
+                            <th class="text-center">Hari</th>
                             @foreach ($dataRuangan as $dr)
                                 <th>{{ $dr->nama_ruangan }}</th>
                             @endforeach
@@ -64,14 +64,14 @@
                             <tr>
                                 <td>{{ $day }}</td>
                                 @foreach ($dataRuangan as $dr)
-                                    <td>{{ $dataByDayAndRoom[$day][$dr->nama_ruangan] ?? 0 }}</td>
+                                    <td class="text-center">{{ $dataByDayAndRoom[$day][$dr->nama_ruangan] ?? 0 }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
                         <tr>
                             <td>Jumlah</td>
                             @foreach ($dataRuangan as $dr)
-                                <td>{{ $totalByRoom[$dr->nama_ruangan] ?? 0 }}</td>
+                                <td class="text-center">{{ $totalByRoom[$dr->nama_ruangan] ?? 0 }}</td>
                             @endforeach
                         </tr>
                         <tr>
@@ -81,19 +81,19 @@
                         <tr>
                             <td>Kapasitas ruangan</td>
                             @foreach ($dataRuangan as $dr)
-                                <td>{{ $dr->kapasitas_maksimal }}</td>
+                                <td class="text-center">{{ $dr->kapasitas_maksimal }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>1 Sesi 4 Jam, 1 hari 3 sesi</td>
                             @foreach ($dataRuangan as $dr)
-                                <td>{{ $dr->kapasitas_maksimal * 3 }}</td>
+                                <td class="text-center">{{ $dr->kapasitas_maksimal * 3 }}</td>
                             @endforeach
                         </tr>
                         <tr>
                             <td>Penggunaan kapasitas maksimum per ruangan dalam 1 bulan (31 hari)</td>
                             @foreach ($dataRuangan as $dr)
-                                <td>{{ $dr->kapasitas_maksimal * 3 * 31 }}</td>
+                                <td class="text-center">{{ $dr->kapasitas_maksimal * 3 * 31 }}</td>
                             @endforeach
                         </tr>
                         <tr>
@@ -114,7 +114,7 @@
                                     $occupancyPercentage =
                                         $totalCapacity > 0 ? ($totalOccupancy / $totalCapacity) * 100 : 0;
                                 @endphp
-                                <td>{{ number_format($occupancyPercentage, 2) }}%</td>
+                                <td class="text-center">{{ number_format($occupancyPercentage, 2) }}%</td>
                             @endforeach
                         </tr>
                         <tr>

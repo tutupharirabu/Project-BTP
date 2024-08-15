@@ -122,7 +122,7 @@ function showSuccessModal(roomName) {
 
 function closeSuccessModal() {
     document.getElementById('successModal').style.display = 'none';
-    window.location.href = '/statusRuanganAdmin';
+    window.location.href = '/daftarRuanganAdmin';
 }
 
 document.getElementById('edit-form').addEventListener('submit', function (e) {

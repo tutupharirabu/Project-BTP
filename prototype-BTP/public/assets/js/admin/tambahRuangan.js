@@ -90,7 +90,7 @@ function showSuccessModal(roomName) {
 
 function closeSuccessModal() {
     document.getElementById('successModal').style.display = 'none';
-    window.location.href = '/statusRuanganAdmin';
+    window.location.href = '/daftarRuanganAdmin';
 }
 
 // Bootstrap form validation

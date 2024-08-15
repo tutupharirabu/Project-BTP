@@ -90,7 +90,7 @@ class AdminStatusRuanganController extends Controller
             ]);
         }
 
-        return redirect('/statusRuanganAdmin')->with('success', 'Ruangan dan Gambar berhasil ditambahkan');
+        return redirect('/daftarRuanganAdmin')->with('success', 'Ruangan dan Gambar berhasil ditambahkan');
     }
 
     /**
@@ -139,7 +139,7 @@ class AdminStatusRuanganController extends Controller
             $this->uploadGambar($dataRuangan, $request);
         }
 
-        return redirect('/statusRuanganAdmin')->with('success', 'Ruangan updated successfully~');
+        return redirect('/daftarRuanganAdmin')->with('success', 'Ruangan updated successfully~');
     }
 
     protected function updateRuangan($dataRuangan, $request)

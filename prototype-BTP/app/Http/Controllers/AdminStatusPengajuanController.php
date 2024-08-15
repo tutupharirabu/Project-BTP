@@ -11,7 +11,10 @@ class AdminStatusPengajuanController extends Controller
 {
     public function index()
     {
-        $dataPeminjaman = Peminjaman::with(['ruangan', 'users'])->orderBy('created_at', 'desc')->get();
+        $dataPeminjaman = Peminjaman::with(['ruangan', 'users'])
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
         return view('admin.statusPengajuanAdmin', compact('dataPeminjaman'));
     }
 
