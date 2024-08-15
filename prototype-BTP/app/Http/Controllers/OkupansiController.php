@@ -163,12 +163,19 @@ class OkupansiController extends Controller
         $csvData[] = ['Okupansi pemakaian ruangan di BTP (dalam %)', number_format(($totalOverall / $totalCapacityMonthly) * 100, 2) . '%'];
 
         $fileName = 'Data Okupansi Peminjaman Ruangan BTP.csv';
-        $file = fopen(storage_path('app/public/' . $fileName), 'w');
+        $filePath = storage_path('app/public/' . $fileName);
+
+        // Ensure the directory exists
+        if (!file_exists(dirname($filePath))) {
+            mkdir(dirname($filePath), 0777, true);
+        }
+
+        $file = fopen($filePath, 'w');
         foreach ($csvData as $line) {
             fputcsv($file, $line);
         }
         fclose($file);
 
-        return Response::download(storage_path('app/public/' . $fileName));
+        return Response::download($filePath);
     }
 }
