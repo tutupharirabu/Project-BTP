@@ -415,7 +415,7 @@
                         hargaRuangan = 0;
                         console.log("Internal role, setting price to 0");
                     } else if (role === 'Mahasiswa' || role === 'Umum') {
-                        hargaRuangan = parseInt(data.harga_ruangan);
+                        hargaRuangan = parseInt(data.harga_ruangan + 2500);
                         console.log("External role, setting price to:", hargaRuangan);
                     }
 
@@ -426,7 +426,7 @@
                     // Calculate PPN and total price
                     const ppnRate = 0.11; // Assuming PPN is 11%
                     const ppnAmount = hargaRuangan * ppnRate;
-                    const totalHarga = hargaRuangan + ppnAmount + 2500;
+                    const totalHarga = hargaRuangan + ppnAmount;
                     const formattedTotalHarga = 'Rp ' + totalHarga.toLocaleString('id-ID');
                     ppnInput.value = formattedTotalHarga;
                     console.log("Calculated total price including PPN:", formattedTotalHarga);
