@@ -40,14 +40,14 @@
             <br>
         </div>
 
-        {{-- <div class="p-3 border mb-2"
+        <div class="p-3 border mb-2"
             style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
             <center>
                 <h2>Grafik Peminjaman Per Bulan</h2>
             </center>
             <canvas id="occupancyChart" width="200" height="100"></canvas>
-        </div> --}}
+        </div>
     </div>
 
     <!-- Modal -->
