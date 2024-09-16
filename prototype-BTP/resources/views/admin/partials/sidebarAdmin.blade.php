@@ -31,12 +31,12 @@
                         <span>Status Pengajuan</span>
                     </a>
                 </div>
-                <div class="m-1">
+                {{-- <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/okupansiRuangan">
                         <i class="material-symbols-outlined me-2 ">database</i>
                         <span>Okupansi Peminjaman Ruangan</span>
                     </a>
-                </div>
+                </div> --}}
                 {{-- <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/daftarRuanganPenyewa">
                         <i class="material-symbols-outlined me-2">view_list</i>
