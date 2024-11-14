@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('total_harga', 255);
             $table->string('status', 255);
             $table->string('keterangan', 255);
+            $table->uuid('id_users')->nullable();
             $table->uuid('id_ruangan');
+            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->timestamps();
         });
