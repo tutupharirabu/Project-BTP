@@ -56,7 +56,7 @@ function submitForm() {
 
     fetch(form.action, {
         method: 'POST',
-        body: formData
+        body: formData,
     })
     .then(response => {
         if (response.ok) {

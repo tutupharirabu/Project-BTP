@@ -12,22 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->increments('id_peminjaman');
-            $table->unsignedInteger('id_users')->nullable();
-            // $table->string('invoice', 255);
+            $table->uuid('id_peminjaman')->primary();
             $table->string('nama_peminjam', 255);
             $table->string('role', 255);
             $table->string('nomor_induk',255);
             $table->string('nomor_telepon',255);
-            $table->unsignedInteger('id_ruangan')->nullable();
-            $table->foreign('id_users')->references('id_users')->on('users');
-            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
+            $table->string('ktp_url')->nullable();
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
             $table->string('total_harga', 255);
             $table->string('status', 255);
             $table->string('keterangan', 255);
+            $table->uuid('id_ruangan');
+            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->timestamps();
         });
     }

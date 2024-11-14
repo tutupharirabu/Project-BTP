@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cloudinary\Cloudinary;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
@@ -47,9 +48,11 @@ class MeminjamRuanganController extends Controller
         ]);
 
         $keterangan = $request->input('keterangan');
-        if($keterangan == NULL){
+        if ($keterangan == NULL) {
             $keterangan = '~';
         }
+
+        $uploadedFileUrl = null;
 
         $status = $request->input('role');
         if ($status == 'Pegawai') {
@@ -62,6 +65,29 @@ class MeminjamRuanganController extends Controller
         $tanggal_mulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
 
         if ($status == 'Mahasiswa' || $status == 'Umum') {
+            $request->validate([
+                'ktp_url' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            try {
+                $cloudinary = new Cloudinary();
+                $uploadedFileUrl = $cloudinary->uploadApi()->upload($request->file('ktp_url')->getRealPath(), [
+                    'folder' => 'ktp_btp',
+                    'transformation' => [
+                        [
+                            'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',
+                            'color' => '#FF0000',
+                            'opacity' => 50,
+                            'gravity' => 'south_east',
+                            'x' => 10,
+                            'y' => 10,
+                        ],
+                    ],
+                ])['secure_url'];
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['ktp_url' => 'Failed to upload KTP image.']);
+            }
+
             $durasi = '04:00';
             $tanggalMulai = $request->input('tanggal_mulai');
             $jamMulai = $request->input('jam_mulai');
@@ -84,11 +110,11 @@ class MeminjamRuanganController extends Controller
         }
 
         $meminjamRuangan = new Peminjaman([
-            // 'invoice' => $request->input('invoice'),
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nomor_induk' => $request->input('nomor_induk'),
             'nomor_telepon' => $request->input('nomor_telepon'),
             'id_ruangan' => $request->input('id_ruangan'),
+            'ktp_url' => $uploadedFileUrl,
             'role' => $request->input('role'),
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai_plus_one_hour,

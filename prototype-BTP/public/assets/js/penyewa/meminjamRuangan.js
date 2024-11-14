@@ -26,7 +26,7 @@ function filterRuanganOptions() {
 
         if (role === 'Mahasiswa' || role === 'Umum') {
             // Cek apakah ruanganType adalah 'Multimedia' atau 'R Training'
-            if (ruanganType === 'Multimedia (A)' || ruanganType === 'R Training (B204)') {
+            if (ruanganType === 'Coworking Space (B103)' || ruanganType === 'R Training (B204)') {
                 option.style.display = 'block';  // Tampilkan ruangan yang sesuai
             } else {
                 option.style.display = 'none';   // Sembunyikan ruangan yang tidak sesuai

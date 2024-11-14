@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gambar', function (Blueprint $table) {
-            $table->increments('id_gambar');
-            $table->unsignedInteger('id_ruangan')->nullable();
-            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan');
+            $table->uuid('id_gambar')->primary();
+            $table->uuid('id_ruangan');
+            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->string('url', 255);
             $table->timestamps();
         });

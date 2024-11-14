@@ -46,14 +46,6 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
-                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label>
-                                        <input type="text" name="invoice" id="invoice"
-                                            class="date form-control border-color" required hidden>
-                                        <div class="invalid-feedback">
-                                            Masukkan Invoice anda!
-                                        </div> --}}
-                                    </div>
-                                    <div class="col-md">
                                         <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
                                             class="date form-control border-color" required>
@@ -169,6 +161,16 @@
                                     <div id="form-content">
                                         <!-- Konten untuk Isi Tanggal Sewa akan dimuat di sini secara default -->
                                     </div>
+                                    <div class="col-md mt-4" id="ktpUrlDiv">
+                                        <label for="ktp_url" class="form-label text-color">Upload KTP
+                                            (JPEG,PNG,JPG)</label>
+                                        <input type="file" name="ktp_url" id="ktp_url"
+                                            class="date form-control border-color" required>
+                                        <div class="invalid-feedback">
+                                            Upload KTP Anda!
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md">
                                         <div class="form-group">
                                             <label for="keterangan" class="mb-2 text-color">Catatan</label>
@@ -276,6 +278,10 @@
                     <div class="mb-3">
                         <label class="form-label text-color">Harga (Termasuk PPN 11% dan biaya Virtual Account)</label>
                         <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-color">Data KTP</label>
+                        <p id="confirm_ktp" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label text-color">Catatan Peminjaman</label>
@@ -535,7 +541,6 @@
 
         function showConfirmationModal(event) {
             event.preventDefault();
-            //const invoiceNumber = document.getElementById('invoice').value;
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const nomorInduk = document.getElementById('nomor_induk').value;
             const nomorTelepon = document.getElementById('nomor_telepon').value;
@@ -546,42 +551,16 @@
             const jamMulai = document.getElementById('jam_mulai').value;
             const harga = document.getElementById('harga_ruangan').value;
             const keterangan = document.getElementById('keterangan').value;
+            const ktpUrl = document.getElementById('ktp_url').value;
 
-            let namaRuangan; // Mendefinisikan variabel di luar blok if-else
+            let namaRuangan;
 
             const origin = "{{ $origin }}";
             if (origin === 'detailRuangan') {
-                namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
-                console.log("Nama Ruangan Dari Detail Ruangan:", namaRuangan);
+            namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
             } else {
-                namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
-                console.log("Nama Ruangan Tidak Dari Detail Ruangan:", namaRuangan);
+            namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
             }
-
-            // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
-            if (status === 'Mahasiswa' || status === 'Umum') { // Per Jam
-                const durasi = document.getElementById('durasi').value;
-                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
-                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
-                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
-                const jamSelesaiFormatted = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
-
-                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
-                    tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
-                document.getElementById('confirm_jam_selesai').innerText =
-                    jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
-            } else if (status === 'Pegawai') { // Per Hari
-                const jamSelesai = document.getElementById('jam_selesai').value;
-                const tanggalSelesai = document.getElementById('tanggal_selesai').value;
-
-                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
-                    tanggalSelesai); // Tanggal selesai sesuai input
-                document.getElementById('confirm_jam_selesai').innerText = jamSelesai; // Jam selesai sesuai input
-            }
-
-            // Debugging logs
-            console.log("Selected status:", status);
-            console.log("Input Harga:", harga);
 
             const cleanedHarga = harga.replace(/[^\d]/g, '');
             var hargaAwal = parseFloat(cleanedHarga);
@@ -589,14 +568,11 @@
             var priceAkhir;
 
             if (status === 'Mahasiswa' || status === 'Umum') {
-                priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
+            priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
             } else {
-                priceAkhir = 'Rp 0';
+            priceAkhir = 'Rp 0';
             }
 
-            // console.log("Final price:", priceAkhir);
-
-            //document.getElementById('confirm_invoice').innerText = invoiceNumber;
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
             document.getElementById('confirm_status').innerText = status;
@@ -604,24 +580,27 @@
             document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
             document.getElementById('confirm_lokasi').innerText = lokasi;
             document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
-            document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
+            document.getElementById('confirm_tanggal_mulai').innerText = tanggalMulai;
             document.getElementById('confirm_jam_mulai').innerText = jamMulai;
             document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
             document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
             document.getElementById('confirm_keterangan').innerText = keterangan;
+            document.getElementById('confirm_ktp').innerText = ktpUrl;
 
             $('#confirmationModal').modal({
-                backdrop: 'static',
-                keyboard: false
+            backdrop: 'static',
+            keyboard: false
             }).modal('show');
         }
 
         function handleRoleChange() {
-            const origin = "{{ $origin }}";  // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
             const role = document.getElementById('role').value;
             const ruanganSelect = document.getElementById('id_ruangan');
             const nomorIndukDiv = document.getElementById('nomorIndukDiv');
             const nomorIndukInput = document.getElementById('nomor_induk');
+            const ktpUrlDiv = document.getElementById('ktpUrlDiv');
+            const ktpUrlInput = document.getElementById('ktp_url');
 
             if (origin !== 'detailRuangan') {
                 // Enable ruangan select if a valid role is selected
@@ -641,6 +620,16 @@
                 nomorIndukDiv.style.display = 'none';
                 nomorIndukInput.value = '0'; // Set the default value to 0
                 nomorIndukInput.required = false; // Make the input not required
+            }
+
+            // Display or hide ktpUrlDiv based on the selected role
+            if (role === 'Umum' || role === 'Mahasiswa') {
+                ktpUrlDiv.style.display = 'block';
+                ktpUrlInput.required = true; // Make the input required
+            } else {
+                ktpUrlDiv.style.display = 'none';
+                ktpUrlInput.value = ''; // Clear the input value
+                ktpUrlInput.required = false; // Make the input not required
             }
 
             // Call additional functions like filterRuanganOptions()
