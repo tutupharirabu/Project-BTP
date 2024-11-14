@@ -280,10 +280,6 @@
                         <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Data KTP</label>
-                        <p id="confirm_ktp" class="bordered-text"></p>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label text-color">Catatan Peminjaman</label>
                         <p id="confirm_keterangan" class="bordered-text"></p>
                     </div>
@@ -541,6 +537,7 @@
 
         function showConfirmationModal(event) {
             event.preventDefault();
+            //const invoiceNumber = document.getElementById('invoice').value;
             const namaPeminjam = document.getElementById('nama_peminjam').value;
             const nomorInduk = document.getElementById('nomor_induk').value;
             const nomorTelepon = document.getElementById('nomor_telepon').value;
@@ -551,16 +548,42 @@
             const jamMulai = document.getElementById('jam_mulai').value;
             const harga = document.getElementById('harga_ruangan').value;
             const keterangan = document.getElementById('keterangan').value;
-            const ktpUrl = document.getElementById('ktp_url').value;
 
-            let namaRuangan;
+            let namaRuangan; // Mendefinisikan variabel di luar blok if-else
 
             const origin = "{{ $origin }}";
             if (origin === 'detailRuangan') {
-            namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
+                namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
+                console.log("Nama Ruangan Dari Detail Ruangan:", namaRuangan);
             } else {
-            namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
+                namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
+                console.log("Nama Ruangan Tidak Dari Detail Ruangan:", namaRuangan);
             }
+
+            // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
+            if (status === 'Mahasiswa' || status === 'Umum') { // Per Jam
+                const durasi = document.getElementById('durasi').value;
+                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
+                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
+                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
+                const jamSelesaiFormatted = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+
+                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
+                    tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
+                document.getElementById('confirm_jam_selesai').innerText =
+                    jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
+            } else if (status === 'Pegawai') { // Per Hari
+                const jamSelesai = document.getElementById('jam_selesai').value;
+                const tanggalSelesai = document.getElementById('tanggal_selesai').value;
+
+                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
+                    tanggalSelesai); // Tanggal selesai sesuai input
+                document.getElementById('confirm_jam_selesai').innerText = jamSelesai; // Jam selesai sesuai input
+            }
+
+            // Debugging logs
+            console.log("Selected status:", status);
+            console.log("Input Harga:", harga);
 
             const cleanedHarga = harga.replace(/[^\d]/g, '');
             var hargaAwal = parseFloat(cleanedHarga);
@@ -568,11 +591,14 @@
             var priceAkhir;
 
             if (status === 'Mahasiswa' || status === 'Umum') {
-            priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
+                priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
             } else {
-            priceAkhir = 'Rp 0';
+                priceAkhir = 'Rp 0';
             }
 
+            // console.log("Final price:", priceAkhir);
+
+            //document.getElementById('confirm_invoice').innerText = invoiceNumber;
             document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
             document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
             document.getElementById('confirm_status').innerText = status;
@@ -580,16 +606,15 @@
             document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
             document.getElementById('confirm_lokasi').innerText = lokasi;
             document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
-            document.getElementById('confirm_tanggal_mulai').innerText = tanggalMulai;
+            document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
             document.getElementById('confirm_jam_mulai').innerText = jamMulai;
             document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
             document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
             document.getElementById('confirm_keterangan').innerText = keterangan;
-            document.getElementById('confirm_ktp').innerText = ktpUrl;
 
             $('#confirmationModal').modal({
-            backdrop: 'static',
-            keyboard: false
+                backdrop: 'static',
+                keyboard: false
             }).modal('show');
         }
 
