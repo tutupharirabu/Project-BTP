@@ -11,9 +11,9 @@
     <div class="container-fluid mt-4">
         <!-- title -->
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-8">
                 <div class="container mx-2">
-                    <h4>Formulir Peminjaman Ruangan</h4>
+                    <h4>Peminjaman\Penyewaan Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
-                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman\Penyewaan
                         Ruangan</a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
-                                        <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
+                                        <label for="nama_peminjam" class="form-label text-color">Nama Lengkap</label>
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
                                             class="date form-control border-color" required>
                                         <div class="invalid-feedback">
@@ -219,7 +219,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#419343;">
-                    <h5 class="modal-title text-white" id="confirmationModalLabel">Rincian Peminjaman Ruangan</h5>
+                    <h5 class="modal-title text-white" id="confirmationModalLabel">Rincian Peminjaman\Penyewaan Ruangan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -256,19 +256,19 @@
                         <p id="confirm_jumlah_peserta" name="jumlah" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Tanggal Mulai Peminjaman</label>
+                        <label class="form-label text-color">Tanggal Mulai Peminjaman\Penyewaan</label>
                         <p id="confirm_tanggal_mulai" name="tanggal_mulai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Tanggal Selesai Peminjaman</label>
+                        <label class="form-label text-color">Tanggal Selesai Peminjaman\Penyewaan</label>
                         <p id="confirm_tanggal_selesai" name="tanggal_selesai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Jam Mulai Peminjaman</label>
+                        <label class="form-label text-color">Jam Mulai Peminjaman\Penyewaan</label>
                         <p id="confirm_jam_mulai" name="jam_mulai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Jam Selesai Peminjaman</label>
+                        <label class="form-label text-color">Jam Selesai Peminjaman\Penyewaan</label>
                         <p id="confirm_jam_selesai" name="jam_selesai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
@@ -280,7 +280,7 @@
                         <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Catatan Peminjaman</label>
+                        <label class="form-label text-color">Catatan Peminjaman\Penyewaan</label>
                         <p id="confirm_keterangan" class="bordered-text"></p>
                     </div>
                     <div class="form-check">
@@ -306,7 +306,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman sudah sesuai?</h5>
+                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman\penyewaan sudah sesuai?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">

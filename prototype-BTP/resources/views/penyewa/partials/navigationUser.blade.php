@@ -71,7 +71,7 @@
             <div class="navbar-nav" style="width:20px; margin-left:20px; text-bold ">
                 <a class="nav-link" href="/dashboardPenyewa" style="font-weight: 900;">Dashboard</a>
                 <a class="nav-link" href="/daftarRuanganPenyewa" style="font-weight: 900;">Daftar Ruangan</a>
-                <a class="nav-link" href="/meminjamRuangan" style="font-weight: 900;">Peminjaman</a>
+                <a class="nav-link" href="/meminjamRuangan" style="font-weight: 900;">Peminjaman\Penyewaan Ruangan</a>
             </div>
         </div>
         
