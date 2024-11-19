@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Pengajuan Ruangan <h4>
+                    <h4>Status Pengajuan Peminjaman\Penyewaan Ruangan <h4>
                 </div>
             </div>
         </div>
@@ -160,7 +160,7 @@
                                 <thead style="vertical-align: middle;">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Nama Lengkap</th>
                                         <th scope="col" class="text-center">Nomor Telepon</th>
                                         <th scope="col" class="text-center">Nama Ruangan</th>
                                         <th scope="col" class="text-center">Jam Mulai</th>
