@@ -692,17 +692,23 @@
             // Call additional functions like filterRuanganOptions()
             filterRuanganOptions();
         }
-    window.onload = function () {
+        window.onload = function () {
         const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
         if (savedData) {
             const rentalForm = document.getElementById('rentalForm');
             const formData = JSON.parse(savedData);
 
-            // Isi kembali form dengan data yang disimpan
+            // Kosongkan field tertentu
+            const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'id_ruangan', 'role']; // Field yang ingin dikosongkan
             for (const key in formData) {
                 const input = rentalForm.querySelector(`[name="${key}"]`);
                 if (input) {
-                    input.value = formData[key];
+                    // Hanya isi kembali field yang tidak ada di fieldsToReset
+                    if (!fieldsToReset.includes(key)) {
+                        input.value = formData[key];
+                    } else {
+                        input.value = ''; // Kosongkan field yang ada di fieldsToReset
+                    }
                 }
             }
         }
