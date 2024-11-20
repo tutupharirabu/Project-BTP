@@ -299,7 +299,7 @@
             </div>
         </div>
     </div>
-
+{{--
     <!-- Confirmation Popup Modal -->
     <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
         aria-hidden="true">
@@ -318,6 +318,34 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <!-- Confirmation Popup Modal -->
+    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Apakah Pemesanan untuk peminjaman/penyewaan sudah sesuai?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Pastikan pemesanan sesuai dengan permintaan anda</p>
+                <div id="spinner" class="d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Memproses pemesanan...</p>
+                </div>
+                <div id="confirmationButtons">
+                    <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
+                        style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn text-white text-capitalize font-btn width-btn "
+                        style="background-color:#0DA200" onclick="confirmSubmission()">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <!-- WhatsApp Modal -->
@@ -347,6 +375,29 @@
     <script src="{{ asset('assets/js/penyewa/meminjamRuangan.js') }}"></script>
 
     <script>
+        function confirmSubmission() {
+            // Tampilkan spinner dan sembunyikan tombol
+            document.getElementById('confirmationButtons').classList.add('d-none');
+            document.getElementById('spinner').classList.remove('d-none');
+
+            // Simulasi loading selama 5 detik
+            setTimeout(() => {
+                // Reset modal konfirmasi (untuk tampilan berikutnya)
+                document.getElementById('spinner').classList.add('d-none');
+                document.getElementById('confirmationButtons').classList.remove('d-none');
+
+                // Tutup modal konfirmasi
+                let confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
+                confirmationModal.hide();
+
+                // Setelah modal konfirmasi hilang, tampilkan modal WhatsApp
+                setTimeout(() => {
+                    let whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
+                    whatsappModal.show();
+                }, 500); // Tambahkan sedikit jeda agar transisi terlihat mulus
+            }, 5000); // Loading berlangsung selama 5 detik
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var origin = "{{ $origin }}"; // Variabel ini diterima dari controller
 
