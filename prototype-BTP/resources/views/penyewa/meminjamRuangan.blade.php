@@ -299,8 +299,8 @@
             </div>
         </div>
     </div>
-{{--
-    <!-- Confirmation Popup Modal -->
+
+    {{-- <!-- Confirmation Popup Modal -->
     <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -320,7 +320,7 @@
         </div>
     </div> --}}
 
-    <!-- Confirmation Popup Modal -->
+    <!-- Confirmation Popup Modal With Spinner -->
     <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -330,23 +330,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <p>Pastikan pemesanan sesuai dengan permintaan anda</p>
+                <p>Pastikan pemesanan sesuai dengan permintaan Anda</p>
+
+                <!-- Spinner -->
                 <div id="spinner" class="d-none">
                     <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <p class="mt-2">Memproses pemesanan...</p>
                 </div>
+
+                <!-- Buttons -->
                 <div id="confirmationButtons">
                     <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
                         style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn text-white text-capitalize font-btn width-btn "
-                        style="background-color:#0DA200" onclick="confirmSubmission()">Ya</button>
+                    <button type="button" class="btn text-white text-capitalize font-btn width-btn"
+                        style="background-color:#0DA200" onclick="confirmSubmission(event)">Ya</button>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
 
     <!-- WhatsApp Modal -->
     <div class="modal fade p-1" id="whatsappModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -375,29 +379,6 @@
     <script src="{{ asset('assets/js/penyewa/meminjamRuangan.js') }}"></script>
 
     <script>
-        function confirmSubmission() {
-            // Tampilkan spinner dan sembunyikan tombol
-            document.getElementById('confirmationButtons').classList.add('d-none');
-            document.getElementById('spinner').classList.remove('d-none');
-
-            // Simulasi loading selama 5 detik
-            setTimeout(() => {
-                // Reset modal konfirmasi (untuk tampilan berikutnya)
-                document.getElementById('spinner').classList.add('d-none');
-                document.getElementById('confirmationButtons').classList.remove('d-none');
-
-                // Tutup modal konfirmasi
-                let confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
-                confirmationModal.hide();
-
-                // Setelah modal konfirmasi hilang, tampilkan modal WhatsApp
-                setTimeout(() => {
-                    let whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
-                    whatsappModal.show();
-                }, 500); // Tambahkan sedikit jeda agar transisi terlihat mulus
-            }, 5000); // Loading berlangsung selama 5 detik
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             var origin = "{{ $origin }}"; // Variabel ini diterima dari controller
 
@@ -711,6 +692,21 @@
             // Call additional functions like filterRuanganOptions()
             filterRuanganOptions();
         }
+    window.onload = function () {
+        const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
+        if (savedData) {
+            const rentalForm = document.getElementById('rentalForm');
+            const formData = JSON.parse(savedData);
+
+            // Isi kembali form dengan data yang disimpan
+            for (const key in formData) {
+                const input = rentalForm.querySelector(`[name="${key}"]`);
+                if (input) {
+                    input.value = formData[key];
+                }
+            }
+        }
+    };
     </script>
 
 @endsection
