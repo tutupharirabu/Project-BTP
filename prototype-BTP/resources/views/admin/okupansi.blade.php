@@ -14,7 +14,7 @@
         <!-- Judul -->
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
-                <h4>Data Okupansi Peminjaman Ruangan</h4>
+                <h4>Data Okupansi Peminjaman\Penyewaan Ruangan</h4>
             </div>
         </div>
 

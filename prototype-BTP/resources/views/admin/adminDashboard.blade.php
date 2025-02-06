@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Penyewaan Ruangan</h4>
+                    <h4>Peminjaman\Penyewaan Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
             style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
             <center>
-                <h2>Grafik Peminjaman Per Bulan</h2>
+                <h2>Grafik Peminjaman\Penyewaan Per Bulan</h2>
             </center>
             <canvas id="occupancyChart" width="200" height="100"></canvas>
         </div>
@@ -56,10 +56,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header " style="">
-                    <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
+                    <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman\Penyewaan</h5>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Nama Peminjam : </strong> <span id="modalNama"></span></p>
+                    <p><strong>Nama Lengkap : </strong> <span id="modalNama"></span></p>
                     <p><strong>Nama Ruangan : </strong> <span id="modalRuangan"></span></p>
                     <p><strong>Mulai : </strong> <span id="modalStart"></span></p>
                     <p><strong>Selesai :</strong> <span id="modalEnd"></span></p>

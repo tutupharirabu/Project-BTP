@@ -121,13 +121,53 @@ function showConfirmationPopup() {
         keyboard: false
     }).modal('show'); // Show the confirmation popup modal
 }
+// Function confirmSubmission() without spinner
+// function confirmSubmission() {
+//     const rentalForm = document.getElementById('rentalForm');
+//     const formData = new FormData(rentalForm);
 
-function confirmSubmission() {
+//     // Temporarily disable form validation
+//     rentalForm.classList.remove('needs-validation');
+
+//     fetch(rentalForm.action, {
+//             method: 'POST',
+//             body: formData,
+//             headers: {
+//                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+//             }
+//         })
+//         .then(response => {
+//             if (response.ok) {
+//                 rentalForm.reset();
+//                 $('#confirmationPopupModal').modal('hide');
+//                 $('#whatsappModal').modal({
+//                     backdrop: 'static',
+//                     keyboard: false
+//                 }).modal('show'); // Show the WhatsApp modal
+//             } else {
+//                 console.error('Form submission error:', response);
+//             }
+//         })
+//         .catch(error => console.error('Error submitting form:', error))
+//         .finally(() => {
+//             // Re-enable form validation
+//             rentalForm.classList.add('needs-validation');
+//         });
+// }
+
+// function confirmSubmission() with spinner
+function confirmSubmission(event) {
+    event.preventDefault(); // Mencegah submit bawaan
+
     const rentalForm = document.getElementById('rentalForm');
     const formData = new FormData(rentalForm);
 
-    // Temporarily disable form validation
-    rentalForm.classList.remove('needs-validation');
+    // Simpan data form ke sessionStorage
+    sessionStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData.entries())));
+
+    // Tampilkan spinner dan sembunyikan tombol
+    document.getElementById('confirmationButtons').classList.add('d-none');
+    document.getElementById('spinner').classList.remove('d-none');
 
     fetch(rentalForm.action, {
             method: 'POST',
@@ -138,20 +178,32 @@ function confirmSubmission() {
         })
         .then(response => {
             if (response.ok) {
-                rentalForm.reset();
-                $('#confirmationPopupModal').modal('hide');
-                $('#whatsappModal').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                }).modal('show'); // Show the WhatsApp modal
+                console.log('Data berhasil dikirim');
+
+                // Tutup modal Confirmation
+                const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
+                if (confirmationModal) {
+                    confirmationModal.hide();
+                }
+
+                // Tampilkan modal WhatsApp
+                setTimeout(() => {
+                    const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
+                    whatsappModal.show();
+                }, 500);
             } else {
                 console.error('Form submission error:', response);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
             }
         })
-        .catch(error => console.error('Error submitting form:', error))
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            alert('Terjadi kesalahan saat mengirim data.');
+        })
         .finally(() => {
-            // Re-enable form validation
-            rentalForm.classList.add('needs-validation');
+            // Sembunyikan spinner dan tampilkan tombol kembali
+            document.getElementById('spinner').classList.add('d-none');
+            document.getElementById('confirmationButtons').classList.remove('d-none');
         });
 }
 

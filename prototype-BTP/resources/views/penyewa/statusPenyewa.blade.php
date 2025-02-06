@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Pengajuan Ruangan <h4>
+                    <h4>Lihat Status Peminjaman\Penyewaan Ruangan <h4>
                 </div>
             </div>
         </div>
@@ -84,8 +84,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status
-                        Ruangan</a>
+                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status Ruangan</a>
                 </div>
             </div>
         </div>
@@ -194,7 +193,7 @@
                                 <thead style="vertical-align: middle;">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Nama Lengkap</th>
                                         <th scope="col" class="text-center">Ruangan yang dipinjam</th>
                                         <th scope="col" class="text-center">Tanggal Mulai</th>
                                         <th scope="col" class="text-center">Tanggal Selesai</th>

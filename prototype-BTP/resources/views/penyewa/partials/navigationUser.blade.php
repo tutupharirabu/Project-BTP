@@ -62,7 +62,7 @@
         </button>
 
         <!-- Navbar brand -->
-        <a class="navbar-brand mt-2 mt-lg-0" href="#" style="margin-left:20px;">
+        <a class="navbar-brand mt-2 mt-lg-0" href="/dashboardPenyewa" style="margin-left:20px;">
             <img src="{{ asset('assets/img/logo_nav.png') }}" height="34" alt="MDB Logo" loading="lazy" />
         </a>
 
@@ -71,10 +71,10 @@
             <div class="navbar-nav" style="width:20px; margin-left:20px; text-bold ">
                 <a class="nav-link" href="/dashboardPenyewa" style="font-weight: 900;">Dashboard</a>
                 <a class="nav-link" href="/daftarRuanganPenyewa" style="font-weight: 900;">Daftar Ruangan</a>
-                <a class="nav-link" href="/meminjamRuangan" style="font-weight: 900;">Peminjaman</a>
+                <a class="nav-link" href="/meminjamRuangan" style="font-weight: 900;">Peminjaman\Penyewaan Ruangan</a>
             </div>
         </div>
-        
+
         <!-- Right elements -->
         <div class="fixed-right d-flex align-items-center pe-5" id="navbarRightElements" style="background-color: #FFFFFF;">
             <!-- Avatar -->

@@ -121,7 +121,6 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No </th>
-                                        {{-- <th scope="col" class="text-center">No Ruangan</th> --}}
                                         <th scope="col" class="text-center">Nama Ruangan</th>
                                         <th scope="col" class="text-center">Nama Gedung</th>
                                         <th scope="col" class="text-center">Ukuran Ruangan</th>
@@ -139,7 +138,6 @@
                                     @foreach ($dataRuangan as $data)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            {{-- <td>{{ $data->id_ruangan }}</td> --}}
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>{{ $data->lokasi}}</td>
                                             <td>{{ $data->ukuran }}</td>
@@ -149,10 +147,6 @@
                                                 {{ $data->satuan }}
                                             </td>
                                             <td>
-                                                {{-- <a class="text-blue" href="#" data-toggle="modal"
-                                                    data-target="#imageModal{{ $data->id_ruangan }}">
-                                                    <u>Gambar</u>
-                                                </a> --}}
                                                 <button type="button"
                                                     class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
                                                     data-bs-toggle="modal"
@@ -249,18 +243,6 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            {{-- <td style="display: flex; justify-content: center;">
-                                                @if ($data->tersedia == '1')
-                                                    <a class="btn text-dark status"
-                                                        style=" background-color: #B0B0B0; ">Digunakan</a>
-                                                @elseif ($data->tersedia != '1')
-                                                    <a class="btn text-white status"
-                                                        style=" background-color: #0EB100; ">Tersedia</a>
-                                                @else
-                                                    <a class="btn text-white status" style=" background-color: #61677A; ">
-                                                        - </a>
-                                                @endif
-                                            </td> --}}
                                             <td style="justify-content: center;">
                                                 @if ($data->status == 'Tersedia')
                                                     <a class="btn text-white status"
@@ -293,9 +275,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{-- <div class="d-flex justify-content-center">
-                                {{ $dataRuangan->links('vendor.pagination.custom') }}
-                            </div> --}}
                         </div>
                     </div>
                 </div>

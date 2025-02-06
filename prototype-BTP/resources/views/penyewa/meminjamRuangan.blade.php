@@ -11,9 +11,9 @@
     <div class="container-fluid mt-4">
         <!-- title -->
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-8">
                 <div class="container mx-2">
-                    <h4>Formulir Peminjaman Ruangan</h4>
+                    <h4>Peminjaman\Penyewaan Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
-                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman\Penyewaan
                         Ruangan</a>
                 </div>
             </div>
@@ -46,15 +46,7 @@
                                 <!-- left form text field -->
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                                     <div class="col-md">
-                                        {{-- <label for="invoice" class="form-label text-color">Nomor Invoice</label>
-                                        <input type="text" name="invoice" id="invoice"
-                                            class="date form-control border-color" required hidden>
-                                        <div class="invalid-feedback">
-                                            Masukkan Invoice anda!
-                                        </div> --}}
-                                    </div>
-                                    <div class="col-md">
-                                        <label for="nama_peminjam" class="form-label text-color">Nama Peminjam</label>
+                                        <label for="nama_peminjam" class="form-label text-color">Nama Lengkap</label>
                                         <input type="text" name="nama_peminjam" id="nama_peminjam"
                                             class="date form-control border-color" required>
                                         <div class="invalid-feedback">
@@ -169,6 +161,16 @@
                                     <div id="form-content">
                                         <!-- Konten untuk Isi Tanggal Sewa akan dimuat di sini secara default -->
                                     </div>
+                                    <div class="col-md mt-4" id="ktpUrlDiv">
+                                        <label for="ktp_url" class="form-label text-color">Upload KTP
+                                            (JPEG,PNG,JPG)</label>
+                                        <input type="file" name="ktp_url" id="ktp_url"
+                                            class="date form-control border-color" required>
+                                        <div class="invalid-feedback">
+                                            Upload KTP Anda!
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md">
                                         <div class="form-group">
                                             <label for="keterangan" class="mb-2 text-color">Catatan</label>
@@ -217,7 +219,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#419343;">
-                    <h5 class="modal-title text-white" id="confirmationModalLabel">Rincian Peminjaman Ruangan</h5>
+                    <h5 class="modal-title text-white" id="confirmationModalLabel">Rincian Peminjaman\Penyewaan Ruangan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -254,19 +256,19 @@
                         <p id="confirm_jumlah_peserta" name="jumlah" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Tanggal Mulai Peminjaman</label>
+                        <label class="form-label text-color">Tanggal Mulai Peminjaman\Penyewaan</label>
                         <p id="confirm_tanggal_mulai" name="tanggal_mulai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Tanggal Selesai Peminjaman</label>
+                        <label class="form-label text-color">Tanggal Selesai Peminjaman\Penyewaan</label>
                         <p id="confirm_tanggal_selesai" name="tanggal_selesai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Jam Mulai Peminjaman</label>
+                        <label class="form-label text-color">Jam Mulai Peminjaman\Penyewaan</label>
                         <p id="confirm_jam_mulai" name="jam_mulai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Jam Selesai Peminjaman</label>
+                        <label class="form-label text-color">Jam Selesai Peminjaman\Penyewaan</label>
                         <p id="confirm_jam_selesai" name="jam_selesai" class="bordered-text"></p>
                     </div>
                     <div class="mb-3">
@@ -278,7 +280,7 @@
                         <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Catatan Peminjaman</label>
+                        <label class="form-label text-color">Catatan Peminjaman\Penyewaan</label>
                         <p id="confirm_keterangan" class="bordered-text"></p>
                     </div>
                     <div class="form-check">
@@ -298,13 +300,13 @@
         </div>
     </div>
 
-    <!-- Confirmation Popup Modal -->
+    {{-- <!-- Confirmation Popup Modal -->
     <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman sudah sesuai?</h5>
+                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman\penyewaan sudah sesuai?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
@@ -316,7 +318,39 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <!-- Confirmation Popup Modal With Spinner -->
+    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Apakah Pemesanan untuk peminjaman/penyewaan sudah sesuai?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Pastikan pemesanan sesuai dengan permintaan Anda</p>
+
+                <!-- Spinner -->
+                <div id="spinner" class="d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Memproses pemesanan...</p>
+                </div>
+
+                <!-- Buttons -->
+                <div id="confirmationButtons">
+                    <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
+                        style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn text-white text-capitalize font-btn width-btn"
+                        style="background-color:#0DA200" onclick="confirmSubmission(event)">Ya</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
     <!-- WhatsApp Modal -->
     <div class="modal fade p-1" id="whatsappModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -617,11 +651,13 @@
         }
 
         function handleRoleChange() {
-            const origin = "{{ $origin }}";  // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
             const role = document.getElementById('role').value;
             const ruanganSelect = document.getElementById('id_ruangan');
             const nomorIndukDiv = document.getElementById('nomorIndukDiv');
             const nomorIndukInput = document.getElementById('nomor_induk');
+            const ktpUrlDiv = document.getElementById('ktpUrlDiv');
+            const ktpUrlInput = document.getElementById('ktp_url');
 
             if (origin !== 'detailRuangan') {
                 // Enable ruangan select if a valid role is selected
@@ -643,9 +679,40 @@
                 nomorIndukInput.required = false; // Make the input not required
             }
 
+            // Display or hide ktpUrlDiv based on the selected role
+            if (role === 'Umum' || role === 'Mahasiswa') {
+                ktpUrlDiv.style.display = 'block';
+                ktpUrlInput.required = true; // Make the input required
+            } else {
+                ktpUrlDiv.style.display = 'none';
+                ktpUrlInput.value = ''; // Clear the input value
+                ktpUrlInput.required = false; // Make the input not required
+            }
+
             // Call additional functions like filterRuanganOptions()
             filterRuanganOptions();
         }
+        window.onload = function () {
+        const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
+        if (savedData) {
+            const rentalForm = document.getElementById('rentalForm');
+            const formData = JSON.parse(savedData);
+
+            // Kosongkan field tertentu
+            const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'id_ruangan', 'role']; // Field yang ingin dikosongkan
+            for (const key in formData) {
+                const input = rentalForm.querySelector(`[name="${key}"]`);
+                if (input) {
+                    // Hanya isi kembali field yang tidak ada di fieldsToReset
+                    if (!fieldsToReset.includes(key)) {
+                        input.value = formData[key];
+                    } else {
+                        input.value = ''; // Kosongkan field yang ada di fieldsToReset
+                    }
+                }
+            }
+        }
+    };
     </script>
 
 @endsection

@@ -1,7 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
     @php
         use Carbon\Carbon;
     @endphp
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Pengajuan Ruangan <h4>
+                    <h4>Status Pengajuan Peminjaman\Penyewaan Ruangan <h4>
                 </div>
             </div>
         </div>
@@ -44,7 +44,8 @@
                             </div>
                             <div class="status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center"
                                 style="">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Disetujui</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -65,7 +66,8 @@
                             </div>
                             <div class="status-count left-status text-black text-justify shadow d-flex flex-column justify-content-center"
                                 style="">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Ditolak</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -86,7 +88,8 @@
                             </div>
                             <div
                                 class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Menunggu</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -107,7 +110,8 @@
                             </div>
                             <div
                                 class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Selesai</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -135,16 +139,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                                                    <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                                            placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                                                                                                                                                                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                            <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                                    placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                                {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                 style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                    </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -156,13 +160,14 @@
                                 <thead style="vertical-align: middle;">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nama Peminjam</th>
+                                        <th scope="col" class="text-center">Nama Lengkap</th>
                                         <th scope="col" class="text-center">Nomor Telepon</th>
                                         <th scope="col" class="text-center">Nama Ruangan</th>
                                         <th scope="col" class="text-center">Jam Mulai</th>
                                         <th scope="col" class="text-center">Jam Selesai</th>
                                         <th scope="col" class="text-center">Tanggal Mulai</th>
                                         <th scope="col" class="text-center">Tanggal Selesai</th>
+                                        <th scope="col" class="text-center">Foto KTP</th>
                                         <th scope="col" class="text-center">Disetujui oleh</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" style="width: 230px;" class="text-center">Aksi</th>
@@ -180,6 +185,49 @@
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
+                                            <td>
+                                                <!-- Tombol untuk membuka modal gambar -->
+                                                <button type="button" class="btn btn-success btn-sm text-capitalize"
+                                                    style="background-color:#0C9300;" data-bs-toggle="modal"
+                                                    data-bs-target="#imageModal{{ $data->id_peminjaman }}">
+                                                    Foto KTP
+                                                </button>
+
+                                                <!-- Modal untuk gambar -->
+                                                <div class="modal fade" id="imageModal{{ $data->id_peminjaman }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Foto KTP
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Menampilkan gambar tunggal menggunakan Cloudinary -->
+                                                                @if (!empty($data->ktp_url))
+                                                                    {{-- <x-cld-image public-id="{{ $data->ktp_url }}"
+                                                                        class="d-block w-100" width="800"
+                                                                        height="400" crop="fill"
+                                                                        alt="Foto KTP">
+                                                                    </x-cld-image> --}}
+                                                                    <img src="{{ $data->ktp_url }}" alt="Foto KTP" width="450" height="300" style="object-fit: cover;" oncontextmenu="return false;">
+                                                                @else
+                                                                    <p>Gambar tidak tersedia.</p>
+                                                                @endif
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             @if ($data->status == 'Menunggu')
                                                 <td>
                                                     @foreach ($data->users as $user)
@@ -246,11 +294,14 @@
                                                 <td>
                                                     <button type="button"
                                                         class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
                                                     </button>
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
+                                                        tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                        aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -342,8 +393,9 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-md" style="background-color:#0C9300"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <button type="button" class="btn btn-success btn-md"
+                                                        style="background-color:#0C9300" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
 

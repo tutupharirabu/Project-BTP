@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-6 col-md-6 col mb-0">
             <div class="container ml-4">
-                <h4>Penyewaan Ruangan</h4>
+                <h4>Peminjaman\Penyewaan Ruangan</h4>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
             <div class="container my-2 mx-2">
-                <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
+                <a class="" href="/dashboardPenyewa" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="">
-                <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman</h5>
+                <h5 class="modal-title" id="eventModalLabel">Detail Peminjaman\Penyewaan</h5>
             </div>
             <div class="modal-body">
                 <p><strong>Nama Peminjam : </strong> <span id="modalNamaP"></span></p>

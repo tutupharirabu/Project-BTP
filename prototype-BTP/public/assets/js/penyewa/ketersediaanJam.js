@@ -41,7 +41,6 @@ function showPerJamForm() {
             <div class="invalid-feedback">Masukkan Durasi Peminjaman!</div>
         </div>
     </div>
-    <br>
 `);
 }
 
@@ -125,7 +124,6 @@ function showPerHariForm() {
             <div class="invalid-feedback">Masukkan Jam Selesai Peminjaman!</div>
         </div>
     </div>
-    <br>
 `);
 
     $('#tanggal_mulai, #jam_mulai').on('change', function() {
