@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-8">
                 <div class="container mx-2">
-                    <h4>Peminjaman\Penyewaan Ruangan</h4>
+                    <h4>Peminjaman/Penyewaan Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                         <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
-                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman\Penyewaan
+                    <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman/Penyewaan
                         Ruangan</a>
                 </div>
             </div>
