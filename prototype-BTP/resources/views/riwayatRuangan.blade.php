@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Riwayat Peminjaman\Penyewaan Ruangan<h4>
+                    <h4>Riwayat Peminjaman/Penyewaan Ruangan<h4>
                 </div>
             </div>
         </div>

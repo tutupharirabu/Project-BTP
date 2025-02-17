@@ -28,13 +28,13 @@
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPengajuanAdmin">
                         <i class="material-symbols-outlined me-2">check_circle</i>
-                        <span>Status Pengajuan Peminjaman\Penyewaan Ruangan</span>
+                        <span>Status Pengajuan Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/okupansiRuangan">
                         <i class="material-symbols-outlined me-2 ">database</i>
-                        <span>Okupansi Peminjaman\Penyewaan Ruangan</span>
+                        <span>Okupansi Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
                 {{-- <div class="m-1">
@@ -46,7 +46,7 @@
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
                         <i class="material-symbols-outlined me-2">history</i>
-                        <span>Riwayat Peminjaman\Penyewaan Ruangan</span>
+                        <span>Riwayat Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
                 <div class="m-1">

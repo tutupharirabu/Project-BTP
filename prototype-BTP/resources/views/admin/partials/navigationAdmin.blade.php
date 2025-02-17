@@ -25,7 +25,7 @@
             <div class="navbar-nav" style="margin-left:20px;">
                 <a class="nav-link" href="/dashboardAdmin" style="font-weight: 900;">Dashboard</a>
                 <a class="nav-link" href="/statusRuanganAdmin" style="font-weight: 900;">Daftar Ruangan</a>
-                <a class="nav-link" href="/statusPengajuanAdmin" style="font-weight: 900;">Status Pengajuan Peminjaman\Penyewaan Ruangan</a>
+                <a class="nav-link" href="/statusPengajuanAdmin" style="font-weight: 900;">Status Pengajuan Peminjaman/Penyewaan Ruangan</a>
                 <a class="nav-link" href="/okupansiRuangan" style="font-weight: 900;">Okupansi Ruangan</a>
                 <a class="nav-link" href="/riwayatRuangan" style="font-weight: 900;">Riwayat Ruangan</a>
                 <a class="nav-link" href="/logout" style="font-weight: 900;">Logout</a>
