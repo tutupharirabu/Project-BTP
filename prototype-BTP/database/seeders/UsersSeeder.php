@@ -17,33 +17,34 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'username'  => 'DhilAdmin',
-            'email' => 'dhiladmin@gmail.com',
+            'id_users' => uuid_create(4),
+            'username'  => 'Petugas BTP',
+            'email' => 'petugasBTP@gmail.com',
             'role' => 'admin',
-            'nama_lengkap' => 'Muhammad Fadhil Ardiansyah Supiyan',
-            'password' => Hash::make('dhiladminaja123'),
+            'nama_lengkap' => 'Petugas BTP',
+            'password' => Hash::make('admin123!'),
         ]);
 
-        DB::table('users')->insert([
-            'username'  => 'tutupharirabu',
-            'email' => 'code.zharaurien@gmail.com',
-            'role' => 'admin',
-            'nama_lengkap' => 'Irfan Zharauri Nanda Sudiyanto',
-            'password' => Hash::make('inipasswordya?'),
-        ]);
+        // DB::table('users')->insert([
+        //     'username'  => 'tutupharirabu',
+        //     'email' => 'code.zharaurien@gmail.com',
+        //     'role' => 'admin',
+        //     'nama_lengkap' => 'Irfan Zharauri Nanda Sudiyanto',
+        //     'password' => Hash::make('inipasswordya?'),
+        // ]);
 
-        $faker = Faker::create('id_ID');
-        for ($i=1; $i <= 10 ; $i++) {
-            $role = $faker->randomElement(['Penyewa', 'Petugas']);
+        // $faker = Faker::create('id_ID');
+        // for ($i=1; $i <= 10 ; $i++) {
+        //     $role = $faker->randomElement(['Penyewa', 'Petugas']);
 
-            DB::table('users')->insert([
-                'username'  => $faker->userName,
-                'email' => $faker->email,
-                'role' => $role,
-                'nama_lengkap' => $faker->name,
-                'password' => Hash::make('password'),
-            ]);
-        }
+        //     DB::table('users')->insert([
+        //         'username'  => $faker->userName,
+        //         'email' => $faker->email,
+        //         'role' => $role,
+        //         'nama_lengkap' => $faker->name,
+        //         'password' => Hash::make('password'),
+        //     ]);
+        // }
 
     }
 }
