@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1793ef17d86ed3e43421d126e346dec4",
+    "content-hash": "e4df652d11b912683a9dddf9396ced65",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -214,16 +214,16 @@
         },
         {
             "name": "cloudinary-labs/cloudinary-laravel",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary-community/cloudinary-laravel.git",
-                "reference": "f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e"
+                "reference": "5e75defda3dd1b33d0b5dfb6ac8dd7b6d0aabdc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e",
-                "reference": "f5c9ca2ecddd5ffa8e04798128b46c065f08ec5e",
+                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/5e75defda3dd1b33d0b5dfb6ac8dd7b6d0aabdc9",
+                "reference": "5e75defda3dd1b33d0b5dfb6ac8dd7b6d0aabdc9",
                 "shasum": ""
             },
             "require": {
@@ -233,6 +233,7 @@
                 "php": "^8.1"
             },
             "require-dev": {
+                "laravel/pint": "^1.20",
                 "mockery/mockery": "^1.1",
                 "orchestra/testbench": "^8.0|^9.0",
                 "pestphp/pest": "^2.35",
@@ -241,12 +242,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
-                    ],
                     "aliases": {
                         "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
-                    }
+                    },
+                    "providers": [
+                        "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -280,9 +281,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cloudinary-community/cloudinary-laravel/issues",
-                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/2.2.2"
+                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/2.2.3"
             },
-            "time": "2024-09-25T20:03:40+00:00"
+            "time": "2025-01-28T19:07:51+00:00"
         },
         {
             "name": "cloudinary/cloudinary_php",
@@ -1386,6 +1387,150 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "intervention/gif",
+            "version": "4.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/gif.git",
+                "reference": "6addac2c68b4bc0e37d0d3ccedda57eb84729c49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/gif/zipball/6addac2c68b4bc0e37d0d3ccedda57eb84729c49",
+                "reference": "6addac2c68b4bc0e37d0d3ccedda57eb84729c49",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^10.0 || ^11.0",
+                "slevomat/coding-standard": "~8.0",
+                "squizlabs/php_codesniffer": "^3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Gif\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@intervention.io",
+                    "homepage": "https://intervention.io/"
+                }
+            ],
+            "description": "Native PHP GIF Encoder/Decoder",
+            "homepage": "https://github.com/intervention/gif",
+            "keywords": [
+                "animation",
+                "gd",
+                "gif",
+                "image"
+            ],
+            "support": {
+                "issues": "https://github.com/Intervention/gif/issues",
+                "source": "https://github.com/Intervention/gif/tree/4.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/interventionio",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Intervention",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/interventionphp",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2025-01-05T10:52:39+00:00"
+        },
+        {
+            "name": "intervention/image",
+            "version": "3.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "0f87254688e480fbb521e2a1ac6c11c784ca41af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/0f87254688e480fbb521e2a1ac6c11c784ca41af",
+                "reference": "0f87254688e480fbb521e2a1ac6c11c784ca41af",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "intervention/gif": "^4.2",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^10.0 || ^11.0",
+                "slevomat/coding-standard": "~8.0",
+                "squizlabs/php_codesniffer": "^3.8"
+            },
+            "suggest": {
+                "ext-exif": "Recommended to be able to read EXIF data properly."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@intervention.io",
+                    "homepage": "https://intervention.io/"
+                }
+            ],
+            "description": "PHP image manipulation",
+            "homepage": "https://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "resize",
+                "thumbnail",
+                "watermark"
+            ],
+            "support": {
+                "issues": "https://github.com/Intervention/image/issues",
+                "source": "https://github.com/Intervention/image/tree/3.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/interventionio",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Intervention",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/interventionphp",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2025-02-01T07:28:26+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8694,12 +8839,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1 || ^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

@@ -145,18 +145,19 @@
                                         {{-- <input type="text" id="satuan"
                                             class="form-control bordered-text border-color" name="satuan"
                                             value="{{ $dataRuangan->satuan }}" required> --}}
-                                            <select class="bordered-text form-control" name="satuan" id="satuan" required>
-                                                <option>{{ $dataRuangan->satuan }}</option>
-                                                @if ($dataRuangan->satuan != 'Seat / Bulan')
-                                                    <option value="Seat / Bulan">Seat / Bulan</option>
-                                                @endif
-                                                @if ($dataRuangan->satuan != 'Seat / Hari')
-                                                    <option value="Seat / Hari">Seat / Hari</option>
-                                                @endif
-                                                @if ($dataRuangan->satuan != 'Halfday / 4 Jam')
-                                                    <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
-                                                @endif
-                                            </select>
+                                        <select class="bordered-text form-control" name="satuan" id="satuan"
+                                            required>
+                                            <option>{{ $dataRuangan->satuan }}</option>
+                                            @if ($dataRuangan->satuan != 'Seat / Bulan')
+                                                <option value="Seat / Bulan">Seat / Bulan</option>
+                                            @endif
+                                            @if ($dataRuangan->satuan != 'Seat / Hari')
+                                                <option value="Seat / Hari">Seat / Hari</option>
+                                            @endif
+                                            @if ($dataRuangan->satuan != 'Halfday / 4 Jam')
+                                                <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
+                                            @endif
+                                        </select>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>
                                     </div>
                                 </div>
@@ -189,7 +190,8 @@
                                     </label>
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="nama_ruangan" class="form-control bordered-text border-color" name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required> --}}
-                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10"  class="bordered-text form-control">{{$dataRuangan->keterangan}}</textarea>
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10"
+                                            class="bordered-text form-control">{{ $dataRuangan->keterangan }}</textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -202,39 +204,55 @@
                                         Ruangan</label>
                                 </div>
                                 <div class="row">
+                                    @php
+                                        // Urutkan gambar berdasarkan indeks dalam public_id (image_1, image_2, dll)
+                                        $sortedGambar = !empty($dataRuangan->gambar)
+                                            ? $dataRuangan->gambar
+                                                ->sortBy(function ($gambar) {
+                                                    // Ekstrak nomor indeks dari URL
+                                                    preg_match('/_image_(\d+)/', $gambar->url, $matches);
+                                                    return isset($matches[1]) ? (int) $matches[1] : 999; // Jika tidak ada pattern, letakkan di akhir
+                                                })
+                                                ->values()
+                                            : collect([]);
+                                        $gambarExists = $sortedGambar->isNotEmpty();
+                                    @endphp
+
                                     <div class="col-12">
                                         <div class="drop-zone">
                                             <span class="drop-zone__prompt" style="color: #717171;">
-                                                @if (!empty($dataRuangan->gambar) && $dataRuangan->gambar->isNotEmpty())
-                                                    <img src="{{ asset('assets/' . $dataRuangan->gambar->first()->url) }}"
-                                                        alt="" width="150" height="100">
-                                                    @php $gambarExists = true; @endphp
+                                                @if ($gambarExists)
+                                                    <img src="{{ asset($sortedGambar[0]->url) }}" alt=""
+                                                        width="150" height="100">
                                                 @else
-                                                    <span class="material-symbols-outlined" style="color: #717171; font-size: 48px;">
+                                                    <span class="material-symbols-outlined"
+                                                        style="color: #717171; font-size: 48px;">
                                                         add_circle
                                                     </span>
-                                                    Gambar Utama
-                                                    @php $gambarExists = false; @endphp
+                                                    <span>Gambar Utama</span>
                                                 @endif
                                             </span>
-                                            <input type="file" for="url" id="url" name="url[]"
-                                                class="drop-zone__input" @if (!$gambarExists) required @endif>
+                                            <input type="file" for="url" id="gambar_utama" name="url[]"
+                                                class="drop-zone__input"
+                                                @if (!$gambarExists) required @endif>
                                             @if (!$gambarExists)
                                                 <div class="invalid-feedback">Silakan upload gambar utama.</div>
                                             @endif
                                         </div>
                                     </div>
+
                                     @for ($i = 1; $i <= 4; $i++)
                                         <div class="col-6">
                                             <div class="drop-zone">
-                                                <span class="drop-zone__prompt" style="display: flex; flex-direction: column; align-items: center;">
-                                                    @if (!empty($dataRuangan->gambar) && $dataRuangan->gambar->count() > $i)
-                                                        <img src="{{ asset('assets/' . $dataRuangan->gambar[$i]->url) }}"
-                                                            alt="" width="150" height="100">
+                                                <span class="drop-zone__prompt"
+                                                    style="display: flex; flex-direction: column; align-items: center;">
+                                                    @if ($sortedGambar->count() > $i)
+                                                        <img src="{{ asset($sortedGambar[$i]->url) }}" alt=""
+                                                            width="150" height="100">
                                                     @else
                                                         <span class="material-symbols-outlined" style="font-size: 36px;">
                                                             add_circle
-                                                         </span>
+                                                        </span>
                                                         <span>Gambar {{ $i + 1 }}</span>
                                                     @endif
                                                 </span>
@@ -303,8 +321,14 @@
         const enter = 13;
 
         const handleInput = (event) => {
-            const { keyCode, target } = event;
-            const { selectionStart, value } = target;
+            const {
+                keyCode,
+                target
+            } = event;
+            const {
+                selectionStart,
+                value
+            } = target;
 
             if (keyCode === enter) {
                 const lines = value.split('\n');

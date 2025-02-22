@@ -26,7 +26,7 @@
     </style>
 
     <head>
-        <link rel="stylesheet" href="assets/css/dragndrop.css">
+        <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/tambahruangan.css') }}">
     </head>
@@ -79,7 +79,7 @@
                                             Contoh: Coworking space (B02)
                                         </div>
                                         <input type="text" id="nama_ruangan" class="bordered-text form-control"
-                                            name="nama_ruangan" placeholder="Masukkan Nama Ruangan" required >
+                                            name="nama_ruangan" placeholder="Masukkan Nama Ruangan" required>
                                         <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan nama
                                             dan nomor ruangan.</div>
                                     </div>
@@ -102,7 +102,8 @@
                                         Minimal kapasitas</label>
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_minimal" class="bordered-text form-control"
-                                            name="kapasitas_minimal" min="1" max="120" placeholder="Masukkan Minimal Kapasitas" required>
+                                            name="kapasitas_minimal" min="1" max="120"
+                                            placeholder="Masukkan Minimal Kapasitas" required>
                                         <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -110,7 +111,8 @@
                                     <label for="kapasitas_maksimal"
                                         class="text-color col-md-3 col-form-label text-md-right">Maksimal kapasitas</label>
                                     <div class="col-md-7">
-                                        <input type="number" id="kapasitas_maksimal" placeholder="Masukkan Maksimal Kapasitas" class="bordered-text form-control"
+                                        <input type="number" id="kapasitas_maksimal"
+                                            placeholder="Masukkan Maksimal Kapasitas" class="bordered-text form-control"
                                             name="kapasitas_maksimal" min="1" max="120" required>
                                         <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
@@ -120,7 +122,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
-                                            name="lokasi" required> -->
+                                                name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>
@@ -149,12 +151,13 @@
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="satuan" class="bordered-text form-control"
                                             name="satuan" required> --}}
-                                            <select class="bordered-text form-control" name="satuan" id="satuan" required>
-                                                <option value="" selected disabled>Pilih Satuan Waktu</option>
-                                                <option value="Seat / Bulan">Seat / Bulan</option>
-                                                <option value="Seat / Hari">Seat / Hari</option>
-                                                <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
-                                            </select>
+                                        <select class="bordered-text form-control" name="satuan" id="satuan"
+                                            required>
+                                            <option value="" selected disabled>Pilih Satuan Waktu</option>
+                                            <option value="Seat / Bulan">Seat / Bulan</option>
+                                            <option value="Seat / Hari">Seat / Hari</option>
+                                            <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
+                                        </select>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>
                                     </div>
                                 </div>
@@ -167,7 +170,8 @@
                                     </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
-                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10" class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" required></textarea>
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10"
+                                            class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" required></textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -192,11 +196,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="drop-zone">
-                                            <span class="material-symbols-outlined" style="color: #717171; font-size: 48px;">
+                                            <span class="material-symbols-outlined"
+                                                style="color: #717171; font-size: 48px;">
                                                 add_circle
                                             </span>
-                                            <span class="drop-zone__label fw-bold" style="color: #717171;">Gambar Utama</span>
-                                            <input type="file" for="url" id="url" name="url[]"
+                                            <span class="drop-zone__label fw-bold" style="color: #717171;">Gambar
+                                                Utama</span>
+                                            <input type="file" for="url" id="gambar-utama" name="url[]"
                                                 class="drop-zone__input" required>
                                             <div class="invalid-feedback" style="bottom:-15%">Silakan unggah gambar utama.
                                             </div>
@@ -206,7 +212,7 @@
                                         <div class="drop-zone">
                                             <span class="material-symbols-outlined" style="font-size: 36px;">
                                                 add_circle
-                                                </span>
+                                            </span>
                                             <span class="drop-zone__label fw-normal">Gambar 2</span>
                                             <input type="file" id="gambar_2" name="url[]"
                                                 class="drop-zone__input">
@@ -216,7 +222,7 @@
                                         <div class="drop-zone">
                                             <span class="material-symbols-outlined" style="font-size: 36px;">
                                                 add_circle
-                                                </span>
+                                            </span>
                                             <span class="drop-zone__label fw-normal">Gambar 3</span>
                                             <input type="file" id="gambar_3" name="url[]"
                                                 class="drop-zone__input">
@@ -226,7 +232,7 @@
                                         <div class="drop-zone">
                                             <span class="material-symbols-outlined" style="font-size: 36px;">
                                                 add_circle
-                                                </span>
+                                            </span>
                                             <span class="drop-zone__label fw-normal">Gambar 4</span>
                                             <input type="file" id="gambar_4" name="url[]"
                                                 class="drop-zone__input">
@@ -236,7 +242,7 @@
                                         <div class="drop-zone">
                                             <span class="material-symbols-outlined" style="font-size: 36px;">
                                                 add_circle
-                                                </span>
+                                            </span>
                                             <span class="drop-zone__label fw-normal">Gambar 5</span>
                                             <input type="file" id="gambar_5" name="url[]"
                                                 class="drop-zone__input">
@@ -301,8 +307,14 @@
         const enter = 13;
 
         const handleInput = (event) => {
-            const { keyCode, target } = event;
-            const { selectionStart, value } = target;
+            const {
+                keyCode,
+                target
+            } = event;
+            const {
+                selectionStart,
+                value
+            } = target;
 
             if (keyCode === enter) {
                 const lines = value.split('\n');

@@ -30,12 +30,19 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="card my-3 mx-2 shadow card-fixed" style="height:22rem; width:18rem;">
                             @if ($ruangan->gambar->isNotEmpty())
-                                <img src="{{ asset('assets/' . $ruangan->gambar->first()->url) }}" class="card-img-top custom-img" alt="Gambar Ruangan" style="height: 300px;">
+                                <img src="{{ asset(
+                                    $ruangan->gambar->sortBy(function ($gambar) {
+                                            preg_match('/_image_(\d+)/', $gambar->url, $matches);
+                                            return isset($matches[1]) ? (int) $matches[1] : 999;
+                                        })->first()->url,
+                                ) }}"
+                                    class="card-img-top custom-img" alt="Gambar Ruangan" style="height: 300px;">
                             @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $ruangan->nama_ruangan }}</h5>
                                 <p class="card-text">
-                                    Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }} {{ $ruangan->satuan }}
+                                    Rp {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
+                                    {{ $ruangan->satuan }}
                                 </p>
                                 <div class="status-group">
                                     @if ($ruangan->tersedia == '1')

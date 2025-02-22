@@ -39,16 +39,25 @@
                 <!-- Carousel -->
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        @foreach ($ruangan->gambar as $index => $gambar)
+                        @php
+                            $sortedGambar = $ruangan->gambar
+                                ->sortBy(function ($gambar) {
+                                    preg_match('/_image_(\d+)/', $gambar->url, $matches);
+                                    return isset($matches[1]) ? (int) $matches[1] : 999;
+                                })
+                                ->values();
+                        @endphp
+
+                        @foreach ($sortedGambar as $index => $gambar)
                             <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}"
                                 class="{{ $index == 0 ? 'active' : '' }}"></button>
                         @endforeach
                     </div>
 
                     <div class="carousel-inner" style="border-radius:5px;">
-                        @foreach ($ruangan->gambar as $index => $gambar)
+                        @foreach ($sortedGambar as $index => $gambar)
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                <img src="{{ asset('assets/' . $gambar->url) }}" alt="Gambar {{ $index + 1 }}"
+                                <img src="{{ asset($gambar->url) }}" alt="Gambar {{ $index + 1 }}"
                                     class="d-block w-100 custom-carousel-img">
                             </div>
                         @endforeach
@@ -423,6 +432,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale/id.js"></script>
-
-    <script src="{{ asset('assets/js/penyewa/detailRuangan.js') }}"></script>
 @endsection

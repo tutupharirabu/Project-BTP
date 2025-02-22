@@ -72,7 +72,7 @@ class MeminjamRuanganController extends Controller
             try {
                 $cloudinary = new Cloudinary();
                 $uploadedFileUrl = $cloudinary->uploadApi()->upload($request->file('ktp_url')->getRealPath(), [
-                    'folder' => 'ktp_btp',
+                    'folder' => 'spacerent-btp/ktp-btp',
                     'transformation' => [
                         [
                             'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',

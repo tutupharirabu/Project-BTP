@@ -1,7 +1,7 @@
 @extends('admin.layouts.mainAdmin')
 
 @section('containAdmin')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
 
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
@@ -139,7 +139,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
-                                            <td>{{ $data->lokasi}}</td>
+                                            <td>{{ $data->lokasi }}</td>
                                             <td>{{ $data->ukuran }}</td>
                                             <td class="text-center">{{ $data->kapasitas_minimal }}</td>
                                             <td class="text-center">{{ $data->kapasitas_maksimal }}</td>
@@ -170,9 +170,25 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div id="carouselExampleIndicators{{ $data->id_ruangan }}"
-                                                                    class="carousel slide" data-ride="carousel">
+                                                                    class="carousel slide" data-bs-ride="carousel">
                                                                     <div class="carousel-indicators">
-                                                                        @foreach ($data->gambar as $index => $gambar)
+                                                                        @php
+                                                                            // Urutkan gambar berdasarkan indeks dalam public_id (image_1, image_2, dll)
+                                                                            $sortedGambar = collect($data->gambar)
+                                                                                ->sortBy(function ($gambar) {
+                                                                                    // Ekstrak nomor indeks dari URL
+                                                                                    preg_match(
+                                                                                        '/_image_(\d+)/',
+                                                                                        $gambar->url,
+                                                                                        $matches,
+                                                                                    );
+                                                                                    return isset($matches[1])
+                                                                                        ? (int) $matches[1]
+                                                                                        : 999; // Jika tidak ada pattern, letakkan di akhir
+                                                                                })
+                                                                                ->values();
+                                                                        @endphp
+                                                                        @foreach ($sortedGambar as $index => $gambar)
                                                                             <button type="button"
                                                                                 data-bs-target="#carouselExampleIndicators{{ $data->id_ruangan }}"
                                                                                 data-bs-slide-to="{{ $index }}"
@@ -181,13 +197,34 @@
                                                                     </div>
                                                                     <div class="carousel-inner"
                                                                         style="border-radius:5px;">
-                                                                        @foreach ($data->gambar as $index => $gambar)
+                                                                        @foreach ($sortedGambar as $index => $gambar)
                                                                             <div
                                                                                 class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                                                <img src="{{ asset('assets/' . $gambar->url) }}"
+                                                                                <img src="{{ asset($gambar->url) }}"
                                                                                     class="d-block w-100"
                                                                                     alt="Gambar Ruangan"
                                                                                     style="max-height: 300px;">
+                                                                                <!-- Membuat public_id berdasarkan urutan gambar -->
+                                                                                <div class="text-center mt-2">
+                                                                                    @php
+                                                                                        // Ekstrak nomor indeks dari URL untuk menampilkan
+                                                                                        preg_match(
+                                                                                            '/_image_(\d+)/',
+                                                                                            $gambar->url,
+                                                                                            $matches,
+                                                                                        );
+                                                                                        $imageNumber = isset(
+                                                                                            $matches[1],
+                                                                                        )
+                                                                                            ? $matches[1]
+                                                                                            : $index + 1;
+                                                                                        $public_id =
+                                                                                            $data->id_ruangan .
+                                                                                            '_' .
+                                                                                            'image_' .
+                                                                                            $imageNumber;
+                                                                                    @endphp
+                                                                                </div>
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
