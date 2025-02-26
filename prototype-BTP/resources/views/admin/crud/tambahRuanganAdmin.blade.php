@@ -84,7 +84,7 @@
                                             dan nomor ruangan.</div>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-2">
+                                {{-- <div class="form-group row mb-2">
                                     <label for="ukuran" class="text-color col-md-3 col-form-label text-md-right">Ukuran
                                         Ruangan</label>
                                     <div class="col-md-7">
@@ -96,7 +96,7 @@
                                         <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan ukuran
                                             ruangan.</div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group row mb-2">
                                     <label for="kapasitas_minimal" class="text-color col-md-3 col-form-label text-md-right">
                                         Minimal kapasitas</label>

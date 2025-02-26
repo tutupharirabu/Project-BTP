@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ruangan', function (Blueprint $table) {
             $table->uuid('id_ruangan')->primary();
             $table->string('nama_ruangan', 255);
-            $table->string('ukuran', 255);
+            // $table->string('ukuran', 255);
             $table->bigInteger('kapasitas_minimal');
             $table->bigInteger('kapasitas_maksimal');
             $table->string('satuan', 255);

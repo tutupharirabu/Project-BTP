@@ -95,10 +95,10 @@
                             <td class="border border-secondary">Lokasi Ruangan</td>
                             <td colspan="3" class="border border-secondary">{{ $ruangan->lokasi }}</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="border border-secondary">Ukuran Ruangan</td>
                             <td colspan="3" class="border border-secondary">{{ $ruangan->ukuran }} Meter</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="border border-secondary">Harga Ruangan</td>
                             <td colspan="3" class="border border-secondary">Rp

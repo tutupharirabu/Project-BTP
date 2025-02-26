@@ -59,7 +59,7 @@ class AdminStatusRuanganController extends Controller
         try {
             $validated = $request->validate([
                 'nama_ruangan' => 'required|string|unique:ruangan,nama_ruangan',
-                'ukuran' => 'required',
+                // 'ukuran' => 'required',
                 'kapasitas_minimal' => 'required',
                 'kapasitas_maksimal' => 'required',
                 'lokasi' => 'required',
@@ -82,7 +82,7 @@ class AdminStatusRuanganController extends Controller
 
         $ruangan = Ruangan::create([
             'nama_ruangan' => $request->nama_ruangan,
-            'ukuran' => $request->ukuran,
+            // 'ukuran' => $request->ukuran,
             'kapasitas_minimal' => $request->kapasitas_minimal,
             'kapasitas_maksimal' => $request->kapasitas_maksimal,
             'lokasi' => $request->lokasi,
@@ -165,7 +165,7 @@ class AdminStatusRuanganController extends Controller
         try {
             $validated = $request->validate([
                 'nama_ruangan' => 'required|string',
-                'ukuran' => 'required',
+                // 'ukuran' => 'required',
                 'kapasitas_minimal' => 'required',
                 'kapasitas_maksimal' => 'required',
                 'lokasi' => 'required',
@@ -196,7 +196,7 @@ class AdminStatusRuanganController extends Controller
         $idUs = Auth::id();
 
         $dataRuangan->nama_ruangan = $request->input('nama_ruangan');
-        $dataRuangan->ukuran = $request->input('ukuran');
+        // $dataRuangan->ukuran = $request->input('ukuran');
         $dataRuangan->kapasitas_minimal = $request->input('kapasitas_minimal');
         $dataRuangan->kapasitas_maksimal = $request->input('kapasitas_maksimal');
         $dataRuangan->satuan = $request->input('satuan');

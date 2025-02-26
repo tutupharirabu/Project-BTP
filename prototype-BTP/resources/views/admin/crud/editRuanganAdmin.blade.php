@@ -71,7 +71,7 @@
                                         <div class="invalid-feedback">Silakan masukkan nama dan nomor ruangan.</div>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-2">
+                                {{-- <div class="form-group row mb-2">
                                     <label for="ukuran"
                                         class="col-md-3 col-form-label text-md-right text-color">Ukuran</label>
                                     <div class="col-md-7">
@@ -82,7 +82,7 @@
                                             name="ukuran" value="{{ $dataRuangan->ukuran }}" required>
                                         <div class="invalid-feedback">Silakan masukkan ukuran ruangan.</div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group row mb-2">
                                     <label for="kapasitas_minimal"
                                         class="col-md-3 col-form-label text-md-right text-color">Minimal kapasitas</label>
