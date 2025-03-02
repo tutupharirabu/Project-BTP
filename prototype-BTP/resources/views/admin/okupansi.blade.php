@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
         <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
         <script src="{{ asset('assets/js/admin/daftarRuangan.js') }}"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
@@ -108,13 +110,13 @@
                         <tr>
                             <td>Okupansi pemakaian per ruangan di BTP (dalam %)</td>
                             @foreach ($dataRuangan as $dr)
-                                @php
-                                    $totalCapacity = $dr->kapasitas_maksimal * 3 * 31;
-                                    $totalOccupancy = $totalByRoom[$dr->nama_ruangan] ?? 0;
-                                    $occupancyPercentage =
-                                        $totalCapacity > 0 ? ($totalOccupancy / $totalCapacity) * 100 : 0;
-                                @endphp
-                                <td class="text-center">{{ number_format($occupancyPercentage, 2) }}%</td>
+                                                    @php
+                                                        $totalCapacity = $dr->kapasitas_maksimal * 3 * 31;
+                                                        $totalOccupancy = $totalByRoom[$dr->nama_ruangan] ?? 0;
+                                                        $occupancyPercentage =
+                                                            $totalCapacity > 0 ? ($totalOccupancy / $totalCapacity) * 100 : 0;
+                                                    @endphp
+                                                    <td class="text-center">{{ number_format($occupancyPercentage, 2) }}%</td>
                             @endforeach
                         </tr>
                         <tr>

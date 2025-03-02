@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/detailRuangan.css') }}">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- title -->
@@ -21,7 +23,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="d-flex container my-2 mx-2">
-                    <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar Ruangan
+                    <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px; ">Daftar
+                        Ruangan
                         > </a>
                     <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Detail Ruangan </a>
                 </div>
@@ -102,7 +105,8 @@
                         <tr>
                             <td class="border border-secondary">Harga Ruangan</td>
                             <td colspan="3" class="border border-secondary">Rp
-                                {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}</td>
+                                {{ number_format((int) $ruangan->harga_ruangan, 0, ',', '.') }}
+                            </td>
                         </tr>
                         <tr>
                             <td class="border border-secondary">Fasilitas</td>
@@ -125,15 +129,15 @@
                                     Informasi ketersediaan
                                 </button>
                                 {{-- @if ($ruangan->tersedia == '1')
-                                    <div type="button boder" class="btn btn-sm text-white"
-                                        style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
-                                        Tersedia
-                                    </div>
+                                <div type="button boder" class="btn btn-sm text-white"
+                                    style="font-size:16px;background-color: #021BFF; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                                    Tersedia
+                                </div>
                                 @elseif($ruangan->tersedia == '0')
-                                    <div type="button boder" class="btn btn-sm text-white"
-                                        style="font-size:16px;background-color: #555555; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
-                                        Digunakan
-                                    </div>
+                                <div type="button boder" class="btn btn-sm text-white"
+                                    style="font-size:16px;background-color: #555555; border-radius: 10px; height: 31.83px; width: 120px; display: flex; align-items: center; justify-content: center;">
+                                    Digunakan
+                                </div>
                                 @endif --}}
                             </td>
                         </tr>
@@ -169,8 +173,8 @@
                                     Ruangan</a>
                             @else
                                 <a type="button" class="btn btn-sm text-white disabled"
-                                    style="background-color: #717171; font-size: 16px; border-radius: 7px;"
-                                    href="#">Pinjam Ruangan</a>
+                                    style="background-color: #717171; font-size: 16px; border-radius: 7px;" href="#">Pinjam
+                                    Ruangan</a>
                             @endif
                         </div>
                     </div>
@@ -194,13 +198,13 @@
                     <div class="d-flex justify-content-center my-3">
                         <div class="w-50">
                             <div class="btn-group w-100" role="group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                    value="per_minggu" autocomplete="off" checked>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="per_minggu"
+                                    autocomplete="off" checked>
                                 <label class="btn btn-outline-black text-capitalize w-50" for="btnradio1"
                                     style="font-size:13px;">Per Minggu</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                    value="per_bulan" autocomplete="off">
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="per_bulan"
+                                    autocomplete="off">
                                 <label class="btn btn-outline-black text-capitalize w-50" for="btnradio2"
                                     style="font-size:13px;">Per Bulan</label>
                             </div>
@@ -220,8 +224,8 @@
     </div>
 
     <!-- Modal for event details -->
-    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header " style="">
@@ -243,7 +247,7 @@
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             let startDate = new Date().toISOString().split('T')[0];
             let ruanganId = $('#roomId').val();
 
@@ -253,16 +257,16 @@
             console.log(bookings);
 
             // Event listener for radio button changes
-            $('input[name="btnradio"]').change(function() {
+            $('input[name="btnradio"]').change(function () {
                 updateView();
             });
 
             // Initialize view on modal show
-            $('#lihatKetersediaanModal').on('show.bs.modal', function() {
+            $('#lihatKetersediaanModal').on('show.bs.modal', function () {
                 updateView();
             });
 
-            $('#lihatKetersediaanModal').on('shown.bs.modal', function() {
+            $('#lihatKetersediaanModal').on('shown.bs.modal', function () {
                 if ($('#calendar').hasClass('fc')) {
                     $('#calendar').fullCalendar('render');
                 }
@@ -296,15 +300,15 @@
 
             function showFooter() {
                 var footerContent = `
-                <div class="d-flex align-items-center mr-4">
-                    <div class="mark-available"></div>
-                    <p class="my-auto">Tersedia</p>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="mark-notavailable"></div>
-                    <p class="my-auto">Tidak tersedia</p>
-                </div>
-            `;
+                    <div class="d-flex align-items-center mr-4">
+                        <div class="mark-available"></div>
+                        <p class="my-auto">Tersedia</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="mark-notavailable"></div>
+                        <p class="my-auto">Tidak tersedia</p>
+                    </div>
+                `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -325,7 +329,7 @@
                             .getDate() + 6)).toISOString().split('T')[0],
                         ruangan_id: ruanganId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         var content =
                             '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
                         var startDateObj = new Date(startDate);
@@ -341,22 +345,22 @@
                             var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                             var dayHtml = `
-                            <div class="mx-2 text-center">
-                                <div>
-                                    <p class="day-name">${dayName}</p>
-                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                <div class="mx-2 text-center">
+                                    <div>
+                                        <p class="day-name">${dayName}</p>
+                                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                    </div>
+                                    <div>
+                                        ${hoursHtml}
+                                    </div>
                                 </div>
-                                <div>
-                                    ${hoursHtml}
-                                </div>
-                            </div>
-                        `;
+                            `;
                             content += dayHtml;
                         }
                         content += '</div>';
                         $('#form-content').html(content);
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error:', xhr.responseText);
                     }
                 });
@@ -369,7 +373,7 @@
 
                 while (start < end) {
                     var hour = start.toTimeString().substring(0, 5);
-                    var isUsed = usedTimeSlots.some(function(slot) {
+                    var isUsed = usedTimeSlots.some(function (slot) {
                         return slot.date === dayDate && slot.time === hour;
                     });
                     var className = isUsed ? 'cek-notavailable' : 'cek-available';
@@ -389,7 +393,7 @@
                 // Check the structure of the bookings array
                 console.log('Bookings:', bookings);
 
-                var filteredBookings = bookings.filter(function(booking) {
+                var filteredBookings = bookings.filter(function (booking) {
                     console.log('Booking Room ID:', booking.ruangan_id); // Log each booking's room ID
                     return booking.ruangan_id == ruanganId;
                 });
@@ -406,7 +410,7 @@
                     $('#calendar').fullCalendar({
                         locale: 'id',
                         events: filteredBookings,
-                        eventClick: function(event) {
+                        eventClick: function (event) {
                             $('#modalNamaP').text(event.peminjam);
                             $('#modalRuangan').text(event.ruangan);
                             $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));

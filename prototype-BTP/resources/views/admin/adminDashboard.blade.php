@@ -8,6 +8,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale/id.js"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
     </head>
 
     <div class="container-fluid mt-4">
@@ -51,8 +53,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header " style="">
@@ -73,14 +75,14 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var bookings = @json($events);
             console.log(bookings);
 
             $('#calendar').fullCalendar({
                 locale: 'id',
                 events: bookings,
-                eventClick: function(event) {
+                eventClick: function (event) {
                     $('#modalTitle').text(event.title);
                     $('#modalNama').text(event.nama);
                     $('#modalRuangan').text(event.ruangan);
@@ -97,7 +99,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('occupancyChart').getContext('2d');
             const occupancyData = @json(array_values($occupancyPerMonth));
 
@@ -123,7 +125,7 @@
                             beginAtZero: true,
                             max: 100,
                             ticks: {
-                                callback: function(value) {
+                                callback: function (value) {
                                     return value + '%';
                                 }
                             }
@@ -132,7 +134,7 @@
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return 'Okupansi: ' + context.parsed.y + '%';
                                 }
                             }

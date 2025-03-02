@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/editRuangan.css') }}">
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
     </head>
 
     <div class="container-fluid mt-4">
@@ -48,13 +50,13 @@
                             <!-- left form text field -->
                             <div class="col-md-7">
                                 <div class="form-group row mb-2">
-                                    {{-- <label for="id_ruangan" class="col-md-3 col-form-label text-md-left-right text-color">ID
+                                    {{-- <label for="id_ruangan"
+                                        class="col-md-3 col-form-label text-md-left-right text-color">ID
                                         Ruangan</label> --}}
                                     <div class="col-md-7">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                        <input type="text" id="id_ruangan"
-                                            class="form-control bordered-text border-color" name="id_ruangan" disabled
-                                            value="{{ $dataRuangan->id_ruangan }}" hidden>
+                                        <input type="text" id="id_ruangan" class="form-control bordered-text border-color"
+                                            name="id_ruangan" disabled value="{{ $dataRuangan->id_ruangan }}" hidden>
                                         <div class="valid-feedback">Tampilan bagus!</div>
                                     </div>
                                 </div>
@@ -65,9 +67,8 @@
                                         <div id="" class="form-text">
                                             Contoh: Coworking space (B02)
                                         </div>
-                                        <input type="text" id="nama_ruangan"
-                                            class="form-control bordered-text border-color" name="nama_ruangan"
-                                            value="{{ $dataRuangan->nama_ruangan }}" required>
+                                        <input type="text" id="nama_ruangan" class="form-control bordered-text border-color"
+                                            name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required>
                                         <div class="invalid-feedback">Silakan masukkan nama dan nomor ruangan.</div>
                                     </div>
                                 </div>
@@ -108,7 +109,7 @@
                                         class="col-md-3 col-form-label text-md-right text-color">Lokasi</label>
                                     <div class="col-md-7">
                                         {{-- <input type="text" id="lokasi" class="form-control bordered-text border-color"
-                                            name="lokasi" value="{{ $dataRuangan->lokasi }}" required>  --}}
+                                            name="lokasi" value="{{ $dataRuangan->lokasi }}" required> --}}
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option>{{ $dataRuangan->lokasi }}</option>
                                             @if ($dataRuangan->lokasi != 'Gedung A')
@@ -142,11 +143,9 @@
                                     <label for="satuan" class="col-md-3 col-form-label text-md-right text-color">Satuan
                                         Waktu Penyewaan</label>
                                     <div class="col-md-7">
-                                        {{-- <input type="text" id="satuan"
-                                            class="form-control bordered-text border-color" name="satuan"
-                                            value="{{ $dataRuangan->satuan }}" required> --}}
-                                        <select class="bordered-text form-control" name="satuan" id="satuan"
-                                            required>
+                                        {{-- <input type="text" id="satuan" class="form-control bordered-text border-color"
+                                            name="satuan" value="{{ $dataRuangan->satuan }}" required> --}}
+                                        <select class="bordered-text form-control" name="satuan" id="satuan" required>
                                             <option>{{ $dataRuangan->satuan }}</option>
                                             @if ($dataRuangan->satuan != 'Seat / Bulan')
                                                 <option value="Seat / Bulan">Seat / Bulan</option>
@@ -189,8 +188,11 @@
                                         </span> --}}
                                     </label>
                                     <div class="col-md-7">
-                                        {{-- <input type="text" id="nama_ruangan" class="form-control bordered-text border-color" name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required> --}}
-                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10"
+                                        {{-- <input type="text" id="nama_ruangan"
+                                            class="form-control bordered-text border-color" name="nama_ruangan"
+                                            value="{{ $dataRuangan->nama_ruangan }}" required> --}}
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30"
+                                            rows="10"
                                             class="bordered-text form-control">{{ $dataRuangan->keterangan }}</textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
@@ -222,8 +224,8 @@
                                         <div class="drop-zone">
                                             <span class="drop-zone__prompt" style="color: #717171;">
                                                 @if ($gambarExists)
-                                                    <img src="{{ asset($sortedGambar[0]->url) }}" alt=""
-                                                        width="150" height="100">
+                                                    <img src="{{ asset($sortedGambar[0]->url) }}" alt="" width="150"
+                                                        height="100">
                                                 @else
                                                     <span class="material-symbols-outlined"
                                                         style="color: #717171; font-size: 48px;">
@@ -233,8 +235,7 @@
                                                 @endif
                                             </span>
                                             <input type="file" for="url" id="gambar_utama" name="url[]"
-                                                class="drop-zone__input"
-                                                @if (!$gambarExists) required @endif>
+                                                class="drop-zone__input" @if (!$gambarExists) required @endif>
                                             @if (!$gambarExists)
                                                 <div class="invalid-feedback">Silakan upload gambar utama.</div>
                                             @endif
@@ -247,8 +248,8 @@
                                                 <span class="drop-zone__prompt"
                                                     style="display: flex; flex-direction: column; align-items: center;">
                                                     @if ($sortedGambar->count() > $i)
-                                                        <img src="{{ asset($sortedGambar[$i]->url) }}" alt=""
-                                                            width="150" height="100">
+                                                        <img src="{{ asset($sortedGambar[$i]->url) }}" alt="" width="150"
+                                                            height="100">
                                                     @else
                                                         <span class="material-symbols-outlined" style="font-size: 36px;">
                                                             add_circle
@@ -355,7 +356,7 @@
             input.value = value;
         }
 
-        document.getElementById('ukuran').addEventListener('input', function() {
+        document.getElementById('ukuran').addEventListener('input', function () {
             formatRoomSize(this);
         });
     </script>

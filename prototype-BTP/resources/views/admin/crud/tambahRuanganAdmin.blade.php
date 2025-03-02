@@ -29,6 +29,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/tambahruangan.css') }}">
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
     </head>
 
     <div class="container-fluid mt-4">
@@ -63,7 +65,8 @@
                             <!-- left from text field -->
                             <div class="col-md-7">
                                 <div class="form-group row mb-2">
-                                    {{-- <label for="id_ruangan" class="text-color col-md-3 col-form-label text-md-left-right">ID
+                                    {{-- <label for="id_ruangan"
+                                        class="text-color col-md-3 col-form-label text-md-left-right">ID
                                         Ruangan</label> --}}
                                     <div class="col-md-7">
                                         <input type="text" id="id_ruangan" class="bordered-text form-control"
@@ -91,8 +94,8 @@
                                         <div id="" class="form-text">
                                             Contoh: 5 x 5
                                         </div>
-                                        <input type="text" id="ukuran" class="bordered-text form-control"
-                                            name="ukuran" placeholder="Masukkan Ukuran Ruangan" required>
+                                        <input type="text" id="ukuran" class="bordered-text form-control" name="ukuran"
+                                            placeholder="Masukkan Ukuran Ruangan" required>
                                         <div id="namaRuanganFeedback" class="invalid-feedback">Silakan masukkan ukuran
                                             ruangan.</div>
                                     </div>
@@ -122,7 +125,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
-                                                name="lokasi" required> -->
+                                                        name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>
@@ -149,10 +152,9 @@
                                     <label for="satuan" class="text-color col-md-3 col-form-label text-md-right">Satuan
                                         Waktu Penyewaan</label>
                                     <div class="col-md-7">
-                                        {{-- <input type="text" id="satuan" class="bordered-text form-control"
-                                            name="satuan" required> --}}
-                                        <select class="bordered-text form-control" name="satuan" id="satuan"
-                                            required>
+                                        {{-- <input type="text" id="satuan" class="bordered-text form-control" name="satuan"
+                                            required> --}}
+                                        <select class="bordered-text form-control" name="satuan" id="satuan" required>
                                             <option value="" selected disabled>Pilih Satuan Waktu</option>
                                             <option value="Seat / Bulan">Seat / Bulan</option>
                                             <option value="Seat / Hari">Seat / Hari</option>
@@ -170,8 +172,9 @@
                                     </label>
                                     {{-- <span class="text-wrap">(jika tidak ada beri tanda (~))</span> --}}
                                     <div class="col-md-7">
-                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30" rows="10"
-                                            class="bordered-text form-control" placeholder="Masukkan Fasilitas ruangan" required></textarea>
+                                        <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30"
+                                            rows="10" class="bordered-text form-control"
+                                            placeholder="Masukkan Fasilitas ruangan" required></textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -214,8 +217,7 @@
                                                 add_circle
                                             </span>
                                             <span class="drop-zone__label fw-normal">Gambar 2</span>
-                                            <input type="file" id="gambar_2" name="url[]"
-                                                class="drop-zone__input">
+                                            <input type="file" id="gambar_2" name="url[]" class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -224,8 +226,7 @@
                                                 add_circle
                                             </span>
                                             <span class="drop-zone__label fw-normal">Gambar 3</span>
-                                            <input type="file" id="gambar_3" name="url[]"
-                                                class="drop-zone__input">
+                                            <input type="file" id="gambar_3" name="url[]" class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -234,8 +235,7 @@
                                                 add_circle
                                             </span>
                                             <span class="drop-zone__label fw-normal">Gambar 4</span>
-                                            <input type="file" id="gambar_4" name="url[]"
-                                                class="drop-zone__input">
+                                            <input type="file" id="gambar_4" name="url[]" class="drop-zone__input">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -244,8 +244,7 @@
                                                 add_circle
                                             </span>
                                             <span class="drop-zone__label fw-normal">Gambar 5</span>
-                                            <input type="file" id="gambar_5" name="url[]"
-                                                class="drop-zone__input">
+                                            <input type="file" id="gambar_5" name="url[]" class="drop-zone__input">
                                         </div>
                                     </div>
                                 </div>
@@ -254,8 +253,7 @@
                                         .JPG / .PNG. Dimensi yang
                                         direkomendasikan adalah 600x300 pixels.</p>
                                     <button type="button" class="btn text-white capitalize-first-letter"
-                                        style="background-color: #0C9300"
-                                        onclick="showConfirmationModal()">Tambah</button>
+                                        style="background-color: #0C9300" onclick="showConfirmationModal()">Tambah</button>
                                 </div>
                             </div>
                         </form>
@@ -331,19 +329,19 @@
                 target.value = `${bulletWithSpace}${value}`;
             }
         }
-        document.getElementById('nama_ruangan').addEventListener('blur', function() {
+        document.getElementById('nama_ruangan').addEventListener('blur', function () {
             var namaRuangan = this.value;
             if (namaRuangan) {
                 fetch('{{ route('check.room.name') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            nama_ruangan: namaRuangan
-                        })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        nama_ruangan: namaRuangan
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
@@ -366,18 +364,18 @@
             input.value = value;
         }
 
-        document.getElementById('ukuran').addEventListener('input', function() {
+        document.getElementById('ukuran').addEventListener('input', function () {
             formatRoomSize(this);
         });
 
-        document.getElementById('kapasitas_minimal').addEventListener('input', function() {
+        document.getElementById('kapasitas_minimal').addEventListener('input', function () {
             let value = this.value;
             if (value <= 0) {
                 this.value = '';
             }
         });
 
-        document.getElementById('kapasitas_maksimal').addEventListener('input', function() {
+        document.getElementById('kapasitas_maksimal').addEventListener('input', function () {
             let value = this.value;
             if (value <= 0) {
                 this.value = '';
