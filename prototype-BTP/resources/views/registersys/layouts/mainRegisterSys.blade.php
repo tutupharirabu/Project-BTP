@@ -10,7 +10,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
     <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-        data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
+        data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
 </head>
 
 <body class="bg-body-tertiary">

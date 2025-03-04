@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/tambahruangan.css') }}">
         <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
+            data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
     </head>
 
     <div class="container-fluid mt-4">
@@ -125,7 +125,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
-                                                        name="lokasi" required> -->
+                                                            name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>

@@ -12,7 +12,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-        data-website-id="7a76e24b-1d1b-4594-8a26-7fcc2765570a"></script>
+        data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
 </head>
 
 <div class="container-fluid">
