@@ -1,7 +1,7 @@
 @extends('penyewa.layouts.mainPenyewa')
 
 @section('containPenyewa')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
     <style>
         .table td,
         .table th {
@@ -107,7 +107,8 @@
                             </div>
                             <div class="status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center"
                                 style="">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Disetujui</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -128,7 +129,8 @@
                             </div>
                             <div class="status-count left-status text-black text-justify shadow d-flex flex-column justify-content-center"
                                 style="">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Ditolak</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -149,7 +151,8 @@
                             </div>
                             <div
                                 class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Menunggu</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -170,7 +173,8 @@
                             </div>
                             <div
                                 class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
-                                <p class="text-center mt-1 mb-2" style="font-size: 18px; margin-top: 8px;font-weight: bold;">
+                                <p class="text-center mt-1 mb-2"
+                                    style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Selesai</p>
                                 <p class="text-center" style="font-size: 32px;margin-top: -4px;font-weight: bold;">
                                     @php
@@ -215,7 +219,8 @@
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ $data->status }}</td>
                                             <td><a href="{{ route('generateInvoice', $data->id_peminjaman) }}"
-                                                    class="btn btn-md text-white text-capitalize" style="background-color:#0C9300">Lihat Invoice</a></td>
+                                                    class="btn btn-md text-white text-capitalize"
+                                                    style="background-color:#0C9300">Lihat Invoice</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -235,8 +240,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi Peminjaman</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Apakah Anda yakin ingin <span id="actionType"></span> peminjaman ini?
@@ -246,8 +250,7 @@
                                 style="background: #FF0000;">Batal</button>
                             <form id="confirmationForm" method="POST">
                                 @csrf
-                                <button type="submit" class="btn text-white"
-                                    style="background-color: #0DA200;">Ya</button>
+                                <button type="submit" class="btn text-white" style="background-color: #0DA200;">Ya</button>
                             </form>
                         </div>
                     </div>
@@ -255,12 +258,14 @@
             </div>
 
             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#dataTPengajuan').DataTable({
                         "paging": true,
                         "searching": true,
@@ -269,4 +274,4 @@
                     });
                 });
             </script>
-        @endsection
+@endsection

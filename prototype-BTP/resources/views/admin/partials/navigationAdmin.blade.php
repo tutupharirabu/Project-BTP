@@ -1,5 +1,6 @@
 <!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css"
+    integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 <!-- MDB -->
@@ -25,7 +26,8 @@
             <div class="navbar-nav" style="margin-left:20px;">
                 <a class="nav-link" href="/dashboardAdmin" style="font-weight: 900;">Dashboard</a>
                 <a class="nav-link" href="/statusRuanganAdmin" style="font-weight: 900;">Daftar Ruangan</a>
-                <a class="nav-link" href="/statusPengajuanAdmin" style="font-weight: 900;">Status Pengajuan Peminjaman/Penyewaan Ruangan</a>
+                <a class="nav-link" href="/statusPengajuanAdmin" style="font-weight: 900;">Status Pengajuan
+                    Peminjaman/Penyewaan Ruangan</a>
                 <a class="nav-link" href="/okupansiRuangan" style="font-weight: 900;">Okupansi Ruangan</a>
                 <a class="nav-link" href="/riwayatRuangan" style="font-weight: 900;">Riwayat Ruangan</a>
                 <a class="nav-link" href="/logout" style="font-weight: 900;">Logout</a>
@@ -36,10 +38,10 @@
         <div class="fixed-right d-flex align-items-center pe-5" id="navbarRightElements">
             <!-- Avatar -->
             <span class="material-symbols-outlined"
-                        style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
-                    <p>
-                        <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
-                    </p>
+                style="margin-right: 10px; font-weight: 600;color: #2F3645;">person</span>
+            <p>
+                <center style="color: black">{{ Auth::user()->nama_lengkap }}</center>
+            </p>
             <!-- <div class="dropdown">
                 <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                     id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
@@ -54,17 +56,21 @@
 
 <!-- Custom CSS -->
 <style>
-    .logo-style{
-        font-size:15px; color:#0B3932; font-weight: bold;
+    .logo-style {
+        font-size: 15px;
+        color: #0B3932;
+        font-weight: bold;
     }
 
     @media (min-width: 768px) {
         #navbarNavAltMarkup .navbar-nav {
             display: none;
         }
+
         .navbar-brand {
             display: block !important;
         }
+
         #navbarRightElements {
             position: absolute;
             right: 0;
@@ -75,16 +81,18 @@
         #navbarNavAltMarkup .navbar-nav {
             display: flex;
         }
+
         .navbar-brand {
             display: none !important;
         }
+
         #navbarRightElements {
             position: static;
         }
     }
 
     /* Ensure the right elements stay on top when the navbar is collapsed */
-    .navbar-collapse.show ~ #navbarRightElements {
+    .navbar-collapse.show~#navbarRightElements {
         display: block;
         width: 100%;
         text-align: right;
@@ -95,8 +103,9 @@
 </style>
 
 <!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EQBeqOJMW/xzPnfnvvQvORpLCzabw2aFUuHTI7sC9yXs5Ddq3HrLnGSs" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
 <!-- MDB -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>

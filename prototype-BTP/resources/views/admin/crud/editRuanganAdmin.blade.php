@@ -10,7 +10,8 @@
 
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/editRuangan.css') }}">
         <script defer src="https://umami.tutupharirabu.cloud/script.js"
             data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>

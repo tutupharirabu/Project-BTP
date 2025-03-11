@@ -131,7 +131,8 @@
                     <div class="col-12 col-md-4 d-flex align-items-center mb-2 mb-md-0">
                         {{-- <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
                             placeholder="Cari pengajuan..."
-                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;"> --}}
+                            style="width: 100%; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                        --}}
                         {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                     </div>
@@ -139,16 +140,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                                                        <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                                                            <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                                                    placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                                                {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                                        placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                    style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                </div>
                                                                                                                                                                                                                                                             </div>
-                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                        </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -194,16 +195,15 @@
                                                 </button>
 
                                                 <!-- Modal untuk gambar -->
-                                                <div class="modal fade" id="imageModal{{ $data->id_peminjaman }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
+                                                <div class="modal fade" id="imageModal{{ $data->id_peminjaman }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Foto KTP
                                                                 </h5>
-                                                                <button type="button" class="close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                <button type="button" class="close" data-bs-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -211,11 +211,12 @@
                                                                 <!-- Menampilkan gambar tunggal menggunakan Cloudinary -->
                                                                 @if (!empty($data->ktp_url))
                                                                     {{-- <x-cld-image public-id="{{ $data->ktp_url }}"
-                                                                        class="d-block w-100" width="800"
-                                                                        height="400" crop="fill"
+                                                                        class="d-block w-100" width="800" height="400" crop="fill"
                                                                         alt="Foto KTP">
                                                                     </x-cld-image> --}}
-                                                                    <img src="{{ $data->ktp_url }}" alt="Foto KTP" width="450" height="300" style="object-fit: cover;" oncontextmenu="return false;">
+                                                                    <img src="{{ $data->ktp_url }}" alt="Foto KTP" width="450"
+                                                                        height="300" style="object-fit: cover;"
+                                                                        oncontextmenu="return false;">
                                                                 @else
                                                                     <p>Gambar tidak tersedia.</p>
                                                                 @endif
@@ -236,15 +237,13 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
-                                                        data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"
+                                                        style="background-color:#0C9300;" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
                                                     </button>
                                                     <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
-                                                        tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                        tabindex="-1" aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -252,8 +251,7 @@
                                                                     <h1 class="modal-title fs-5"
                                                                         id="exampleModalLabel{{ $data->id_peminjaman }}">
                                                                         Keterangan Ruangan</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -292,23 +290,20 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
-                                                        data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"
+                                                        style="background-color:#0C9300;" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
                                                         Catatan
                                                     </button>
                                                     <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
-                                                        tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                        tabindex="-1" aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
                                                                         Catatan Dari Pengguna</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -327,8 +322,7 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button type="submit" value='selesai'
-                                                            class="btn btn-outline-warning"
+                                                        <button type="submit" value='selesai' class="btn btn-outline-warning"
                                                             style="border-radius:6px;font-size: 13px;text-transform: capitalize;">Selesai</button>
                                                     </form>
                                                 </td>
@@ -344,9 +338,9 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-md text-capitalize"style="background-color:#0C9300;"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"
+                                                        style="background-color:#0C9300;" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
 
@@ -357,8 +351,7 @@
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
                                                                         Catatan Dari Pengguna</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -406,8 +399,7 @@
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
                                                                         Catatan Dari Pengguna</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -453,8 +445,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi Peminjaman</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Apakah Anda yakin ingin <span id="actionType"></span> peminjaman ini?
@@ -464,8 +455,7 @@
                                 style="background: #FF0000;">Batal</button>
                             <form id="confirmationForm" method="POST">
                                 @csrf
-                                <button type="submit" class="btn text-white"
-                                    style="background-color: #0DA200;">Ya</button>
+                                <button type="submit" class="btn text-white" style="background-color: #0DA200;">Ya</button>
                             </form>
                         </div>
                     </div>
@@ -473,12 +463,14 @@
             </div>
 
             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#dataTPengajuan').DataTable({
                         "paging": true,
                         "searching": true,
@@ -489,13 +481,13 @@
             </script>
 
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                     var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
                     var confirmationForm = document.getElementById('confirmationForm');
                     var actionTypeSpan = document.getElementById('actionType');
 
-                    document.querySelectorAll('.btn-outline-success, .btn-outline-danger').forEach(function(button) {
-                        button.addEventListener('click', function(event) {
+                    document.querySelectorAll('.btn-outline-success, .btn-outline-danger').forEach(function (button) {
+                        button.addEventListener('click', function (event) {
                             event.preventDefault();
                             var action = this.value === 'terima' ? 'menyetujui' : 'menolak';
                             actionTypeSpan.textContent = action;
@@ -606,4 +598,4 @@
                     color: orange;
                 }
             </style>
-        @endsection
+@endsection

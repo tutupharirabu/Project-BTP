@@ -3,7 +3,7 @@
 @section('containPenyewa')
 
     <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
         {{-- <link rel="stylesheet" href="style.css"> --}}
         <script defer src="https://umami.tutupharirabu.cloud/script.js" data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
