@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/detailRuangan.css') }}">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
+        <script defer src="https://umami.tutupharirabu.cloud/script.js"
+            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- title -->
@@ -300,15 +300,15 @@
 
             function showFooter() {
                 var footerContent = `
-                        <div class="d-flex align-items-center mr-4">
-                            <div class="mark-available"></div>
-                            <p class="my-auto">Tersedia</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="mark-notavailable"></div>
-                            <p class="my-auto">Tidak tersedia</p>
-                        </div>
-                    `;
+                            <div class="d-flex align-items-center mr-4">
+                                <div class="mark-available"></div>
+                                <p class="my-auto">Tersedia</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="mark-notavailable"></div>
+                                <p class="my-auto">Tidak tersedia</p>
+                            </div>
+                        `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -345,16 +345,16 @@
                             var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                             var dayHtml = `
-                                    <div class="mx-2 text-center">
-                                        <div>
-                                            <p class="day-name">${dayName}</p>
-                                            <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                        <div class="mx-2 text-center">
+                                            <div>
+                                                <p class="day-name">${dayName}</p>
+                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                            </div>
+                                            <div>
+                                                ${hoursHtml}
+                                            </div>
                                         </div>
-                                        <div>
-                                            ${hoursHtml}
-                                        </div>
-                                    </div>
-                                `;
+                                    `;
                             content += dayHtml;
                         }
                         content += '</div>';

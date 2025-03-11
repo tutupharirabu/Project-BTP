@@ -29,8 +29,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/tambahruangan.css') }}">
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
+        <script defer src="https://umami.tutupharirabu.cloud/script.js"
+            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
     </head>
 
     <div class="container-fluid mt-4">
@@ -125,7 +125,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
-                                                            name="lokasi" required> -->
+                                                                name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>

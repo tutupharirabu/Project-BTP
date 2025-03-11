@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="sha512-VoVp+Y7fE9gr/mq6+dL88UJ8RxmcrnhOHKAtMtTX/AriKVIyK/Bn0pNED0oGzUg0JeA7L+CK6XXNwOjf5eFpBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-        data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
+    <script defer src="https://umami.tutupharirabu.cloud/script.js"
+        data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
 </head>
 
 <body class="bg-body-tertiary">

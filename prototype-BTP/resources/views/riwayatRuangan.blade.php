@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
         <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
         <script src="assets/js/admin/daftarRuangan.js"></script>
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
+        <script defer src="https://umami.tutupharirabu.cloud/script.js"
+            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
@@ -59,18 +59,18 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                            placeholder="Cari riwayat..."
-                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                        {{-- <button type="button" class="btn btn-md text-white text-center"
-                                    style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                placeholder="Cari riwayat..."
+                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                            {{-- <button type="button" class="btn btn-md text-white text-center"
+                                        style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                        </div>
+                                                                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
+                                                                            style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                                                                     </div>
-                                                                    <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
-                                                                        style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
-                                                                </div>
-                                                            </div> -->
+                                                                </div> -->
 
             <!-- table edit -->
             <div class="row">

@@ -3,8 +3,8 @@
 
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/daftarRuangan.css') }}">
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="a0fc1451-ec3e-4c05-ab7f-cac39472a1bd"></script>
+        <script defer src="https://umami.tutupharirabu.cloud/script.js"
+            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
