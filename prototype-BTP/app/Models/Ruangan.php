@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Mengelola;
 use App\Models\Gambar;
 use App\Models\Users;
 
@@ -28,10 +27,6 @@ class Ruangan extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
-    }
-
-    public function mengelola() {
-        return $this->belongsTo(Mengelola::class, 'id_pengelola', 'id_pengelola');
     }
 
     public function gambar(){

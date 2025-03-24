@@ -5,7 +5,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
 
 use App\Http\Controllers\RiwayatController;
-use App\Http\Controllers\AdminDetailRuangan;
 use App\Http\Controllers\OkupansiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenyewaDaftarRuangan;
@@ -57,7 +56,6 @@ Route::get('/get-ruangan-details', [MeminjamRuanganController::class, 'getRuanga
 
 // Admin Lihat Status Ruangan
 Route::get('/daftarRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
-Route::get('/detailRuanganAdmin', [AdminDetailRuangan::class, 'index'])->middleware('auth');
 
 // Status Pengajuan
 Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index'])->middleware('auth');
