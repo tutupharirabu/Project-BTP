@@ -157,15 +157,12 @@ function showConfirmationPopup() {
 
 // function confirmSubmission() with spinner
 function confirmSubmission(event) {
-    event.preventDefault(); // Mencegah submit bawaan
+    event.preventDefault(); // Prevent the default form submission
 
     const rentalForm = document.getElementById('rentalForm');
     const formData = new FormData(rentalForm);
 
-    // Simpan data form ke sessionStorage
-    sessionStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData.entries())));
-
-    // Tampilkan spinner dan sembunyikan tombol
+    // Show spinner and hide the confirmation buttons
     document.getElementById('confirmationButtons').classList.add('d-none');
     document.getElementById('spinner').classList.remove('d-none');
 
@@ -176,24 +173,46 @@ function confirmSubmission(event) {
                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
             }
         })
-        .then(response => {
-            if (response.ok) {
-                console.log('Data berhasil dikirim');
+        .then(response => response.json()) // Ensure the response is parsed as JSON
+        .then(data => {
+            if (data.is_sqli) {
+                // SQLi detected: Display the error message below the form
+                console.log('SQL Injection detected:', data);
+                const errorMessage = `SQL Injection detected! Confidence: ${data.probability}`;
+                
+                // Create the error message element if not already present
+                let errorElement = document.getElementById('sqliError');
+                if (!errorElement) {
+                    errorElement = document.createElement('div');
+                    errorElement.id = 'sqliError';
+                    errorElement.style.color = 'red';
+                    document.getElementById('rentalForm').appendChild(errorElement);
+                }
+                errorElement.textContent = errorMessage;
 
-                // Tutup modal Confirmation
+                // Hide the WhatsApp modal and prevent redirection
+                const whatsappModal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
+                if (whatsappModal) {
+                    whatsappModal.hide();
+                }
+
+                // Prevent redirect to dashboard
+                window.location.href = "#"; // Stay on the current page
+            } else {
+                // No SQLi detected: Proceed with normal submission
+                console.log('Data successfully submitted');
+                
+                // Close the confirmation modal
                 const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
                 if (confirmationModal) {
                     confirmationModal.hide();
                 }
 
-                // Tampilkan modal WhatsApp
+                // Show WhatsApp modal after a brief delay
                 setTimeout(() => {
                     const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
                     whatsappModal.show();
                 }, 500);
-            } else {
-                console.error('Form submission error:', response);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
             }
         })
         .catch(error => {
@@ -201,11 +220,13 @@ function confirmSubmission(event) {
             alert('Terjadi kesalahan saat mengirim data.');
         })
         .finally(() => {
-            // Sembunyikan spinner dan tampilkan tombol kembali
+            // Hide spinner and show the confirmation buttons again
             document.getElementById('spinner').classList.add('d-none');
             document.getElementById('confirmationButtons').classList.remove('d-none');
         });
 }
+
+
 
 document.getElementById('whatsappButton').addEventListener('click', function() {
     setTimeout(function() {
