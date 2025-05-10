@@ -173,24 +173,47 @@ function confirmSubmission(event) {
                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
             }
         })
-        .then(response => response.json()) // Ensure the response is parsed as JSON
+        .then(response => {
+            if (!response.ok) {
+                console.error('Error response from API:', response);
+                alert('Terjadi kesalahan saat mengirim data');
+                return Promise.reject('Failed response');
+            }
+            return response.json(); // Mengambil response dalam format JSON jika status OK
+        })
         .then(data => {
             if (data.is_sqli) {
                 // SQLi detected: Display the error message below the form
                 console.log('SQL Injection detected:', data);
                 const errorMessage = `SQL Injection detected! Confidence: ${data.probability}`;
                 
-                // Create the error message element if not already present
+                // Create or update the error message element
                 let errorElement = document.getElementById('sqliError');
                 if (!errorElement) {
                     errorElement = document.createElement('div');
                     errorElement.id = 'sqliError';
                     errorElement.style.color = 'red';
+                    errorElement.style.fontWeight = 'bold'; // Make it stand out
                     document.getElementById('rentalForm').appendChild(errorElement);
                 }
                 errorElement.textContent = errorMessage;
 
-                // Hide the WhatsApp modal and prevent redirection
+                // Send error back to Laravel for form validation display
+                const errorData = {
+                    errors: {
+                        sql_injection: `SQL Injection detected! Confidence: ${data.probability}`
+                    }
+                };
+
+                // Manually trigger Laravel's error display logic
+                document.getElementById('rentalForm').classList.add('was-validated');
+                document.querySelector('.alert-danger').innerHTML = `
+                    <ul>
+                        <li>${errorData.errors.sql_injection}</li>
+                    </ul>
+                `;
+
+                // Prevent showing WhatsApp modal
                 const whatsappModal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
                 if (whatsappModal) {
                     whatsappModal.hide();
@@ -201,7 +224,7 @@ function confirmSubmission(event) {
             } else {
                 // No SQLi detected: Proceed with normal submission
                 console.log('Data successfully submitted');
-                
+
                 // Close the confirmation modal
                 const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
                 if (confirmationModal) {
@@ -213,11 +236,15 @@ function confirmSubmission(event) {
                     const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
                     whatsappModal.show();
                 }, 500);
+
+                // Redirect to dashboard after data submission (successful)
+                window.location.href = "/dashboardPenyewa";
             }
         })
         .catch(error => {
+            // Catch any errors in the fetch or response processing
             console.error('Error submitting form:', error);
-            alert('Terjadi kesalahan saat mengirim data.');
+            // alert('Terjadi kesalahan saat mengirim data yang ini?.');
         })
         .finally(() => {
             // Hide spinner and show the confirmation buttons again
@@ -225,6 +252,7 @@ function confirmSubmission(event) {
             document.getElementById('confirmationButtons').classList.remove('d-none');
         });
 }
+
 
 
 

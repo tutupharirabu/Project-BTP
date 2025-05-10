@@ -49,6 +49,24 @@ class MeminjamRuanganController extends Controller
             // 'keterangan' => 'required|string',
         ]);
 
+            // Check for SQL injection via external API (Flask)
+        $fieldsToCheck = [
+            'nama_peminjam' => $validated['nama_peminjam'],
+            'nomor_induk' => $validated['nomor_induk'],
+            'nomor_telepon' => $validated['nomor_telepon'],
+            'keterangan' => $request->input('keterangan', '~'),
+        ];
+
+        $response = $this->detectSQLInjection($fieldsToCheck);
+
+        // If SQL injection detected, return with error response
+        if (isset($response['is_sqli']) && $response['is_sqli']) {
+            return response()->json([
+                'is_sqli' => true,
+                'probability' => $response['probability']
+            ], 200);  // Return a 400 Bad Request for SQLi errors
+        }
+
         $keterangan = $request->input('keterangan');
         if ($keterangan == NULL) {
             $keterangan = '~';
@@ -121,30 +139,6 @@ class MeminjamRuanganController extends Controller
             'keterangan' => $request->input('keterangan', '~'), 
         ];
 
-
-        $response = $this->detectSQLInjection($fieldsToCheck);  
-        // Log::info('SQL Injection Response: ', $response);
-        // if (isset($response['is_sqli']) && $response['is_sqli'] && isset($response['probability'])) {
-        //     return back()->withErrors([
-        //         'sql_injection' => 'Input detected contains SQL Injection! Confidence: ' 
-        //             . ($response['probability'] * 100) . '%'
-        //     ])->withInput();
-        // }
-
-        // if (isset($response['is_sqli']) && $response['is_sqli'] && isset($response['probability'])) {
-        //     return back()->withErrors([
-        //         'sql_injection' => 'Input detected contains SQL Injection! Confidence: ' . ($response['probability'] * 100) . '%'
-        //     ])->withInput();
-        // }
-
-        if (isset($response['is_sqli']) && $response['is_sqli'] && isset($response['probability'])) {
-            return response()->json([
-                'is_sqli' => true,
-                'probability' => $response['probability']
-            ], 400);  // Send a 400 status for SQLi error
-        }
-        
-
         // Create the new "Peminjaman" (Room Reservation)
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
@@ -163,7 +157,8 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan->save();
 
-        return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Berhasil');
+        // return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Berhasil');
+        return response()->json(['message' => 'Data successfully saved'], 200);  // Send success response
     }
 
 
