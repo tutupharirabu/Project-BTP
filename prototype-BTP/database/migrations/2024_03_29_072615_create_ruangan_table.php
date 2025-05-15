@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('satuan', 255);
             $table->string('lokasi', 255);
             $table->string('harga_ruangan', 255);
-            $table->boolean('tersedia');
+            // $table->boolean('tersedia');
             $table->string('keterangan', 255);
             $table->string('status', 255);
             $table->uuid('id_users');

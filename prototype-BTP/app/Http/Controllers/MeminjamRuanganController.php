@@ -23,8 +23,8 @@ class MeminjamRuanganController extends Controller
      */
     public function create()
     {
-        $dataPeminjaman = Peminjaman::all();
-        $dataRuangan = Ruangan::all();
+        $dataPeminjaman = Peminjaman::all(); // bisa dijadikan sebagai service saja
+        $dataRuangan = Ruangan::all(); // bisa dijadikan sebagai service saja
         $origin = 'dashboard'; // Asumsi default asal dari dashboard
 
         return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan', 'origin'));
@@ -132,6 +132,15 @@ class MeminjamRuanganController extends Controller
     public function getRuanganDetails(Request $request)
     {
         $idRuangan = $request->query('id_ruangan');
+
+        /**
+         *  Best practice untuk query
+         * 
+         *  $queryIdRuangan = Ruangan::firstOrFail('id_ruangan', $idRuangan);
+         *  
+         *  $ruangan = queryIdRuangan->get();
+         */
+
         $ruangan = Ruangan::find($idRuangan);
 
         if ($ruangan) {

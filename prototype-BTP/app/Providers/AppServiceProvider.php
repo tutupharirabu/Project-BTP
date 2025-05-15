@@ -5,6 +5,8 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\Repositories\AdminRuanganRepositoryInterface;
+use App\Repositories\AdminRuanganRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            AdminRuanganRepositoryInterface::class,
+            AdminRuanganRepository::class
+        );
     }
 
     /**

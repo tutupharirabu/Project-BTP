@@ -301,7 +301,7 @@
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">
-                                                    <a href="/editRuanganAdmin/{{ $data->id_ruangan }}/edit"
+                                                    <a href="/editRuanganAdmin/{{ $data->id_ruangan }}"
                                                         class="btn text-white modify"
                                                         style="background-color: #E0AF00;">Edit</a>
                                                     <button class="btn text-white delete-btn modify"

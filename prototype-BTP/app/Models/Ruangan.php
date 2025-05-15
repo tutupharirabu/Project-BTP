@@ -2,38 +2,35 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use App\Models\Gambar;
 use App\Models\Users;
 
 class Ruangan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $primaryKey = 'id_ruangan';
     protected $table = 'ruangan';
-    protected $fillable = ['nama_ruangan', 'ukuran', 'kapasitas_minimal', 'kapasitas_maksimal', 'satuan', 'lokasi', 'harga_ruangan', 'tersedia', 'status', 'keterangan', 'id_users'];
-    public $incrementing = false;
-    protected $keyType = 'string';
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
-            }
-        });
-    }
+    protected $fillable = [
+        'nama_ruangan', 
+        'kapasitas_maksimal', 
+        'kapasitas_minimal',  
+        'satuan', 
+        'lokasi', 
+        'harga_ruangan',
+        'status', 
+        'keterangan', 
+        'id_users'
+    ];
 
     public function gambar(){
         return $this->hasMany(Gambar::class, 'id_ruangan', 'id_ruangan');
     }
 
     public function users(){
-        return $this->hasMany(Users::class , 'id_users', 'id_users');
-    }
+        return $this->hasMany(Users::class , 'id_users', 'id_users'); // Ini salah cara relasinya harusnya belongsTo
+    } 
 }

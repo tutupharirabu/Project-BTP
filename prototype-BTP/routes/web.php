@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\HealthcheckController;
+use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
+use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
+use App\Http\Controllers\Admin\Ruangan\AdminTambahRuanganController;
+
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
@@ -9,12 +15,10 @@ use App\Http\Controllers\OkupansiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenyewaDaftarRuangan;
 use App\Http\Controllers\PenyewaDetailRuangan;
-use App\Http\Controllers\HealthcheckController;
 use App\Http\Controllers\StatusPenyewaController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\DashboardPenyewaController;
-use App\Http\Controllers\AdminStatusRuanganController;
 use App\Http\Controllers\AdminStatusPengajuanController;
 
 /*
@@ -27,9 +31,6 @@ use App\Http\Controllers\AdminStatusPengajuanController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/health', [HealthCheckController::class, 'check'])
-    ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
 
 Route::get('/', [DashboardPenyewaController::class, 'index']);
 
@@ -54,13 +55,8 @@ Route::get('/meminjamRuangan/{id}', [MeminjamRuanganController::class, 'showPinj
 Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
 Route::get('/get-ruangan-details', [MeminjamRuanganController::class, 'getRuanganDetails']);
 
-// Admin Lihat Status Ruangan
-Route::get('/daftarRuanganAdmin', [AdminStatusRuanganController::class, 'index'])->name('admin.status')->middleware('auth');
-
 // Status Pengajuan
 Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index'])->middleware('auth');
-Route::post('/tambahRuanganAdmin/posts', [AdminStatusRuanganController::class, 'store'])->name('posts.ruangan')->middleware('auth');
-Route::post('/check-room-name', [AdminStatusRuanganController::class, 'checkRoomName'])->name('check.room.name');
 Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('selesaiPengajuan')->middleware('auth');
 
@@ -68,12 +64,6 @@ Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->n
 Route::get('/daftarRuanganPenyewa', [PenyewaDaftarRuangan::class, 'index'])->name('daftarRuanganPenyewa');
 Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuangan::class, 'show'])->name('detailRuanganPenyewa');
 Route::get('/get-sediaan-details', [PenyewaDetailRuangan::class, 'getAvailableTimes']);
-
-// Admin crud ruangan
-Route::get('/tambahRuanganAdmin', [AdminStatusRuanganController::class, 'create'])->middleware('auth');
-Route::get('/editRuanganAdmin/{id}/edit', [AdminStatusRuanganController::class, 'edit'])->middleware('auth');
-Route::put('/editRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'update'])->name('update.ruangan')->middleware('auth');
-Route::get('/daftarRuanganAdmin/{id}', [AdminStatusRuanganController::class, 'destroy'])->middleware('auth'); //delete
 
 // History
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
@@ -86,3 +76,28 @@ Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi']
 // status penyewa
 Route::get('/statusPenyewa', [StatusPenyewaController::class, 'index']);
 Route::get('/invoice/{id}', [StatusPenyewaController::class, 'generateInvoice'])->name('generateInvoice');
+
+Route::get('/health', [HealthCheckController::class, 'check'])
+    ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
+
+// New Routing - Admin
+Route::middleware('auth')->group(function () {
+    /**
+     *  Admin - CRUD Ruangan
+     */
+    Route::get('/daftarRuanganAdmin', [AdminRuanganController::class, 'index'])->name('ruangan.listRuangan');
+    Route::post('/checkRuanganName', [AdminRuanganController::class, 'checkRuanganName'])->name('ruangan.cekNama');
+
+    // Tambah Ruangan (Admin - CRUD Ruangan)
+    Route::get('/tambahRuanganAdmin', [AdminTambahRuanganController::class, 'index'])->name('ruangan.tambahRuangan');
+    Route::post('/tambahRuanganAdmin', [AdminTambahRuanganController::class, 'store'])->name('ruangan.simpanDataRuangan');
+
+    // Edit Ruangan
+    Route::get('/editRuanganAdmin/{id}', [AdminEditRuanganController::class, 'edit'])->name('ruangan.editRuangan');
+    Route::put('/editRuanganAdmin/{id}', [AdminEditRuanganController::class, 'update'])->name('ruangan.updateDataRuangan');
+
+    // Hapus Ruangan
+    Route::get('/daftarRuanganAdmin/{id}', [AdminRuanganController::class, 'destroy'])->name('ruangan.hapusDataRuangan');
+});
+
+// New Routing - Penyewa

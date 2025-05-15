@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\Ruangan;
+use Illuminate\Support\Facades\DB;
+use App\Interfaces\Repositories\AdminRuanganRepositoryInterface;
+
+class AdminRuanganRepository implements AdminRuanganRepositoryInterface
+{
+  public function getAllRuangan()
+  {
+    return Ruangan::with(['gambar', 'users'])
+      ->orderBy('created_at', 'desc')
+      ->get();
+  }
+
+  public function getRuanganById(string $idRuangan): ?Ruangan
+  {
+    return Ruangan::with('gambar')
+      ->where('id_ruangan', $idRuangan)
+      ->first();
+  }
+
+  public function checkRuanganByName(string $namaRuangan): bool
+  {
+    return Ruangan::where('nama_ruangan', $namaRuangan)
+      ->exists();
+  }
+
+  public function createRuangan(array $data): Ruangan
+  {
+    return Ruangan::create($data);
+  }
+
+  public function deleteRuangan(Ruangan $ruangan): void
+  {
+    DB::table('gambar')
+      ->where('id_ruangan', $ruangan->id_ruangan)
+      ->delete();
+    $ruangan->delete();
+  }
+
+
+}

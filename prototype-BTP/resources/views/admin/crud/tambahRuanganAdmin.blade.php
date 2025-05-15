@@ -60,7 +60,7 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form id="add-form" class="row g-1 needs-validation" action="{{ route('posts.ruangan') }}"
+                        <form id="add-form" class="row g-1 needs-validation" action="{{ route('ruangan.simpanDataRuangan') }}"
                             method="POST" enctype="multipart/form-data" novalidate>
                             @csrf
                             <!-- left from text field -->
@@ -333,7 +333,7 @@
         document.getElementById('nama_ruangan').addEventListener('blur', function () {
             var namaRuangan = this.value;
             if (namaRuangan) {
-                fetch('{{ route('check.room.name') }}', {
+                fetch('{{ route('ruangan.cekNama') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

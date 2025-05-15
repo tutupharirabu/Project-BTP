@@ -43,7 +43,7 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form action="{{ route('update.ruangan', $dataRuangan->id_ruangan) }}" method="POST"
+                        <form action="{{ route('ruangan.updateDataRuangan', $dataRuanganEdit->id_ruangan) }}" method="POST"
                             enctype="multipart/form-data" id="edit-form" class="row g-3 needs-validation"
                             onsubmit="removeRpPrefix()" novalidate>
                             @csrf
@@ -57,7 +57,7 @@
                                     <div class="col-md-7">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                         <input type="text" id="id_ruangan" class="form-control bordered-text border-color"
-                                            name="id_ruangan" disabled value="{{ $dataRuangan->id_ruangan }}" hidden>
+                                            name="id_ruangan" disabled value="{{ $dataRuanganEdit->id_ruangan }}" hidden>
                                         <div class="valid-feedback">Tampilan bagus!</div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                             Contoh: Coworking space (B02)
                                         </div>
                                         <input type="text" id="nama_ruangan" class="form-control bordered-text border-color"
-                                            name="nama_ruangan" value="{{ $dataRuangan->nama_ruangan }}" required>
+                                            name="nama_ruangan" value="{{ $dataRuanganEdit->nama_ruangan }}" required>
                                         <div class="invalid-feedback">Silakan masukkan nama dan nomor ruangan.</div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_minimal"
                                             class="form-control bordered-text border-color" name="kapasitas_minimal"
-                                            value="{{ $dataRuangan->kapasitas_minimal }}" required>
+                                            value="{{ $dataRuanganEdit->kapasitas_minimal }}" required>
                                         <div class="invalid-feedback">Silakan masukkan minimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                     <div class="col-md-7">
                                         <input type="number" id="kapasitas_maksimal"
                                             class="form-control bordered-text border-color" name="kapasitas_maksimal"
-                                            value="{{ $dataRuangan->kapasitas_maksimal }}" required>
+                                            value="{{ $dataRuanganEdit->kapasitas_maksimal }}" required>
                                         <div class="invalid-feedback">Silakan masukkan maksimal kapasitas.</div>
                                     </div>
                                 </div>
@@ -112,17 +112,17 @@
                                         {{-- <input type="text" id="lokasi" class="form-control bordered-text border-color"
                                             name="lokasi" value="{{ $dataRuangan->lokasi }}" required> --}}
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
-                                            <option>{{ $dataRuangan->lokasi }}</option>
-                                            @if ($dataRuangan->lokasi != 'Gedung A')
+                                            <option>{{ $dataRuanganEdit->lokasi }}</option>
+                                            @if ($dataRuanganEdit->lokasi != 'Gedung A')
                                                 <option value="Gedung A">Gedung A</option>
                                             @endif
-                                            @if ($dataRuangan->lokasi != 'Gedung B')
+                                            @if ($dataRuanganEdit->lokasi != 'Gedung B')
                                                 <option value="Gedung B">Gedung B</option>
                                             @endif
-                                            @if ($dataRuangan->lokasi != 'Gedung C')
+                                            @if ($dataRuanganEdit->lokasi != 'Gedung C')
                                                 <option value="Gedung C">Gedung C</option>
                                             @endif
-                                            @if ($dataRuangan->lokasi != 'Gedung D')
+                                            @if ($dataRuanganEdit->lokasi != 'Gedung D')
                                                 <option value="Gedung D">Gedung D</option>
                                             @endif
                                         </select>
@@ -135,7 +135,7 @@
                                     <div class="col-md-7">
                                         <div class="input-group">
                                             <input type="text" id="harga_ruangan" class="bordered-text form-control"
-                                                name="harga_ruangan" value="{{ $dataRuangan->harga_ruangan }}" required>
+                                                name="harga_ruangan" value="{{ $dataRuanganEdit->harga_ruangan }}" required>
                                             <div class="invalid-feedback">Silakan masukkan harga.</div>
                                         </div>
                                     </div>
@@ -147,14 +147,14 @@
                                         {{-- <input type="text" id="satuan" class="form-control bordered-text border-color"
                                             name="satuan" value="{{ $dataRuangan->satuan }}" required> --}}
                                         <select class="bordered-text form-control" name="satuan" id="satuan" required>
-                                            <option>{{ $dataRuangan->satuan }}</option>
-                                            @if ($dataRuangan->satuan != 'Seat / Bulan')
+                                            <option>{{ $dataRuanganEdit->satuan }}</option>
+                                            @if ($dataRuanganEdit->satuan != 'Seat / Bulan')
                                                 <option value="Seat / Bulan">Seat / Bulan</option>
                                             @endif
-                                            @if ($dataRuangan->satuan != 'Seat / Hari')
+                                            @if ($dataRuanganEdit->satuan != 'Seat / Hari')
                                                 <option value="Seat / Hari">Seat / Hari</option>
                                             @endif
-                                            @if ($dataRuangan->satuan != 'Halfday / 4 Jam')
+                                            @if ($dataRuanganEdit->satuan != 'Halfday / 4 Jam')
                                                 <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
                                             @endif
                                         </select>
@@ -167,18 +167,18 @@
                                     <div class="col-md-7">
                                         <select id="status" class="form-control bordered-text" name="status" required
                                             onchange="updateTersedia()">
-                                            <option value="{{ $dataRuangan->status }}">{{ $dataRuangan->status }}
+                                            <option value="{{ $dataRuanganEdit->status }}">{{ $dataRuanganEdit->status }}
                                             </option>
-                                            @if ($dataRuangan->status != 'Tersedia')
+                                            @if ($dataRuanganEdit->status != 'Tersedia')
                                                 <option value="Tersedia">Tersedia</option>
                                             @endif
-                                            @if ($dataRuangan->status != 'Digunakan')
+                                            @if ($dataRuanganEdit->status != 'Digunakan')
                                                 <option value="Digunakan">Digunakan</option>
                                             @endif
                                         </select>
                                         <div class="invalid-feedback">Silakan pilih status.</div>
                                         <input type="number" id="tersedia" class="form-control bordered-text"
-                                            name="tersedia" value="{{ $dataRuangan->tersedia }}" hidden>
+                                            name="tersedia" value="{{ $dataRuanganEdit->tersedia }}" hidden>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
@@ -194,7 +194,7 @@
                                             value="{{ $dataRuangan->nama_ruangan }}" required> --}}
                                         <textarea name="keterangan" id="keterangan" onkeyup="handleInput(event)" cols="30"
                                             rows="10"
-                                            class="bordered-text form-control">{{ $dataRuangan->keterangan }}</textarea>
+                                            class="bordered-text form-control">{{ $dataRuanganEdit->keterangan }}</textarea>
                                         <div class="invalid-feedback">Silakan masukkan fasilitas ruangan.</div>
                                     </div>
                                 </div>
@@ -209,8 +209,8 @@
                                 <div class="row">
                                     @php
                                         // Urutkan gambar berdasarkan indeks dalam public_id (image_1, image_2, dll)
-                                        $sortedGambar = !empty($dataRuangan->gambar)
-                                            ? $dataRuangan->gambar
+                                        $sortedGambar = !empty($dataRuanganEdit->gambar)
+                                            ? $dataRuanganEdit->gambar
                                                 ->sortBy(function ($gambar) {
                                                     // Ekstrak nomor indeks dari URL
                                                     preg_match('/_image_(\d+)/', $gambar->url, $matches);
