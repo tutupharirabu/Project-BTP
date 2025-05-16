@@ -51,7 +51,7 @@
                                         @else
                                             <span class="status-not-available">Digunakan</span>
                                         @endif
-                                        <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
+                                        <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
                                             class="btn btn-dark shadow-none status-detail">Detail</a>
                                     </div>
                                 </div>

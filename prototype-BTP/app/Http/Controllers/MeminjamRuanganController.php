@@ -109,20 +109,19 @@ class MeminjamRuanganController extends Controller
             $tanggal_selesai_plus_one_hour = $datetime->format('Y-m-d H:i:s');
         }
 
-        $meminjamRuangan = new Peminjaman([
-            'nama_peminjam' => $request->input('nama_peminjam'),
-            'nomor_induk' => $request->input('nomor_induk'),
-            'nomor_telepon' => $request->input('nomor_telepon'),
-            'id_ruangan' => $request->input('id_ruangan'),
-            'ktp_url' => $uploadedFileUrl,
-            'role' => $request->input('role'),
-            'tanggal_mulai' => $tanggal_mulai,
-            'tanggal_selesai' => $tanggal_selesai_plus_one_hour,
-            'jumlah' => $request->input('jumlah'),
-            'total_harga' => $request->input('total_harga'),
-            'status' => 'Menunggu',
-            'keterangan' => $keterangan,
-        ]);
+        $meminjamRuangan = new Peminjaman();
+        $meminjamRuangan->nama_peminjam = $request->input('nama_peminjam');
+        $meminjamRuangan->nomor_induk = $request->input('nomor_induk');
+        $meminjamRuangan->nomor_telepon = $request->input('nomor_telepon');
+        $meminjamRuangan->id_ruangan = $request->input('id_ruangan');
+        $meminjamRuangan->ktp_url = $uploadedFileUrl;
+        $meminjamRuangan->role = $request->input('role');
+        $meminjamRuangan->tanggal_mulai = $tanggal_mulai;
+        $meminjamRuangan->tanggal_selesai = $tanggal_selesai_plus_one_hour;
+        $meminjamRuangan->jumlah = $request->input('jumlah');
+        $meminjamRuangan->total_harga = $request->input('total_harga');
+        $meminjamRuangan->status = 'Menunggu';
+        $meminjamRuangan->keterangan = $keterangan;
 
         $meminjamRuangan->save();
 

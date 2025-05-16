@@ -255,6 +255,8 @@
             var bookings = @json($events);
             var dataRuangan = @json($dataRuangan);
             console.log(bookings);
+            console.log("Events:", @json($events));
+            console.log("Data Ruangan:", @json($dataRuangan));
 
             // Event listener for radio button changes
             $('input[name="btnradio"]').change(function () {
@@ -300,15 +302,15 @@
 
             function showFooter() {
                 var footerContent = `
-                            <div class="d-flex align-items-center mr-4">
-                                <div class="mark-available"></div>
-                                <p class="my-auto">Tersedia</p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="mark-notavailable"></div>
-                                <p class="my-auto">Tidak tersedia</p>
-                            </div>
-                        `;
+                                <div class="d-flex align-items-center mr-4">
+                                    <div class="mark-available"></div>
+                                    <p class="my-auto">Tersedia</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="mark-notavailable"></div>
+                                    <p class="my-auto">Tidak tersedia</p>
+                                </div>
+                            `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -321,7 +323,7 @@
                 let ruanganId = $('#roomId').val();
 
                 $.ajax({
-                    url: '/get-sediaan-details',
+                    url: '/getAvailableTimes',
                     method: 'GET',
                     data: {
                         tanggal_mulai: startDate,
@@ -345,16 +347,16 @@
                             var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                             var dayHtml = `
-                                        <div class="mx-2 text-center">
-                                            <div>
-                                                <p class="day-name">${dayName}</p>
-                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                            <div class="mx-2 text-center">
+                                                <div>
+                                                    <p class="day-name">${dayName}</p>
+                                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                </div>
+                                                <div>
+                                                    ${hoursHtml}
+                                                </div>
                                             </div>
-                                            <div>
-                                                ${hoursHtml}
-                                            </div>
-                                        </div>
-                                    `;
+                                        `;
                             content += dayHtml;
                         }
                         content += '</div>';

@@ -54,7 +54,7 @@
                                             ) }}" class="card-img-top custom-img" alt="Gambar Ruangan"
                                                                         style="width:320px; height: 215px;">
                                                                     <h6 class="card-title title-overlay">{{ $ruangan->nama_ruangan }}</h6>
-                                                                    <a href="{{ route('detailRuanganPenyewa', $ruangan->id_ruangan) }}"
+                                                                    <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
                                                                         class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
                                                                     @if ($ruangan->tersedia == '1')
                                                                         <span class="status-available status-overlay">Tersedia</span>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HealthcheckController;
 use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
@@ -59,10 +60,6 @@ Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'ind
 Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
 Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('selesaiPengajuan')->middleware('auth');
 
-// Penyewa lihat status Ruangan
-Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuangan::class, 'show'])->name('detailRuanganPenyewa');
-Route::get('/get-sediaan-details', [PenyewaDetailRuangan::class, 'getAvailableTimes']);
-
 // History
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
 Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');
@@ -103,5 +100,6 @@ Route::middleware('auth')->group(function () {
 /**
  *  Penyewa - Daftar Ruangan & Detail Ruangan
  */
-
 Route::get('/daftarRuanganPenyewa', [PenyewaRuanganController::class, 'index'])->name('penyewa.listRuangan');
+Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuanganController::class, 'show'])->name('penyewa.detailRuangan');
+Route::get('/getAvailableTimes', [PenyewaDetailRuanganController::class, 'getAvailableTimes']);

@@ -26,7 +26,7 @@
                     @if ($origin == 'detailRuangan')
                         <a href="/daftarRuanganPenyewa" class="fw-bolder" style="color: #797979; font-size:12px;">Daftar
                             Ruangan > </a>
-                        <a href="{{ route('detailRuanganPenyewa', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
+                        <a href="{{ route('penyewa.detailRuangan', ['id' => $ruangan->id_ruangan]) }}" class="fw-bolder"
                             style="color: #797979; font-size:12px;">&nbsp;Detail Ruangan ></a>
                     @endif
                     <a href="" class="fw-bolder" style="color: #028391; font-size:12px;">&nbsp;Formulir Peminjaman/Penyewaan
