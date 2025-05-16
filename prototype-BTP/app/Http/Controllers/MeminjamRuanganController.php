@@ -161,7 +161,7 @@ class MeminjamRuanganController extends Controller
         $dataRuangan = Ruangan::all();
         $ruangan = Ruangan::find($id);
         if (!$ruangan) {
-            return redirect()->route('daftarRuanganPenyewa')->with('error', 'Ruangan tidak ditemukan.');
+            return redirect()->route('penyewa.listRuangan')->with('error', 'Ruangan tidak ditemukan.');
         }
         $origin = 'detailRuangan'; // Asumsi asal dari detail ruangan
 

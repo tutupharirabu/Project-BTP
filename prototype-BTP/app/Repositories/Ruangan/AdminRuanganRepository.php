@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Ruangan;
 
 use App\Models\Ruangan;
 use Illuminate\Support\Facades\DB;
-use App\Interfaces\Repositories\AdminRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 
 class AdminRuanganRepository implements AdminRuanganRepositoryInterface
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Ruangan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Ruangan\AdminRuanganService;
-use App\Interfaces\Repositories\AdminRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 
 class AdminRuanganController extends Controller
 {

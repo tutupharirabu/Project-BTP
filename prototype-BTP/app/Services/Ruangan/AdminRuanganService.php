@@ -8,7 +8,7 @@ use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRuanganRequest;
 use App\Http\Requests\UpdateRuanganRequest;
-use App\Interfaces\Repositories\AdminRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 
 class AdminRuanganService
 {
