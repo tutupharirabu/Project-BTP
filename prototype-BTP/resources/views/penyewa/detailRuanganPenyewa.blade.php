@@ -166,10 +166,10 @@
                     </div>
                     <div class="col-3">
                         <div class="d-flex justify-content-end">
-                            @if ($ruangan->tersedia == '1')
+                            @if ($ruangan->status == 'Tersedia')
                                 <a type="button" class="btn btn-md text-white"
                                     style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
-                                    href="{{ route('penyewa.peminjamanRuanganDariDetail', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                                    href="{{ route('penyewa.formPeminjaman', ['id' => $ruangan->id_ruangan]) }}">Pinjam
                                     Ruangan</a>
                             @else
                                 <a type="button" class="btn btn-sm text-white disabled"
@@ -254,7 +254,7 @@
             // Bookings data for the calendar (assuming this is passed from your backend)
             var bookings = @json($events);
             var dataRuangan = @json($dataRuangan);
-            console.log(bookings);
+    
             console.log("Events:", @json($events));
             console.log("Data Ruangan:", @json($dataRuangan));
 
@@ -332,6 +332,7 @@
                         ruangan_id: ruanganId
                     },
                     success: function (response) {
+                        console.log('AJAX success', response);
                         var content =
                             '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
                         var startDateObj = new Date(startDate);

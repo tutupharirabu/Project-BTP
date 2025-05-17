@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers\Penyewa\Peminjaman;
+
+use RuntimeException;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\Peminjaman\PenyewaPeminjamanService;
+use App\Http\Requests\Peminjaman\BasePeminjamanRequest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class PenyewaPeminjamanController extends Controller
+{
+    protected PenyewaPeminjamanService $peminjamanService;
+
+    public function __construct(PenyewaPeminjamanService $penyewaPeminjamanService)
+    {
+        $this->peminjamanService = $penyewaPeminjamanService;
+    }
+
+    public function index(?string $id = null)
+    {
+        $formData = $this->peminjamanService->getFormData();
+        $origin = $id ? 'detailRuangan' : 'dashboard';
+        $ruangan = $id ? $this->peminjamanService->getDetailRuanganById($id) : null;
+
+        return view('penyewa.meminjamRuangan', [
+            'dataPeminjaman' => $formData['dataPeminjaman'],
+            'dataRuangan' => $formData['dataRuangan'],
+            'origin' => $origin,
+            'ruangan' => $ruangan,
+        ]);
+    }
+
+    public function store(BasePeminjamanRequest $request)
+    {
+        try {
+            $this->peminjamanService->handlePeminjaman($request);
+            return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.');
+        } catch (RuntimeException $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function getDetailRuangan(Request $request)
+    {
+        try {
+            $ruangan = $this->peminjamanService->getDetailRuanganById($request->query('id_ruangan'));
+            return response()->json($ruangan);
+        } catch (NotFoundHttpException $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
+}

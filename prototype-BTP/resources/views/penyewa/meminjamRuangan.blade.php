@@ -40,7 +40,7 @@
             <div class="col m-3">
                 <div class="card border shadow shadow-md p-2">
                     <div class="card-body">
-                        <form id="rentalForm" action="{{ route('posts.peminjamanRuangan') }}" method="POST"
+                        <form id="rentalForm" action="{{ route('penyewa.postFormPeminjaman') }}" method="POST"
                             class="needs-validation" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="row">
@@ -480,7 +480,7 @@
             }
 
             if (idRuangan) {
-                fetch(`/get-ruangan-details?id_ruangan=${idRuangan}`)
+                fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
                     .then(response => response.json())
                     .then(data => {
                         console.log("Fetched data:", data);

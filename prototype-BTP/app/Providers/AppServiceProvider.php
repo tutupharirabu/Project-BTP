@@ -9,6 +9,8 @@ use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
 use App\Repositories\Ruangan\PenyewaRuanganRepository;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 use App\Repositories\Ruangan\AdminRuanganRepository;
+use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
+use App\Repositories\Peminjaman\PenyewaPeminjamanRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PenyewaRuanganRepositoryInterface::class,
             PenyewaRuanganRepository::class
+        );
+
+        $this->app->bind(
+            PenyewaPeminjamanRepositoryInterface::class,
+            PenyewaPeminjamanRepository::class
         );
     }
 

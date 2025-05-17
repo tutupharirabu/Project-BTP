@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Ruangan;
 
 class StoreRuanganRequest extends BaseRuanganRequest
 {

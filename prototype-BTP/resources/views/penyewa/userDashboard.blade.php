@@ -56,7 +56,7 @@
                                                                     <h6 class="card-title title-overlay">{{ $ruangan->nama_ruangan }}</h6>
                                                                     <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
                                                                         class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
-                                                                    @if ($ruangan->tersedia == '1')
+                                                                    @if ($ruangan->status == 'Tersedia')
                                                                         <span class="status-available status-overlay">Tersedia</span>
                                                                     @else
                                                                         <span class="status-not-available status-overlay">Digunakan</span>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HealthcheckController;
@@ -49,12 +50,6 @@ Route::post('/check-unique', [PenyewaController::class, 'checkUnique'])->name('c
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
 
-// Peminjaman Ruangan
-Route::get('/meminjamRuangan', [MeminjamRuanganController::class, 'create'])->name('penyewa.peminjamanRuangan');
-Route::get('/meminjamRuangan/{id}', [MeminjamRuanganController::class, 'showPinjamRuangan'])->name('penyewa.peminjamanRuanganDariDetail');
-Route::post('/meminjamRuangan/posts', [MeminjamRuanganController::class, 'store'])->name('posts.peminjamanRuangan');
-Route::get('/get-ruangan-details', [MeminjamRuanganController::class, 'getRuanganDetails']);
-
 // Status Pengajuan
 Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index'])->middleware('auth');
 Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
@@ -93,6 +88,9 @@ Route::middleware('auth')->group(function () {
 
     // Hapus Ruangan
     Route::get('/daftarRuanganAdmin/{id}', [AdminRuanganController::class, 'destroy'])->name('ruangan.hapusDataRuangan');
+    /**
+     *  Done - Admin (CRUD Ruangan)
+     */
 });
 
 // New Routing - Penyewa
@@ -103,3 +101,16 @@ Route::middleware('auth')->group(function () {
 Route::get('/daftarRuanganPenyewa', [PenyewaRuanganController::class, 'index'])->name('penyewa.listRuangan');
 Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuanganController::class, 'show'])->name('penyewa.detailRuangan');
 Route::get('/getAvailableTimes', [PenyewaDetailRuanganController::class, 'getAvailableTimes']);
+/**
+ *  Done - Penyewa (Daftar Ruangan & Detail Ruangan)
+ */
+
+/**
+ *  Penyewa - Form Peminjaman
+ */
+Route::get('/meminjamRuangan/{id?}', [PenyewaPeminjamanController::class, 'index'])->name('penyewa.formPeminjaman');
+Route::post('/meminjamRuangan', [PenyewaPeminjamanController::class, 'store'])->name('penyewa.postFormPeminjaman');
+Route::get('/getRuanganDetails', [PenyewaPeminjamanController::class, 'getDetailRuangan']);
+ /**
+ *  Done - Penyewa (Form Peminjaman)
+ */

@@ -6,8 +6,8 @@ use App\Models\Gambar;
 use App\Models\Ruangan;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreRuanganRequest;
-use App\Http\Requests\UpdateRuanganRequest;
+use App\Http\Requests\Ruangan\StoreRuanganRequest;
+use App\Http\Requests\Ruangan\UpdateRuanganRequest;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 
 class AdminRuanganService

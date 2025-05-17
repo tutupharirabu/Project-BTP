@@ -8,5 +8,4 @@ interface BaseRuanganRepositoryInterface
 {
     public function getAllRuangan();
     public function getRuanganById(string $idRuangan): ?Ruangan;
-    
 }

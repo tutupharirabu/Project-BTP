@@ -46,7 +46,7 @@
                                         {{ $ruangan->satuan }}
                                     </p>
                                     <div class="status-group">
-                                        @if ($ruangan->tersedia == '1')
+                                        @if ($ruangan->status == 'Tersedia')
                                             <span class="status-available">Tersedia</span>
                                         @else
                                             <span class="status-not-available">Digunakan</span>

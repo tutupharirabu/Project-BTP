@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Ruangan;
 
-use App\Http\Requests\StoreRuanganRequest;
+use App\Http\Requests\Ruangan\StoreRuanganRequest;
 use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
 
 class AdminTambahRuanganController extends AdminRuanganController
