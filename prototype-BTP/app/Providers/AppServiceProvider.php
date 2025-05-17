@@ -5,12 +5,16 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
-use App\Repositories\Ruangan\PenyewaRuanganRepository;
-use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 use App\Repositories\Ruangan\AdminRuanganRepository;
-use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
+use App\Repositories\Ruangan\PenyewaRuanganRepository;
 use App\Repositories\Peminjaman\PenyewaPeminjamanRepository;
+use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
+use App\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepository;
+use App\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepository;
+use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterfaces;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +36,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PenyewaPeminjamanRepositoryInterface::class,
             PenyewaPeminjamanRepository::class
+        );
+
+        $this->app->bind(
+            BaseStatusPengajuanRepositoryInterfaces::class,
+            BaseStatusPengajuanRepository::class
+        );
+
+        $this->app->bind(
+            AdminStatusPengajuanRepositoryInterfaces::class,
+            AdminStatusPengajuanRepository::class
         );
     }
 

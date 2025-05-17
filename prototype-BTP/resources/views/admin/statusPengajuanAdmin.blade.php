@@ -266,7 +266,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
-                                                    <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
+                                                    <form action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         @csrf
                                                         <input type="hidden" name="pilihan" id="pilihan">
@@ -318,7 +318,7 @@
                                                     </div>
                                                 </td>
                                                 <td class=" justify-content-between">
-                                                    <form action="{{ route('selesaiPengajuan', $data->id_peminjaman) }}"
+                                                    <form action="{{ route('statusPengajuan.selesaiPeminjaman', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
@@ -366,7 +366,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="justify-content-between">
-                                                    <form action="{{ route('update.pengajuan', $data->id_peminjaman) }}"
+                                                    <form action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         <a type="button" class="btn btn-outline-success btn-styl"
                                                             style="width: 75px;font-size: 12px;">Setuju</a>

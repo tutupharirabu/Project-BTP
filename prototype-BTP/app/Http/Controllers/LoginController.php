@@ -18,23 +18,23 @@ class LoginController extends Controller
 
         $credentials = $request -> validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required'            
         ]);
 
-        if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'petugas'))) {
+        if (Auth::attempt($credentials) && ((Auth::user()->role == 'Admin' || Auth::user()->role == 'Petugas'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('/dashboardAdmin');
         }
 
-        if (Auth::attempt($credentials) && Auth::user()->role == 'penyewa') {
-            $request->session()->regenerate();
+        // if (Auth::attempt($credentials) && Auth::user()->role == 'penyewa') {
+        //     $request->session()->regenerate();
 
-            $request->session()->put('id_users', Auth::user()->id);
-            $request->session()->put('email', Auth::user()->email);
+        //     $request->session()->put('id_users', Auth::user()->id);
+        //     $request->session()->put('email', Auth::user()->email);
 
-            return redirect()->intended('/');
-        }
+        //     return redirect()->intended('/');
+        // }
 
         return back()->with('loginError', 'Login Failed~');
     }

@@ -1,26 +1,27 @@
 <?php
 
-use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
-use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HealthcheckController;
-use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
-use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
-use App\Http\Controllers\Admin\Ruangan\AdminTambahRuanganController;
-use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
-
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
-
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\OkupansiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenyewaDetailRuangan;
+use App\Http\Controllers\HealthcheckController;
+
 use App\Http\Controllers\StatusPenyewaController;
 use App\Http\Controllers\DashboardAdminController;
+
 use App\Http\Controllers\MeminjamRuanganController;
 use App\Http\Controllers\DashboardPenyewaController;
-use App\Http\Controllers\AdminStatusPengajuanController;
+use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
+use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
+use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
+use App\Http\Controllers\Admin\Ruangan\AdminTambahRuanganController;
+use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
+use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
+use App\Http\Controllers\Admin\Peminjaman\StatusPengajuan\AdminStatusPengajuanController;
+// use App\Http\Controllers\AdminStatusPengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,11 +50,6 @@ Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name(
 Route::post('/check-unique', [PenyewaController::class, 'checkUnique'])->name('check.unique');
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
-
-// Status Pengajuan
-Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index'])->middleware('auth');
-Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('update.pengajuan')->middleware('auth');
-Route::put('/finish/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('selesaiPengajuan')->middleware('auth');
 
 // History
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
@@ -91,6 +87,16 @@ Route::middleware('auth')->group(function () {
     /**
      *  Done - Admin (CRUD Ruangan)
      */
+
+    /**
+     *  Admin - Status Pengajuan Peminjaman
+     */
+    Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index']);
+    Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('statusPengajuan.updateStatusPengajuan');
+    Route::put('/finishPeminjaman/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('statusPengajuan.selesaiPeminjaman');
+    /**
+     *  Done - Admin (Status Pengajuan Peminjaman)
+     */
 });
 
 // New Routing - Penyewa
@@ -111,6 +117,6 @@ Route::get('/getAvailableTimes', [PenyewaDetailRuanganController::class, 'getAva
 Route::get('/meminjamRuangan/{id?}', [PenyewaPeminjamanController::class, 'index'])->name('penyewa.formPeminjaman');
 Route::post('/meminjamRuangan', [PenyewaPeminjamanController::class, 'store'])->name('penyewa.postFormPeminjaman');
 Route::get('/getRuanganDetails', [PenyewaPeminjamanController::class, 'getDetailRuangan']);
- /**
+/**
  *  Done - Penyewa (Form Peminjaman)
  */

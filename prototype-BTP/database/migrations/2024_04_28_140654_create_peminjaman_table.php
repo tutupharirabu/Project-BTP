@@ -22,7 +22,7 @@ return new class extends Migration
             $table->dateTime('tanggal_selesai');
             $table->bigInteger('jumlah');
             $table->string('total_harga', 255);
-            $table->string('status', 255);
+            $table->enum('status', ['Diterima', 'Menunggu', 'Ditolak']);
             $table->string('keterangan', 255);
             $table->uuid('id_users')->nullable();
             $table->uuid('id_ruangan');

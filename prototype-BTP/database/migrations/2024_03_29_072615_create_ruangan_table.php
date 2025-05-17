@@ -17,12 +17,12 @@ return new class extends Migration
             // $table->string('ukuran', 255);
             $table->bigInteger('kapasitas_minimal');
             $table->bigInteger('kapasitas_maksimal');
-            $table->string('satuan', 255);
+            $table->enum('satuan', ['Seat / Bulan', 'Seat / Hari', 'Halfday / 4 Jam']);
             $table->string('lokasi', 255);
             $table->string('harga_ruangan', 255);
             // $table->boolean('tersedia');
             $table->string('keterangan', 255);
-            $table->string('status', 255);
+            $table->enum('status', ['Tersedia', 'Digunakan']);
             $table->uuid('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->nullable()->onDelete('cascade');
             $table->timestamps();
