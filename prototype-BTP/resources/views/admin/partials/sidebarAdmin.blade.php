@@ -33,7 +33,7 @@
                     </a>
                 </div>
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/okupansiRuangan">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/okupansiRuanganAdmin">
                         <i class="material-symbols-outlined me-2 ">database</i>
                         <span>Okupansi Peminjaman/Penyewaan Ruangan</span>
                     </a>
@@ -45,7 +45,7 @@
                     </a>
                 </div> --}}
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatRuangan">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatPeminjamanRuanganAdmin">
                         <i class="material-symbols-outlined me-2">history</i>
                         <span>Riwayat Peminjaman/Penyewaan Ruangan</span>
                     </a>

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Repositories\Peminjaman\BasePeminjamanRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
+use App\Repositories\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjamanRepository;
 use App\Repositories\Ruangan\BaseRuanganRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
@@ -60,6 +62,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             BaseRuanganRepositoryInterface::class,
             BaseRuanganRepository::class
+        );
+
+        $this->app->bind(
+            BasePeminjamanRepositoryInterface::class,
+            AdminRiwayatPeminjamanRepository::class
         );
     }
 

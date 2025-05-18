@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="/riwayatRuangan" style="color: #028391;font-size:12px;font-weight: bold;">Riwayat
+                    <a class="" href="/riwayatPeminjamanRuanganAdmin" style="color: #028391;font-size:12px;font-weight: bold;">Riwayat
                         Peminjaman\Penyewaan Ruangan</a>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                         {{-- </div> --}}
                     {{-- <div class="col-md-5"></div> --}}
                     <div class="col-12 col-md-12 d-flex justify-content-end align-items-center">
-                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center w-23 w-md-auto"
+                        <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center w-23 w-md-auto"
                             style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                                                             {{-- <button type="button" class="btn btn-md text-white text-center"
                                         style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
                                                                         </div>
-                                                                        <a href="{{ route('download.riwayat') }}" class="btn btn-md text-white text-center"
+                                                                        <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center"
                                                                             style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                                                                     </div>
                                                                 </div> -->

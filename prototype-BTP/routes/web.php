@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
-use App\Http\Controllers\RiwayatController;
+
 
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardController;
@@ -17,8 +17,9 @@ use App\Http\Controllers\Admin\Ruangan\AdminTambahRuanganController;
 use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
 use App\Http\Controllers\Admin\Ruangan\Okupansi\AdminOkupansiRuanganController;
-use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
 use App\Http\Controllers\Admin\Peminjaman\StatusPengajuan\AdminStatusPengajuanController;
+use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
+use App\Http\Controllers\Admin\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,10 +48,6 @@ Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name(
 Route::post('/check-unique', [PenyewaController::class, 'checkUnique'])->name('check.unique');
 Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
 Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
-
-// History
-Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
-Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');
 
 Route::get('/health', [HealthCheckController::class, 'check'])
     ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
@@ -90,10 +87,19 @@ Route::middleware('auth')->group(function () {
     /**
      *  Admin - Okupansi Ruangan
      */
-    Route::get('/okupansiRuangan', [AdminOkupansiRuanganController::class, 'index'])->name('okupansi.tabelOkupansiRuangan');
-    Route::get('/okupansiRuangan/downloadFileOkupansiRuangan', [AdminOkupansiRuanganController::class, 'downloadOkupansi'])->name('okupansi.downloadDataOkupansiRuangan');
-     /**
+    Route::get('/okupansiRuanganAdmin', [AdminOkupansiRuanganController::class, 'index'])->name('okupansi.tabelOkupansiRuangan');
+    Route::get('/okupansiRuanganAdmin/downloadFileOkupansiRuangan', [AdminOkupansiRuanganController::class, 'downloadOkupansi'])->name('okupansi.downloadDataOkupansiRuangan');
+    /**
      *  Done - Admin (Okupansi Ruangan)
+     */
+
+    /**
+     *  Admin - Riwayat Ruangan
+     */
+    Route::get('/riwayatPeminjamanRuanganAdmin', [AdminRiwayatPeminjamanController::class, 'index']);
+    Route::get('/riwayatPeminjamanRuanganAdmin/downloadRiwayatPeminjamanRuangan', [AdminRiwayatPeminjamanController::class, 'downloadCSV'])->name('riwayat.downloadRiwayatPeminjamanRuangan');
+    /**
+     *  Done - Admin (Riwayat Ruangan)
      */
 });
 
@@ -123,7 +129,7 @@ Route::get('/getRuanganDetails', [PenyewaPeminjamanController::class, 'getDetail
  *  Penyewa - Lihat Status Pengajuan
  */
 Route::get('/statusPengajuanPenyewa', [PenyewaStatusPengajuanController::class, 'index']);
-Route::get('/cetakInvoice/{id}', [PenyewaStatusPengajuanController::class, 'generateInvoice'])->name('penyewa.cetakInvoicePengajuanPeminjaman');
+Route::get('/statusPengajuanPenyewa/cetakInvoice/{id}', [PenyewaStatusPengajuanController::class, 'generateInvoice'])->name('penyewa.cetakInvoicePengajuanPeminjaman');
 /**
  *  Done - Penyewa (Lihat Status Pengajuan)
  */
