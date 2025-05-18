@@ -6,7 +6,7 @@
                 <img src="{{ asset('assets/img/logoSpaceRent.png') }}" alt="Logo" style="max-width: 150px;">
             </div>
             <h3 class="text-center pb-3">Daftar</h3>
-            <form class="row g-3 needs-validation" action="{{ route('posts.daftarPenyewa') }}" method="POST"
+            <form class="row g-3 needs-validation" action="{{ route('register.postRegisterAdminOrPetugas') }}" method="POST"
                 enctype="multipart/form-data" novalidate onsubmit="return validateForm(event)">
                 @csrf
                 <div class="col-md-12">
@@ -117,7 +117,7 @@
         });
 
         function checkUnique(field, value) {
-            fetch('{{ route('check.unique') }}', {
+            fetch('{{ route('register.checkUnique') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

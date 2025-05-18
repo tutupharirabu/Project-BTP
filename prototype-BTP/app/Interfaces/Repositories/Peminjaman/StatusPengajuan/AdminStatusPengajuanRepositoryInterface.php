@@ -5,7 +5,7 @@ namespace App\Interfaces\Repositories\Peminjaman\StatusPengajuan;
 use App\Models\Peminjaman;
 use Illuminate\Support\Collection;
 
-interface AdminStatusPengajuanRepositoryInterfaces
+interface AdminStatusPengajuanRepositoryInterface
 {
   public function getConflictingBookings(Peminjaman $peminjaman): Collection;
   public function approvePengajuan(Peminjaman $peminjaman, string $idUser): void;

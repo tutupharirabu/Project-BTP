@@ -1,15 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PenyewaController;
 
-
-use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPenyewaController;
 
-use App\Http\Controllers\HealthcheckController;
+use App\Http\Controllers\HealthCheckController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
 use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
@@ -18,8 +17,8 @@ use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
 use App\Http\Controllers\Admin\Ruangan\Okupansi\AdminOkupansiRuanganController;
 use App\Http\Controllers\Admin\Peminjaman\StatusPengajuan\AdminStatusPengajuanController;
-use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
 use App\Http\Controllers\Admin\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjamanController;
+use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,26 +33,37 @@ use App\Http\Controllers\Admin\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjam
 
 Route::get('/', [DashboardPenyewaController::class, 'index']);
 
-// Authenticate
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('posts.login');
-Route::get('/logout', [LoginController::class, 'logout']);
-
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'index'])->name('penyewa.dashboard'); // Dashboard Penyewa
 Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name('admin.dashboard')->middleware('auth'); // Dashboard Admin
 
-// Register Penyewa
-Route::post('/check-unique', [PenyewaController::class, 'checkUnique'])->name('check.unique');
-Route::get('/daftarPenyewa', [PenyewaController::class, 'create'])->name('daftarPenyewa');
-Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('posts.daftarPenyewa');
-
 Route::get('/health', [HealthCheckController::class, 'check'])
     ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
 
 // New Routing - Admin
-Route::middleware('auth')->group(function () {
+
+/**
+ *  Admin - Register
+ */
+Route::get('/registerAdmin', [RegisterController::class, 'index']);
+Route::post('/registerAdmin', [RegisterController::class, 'store'])->name('register.postRegisterAdminOrPetugas');
+Route::post('/registerAdmin/checkUnique', [RegisterController::class, 'checkUnique'])->name('register.checkUnique');
+/**
+ *  Done - Admin (Register)
+ */
+
+/**
+ *  Admin - Login
+ */
+Route::get('/login', [LoginController::class, 'index'])->name('login.adminOrPetugas');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticateAdminOrPetugas');
+Route::get('/logout', [LoginController::class, 'logout']);
+/**
+ *  Done - Admin (Login)
+ */
+
+Route::middleware(['auth', 'throttle:60,1'])->group(function () {
     /**
      *  Admin - CRUD Ruangan
      */

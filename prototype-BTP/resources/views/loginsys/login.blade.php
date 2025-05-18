@@ -24,7 +24,7 @@
 
             <h3 class="text-center pb-3">Masuk</h3>
             <p class="text-center">Halo! selamat datang di website peminjaman Bandung Techno Park</p>
-            <form class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST"
+            <form class="row g-3 needs-validation" action="{{ route('login.authenticateAdminOrPetugas') }}" method="POST"
                 enctype="multipart/form-data" novalidate>
                 @csrf
                 <div class="col-md-12">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 {{-- <div class="col-md-12 text-center mt-3">
-                    <h6>Belum memiliki akun? <a href="/daftarPenyewa">Daftar</a></h6>
+                    <h6>Belum memiliki akun? <a href="/registerAdmin">Daftar</a></h6>
                 </div> --}}
             </form>
         </div>

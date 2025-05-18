@@ -2,25 +2,29 @@
 
 namespace App\Providers;
 
-use App\Interfaces\Repositories\Peminjaman\BasePeminjamanRepositoryInterface;
-use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
-use App\Repositories\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjamanRepository;
-use App\Repositories\Ruangan\BaseRuanganRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Ruangan\BaseRuanganRepository;
+use App\Repositories\Authentication\LoginRepository;
 use App\Repositories\Ruangan\AdminRuanganRepository;
 use App\Repositories\Ruangan\PenyewaRuanganRepository;
+use App\Repositories\Authentication\RegisterRepository;
 use App\Repositories\Peminjaman\PenyewaPeminjamanRepository;
 use App\Repositories\Ruangan\Okupansi\AdminOkupansiRepository;
+use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Authentication\LoginRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
-use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
+use App\Interfaces\Repositories\Authentication\RegisterRepositoryInterface;
+use App\Interfaces\Repositories\Peminjaman\BasePeminjamanRepositoryInterface;
 use App\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepository;
 use App\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepository;
+use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\Okupansi\AdminOkupansiRepositoryInterface;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterfaces;
+use App\Repositories\Peminjaman\RiwayatPeminjaman\AdminRiwayatPeminjamanRepository;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterface;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,12 +49,12 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            BaseStatusPengajuanRepositoryInterfaces::class,
+            BaseStatusPengajuanRepositoryInterface::class,
             BaseStatusPengajuanRepository::class
         );
 
         $this->app->bind(
-            AdminStatusPengajuanRepositoryInterfaces::class,
+            AdminStatusPengajuanRepositoryInterface::class,
             AdminStatusPengajuanRepository::class
         );
 
@@ -67,6 +71,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             BasePeminjamanRepositoryInterface::class,
             AdminRiwayatPeminjamanRepository::class
+        );
+
+        $this->app->bind(
+            RegisterRepositoryInterface::class,
+            RegisterRepository::class
+        );
+
+        $this->app->bind(
+            LoginRepositoryInterface::class,
+            LoginRepository::class
         );
     }
 
