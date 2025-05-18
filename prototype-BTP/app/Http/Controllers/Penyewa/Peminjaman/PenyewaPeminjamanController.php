@@ -11,18 +11,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PenyewaPeminjamanController extends Controller
 {
-    protected PenyewaPeminjamanService $peminjamanService;
+    protected PenyewaPeminjamanService $penyewaPeminjamanService;
 
     public function __construct(PenyewaPeminjamanService $penyewaPeminjamanService)
     {
-        $this->peminjamanService = $penyewaPeminjamanService;
+        $this->penyewaPeminjamanService = $penyewaPeminjamanService;
     }
 
     public function index(?string $id = null)
     {
-        $formData = $this->peminjamanService->getFormData();
+        $formData = $this->penyewaPeminjamanService->getFormData();
         $origin = $id ? 'detailRuangan' : 'dashboard';
-        $ruangan = $id ? $this->peminjamanService->getDetailRuanganById($id) : null;
+        $ruangan = $id ? $this->penyewaPeminjamanService->getDetailRuanganById($id) : null;
 
         return view('penyewa.meminjamRuangan', [
             'dataPeminjaman' => $formData['dataPeminjaman'],
@@ -35,7 +35,7 @@ class PenyewaPeminjamanController extends Controller
     public function store(BasePeminjamanRequest $request)
     {
         try {
-            $this->peminjamanService->handlePeminjaman($request);
+            $this->penyewaPeminjamanService->handlePeminjaman($request);
             return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.');
         } catch (RuntimeException $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
@@ -45,7 +45,7 @@ class PenyewaPeminjamanController extends Controller
     public function getDetailRuangan(Request $request)
     {
         try {
-            $ruangan = $this->peminjamanService->getDetailRuanganById($request->query('id_ruangan'));
+            $ruangan = $this->penyewaPeminjamanService->getDetailRuanganById($request->query('id_ruangan'));
             return response()->json($ruangan);
         } catch (NotFoundHttpException $e) {
             return response()->json(['error' => $e->getMessage()], 404);

@@ -218,7 +218,7 @@
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ $data->status }}</td>
-                                            <td><a href="{{ route('generateInvoice', $data->id_peminjaman) }}"
+                                            <td><a href="{{ route('penyewa.cetakInvoicePengajuanPeminjaman', $data->id_peminjaman) }}"
                                                     class="btn btn-md text-white text-capitalize"
                                                     style="background-color:#0C9300">Lihat Invoice</a></td>
                                         </tr>

@@ -39,7 +39,7 @@
                     </a>
                 </div>
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPenyewa">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/statusPengajuanPenyewa">
                         <i class="material-symbols-outlined me-2">checklist</i>
                         <span>Lihat Status Peminjaman/Penyewaan Ruangan</span>
                     </a>
