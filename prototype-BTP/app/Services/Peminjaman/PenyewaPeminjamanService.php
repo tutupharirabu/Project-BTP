@@ -2,6 +2,7 @@
 
 namespace App\Services\Peminjaman;
 
+use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use Cloudinary\Cloudinary;
@@ -15,25 +16,27 @@ use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
 class PenyewaPeminjamanService
 {
   protected PenyewaPeminjamanRepositoryInterface $penyewaPeminjamanRepository;
-  protected PenyewaRuanganRepositoryInterface $ruanganRepository;
+  protected PenyewaRuanganRepositoryInterface $penyewaRuanganRepository;
+  protected BaseRuanganRepositoryInterface $baseRuanganRepository;
 
-  public function __construct(PenyewaPeminjamanRepositoryInterface $penyewaPeminjamanRepositoryInterface, PenyewaRuanganRepositoryInterface $penyewaRuanganRepositoryInterface)
+  public function __construct(PenyewaPeminjamanRepositoryInterface $penyewaPeminjamanRepositoryInterface, PenyewaRuanganRepositoryInterface $penyewaRuanganRepositoryInterface, BaseRuanganRepositoryInterface $baseRuanganRepositoryInterface)
   {
     $this->penyewaPeminjamanRepository = $penyewaPeminjamanRepositoryInterface;
-    $this->ruanganRepository = $penyewaRuanganRepositoryInterface;
+    $this->penyewaRuanganRepository = $penyewaRuanganRepositoryInterface;
+    $this->baseRuanganRepository = $baseRuanganRepositoryInterface;
   }
 
   public function getFormData(): array
   {
     return [
       'dataPeminjaman' => $this->penyewaPeminjamanRepository->getAllPeminjaman(),
-      'dataRuangan' => $this->ruanganRepository->getAllRuangan(),
+      'dataRuangan' => $this->baseRuanganRepository->getAllRuangan(),
     ];
   }
 
   public function getDetailRuanganById(string $id): Ruangan
   {
-    $ruangan = $this->ruanganRepository->getRuanganById($id);
+    $ruangan = $this->baseRuanganRepository->getRuanganById($id);
 
     if (!$ruangan) {
       throw new NotFoundHttpException('Ruangan tidak ditemukan.');

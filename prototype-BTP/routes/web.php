@@ -1,15 +1,12 @@
 <?php
 
-use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RiwayatController;
-use App\Http\Controllers\OkupansiController;
-use App\Http\Controllers\DashboardController;
 
-use App\Http\Controllers\StatusPenyewaController;
 use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardPenyewaController;
 
 use App\Http\Controllers\HealthcheckController;
@@ -19,6 +16,8 @@ use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
 use App\Http\Controllers\Admin\Ruangan\AdminTambahRuanganController;
 use App\Http\Controllers\Penyewa\Peminjaman\PenyewaPeminjamanController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaDetailRuanganController;
+use App\Http\Controllers\Admin\Ruangan\Okupansi\AdminOkupansiRuanganController;
+use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengajuanController;
 use App\Http\Controllers\Admin\Peminjaman\StatusPengajuan\AdminStatusPengajuanController;
 
 /*
@@ -53,10 +52,6 @@ Route::post('/daftarPenyewa/posts', [PenyewaController::class, 'store'])->name('
 Route::get('/riwayatRuangan', [RiwayatController::class, 'index'])->name('riwayat.ruangan')->middleware('auth');
 Route::get('/download-riwayat', [RiwayatController::class, 'downloadCSV'])->name('download.riwayat')->middleware('auth');
 
-// okupansi
-Route::get('/okupansiRuangan', [OkupansiController::class, 'index'])->name('admin.okupansi.index')->middleware('auth');
-Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi'])->name('download.okupansi');
-
 Route::get('/health', [HealthCheckController::class, 'check'])
     ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
 
@@ -90,6 +85,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/finishPeminjaman/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('statusPengajuan.selesaiPeminjaman');
     /**
      *  Done - Admin (Status Pengajuan Peminjaman)
+     */
+
+    /**
+     *  Admin - Okupansi Ruangan
+     */
+    Route::get('/okupansiRuangan', [AdminOkupansiRuanganController::class, 'index'])->name('okupansi.tabelOkupansiRuangan');
+    Route::get('/okupansiRuangan/downloadFileOkupansiRuangan', [AdminOkupansiRuanganController::class, 'downloadOkupansi'])->name('okupansi.downloadDataOkupansiRuangan');
+     /**
+     *  Done - Admin (Okupansi Ruangan)
      */
 });
 

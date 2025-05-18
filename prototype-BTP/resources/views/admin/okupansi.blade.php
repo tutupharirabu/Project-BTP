@@ -23,19 +23,19 @@
         <!-- Month Navigation -->
         <div class="row mt-3">
             <div class="col-md-10">
-                <form action="{{ route('admin.okupansi.index') }}" method="GET" class="d-inline">
+                <form action="{{ route('okupansi.tabelOkupansiRuangan') }}" method="GET" class="d-inline">
                     <input type="hidden" name="month"
                         value="{{ Carbon::parse($selectedMonth)->subMonth()->format('Y-m') }}">
                     <button type="submit" class="btn btn-outline-primary text-capitalize mb-2">Bulan Sebelumnya</button>
                 </form>
-                <form action="{{ route('admin.okupansi.index') }}" method="GET" class="d-inline">
+                <form action="{{ route('okupansi.tabelOkupansiRuangan') }}" method="GET" class="d-inline">
                     <input type="hidden" name="month"
                         value="{{ Carbon::parse($selectedMonth)->addMonth()->format('Y-m') }}">
                     <button type="submit" class="btn btn-outline-primary text-capitalize mb-2">Bulan Selanjutnya</button>
                 </form>
             </div>
             <div class="col-md-2 justify-content-md-end">
-                <a href="{{ route('download.okupansi') }}" class="btn btn-md text-white text-center w-100 w-md-auto mb-2"
+                <a href="{{ route('okupansi.downloadDataOkupansiRuangan') }}" class="btn btn-md text-white text-center w-100 w-md-auto mb-2"
                     style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
             </div>
         </div>
