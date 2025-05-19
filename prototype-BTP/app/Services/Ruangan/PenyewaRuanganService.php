@@ -2,27 +2,31 @@
 
 namespace App\Services\Ruangan;
 
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
 
 class PenyewaRuanganService
 {
   protected PenyewaRuanganRepositoryInterface $penyewaRuanganRepository;
+  protected BaseRuanganRepositoryInterface $baseRuanganRepository;
 
-  public function __construct(PenyewaRuanganRepositoryInterface $penyewaRuanganRepositoryInterface)
+  public function __construct(PenyewaRuanganRepositoryInterface $penyewaRuanganRepositoryInterface, BaseRuanganRepositoryInterface $baseRuanganRepositoryInterface)
   {
     $this->penyewaRuanganRepository = $penyewaRuanganRepositoryInterface;
+    $this->baseRuanganRepository = $baseRuanganRepositoryInterface;
   }
 
   public function getRuanganDetailWithEvents(string $id): array
   {
-    $ruangan = $this->penyewaRuanganRepository->getRuanganById($id);
+    $ruangan = $this->baseRuanganRepository->getRuanganById($id);
     if (!$ruangan) {
-      throw new \Exception('Ruangan tidak ditemukan');
+      throw new Exception('Ruangan tidak ditemukan');
     }
 
-    $dataRuangan = $this->penyewaRuanganRepository->getAllRuangan();
+    $dataRuangan = $this->baseRuanganRepository->getAllRuangan();
     $peminjamans = $this->penyewaRuanganRepository->getApprovedPeminjamanRuangan($id);
 
     $events = [];

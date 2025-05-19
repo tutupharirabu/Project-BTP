@@ -3,13 +3,13 @@
 namespace App\Repositories\Peminjaman\StatusPengajuan;
 
 use App\Models\Peminjaman;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterface;
 
-class BaseStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInterfaces
+class BaseStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInterface
 {
   public function getAllPeminjaman()
   {
-    return Peminjaman::with(['ruangan', 'users'])
+    return Peminjaman::with(['ruangan', 'user'])
       ->orderByDesc('created_at')
       ->orderByDesc('updated_at')
       ->get();

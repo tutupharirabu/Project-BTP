@@ -6,7 +6,8 @@
     <head>
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
         <script src="assets/js/admin/daftarRuangan.js"></script>
-        <script defer src="https://umami.tutupharirabu.cloud/script.js" data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
+        <script defer src="https://umami.tutupharirabu.cloud/script.js"
+            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
@@ -85,12 +86,12 @@
             <div class="container mt-4 mb-2">
                 <div class="row">
                     {{-- <div class="col-12 col-md-8 col-lg-6 mb-3 mb-md-0 d-flex align-items-center"> --}}
-                    {{-- <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                        {{-- <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
                             placeholder="Cari ruangan..."
                             style="border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;"> --}}
-                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                    {{-- </div> --}}
+                        {{-- </div> --}}
                     {{-- <div class="col-md-2 col-lg-4 "></div> --}}
                     <div class="col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end">
                         <a href="/tambahRuanganAdmin"
@@ -105,7 +106,7 @@
                         <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
                             placeholder="Cari ruangan..."
                             style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                            <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                        <button id="searchButton" type="button" class="btn btn-md text-white text-center"
                             style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button>
                     </div>
                     <a href="/tambahRuanganAdmin" class="btn btn-md text-white text-center text-capitalize"
@@ -148,24 +149,22 @@
                                                 {{ $data->satuan }}
                                             </td>
                                             <td>
-                                                <button type="button"
-                                                    class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
-                                                    data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-success btn-sm text-capitalize"
+                                                    style="background-color: #0EB100;" data-bs-toggle="modal"
                                                     data-bs-target="#imageModal{{ $data->id_ruangan }}">
                                                     Gambar
                                                 </button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="imageModal{{ $data->id_ruangan }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
+                                                <div class="modal fade" id="imageModal{{ $data->id_ruangan }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Gambar
                                                                     Ruangan</h5>
-                                                                <button type="button" class="close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                <button type="button" class="close" data-bs-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -175,7 +174,7 @@
                                                                     <div class="carousel-indicators">
                                                                         @php
                                                                             // Urutkan gambar berdasarkan indeks dalam public_id (image_1, image_2, dll)
-                                                                            $sortedGambar = collect($data->gambar)
+                                                                            $sortedGambar = collect($data->gambars)
                                                                                 ->sortBy(function ($gambar) {
                                                                                     // Ekstrak nomor indeks dari URL
                                                                                     preg_match(
@@ -196,14 +195,12 @@
                                                                                 class="{{ $index == 0 ? 'active' : '' }}"></button>
                                                                         @endforeach
                                                                     </div>
-                                                                    <div class="carousel-inner"
-                                                                        style="border-radius:5px;">
+                                                                    <div class="carousel-inner" style="border-radius:5px;">
                                                                         @foreach ($sortedGambar as $index => $gambar)
                                                                             <div
                                                                                 class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                                                                                 <img src="{{ asset($gambar->url) }}"
-                                                                                    class="d-block w-100"
-                                                                                    alt="Gambar Ruangan"
+                                                                                    class="d-block w-100" alt="Gambar Ruangan"
                                                                                     style="max-height: 300px;">
                                                                                 <!-- Membuat public_id berdasarkan urutan gambar -->
                                                                                 <div class="text-center mt-2">
@@ -250,15 +247,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button"
-                                                    class="btn btn-success btn-sm text-capitalize"style="background-color: #0EB100;"
-                                                    data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-success btn-sm text-capitalize"
+                                                    style="background-color: #0EB100;" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal{{ $data->id_ruangan }}">
                                                     Fasilitas
                                                 </button>
 
-                                                <div class="modal fade" id="exampleModal{{ $data->id_ruangan }}"
-                                                    tabindex="-1"
+                                                <div class="modal fade" id="exampleModal{{ $data->id_ruangan }}" tabindex="-1"
                                                     aria-labelledby="exampleModalLabel{{ $data->id_ruangan }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -267,8 +262,8 @@
                                                                 <h1 class="modal-title fs-5"
                                                                     id="exampleModalLabel{{ $data->id_ruangan }}">
                                                                     Fasilitas Ruangan</h1>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 {!! nl2br(e($data->keterangan)) !!}
@@ -325,8 +320,7 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <div class="circle-add">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 3.5em; color: #FFFFFF;">delete</span>
+                            <span class="material-symbols-outlined" style="font-size: 3.5em; color: #FFFFFF;">delete</span>
                         </div>
                         <p style="margin-top: 10px;">Apakah ruangan ini ingin dihapus?</p>
                         <button type="button" class="btn"
@@ -340,12 +334,14 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
         <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap5.js"></script>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTRuangan').DataTable({
                     "paging": true,
                     "searching": true,
@@ -385,4 +381,4 @@
                 }
             }
         </script>
-    @endsection
+@endsection

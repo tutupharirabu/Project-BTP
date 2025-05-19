@@ -2,14 +2,15 @@
 
 namespace App\Services\Peminjaman;
 
-use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use Carbon\Carbon;
+use RuntimeException;
 use App\Models\Ruangan;
 use Cloudinary\Cloudinary;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Peminjaman\BasePeminjamanRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
 
@@ -68,7 +69,7 @@ class PenyewaPeminjamanService
 
     } catch (\Exception $e) {
       Log::error('Cloudinary gagal upload: ' . $e->getMessage());
-      throw new \RuntimeException('Gagal mengunggah gambar KTP.');
+      throw new RuntimeException('Gagal mengunggah gambar KTP.');
     }
   }
 
@@ -96,7 +97,7 @@ class PenyewaPeminjamanService
       $ktpUrl = $this->uploadKtpImage($request->file('ktp_url'));
 
       if (!$ktpUrl) {
-        throw new \RuntimeException('Upload KTP gagal. Silakan coba lagi nanti.');
+        throw new RuntimeException('Upload KTP gagal. Silakan coba lagi nanti.');
       }
 
       $tanggalSelesai = $this->calculateTanggalSelesaiMahasiswa(

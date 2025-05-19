@@ -41,31 +41,31 @@
             <div id="ruanganCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @foreach ($RuangDashboard->chunk(3) as $index => $chunk)
-                                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                    <div class="row justify-content-sm-center text-center text-dark mt-3">
-                                        @foreach ($chunk as $ruangan)
-                                                            <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
-                                                                <div class="position-relative">
-                                                                    <img src="{{ asset(
-                                                $ruangan->gambar->sortBy(function ($gambar) {
-                                                    preg_match('/_image_(\d+)/', $gambar->url, $matches);
-                                                    return isset($matches[1]) ? (int) $matches[1] : 999;
-                                                })->first()->url,
-                                            ) }}" class="card-img-top custom-img" alt="Gambar Ruangan"
-                                                                        style="width:320px; height: 215px;">
-                                                                    <h6 class="card-title title-overlay">{{ $ruangan->nama_ruangan }}</h6>
-                                                                    <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
-                                                                        class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
-                                                                    @if ($ruangan->status == 'Tersedia')
-                                                                        <span class="status-available status-overlay">Tersedia</span>
-                                                                    @else
-                                                                        <span class="status-not-available status-overlay">Digunakan</span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <div class="row justify-content-sm-center text-center text-dark mt-3">
+                                @foreach ($chunk as $ruangan)
+                                                    <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                                                        <div class="position-relative">
+                                                            <img src="{{ asset(
+                                        $ruangan->gambars->sortBy(function ($gambar) {
+                                            preg_match('/_image_(\d+)/', $gambar->url, $matches);
+                                            return isset($matches[1]) ? (int) $matches[1] : 999;
+                                        })->first()->url,
+                                    ) }}" class="card-img-top custom-img" alt="Gambar Ruangan"
+                                                                style="width:320px; height: 215px;">
+                                                            <h6 class="card-title title-overlay">{{ $ruangan->nama_ruangan }}</h6>
+                                                            <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
+                                                                class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
+                                                            @if ($ruangan->status == 'Tersedia')
+                                                                <span class="status-available status-overlay">Tersedia</span>
+                                                            @else
+                                                                <span class="status-not-available status-overlay">Digunakan</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#ruanganCarousel" data-bs-slide="prev"
@@ -114,8 +114,8 @@
                     <p><strong>Selesai :</strong> <span id="modalEnd"></span></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn text-white text-capitalize" data-dismiss="modal"
-                        data-bs-dismiss="modal" style="background-color: #0DA200; font-size:15px;">Close</button>
+                    <button type="button" class="btn text-white text-capitalize" data-bs-dismiss="modal"
+                        style="background-color: #0DA200; font-size:15px;">Close</button>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ class BasePeminjamanRequest extends FormRequest
     {
         $rules = [
             'nama_peminjam' => 'required|string|max:255',
-            'role' => 'required',
+            'role' => 'required|in:Mahasiswa,Umum,Pegawai',
             'nomor_induk' => 'required',
             'nomor_telepon' => 'required',
             'tanggal_mulai' => 'required|date',

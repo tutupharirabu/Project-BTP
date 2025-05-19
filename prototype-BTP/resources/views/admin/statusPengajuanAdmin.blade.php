@@ -140,16 +140,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                                                                <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                                                        placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                    style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                                            placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                        style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                    </div>
                                                                                                                                                                                                                                                                 </div>
-                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                            </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -231,10 +231,7 @@
                                             </td>
                                             @if ($data->status == 'Menunggu')
                                                 <td>
-                                                    @foreach ($data->users as $user)
-                                                        {{ $user->username }}
-                                                        <br>
-                                                    @endforeach
+                                                    {{ $data->user->nama_lengkap ?? '-' }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
@@ -266,7 +263,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="d-flex justify-content-between" style="align-items: center;">
-                                                    <form action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
+                                                    <form
+                                                        action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         @csrf
                                                         <input type="hidden" name="pilihan" id="pilihan">
@@ -284,10 +282,7 @@
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
                                                 <td>
-                                                    @foreach ($data->users as $user)
-                                                        {{ $user->username }}
-                                                        <br>
-                                                    @endforeach
+                                                    {{ $data->user->nama_lengkap }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
@@ -318,7 +313,8 @@
                                                     </div>
                                                 </td>
                                                 <td class=" justify-content-between">
-                                                    <form action="{{ route('statusPengajuan.selesaiPeminjaman', $data->id_peminjaman) }}"
+                                                    <form
+                                                        action="{{ route('statusPengajuan.selesaiPeminjaman', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
@@ -332,10 +328,7 @@
                                                 </td>
                                             @elseif($data->status == 'Ditolak')
                                                 <td>
-                                                    @foreach ($data->users as $user)
-                                                        {{ $user->username }}
-                                                        <br>
-                                                    @endforeach
+                                                    {{ $data->user->nama_lengkap }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
@@ -366,7 +359,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="justify-content-between">
-                                                    <form action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
+                                                    <form
+                                                        action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
                                                         method="POST">
                                                         <a type="button" class="btn btn-outline-success btn-styl"
                                                             style="width: 75px;font-size: 12px;">Setuju</a>
@@ -380,7 +374,7 @@
                                                 </td>
                                             @elseif($data->status == 'Selesai')
                                                 <td>
-                                                    @foreach ($data->users as $user)
+                                                    @foreach ($data->user as $user)
                                                         {{ $user->username }}
                                                         <br>
                                                     @endforeach

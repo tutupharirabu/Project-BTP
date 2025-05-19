@@ -4,18 +4,18 @@ namespace App\Services\Peminjaman\StatusPengajuan;
 
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterface;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterface;
 
 class AdminStatusPengajuanService
 {
-  protected BaseStatusPengajuanRepositoryInterfaces $baseStatusPengajuanRepository;
-  protected AdminStatusPengajuanRepositoryInterfaces $adminStatusPengajuanRepository;
+  protected BaseStatusPengajuanRepositoryInterface $baseStatusPengajuanRepository;
+  protected AdminStatusPengajuanRepositoryInterface $adminStatusPengajuanRepository;
 
-  public function __construct(BaseStatusPengajuanRepositoryInterfaces $baseStatusPengajuanRepositoryInterfaces, AdminStatusPengajuanRepositoryInterfaces $adminStatusPengajuanRepositoryInterfaces)
+  public function __construct(BaseStatusPengajuanRepositoryInterface $baseStatusPengajuanRepositoryInterface, AdminStatusPengajuanRepositoryInterface $adminStatusPengajuanRepositoryInterface)
   {
-    $this->baseStatusPengajuanRepository = $baseStatusPengajuanRepositoryInterfaces;
-    $this->adminStatusPengajuanRepository = $adminStatusPengajuanRepositoryInterfaces;
+    $this->baseStatusPengajuanRepository = $baseStatusPengajuanRepositoryInterface;
+    $this->adminStatusPengajuanRepository = $adminStatusPengajuanRepositoryInterface;
   }
 
   public function getAllPeminjaman()

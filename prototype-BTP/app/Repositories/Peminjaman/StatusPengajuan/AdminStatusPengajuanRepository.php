@@ -4,9 +4,9 @@ namespace App\Repositories\Peminjaman\StatusPengajuan;
 
 use App\Models\Peminjaman;
 use Illuminate\Support\Collection;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterface;
 
-class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryInterfaces
+class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryInterface
 {
   public function getConflictingBookings(Peminjaman $peminjaman): Collection
   {

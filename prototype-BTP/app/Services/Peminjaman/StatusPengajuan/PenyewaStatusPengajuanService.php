@@ -3,15 +3,15 @@
 namespace App\Services\Peminjaman\StatusPengajuan;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterface;
 
 class PenyewaStatusPengajuanService
 {
-  protected BaseStatusPengajuanRepositoryInterfaces $penyewaStatusPengajuanRepository;
+  protected BaseStatusPengajuanRepositoryInterface $penyewaStatusPengajuanRepository;
 
-  public function __construct(BaseStatusPengajuanRepositoryInterfaces $penyewaStatusPengajuanRepositoryInterfaces)
+  public function __construct(BaseStatusPengajuanRepositoryInterface $penyewaStatusPengajuanRepositoryInterface)
   {
-    $this->penyewaStatusPengajuanRepository = $penyewaStatusPengajuanRepositoryInterfaces;
+    $this->penyewaStatusPengajuanRepository = $penyewaStatusPengajuanRepositoryInterface;
   }
 
   public function getAllPeminjaman()

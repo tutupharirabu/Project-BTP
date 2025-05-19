@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Penyewa\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Dashboard\DashboardService;
 
-class AdminDashboardController extends Controller
+class PenyewaDashboardController extends Controller
 {
     protected DashboardService $dashboardService;
 
@@ -17,13 +17,12 @@ class AdminDashboardController extends Controller
 
     public function index()
     {
-        $data = $this->dashboardService->getDashboardData(true);
+        $data = $this->dashboardService->getDashboardData(false);
 
-        return view('admin.adminDashboard', [
+        return view('penyewa.userDashboard', [
             'peminjamans' => $data['peminjamans'],
             'events' => $data['events'],
-            'occupancyPerMonth' => $data['occupancyPerMonth'],
-            'totalCapacityPerRoom' => $data['totalCapacityPerRoom'],
+            'RuangDashboard' => $data['RuangDashboard'],
         ]);
     }
 }

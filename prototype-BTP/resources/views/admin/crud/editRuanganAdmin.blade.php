@@ -209,8 +209,8 @@
                                 <div class="row">
                                     @php
                                         // Urutkan gambar berdasarkan indeks dalam public_id (image_1, image_2, dll)
-                                        $sortedGambar = !empty($dataRuanganEdit->gambar)
-                                            ? $dataRuanganEdit->gambar
+                                        $sortedGambar = !empty($dataRuanganEdit->gambars)
+                                            ? $dataRuanganEdit->gambars
                                                 ->sortBy(function ($gambar) {
                                                     // Ekstrak nomor indeks dari URL
                                                     preg_match('/_image_(\d+)/', $gambar->url, $matches);

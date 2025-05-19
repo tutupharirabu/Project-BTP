@@ -43,7 +43,7 @@
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         @php
-                            $sortedGambar = $ruangan->gambar
+                            $sortedGambar = $ruangan->gambars
                                 ->sortBy(function ($gambar) {
                                     preg_match('/_image_(\d+)/', $gambar->url, $matches);
                                     return isset($matches[1]) ? (int) $matches[1] : 999;
@@ -239,12 +239,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn text-white text-capitalize" data-dismiss="modal"
-                        data-bs-dismiss="modal" style="background-color: #0DA200; font-size:15px;">Close</button>
+                        style="background-color: #0DA200; font-size:15px;">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script>
         $(document).ready(function () {
@@ -254,7 +253,7 @@
             // Bookings data for the calendar (assuming this is passed from your backend)
             var bookings = @json($events);
             var dataRuangan = @json($dataRuangan);
-    
+
             console.log("Events:", @json($events));
             console.log("Data Ruangan:", @json($dataRuangan));
 
@@ -302,15 +301,15 @@
 
             function showFooter() {
                 var footerContent = `
-                                <div class="d-flex align-items-center mr-4">
-                                    <div class="mark-available"></div>
-                                    <p class="my-auto">Tersedia</p>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="mark-notavailable"></div>
-                                    <p class="my-auto">Tidak tersedia</p>
-                                </div>
-                            `;
+                                            <div class="d-flex align-items-center mr-4">
+                                                <div class="mark-available"></div>
+                                                <p class="my-auto">Tersedia</p>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="mark-notavailable"></div>
+                                                <p class="my-auto">Tidak tersedia</p>
+                                            </div>
+                                        `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -348,16 +347,16 @@
                             var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                             var dayHtml = `
-                                            <div class="mx-2 text-center">
-                                                <div>
-                                                    <p class="day-name">${dayName}</p>
-                                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                                                </div>
-                                                <div>
-                                                    ${hoursHtml}
-                                                </div>
-                                            </div>
-                                        `;
+                                                        <div class="mx-2 text-center">
+                                                            <div>
+                                                                <p class="day-name">${dayName}</p>
+                                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                            </div>
+                                                            <div>
+                                                                ${hoursHtml}
+                                                            </div>
+                                                        </div>
+                                                    `;
                             content += dayHtml;
                         }
                         content += '</div>';
@@ -413,17 +412,17 @@
                     $('#calendar').fullCalendar({
                         locale: 'id',
                         events: filteredBookings,
-                        eventClick: function (event) {
-                            $('#modalNamaP').text(event.peminjam);
-                            $('#modalRuangan').text(event.ruangan);
-                            $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
-                            if (event.end) {
-                                $('#modalEnd').text(event.end.format('DD-MM-YYYY | HH:mm'));
-                            } else {
-                                $('#modalEnd').text('N/A');
-                            }
-                            $('#eventModal').modal('show');
-                        }
+                        // eventClick: function (event) {
+                        //     $('#modalNamaP').text(event.peminjam);
+                        //     $('#modalRuangan').text(event.ruangan);
+                        //     $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
+                        //     if (event.end) {
+                        //         $('#modalEnd').text(event.end.format('DD-MM-YYYY | HH:mm'));
+                        //     } else {
+                        //         $('#modalEnd').text('N/A');
+                        //     }
+                        //     $('#eventModal').modal('show');
+                        // }
                     });
                 }
             }

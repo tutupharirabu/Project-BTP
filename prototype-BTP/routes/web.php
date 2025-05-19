@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
-use App\Http\Controllers\Dashboard\AdminDashboardController;
-use App\Http\Controllers\Dashboard\PenyewaDashboardController;
+use App\Http\Controllers\Admin\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Penyewa\Dashboard\PenyewaDashboardController;
 use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
 use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
@@ -28,6 +28,8 @@ use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengaju
 |
 */
 
+Route::get('/', [PenyewaDashboardController::class, 'index']);
+
 Route::get('/health', [HealthCheckController::class, 'check'])
     ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
 
@@ -36,9 +38,11 @@ Route::get('/health', [HealthCheckController::class, 'check'])
 /**
  *  Admin - Register
  */
-Route::get('/registerAdmin', [RegisterController::class, 'index']);
-Route::post('/registerAdmin', [RegisterController::class, 'store'])->name('register.postRegisterAdminOrPetugas');
-Route::post('/registerAdmin/checkUnique', [RegisterController::class, 'checkUnique'])->name('register.checkUnique');
+Route::middleware('throttle:3,10')->group(function () {
+    Route::get('/registerAdmin', [RegisterController::class, 'index']);
+    Route::post('/registerAdmin', [RegisterController::class, 'store'])->name('register.postRegisterAdminOrPetugas');
+    Route::post('/registerAdmin/checkUnique', [RegisterController::class, 'checkUnique'])->name('register.checkUnique');
+});
 /**
  *  Done - Admin (Register)
  */
@@ -46,9 +50,11 @@ Route::post('/registerAdmin/checkUnique', [RegisterController::class, 'checkUniq
 /**
  *  Admin - Login
  */
-Route::get('/login', [LoginController::class, 'index'])->name('login.adminOrPetugas');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticateAdminOrPetugas');
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::middleware('throttle:15,1')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login.adminOrPetugas');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticateAdminOrPetugas');
+    Route::get('/logout', [LoginController::class, 'logout']);
+});
 /**
  *  Done - Admin (Login)
  */
@@ -107,7 +113,7 @@ Route::middleware(['auth', 'throttle:60,1'])->group(function () {
 
 // New Routing - Penyewa
 
-Route::get('/', [PenyewaDashboardController::class, 'index']);
+Route::get('/dashboardPenyewa', [PenyewaDashboardController::class, 'index']);
 
 /**
  *  Penyewa - Daftar Ruangan & Detail Ruangan

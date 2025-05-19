@@ -218,9 +218,19 @@
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ $data->status }}</td>
-                                            <td><a href="{{ route('penyewa.cetakInvoicePengajuanPeminjaman', $data->id_peminjaman) }}"
+                                            <td>
+                                                @if (in_array($data->status, ['Menunggu', 'Tolak', 'Ditolak']))
+                                                    <button class="btn btn-md text-white text-capitalize" style="background-color:#aaa; cursor:not-allowed;" disabled>
+                                                        Lihat Invoice
+                                                    </button>
+                                                @else
+                                                    <a href="{{ route('penyewa.cetakInvoicePengajuanPeminjaman', $data->id_peminjaman) }}"
                                                     class="btn btn-md text-white text-capitalize"
-                                                    style="background-color:#0C9300">Lihat Invoice</a></td>
+                                                    style="background-color:#0C9300">
+                                                        Lihat Invoice
+                                                    </a>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

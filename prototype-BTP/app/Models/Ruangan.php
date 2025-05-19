@@ -15,22 +15,28 @@ class Ruangan extends Model
     protected $primaryKey = 'id_ruangan';
     protected $table = 'ruangan';
     protected $fillable = [
-        'nama_ruangan', 
-        'kapasitas_maksimal', 
-        'kapasitas_minimal',  
-        'satuan', 
-        'lokasi', 
+        'nama_ruangan',
+        'kapasitas_minimal',
+        'kapasitas_maksimal',
+        'satuan',
+        'lokasi',
         'harga_ruangan',
-        'status', 
-        'keterangan', 
+        'status',
+        'keterangan',
         'id_users'
     ];
+    public function users()
+    {
+        return $this->hasMany(Users::class, 'id_users', 'id_users'); // Ini salah cara relasinya harusnya belongsTo
+    }
 
-    public function gambar(){
+    public function gambars()
+    {
         return $this->hasMany(Gambar::class, 'id_ruangan', 'id_ruangan');
     }
 
-    public function users(){
-        return $this->hasMany(Users::class , 'id_users', 'id_users'); // Ini salah cara relasinya harusnya belongsTo
-    } 
+    public function peminjamans()
+    {
+        return $this->hasMany(Peminjaman::class, 'id_ruangan', 'id_ruangan');
+    }
 }

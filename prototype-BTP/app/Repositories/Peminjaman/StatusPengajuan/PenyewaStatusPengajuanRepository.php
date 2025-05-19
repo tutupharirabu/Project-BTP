@@ -3,10 +3,10 @@
 namespace App\Repositories\Peminjaman\StatusPengajuan;
 
 use App\Models\Peminjaman;
-use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterfaces;
+use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\BaseStatusPengajuanRepositoryInterface;
 
 
-class PenyewaStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInterfaces
+class PenyewaStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInterface
 {
   public function getAllPeminjaman()
   {
