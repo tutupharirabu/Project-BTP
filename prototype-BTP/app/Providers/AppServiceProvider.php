@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Dashboard\DashboardRepository;
 use App\Repositories\Ruangan\BaseRuanganRepository;
 use App\Repositories\Authentication\LoginRepository;
 use App\Repositories\Ruangan\AdminRuanganRepository;
@@ -13,6 +14,7 @@ use App\Repositories\Authentication\RegisterRepository;
 use App\Repositories\Peminjaman\PenyewaPeminjamanRepository;
 use App\Repositories\Ruangan\Okupansi\AdminOkupansiRepository;
 use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
+use App\Interfaces\Repositories\Dashboard\DashboardRepositoryInterface;
 use App\Interfaces\Repositories\Authentication\LoginRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
@@ -81,6 +83,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             LoginRepositoryInterface::class,
             LoginRepository::class
+        );
+
+        $this->app->bind(
+            DashboardRepositoryInterface::class,
+            DashboardRepository::class
         );
     }
 

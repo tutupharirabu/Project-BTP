@@ -1,14 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DashboardAdminController;
-use App\Http\Controllers\DashboardPenyewaController;
-
 use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
+use App\Http\Controllers\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Dashboard\PenyewaDashboardController;
 use App\Http\Controllers\Admin\Ruangan\AdminRuanganController;
 use App\Http\Controllers\Admin\Ruangan\AdminEditRuanganController;
 use App\Http\Controllers\Penyewa\Ruangan\PenyewaRuanganController;
@@ -30,13 +27,6 @@ use App\Http\Controllers\Penyewa\Peminjaman\StatusPengajuan\PenyewaStatusPengaju
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', [DashboardPenyewaController::class, 'index']);
-
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-Route::get('/dashboardPenyewa', [DashboardPenyewaController::class, 'index'])->name('penyewa.dashboard'); // Dashboard Penyewa
-Route::get('/dashboardAdmin', [DashboardAdminController::class, 'index'])->name('admin.dashboard')->middleware('auth'); // Dashboard Admin
 
 Route::get('/health', [HealthCheckController::class, 'check'])
     ->middleware(['health.ip', 'throttle:60,1']); // 60 requests per minute
@@ -64,6 +54,8 @@ Route::get('/logout', [LoginController::class, 'logout']);
  */
 
 Route::middleware(['auth', 'throttle:60,1'])->group(function () {
+    Route::get('/dashboardAdmin', [AdminDashboardController::class, 'index']);
+
     /**
      *  Admin - CRUD Ruangan
      */
@@ -114,6 +106,8 @@ Route::middleware(['auth', 'throttle:60,1'])->group(function () {
 });
 
 // New Routing - Penyewa
+
+Route::get('/', [PenyewaDashboardController::class, 'index']);
 
 /**
  *  Penyewa - Daftar Ruangan & Detail Ruangan
