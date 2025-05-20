@@ -2,9 +2,11 @@
 
 namespace App\Services\Ruangan;
 
+use Exception;
 use App\Models\Gambar;
 use App\Models\Ruangan;
 use Cloudinary\Cloudinary;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Ruangan\StoreRuanganRequest;
 use App\Http\Requests\Ruangan\UpdateRuanganRequest;
@@ -48,8 +50,8 @@ class AdminRuanganService
             'id_ruangan' => $ruangan->id_ruangan,
             'url' => $uploadResult['secure_url']
           ]);
-        } catch (\Exception $e) {
-          \Log::error('Error uploading to Cloudinary', [
+        } catch (Exception $e) {
+          Log::error('Error uploading to Cloudinary', [
             'message' => $e->getMessage(),
             'file_index' => $index
           ]);
@@ -69,7 +71,7 @@ class AdminRuanganService
     $ruangan->save();
 
     if ($request->hasFile('url')) {
-      $existingGambar = $ruangan->gambar
+      $existingGambar = $ruangan->gambars
         ->sortBy(function ($gambar) {
           preg_match('/_image_(\d+)/', $gambar->url, $matches);
           return isset($matches[1]) ? (int) $matches[1] : 999;
