@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Gambar;
 use App\Models\Users;
+use App\Models\Gambar;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ruangan extends Model
 {
@@ -25,17 +27,17 @@ class Ruangan extends Model
         'keterangan',
         'id_users'
     ];
-    public function users()
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Users::class, 'id_users', 'id_users'); // Ini salah cara relasinya harusnya belongsTo
+        return $this->belongsTo(Users::class, 'id_users', 'id_users'); // Ini salah cara relasinya harusnya belongsTo
     }
 
-    public function gambars()
+    public function gambars(): HasMany
     {
         return $this->hasMany(Gambar::class, 'id_ruangan', 'id_ruangan');
     }
 
-    public function peminjamans()
+    public function peminjamans(): HasMany
     {
         return $this->hasMany(Peminjaman::class, 'id_ruangan', 'id_ruangan');
     }

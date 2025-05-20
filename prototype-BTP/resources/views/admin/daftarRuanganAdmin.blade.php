@@ -289,10 +289,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @foreach ($data->users as $user)
-                                                    {{ $user->username }}
-                                                    <br>
-                                                @endforeach
+                                                {{ $data->user->nama_lengkap }}
                                             </td>
                                             <td>
                                                 <div style="display: flex; gap: 5px; justify-content: center;">

@@ -10,7 +10,7 @@ class AdminRuanganRepository implements AdminRuanganRepositoryInterface
 {
   public function getAllRuangan()
   {
-    return Ruangan::with(['gambars', 'users'])
+    return Ruangan::with(['gambars', 'user'])
       ->orderBy('created_at', 'desc')
       ->get();
   }
