@@ -1,6 +1,5 @@
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css"
-    integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 <!-- MDB -->
@@ -45,7 +44,8 @@
                     </a>
                 </div> --}}
                 <div class="m-1">
-                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/riwayatPeminjamanRuanganAdmin">
+                    <a class="text-white nav-link d-flex align-items-center menu-item"
+                        href="/riwayatPeminjamanRuanganAdmin">
                         <i class="material-symbols-outlined me-2">history</i>
                         <span>Riwayat Peminjaman/Penyewaan Ruangan</span>
                     </a>
@@ -105,7 +105,18 @@
         const currentPath = window.location.pathname;
 
         menuItems.forEach(item => {
-            if (item.getAttribute('href') === currentPath) {
+            // Get menu href
+            const href = item.getAttribute('href');
+
+            // Cek apakah currentPath mengandung string menu yang relevan
+            if (
+                (href === '/daftarRuanganAdmin' && (
+                    currentPath.startsWith('/daftarRuanganAdmin') ||
+                    currentPath.startsWith('/tambahRuanganAdmin') ||
+                    currentPath.startsWith('/editRuanganAdmin')
+                )) ||
+                href === currentPath // fallback buat menu lain
+            ) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');

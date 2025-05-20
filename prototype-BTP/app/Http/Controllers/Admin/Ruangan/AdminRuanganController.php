@@ -16,6 +16,10 @@ class AdminRuanganController extends Controller
     {
         $this->adminRuanganService = $adminRuanganService;
         $this->adminRuanganRepository = $adminRuanganRepositoryInterface;
+        $this->middleware(function ($request, $next) {
+            $this->authorize('access-ruangan');
+            return $next($request);
+        });
     }
 
     public function index()

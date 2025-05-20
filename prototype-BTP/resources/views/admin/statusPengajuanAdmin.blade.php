@@ -1,5 +1,4 @@
 @extends('admin.layouts.mainAdmin')
-
 @section('containAdmin')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
     @php
@@ -140,16 +139,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                                                                    <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                                                            placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                                                        {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                        style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                                        <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                                                placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                        </div>
                                                                                                                                                                                                                                                                     </div>
-                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -287,7 +286,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
+                                                        data-bs-target="#exampleModal">
                                                         Catatan
                                                     </button>
                                                     <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
@@ -374,13 +373,10 @@
                                                 </td>
                                             @elseif($data->status == 'Selesai')
                                                 <td>
-                                                    @foreach ($data->user as $user)
-                                                        {{ $user->username }}
-                                                        <br>
-                                                    @endforeach
+                                                    {{ $data->user->nama_lengkap }}
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-md"
+                                                    <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal">
                                                         Catatan

@@ -21,9 +21,7 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
 
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css"
-        integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('assets/css/dragndrop.css') }}">
 
@@ -56,7 +54,7 @@
             @include('admin.partials.sidebarAdmin')
         </div>
         <div class="col-sm-12 col-md-10 col-xl-10">
-            <div class="">
+            <div>
                 @yield('containAdmin')
             </div>
             <div>
@@ -69,12 +67,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
+
     {{-- jquery --}}
-
-    {{--
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 
@@ -113,19 +107,6 @@
         padding: 8px;
     } */
 </style>
-{{--
-<script type="text/javascript">
-    var dropzone = new Dropzone("#my-dropzone", {
-        url: "{{ route('dropzone.store') }}",
-        thumbnailWidth: 200,
-        maxFilesize: 2,
-        acceptedFiles: ".jpeg,.jpg,.png,.svg",
-        autoProcessQueue: false,
-        addRemoveLinks: true,
-        dictRemoveFile: 'Remove file',
-        previewTemplate: '<div class="dz-preview dz-file-preview"><div class="dz-image"><img data-dz-thumbnail /></div><div class="dz-details"><div class="dz-size"><span data-dz-size></span></div><div class="dz-filename"><span data-dz-name></span></div></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div><div class="dz-error-message"><span data-dz-errormessage></span></div></div>'
-    });
-</script> --}}
 
 </html>
 

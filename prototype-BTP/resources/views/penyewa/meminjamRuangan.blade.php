@@ -3,7 +3,7 @@
 @section('containPenyewa')
 
     <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
         {{-- <link rel="stylesheet" href="style.css"> --}}
         <script defer src="https://umami.tutupharirabu.cloud/script.js" data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
@@ -496,7 +496,7 @@
                     })
                     .catch(error => console.error('Error fetching ruangan details:', error));
             } else {
-                lokasiInput.value = '';
+                // lokasiInput.value = '';
                 hargaInput.value = '';
                 ppnInput.value = '';
                 console.log("No ruangan selected, clearing inputs");
@@ -543,11 +543,6 @@
                     pesertaSelect.appendChild(option);
                 }
 
-                // Display validation message based on room capacity
-                const feedback = pesertaSelect.nextElementSibling;
-                if (feedback) {
-                    feedback.textContent = "Masukkan Jumlah Peserta antara " + min + " dan " + max + "!";
-                }
             } else {
                 console.error("Peserta select element not found");
             }
@@ -652,7 +647,7 @@
         }
 
         function handleRoleChange() {
-            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}";
             const role = document.getElementById('role').value;
             const ruanganSelect = document.getElementById('id_ruangan');
             const nomorIndukDiv = document.getElementById('nomorIndukDiv');
@@ -661,7 +656,6 @@
             const ktpUrlInput = document.getElementById('ktp_url');
 
             if (origin !== 'detailRuangan') {
-                // Enable ruangan select if a valid role is selected
                 if (role) {
                     ruanganSelect.removeAttribute('disabled');
                 } else {
@@ -669,51 +663,55 @@
                 }
             }
 
-            // Display or hide nomorIndukDiv based on the selected role
             if (role === 'Pegawai' || role === 'Mahasiswa') {
                 nomorIndukDiv.style.display = 'block';
-                nomorIndukInput.value = ''; // Clear the input value
-                nomorIndukInput.required = true; // Make the input required
+                nomorIndukInput.value = '';
+                nomorIndukInput.required = true;
             } else {
                 nomorIndukDiv.style.display = 'none';
-                nomorIndukInput.value = '0'; // Set the default value to 0
-                nomorIndukInput.required = false; // Make the input not required
+                nomorIndukInput.value = '0';
+                nomorIndukInput.required = false;
             }
 
-            // Display or hide ktpUrlDiv based on the selected role
             if (role === 'Umum' || role === 'Mahasiswa') {
                 ktpUrlDiv.style.display = 'block';
-                ktpUrlInput.required = true; // Make the input required
+                ktpUrlInput.required = true;
             } else {
                 ktpUrlDiv.style.display = 'none';
-                ktpUrlInput.value = ''; // Clear the input value
-                ktpUrlInput.required = false; // Make the input not required
+                ktpUrlInput.value = '';
+                ktpUrlInput.required = false;
             }
 
-            // Call additional functions like filterRuanganOptions()
-            filterRuanganOptions();
+            // Panggil dengan preserveSelection true jika dari detailRuangan
+            filterRuanganOptions(origin === 'detailRuangan');
         }
         window.onload = function () {
-        const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
-        if (savedData) {
-            const rentalForm = document.getElementById('rentalForm');
-            const formData = JSON.parse(savedData);
+            const origin = "{{ $origin }}";
+            const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
+            if (savedData) {
+                const rentalForm = document.getElementById('rentalForm');
+                const formData = JSON.parse(savedData);
 
-            // Kosongkan field tertentu
-            const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'id_ruangan', 'role']; // Field yang ingin dikosongkan
-            for (const key in formData) {
-                const input = rentalForm.querySelector(`[name="${key}"]`);
-                if (input) {
-                    // Hanya isi kembali field yang tidak ada di fieldsToReset
-                    if (!fieldsToReset.includes(key)) {
-                        input.value = formData[key];
-                    } else {
-                        input.value = ''; // Kosongkan field yang ada di fieldsToReset
+                // Kosongkan field tertentu
+                const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'role']; // Field yang ingin dikosongkan
+                if (origin !== 'detailRuangan') {
+                    fieldsToReset.push('id_ruangan');
+                } else {
+                    fieldsToReset.push('jumlah'); // <-- Tambahkan ini agar jumlah peserta juga direset
+                }
+                for (const key in formData) {
+                    const input = rentalForm.querySelector(`[name="${key}"]`);
+                    if (input) {
+                        // Hanya isi kembali field yang tidak ada di fieldsToReset
+                        if (!fieldsToReset.includes(key)) {
+                            input.value = formData[key];
+                        } else {
+                            input.value = ''; // Kosongkan field yang ada di fieldsToReset
+                        }
                     }
                 }
             }
-        }
-    };
+        };
     </script>
 
 @endsection

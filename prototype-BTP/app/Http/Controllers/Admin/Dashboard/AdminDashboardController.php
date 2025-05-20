@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Dashboard;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Dashboard\DashboardService;
 
@@ -13,6 +12,10 @@ class AdminDashboardController extends Controller
     public function __construct(DashboardService $dashboardService)
     {
         $this->dashboardService = $dashboardService;
+        $this->middleware(function ($request, $next) {
+            $this->authorize('view-admin-dashboard');
+            return $next($request);
+        });
     }
 
     public function index()

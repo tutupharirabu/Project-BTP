@@ -15,6 +15,10 @@ class AdminOkupansiRuanganController extends Controller
     public function __construct(AdminOkupansiService $adminOkupansiService)
     {
         $this->adminOkupansiService = $adminOkupansiService;
+        $this->middleware(function ($request, $next) {
+            $this->authorize('access-okupansi');
+            return $next($request);
+        });
     }
 
     public function index(Request $request)

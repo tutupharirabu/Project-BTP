@@ -16,6 +16,10 @@ class AdminStatusPengajuanController extends Controller
     public function __construct(AdminStatusPengajuanService $adminStatusPengajuanService)
     {
         $this->adminStatusPengajuanService = $adminStatusPengajuanService;
+        $this->middleware(function ($request, $next) {
+            $this->authorize('access-status-pengajuan');
+            return $next($request);
+        });
     }
 
     public function index()

@@ -37,7 +37,7 @@
 //     }
 // }
 
-function filterRuanganOptions() {
+function filterRuanganOptions(preserveSelection = false) {
     const ruanganSelect = document.getElementById('id_ruangan');
     const lokasiInput = document.getElementById('lokasi');
     const hargaInput = document.getElementById('harga_ruangan');
@@ -48,8 +48,11 @@ function filterRuanganOptions() {
     ruanganSelect.disabled = false;
 
     // Reset input
-    ruanganSelect.value = "";
-    lokasiInput.value = "";
+    if (!preserveSelection) {
+        ruanganSelect.value = "";
+        lokasiInput.value = "";
+    }
+
     hargaInput.value = "";
     jumlahPesertaInput.value = "";
 
@@ -61,8 +64,7 @@ function filterRuanganOptions() {
     console.log("Semua ruangan tersedia untuk semua role.");
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize state
     handleRoleChange();
 });

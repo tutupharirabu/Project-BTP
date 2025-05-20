@@ -14,6 +14,15 @@ class AdminRiwayatPeminjamanController extends Controller
     public function __construct(AdminRiwayatPeminjamanService $adminRiwayatPeminjamanService)
     {
         $this->adminRiwayatPeminjamanService = $adminRiwayatPeminjamanService;
+        $this->middleware(function ($request, $next) {
+            $action = $request->route()->getActionMethod();
+            if ($action === 'index') {
+                $this->authorize('view-riwayat-peminjaman');
+            } elseif ($action === 'downloadCSV') {
+                $this->authorize('download-riwayat-peminjaman');
+            }
+            return $next($request);
+        });
     }
 
     public function index()
