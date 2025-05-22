@@ -4,8 +4,13 @@ $(document).ready(function () {
         var origin = typeof window.origin !== "undefined" ? window.origin : "{{ $origin ?? '' }}";
         var role = $('#role').val() || '';
         var satuan = '';
+
         if (origin === 'detailRuangan') {
             satuan = $('#hidden_satuan').val() || $('input[name="hidden_satuan"]').val() || '';
+            // PENTING: Jangan fallback ke select!
+            if (!satuan) {
+                console.error('Satuan tidak ditemukan di hidden_satuan!');
+            }
         } else if ($('#id_ruangan').length) {
             satuan = $('#id_ruangan option:selected').data('satuan') || '';
         }
@@ -29,6 +34,7 @@ $(document).ready(function () {
     if ($('input[name="id_ruangan"]').length) {
         refreshFormContent();
     }
+
 });
 
 function getRuanganNama() {
@@ -129,6 +135,7 @@ function applyFlatpickrPrivateOfficeBlockedDates() {
         });
     });
 }
+
 
 function updateFormContent(role, satuan) {
     // Cek keduanya sudah ada

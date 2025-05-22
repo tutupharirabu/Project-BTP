@@ -95,7 +95,7 @@
                                                 data-max="{{ $ruangan->kapasitas_maksimal }}">
                                             <input type="text" name="nama_ruangan" value="{{ $ruangan->nama_ruangan }}"
                                                 class="form-control border-color" disabled>
-                                            <input type="hidden" id="hidden_satuan" value="{{ $ruangan->satuan }}">
+                                            <input type="hidden" id="hidden_satuan" name="hidden_satuan" value="{{ $ruangan->satuan }}">
                                             <div class="invalid-feedback">
                                                 Masukkan pilihan ruangan Anda!
                                             </div>
@@ -416,7 +416,6 @@
         function fetchRuanganDetails() {
             const origin = "{{ $origin }}";
             let idRuangan;
-
             if (origin === 'detailRuangan') {
                 const idRuanganElement = document.querySelector('input[name="id_ruangan"]');
                 idRuangan = idRuanganElement ? idRuanganElement.value : null;
@@ -428,6 +427,7 @@
                 document.getElementById('harga_ruangan').value = '';
                 document.getElementById('total_harga').value = '';
                 document.getElementById('lokasi').value = '';
+                updateFormContent(document.getElementById('role').value, '');
                 return;
             }
 
@@ -436,46 +436,37 @@
             const ppnInput = document.getElementById('total_harga');
             const lokasiInput = document.getElementById('lokasi');
 
-            function updatePrice(data) {
-                if (role) {
-                    let hargaRuangan;
-                    if (role === 'Pegawai') {
-                        hargaRuangan = 0;
-                    } else if (role === 'Mahasiswa' || role === 'Umum') {
-                        hargaRuangan = parseInt(data.harga_ruangan);
-                    }
-                    const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
-                    hargaInput.value = formattedHargaRuangan;
-
-                    const ppnRate = 0.11;
-                    const ppnAmount = hargaRuangan * ppnRate;
-                    let totalHarga = hargaRuangan + ppnAmount;
-                    if (role === 'Mahasiswa' || role === 'Umum') {
-                        totalHarga += 2500;
-                    }
-                    const formattedTotalHarga = 'Rp ' + totalHarga.toLocaleString('id-ID');
-                    ppnInput.value = formattedTotalHarga;
-                } else {
-                    hargaInput.value = '';
-                    ppnInput.value = '';
-                }
-            }
-
             fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
                 .then(response => response.json())
                 .then(data => {
-                    lokasiInput.value = data.lokasi;
-                    updatePrice(data);
+                    console.log('DATA RUANGAN:', data); // Pastikan ada data.satuan
+                    // Update lokasi
+                    lokasiInput.value = data.lokasi || '';
+                    // Harga (khusus Pegawai = 0, lainya pakai harga dari data)
+                    let hargaRuangan = 0;
+                    if (role === 'Pegawai') {
+                        hargaRuangan = 0;
+                    } else if (role === 'Mahasiswa' || role === 'Umum') {
+                        hargaRuangan = parseInt(data.harga_ruangan) || 0;
+                    }
+                    hargaInput.value = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+                    // Hitung harga total+PPN+2500 jika perlu
+                    const ppnRate = 0.11;
+                    let totalHarga = hargaRuangan + (hargaRuangan * ppnRate);
+                    if (role === 'Mahasiswa' || role === 'Umum') {
+                        totalHarga += 2500;
+                    }
+                    ppnInput.value = 'Rp ' + totalHarga.toLocaleString('id-ID');
 
-                    // Panggil updateFormContent dengan role dan satuan yang pasti
-                    const role = document.getElementById('role').value;
-                    const satuan = data.satuan || getCurrentSatuan();
+                    // PENTING: Panggil updateFormContent hanya dengan satuan dari API!
+                    const satuan = data.satuan || '';
                     updateFormContent(role, satuan);
                 })
                 .catch(error => {
                     hargaInput.value = '';
                     ppnInput.value = '';
                     lokasiInput.value = '';
+                    updateFormContent(document.getElementById('role').value, '');
                     console.error('Error fetching ruangan details:', error);
                 });
         }
@@ -686,30 +677,36 @@
             // Panggil dengan preserveSelection true jika dari detailRuangan
             filterRuanganOptions(origin === 'detailRuangan');
         }
+        
         window.onload = function () {
+            // Untuk mencegah formData lama terpakai, selalu clear sessionStorage ketika halaman ini dimuat
+            sessionStorage.removeItem('formData');
+
             const origin = "{{ $origin }}";
-            const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage
+            const savedData = sessionStorage.getItem('formData'); // Ambil data dari sessionStorage (akan selalu null setelah removeItem, tapi biarkan untuk konsistensi jika di masa depan dipakai ulang)
             if (savedData) {
                 const rentalForm = document.getElementById('rentalForm');
                 const formData = JSON.parse(savedData);
 
                 // Kosongkan field tertentu
-                const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'role', 'keterangan']; // Field yang ingin dikosongkan
-                if (origin !== 'detailRuangan') {
-                    fieldsToReset.push('id_ruangan');
-                } else {
-                    fieldsToReset.push('jumlah'); // <-- Tambahkan ini agar jumlah peserta juga direset
+                const fieldsToReset = [
+                    'nama_peminjam',
+                    'nomor_telepon',
+                    'role',
+                    'keterangan',
+                    'id_ruangan',
+                    'jumlah'
+                ]; // Reset semuanya untuk semua origin (biar ga nyangkut id_ruangan)
 
-                }
                 for (const key in formData) {
                     const input = rentalForm.querySelector(`[name="${key}"]`);
                     if (input) {
                         // Cek jika input file
                         if (input.type === 'file') {
-                            input.value = ''; // Hanya boleh reset ke kosong
-                            continue; // Lanjut ke field berikutnya
+                            input.value = '';
+                            continue;
                         }
-                        // Cek jika input yang tidak ada di fieldsToReset
+                        // Reset field yang perlu direset
                         if (!fieldsToReset.includes(key)) {
                             input.value = formData[key];
                         } else {
