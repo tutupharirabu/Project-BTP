@@ -1,21 +1,21 @@
 document.getElementById('harga_ruangan').addEventListener('input', function (e) {
 
-let value = this.value.replace(/[^0-9]/g, '');
+    let value = this.value.replace(/[^0-9]/g, '');
 
-if (value === '') {
-    value = '0';
-} else if (value.startsWith('0') && value.length > 1) {
-    value = value.substring(1);
-}
+    if (value === '') {
+        value = '0';
+    } else if (value.startsWith('0') && value.length > 1) {
+        value = value.substring(1);
+    }
 
-this.value = value;
+    this.value = value;
 });
 
 document.getElementById('harga_ruangan').addEventListener('focus', function (e) {
-// If the current value is '0', clear it
-if (this.value === '0') {
-    this.value = '';
-}
+    // If the current value is '0', clear it
+    if (this.value === '0') {
+        this.value = '';
+    }
 });
 
 document.getElementById('harga_ruangan').addEventListener('blur', function (e) {
@@ -57,18 +57,21 @@ function submitForm() {
     fetch(form.action, {
         method: 'POST',
         body: formData,
-    })
-    .then(response => {
-        if (response.ok) {
-            closeConfirmationModal();
-            form.reset();
-            form.classList.remove('was-validated');
-            showSuccessModal(roomName); // Pass the roomName to showSuccessModal
-        } else {
-            console.error('Form submission failed.');
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .catch(error => console.error('Form submission error:', error));
+        .then(response => {
+            if (response.ok) {
+                closeConfirmationModal();
+                form.reset();
+                form.classList.remove('was-validated');
+                showSuccessModal(roomName); // Pass the roomName to showSuccessModal
+            } else {
+                console.error('Form submission failed.');
+            }
+        })
+        .catch(error => console.error('Form submission error:', error));
 }
 
 function showSuccessModal(roomName) {

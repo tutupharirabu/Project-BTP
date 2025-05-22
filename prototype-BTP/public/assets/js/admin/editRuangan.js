@@ -88,19 +88,22 @@ function submitForm() {
 
     fetch(form.action, {
         method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            closeConfirmationModal();
-            form.reset();
-            form.classList.remove('was-validated');
-            showSuccessModal(roomName); // Pass the roomName to showSuccessModal
-        } else {
-            console.error('Form submission failed.');
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .catch(error => console.error('Form submission error:', error));
+        .then(response => {
+            if (response.ok) {
+                closeConfirmationModal();
+                form.reset();
+                form.classList.remove('was-validated');
+                showSuccessModal(roomName); // Pass the roomName to showSuccessModal
+            } else {
+                console.error('Form submission failed.');
+            }
+        })
+        .catch(error => console.error('Form submission error:', error));
 }
 
 function showSuccessModal(roomName) {
