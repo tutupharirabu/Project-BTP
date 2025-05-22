@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\UpdateRuanganStatus' => $baseDir . '/app/Console/Commands/UpdateRuanganStatus.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Admin\\Dashboard\\AdminDashboardController' => $baseDir . '/app/Http/Controllers/Admin/Dashboard/AdminDashboardController.php',
@@ -56,6 +57,11 @@ return array(
     'App\\Models\\Peminjaman' => $baseDir . '/app/Models/Peminjaman.php',
     'App\\Models\\Ruangan' => $baseDir . '/app/Models/Ruangan.php',
     'App\\Models\\Users' => $baseDir . '/app/Models/Users.php',
+    'App\\Policies\\Admin\\Dashboard\\AdminDashboardPolicy' => $baseDir . '/app/Policies/Admin/Dashboard/AdminDashboardPolicy.php',
+    'App\\Policies\\Admin\\Peminjaman\\RiwayatPeminjaman\\AdminRiwayatPeminjamanPolicy' => $baseDir . '/app/Policies/Admin/Peminjaman/RiwayatPeminjaman/AdminRiwayatPeminjamanPolicy.php',
+    'App\\Policies\\Admin\\Peminjaman\\StatusPengajuan\\AdminStatusPengajuanPolicy' => $baseDir . '/app/Policies/Admin/Peminjaman/StatusPengajuan/AdminStatusPengajuanPolicy.php',
+    'App\\Policies\\Admin\\Ruangan\\AdminRuanganPolicy' => $baseDir . '/app/Policies/Admin/Ruangan/AdminRuanganPolicy.php',
+    'App\\Policies\\Admin\\Ruangan\\Okupansi\\AdminOkupansiRuanganPolicy' => $baseDir . '/app/Policies/Admin/Ruangan/Okupansi/AdminOkupansiRuanganPolicy.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

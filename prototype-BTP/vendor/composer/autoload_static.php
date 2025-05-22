@@ -601,6 +601,7 @@ class ComposerStaticInit3ad22c5ad539eb101dc268640e5b3f9d
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\UpdateRuanganStatus' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateRuanganStatus.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\Dashboard\\AdminDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Dashboard/AdminDashboardController.php',
@@ -651,6 +652,11 @@ class ComposerStaticInit3ad22c5ad539eb101dc268640e5b3f9d
         'App\\Models\\Peminjaman' => __DIR__ . '/../..' . '/app/Models/Peminjaman.php',
         'App\\Models\\Ruangan' => __DIR__ . '/../..' . '/app/Models/Ruangan.php',
         'App\\Models\\Users' => __DIR__ . '/../..' . '/app/Models/Users.php',
+        'App\\Policies\\Admin\\Dashboard\\AdminDashboardPolicy' => __DIR__ . '/../..' . '/app/Policies/Admin/Dashboard/AdminDashboardPolicy.php',
+        'App\\Policies\\Admin\\Peminjaman\\RiwayatPeminjaman\\AdminRiwayatPeminjamanPolicy' => __DIR__ . '/../..' . '/app/Policies/Admin/Peminjaman/RiwayatPeminjaman/AdminRiwayatPeminjamanPolicy.php',
+        'App\\Policies\\Admin\\Peminjaman\\StatusPengajuan\\AdminStatusPengajuanPolicy' => __DIR__ . '/../..' . '/app/Policies/Admin/Peminjaman/StatusPengajuan/AdminStatusPengajuanPolicy.php',
+        'App\\Policies\\Admin\\Ruangan\\AdminRuanganPolicy' => __DIR__ . '/../..' . '/app/Policies/Admin/Ruangan/AdminRuanganPolicy.php',
+        'App\\Policies\\Admin\\Ruangan\\Okupansi\\AdminOkupansiRuanganPolicy' => __DIR__ . '/../..' . '/app/Policies/Admin/Ruangan/Okupansi/AdminOkupansiRuanganPolicy.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

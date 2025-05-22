@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HealthCheckController extends Controller
 {
@@ -14,9 +16,9 @@ class HealthCheckController extends Controller
 
             // Respons yang tidak mengungkapkan detail
             return response('OK', 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log error lengkap, tapi respons terbatas
-            \Log::error('Healthcheck failed: ' . $e->getMessage());
+            Log::error('Healthcheck failed: ' . $e->getMessage());
             return response('Service Unavailable', 503);
         }
     }
