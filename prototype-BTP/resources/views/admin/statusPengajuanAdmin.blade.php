@@ -281,7 +281,7 @@
                                                 </td>
                                             @elseif($data->status == 'Disetujui')
                                                 <td>
-                                                    {{ $data->user->nama_lengkap }}
+                                                    {{ $data->user->nama_lengkap ?? "-" }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
@@ -327,7 +327,7 @@
                                                 </td>
                                             @elseif($data->status == 'Ditolak')
                                                 <td>
-                                                    {{ $data->user->nama_lengkap }}
+                                                    {{ $data->user->nama_lengkap ?? "-" }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
@@ -373,7 +373,7 @@
                                                 </td>
                                             @elseif($data->status == 'Selesai')
                                                 <td>
-                                                    {{ $data->user->nama_lengkap }}
+                                                    {{ $data->user->nama_lengkap ?? "-" }}
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"

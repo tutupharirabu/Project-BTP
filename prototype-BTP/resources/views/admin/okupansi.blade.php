@@ -132,6 +132,6 @@
     </div>
     <script>
         const aaa = {{ $totalOverall }};
-        console.log(aaa);
+        // console.log(aaa);
     </script>
 @endsection

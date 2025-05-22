@@ -58,8 +58,9 @@
             <div class="col-11">
                 <div class="card border shadow shadow-md">
                     <div class="card-body">
-                        <form id="add-form" class="row g-1 needs-validation" action="{{ route('ruangan.simpanDataRuangan') }}"
-                            method="POST" enctype="multipart/form-data" novalidate>
+                        <form id="add-form" class="row g-1 needs-validation"
+                            action="{{ route('ruangan.simpanDataRuangan') }}" method="POST" enctype="multipart/form-data"
+                            novalidate>
                             @csrf
                             <!-- left from text field -->
                             <div class="col-md-7">
@@ -73,6 +74,7 @@
                                         <div class="valid-feedback">Tampilan bagus!</div>
                                     </div>
                                 </div>
+                                <input type="hidden" id="group_id_ruangan" name="group_id_ruangan">
                                 <div class="form-group row mb-2">
                                     <label for="nama_ruangan" class="text-color col-md-3 col-form-label text-md-right">Nama
                                         dan Nomor Ruangan</label>
@@ -124,7 +126,7 @@
                                         class="text-color col-md-3 col-form-label text-md-right">Lokasi</label>
                                     <div class="col-md-7">
                                         <!-- <input type="text" id="lokasi" class="bordered-text form-control"
-                                                                    name="lokasi" required> -->
+                                                                                    name="lokasi" required> -->
                                         <select class="bordered-text form-control" name="lokasi" id="lokasi" required>
                                             <option value="" selected disabled>Pilih Lokasi Gedung</option>
                                             <option value="Gedung A">Gedung A</option>
@@ -331,6 +333,7 @@
         document.getElementById('nama_ruangan').addEventListener('blur', function () {
             var namaRuangan = this.value;
             if (namaRuangan) {
+                // Cek apakah nama ruangan sudah ada (duplikat)
                 fetch('{{ route('ruangan.cekNama') }}', {
                     method: 'POST',
                     headers: {
@@ -343,29 +346,51 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        var inputElement = document.getElementById('nama_ruangan');
                         if (data.exists) {
-                            var inputElement = document.getElementById('nama_ruangan');
                             inputElement.setCustomValidity('Nama ruangan sudah ada, silakan pilih nama lain.');
                             inputElement.reportValidity();
                         } else {
-                            document.getElementById('nama_ruangan').setCustomValidity('');
+                            inputElement.setCustomValidity('');
+                            // Tambahkan cek group id di sini
+                            // Ambil "core nama", misal sebelum " - "
+                            var coreNama = namaRuangan.split(' - ')[0];
+                            fetch('{{ route('ruangan.cekGroupId') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    nama_ruangan: coreNama
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Auto-isi input group_id_ruangan jika ada
+                                    if (data.group_id_ruangan) {
+                                        document.getElementById('group_id_ruangan').value = data.group_id_ruangan;
+                                    } else {
+                                        document.getElementById('group_id_ruangan').value = '';
+                                    }
+                                });
                         }
                     });
             }
         });
 
-        function formatRoomSize(input) {
-            let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
-            if (value.length >= 2) {
-                const mid = Math.ceil(value.length / 2);
-                value = value.slice(0, mid) + ' x ' + value.slice(mid);
-            }
-            input.value = value;
-        }
+        // function formatRoomSize(input) {
+        //     let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
+        //     if (value.length >= 2) {
+        //         const mid = Math.ceil(value.length / 2);
+        //         value = value.slice(0, mid) + ' x ' + value.slice(mid);
+        //     }
+        //     input.value = value;
+        // }
 
-        document.getElementById('ukuran').addEventListener('input', function () {
-            formatRoomSize(this);
-        });
+        // document.getElementById('ukuran').addEventListener('input', function () {
+        //     formatRoomSize(this);
+        // });
 
         document.getElementById('kapasitas_minimal').addEventListener('input', function () {
             let value = this.value;

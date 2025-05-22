@@ -7,6 +7,7 @@ use App\Models\Ruangan;
 interface AdminRuanganRepositoryInterface extends BaseRuanganRepositoryInterface
 {
   public function checkRuanganByName(string $namaRuangan): bool;
+  public function getGroupIdByCoreNamaRuangan(string $coreNama): ?string;
   public function createRuangan(array $data): Ruangan;
   public function deleteRuangan(Ruangan $ruangan): void;
 }

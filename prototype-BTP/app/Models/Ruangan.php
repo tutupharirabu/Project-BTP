@@ -17,6 +17,7 @@ class Ruangan extends Model
     protected $primaryKey = 'id_ruangan';
     protected $table = 'ruangan';
     protected $fillable = [
+        'group_id_ruangan',
         'nama_ruangan',
         'kapasitas_minimal',
         'kapasitas_maksimal',

@@ -347,17 +347,17 @@
             }
         }
         //endbullet
-        function formatRoomSize(input) {
-            let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
-            if (value.length >= 2) {
-                const mid = Math.ceil(value.length / 2);
-                value = value.slice(0, mid) + ' x ' + value.slice(mid);
-            }
-            input.value = value;
-        }
+        // function formatRoomSize(input) {
+        //     let value = input.value.replace(/\s/g, '').replace(/[^\d]/g, ''); // Remove spaces and non-numeric characters
+        //     if (value.length >= 2) {
+        //         const mid = Math.ceil(value.length / 2);
+        //         value = value.slice(0, mid) + ' x ' + value.slice(mid);
+        //     }
+        //     input.value = value;
+        // }
 
-        document.getElementById('ukuran').addEventListener('input', function () {
-            formatRoomSize(this);
-        });
+        // document.getElementById('ukuran').addEventListener('input', function () {
+        //     formatRoomSize(this);
+        // });
     </script>
 @endsection

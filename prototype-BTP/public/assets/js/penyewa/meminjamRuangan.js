@@ -1,44 +1,11 @@
-// function filterRuanganOptions() {
-//     const role = document.getElementById('role').value;
-//     const ruanganSelect = document.getElementById('id_ruangan');
-//     const lokasiInput = document.getElementById('lokasi');
-//     const hargaInput = document.getElementById('harga_ruangan');
-//     const jumlahPesertaInput = document.getElementById('peserta');
-//     const options = ruanganSelect.getElementsByTagName('option');
-
-//     // Aktifkan select ruangan jika disabled
-//     ruanganSelect.disabled = false;
-
-//     // Reset pilihan ruangan sebelumnya
-//     ruanganSelect.value = "";
-//     lokasiInput.value = "";
-//     hargaInput.value = "";
-//     jumlahPesertaInput.value ="";
-
-//     for (let i = 0; i < options.length; i++) {
-//         const option = options[i];
-//         const ruanganType = option.getAttribute('data-type');
-
-//         if (option.value === "") {
-//             option.style.display = 'block';
-//             continue;
-//         }
-
-//         if (role === 'Mahasiswa' || role === 'Umum') {
-//             // Cek apakah ruanganType adalah 'Multimedia' atau 'R Training'
-//             if (ruanganType === 'Coworking Space (B103)' || ruanganType === 'R Training (B204)') {
-//                 option.style.display = 'block';  // Tampilkan ruangan yang sesuai
-//             } else {
-//                 option.style.display = 'none';   // Sembunyikan ruangan yang tidak sesuai
-//             }
-//         } else {
-//             option.style.display = 'block';  // Tampilkan semua untuk role lain
-//         }
-//     }
-// }
-
 function filterRuanganOptions(preserveSelection = false) {
     const ruanganSelect = document.getElementById('id_ruangan');
+    if (!ruanganSelect || typeof ruanganSelect.getElementsByTagName !== 'function') {
+        // Bisa di-comment/hapus log jika tidak perlu
+        // console.debug('filterRuanganOptions: #id_ruangan select not found, skip filtering');
+        return;
+    }
+
     const lokasiInput = document.getElementById('lokasi');
     const hargaInput = document.getElementById('harga_ruangan');
     const jumlahPesertaInput = document.getElementById('peserta');
@@ -61,11 +28,10 @@ function filterRuanganOptions(preserveSelection = false) {
         options[i].style.display = 'block';
     }
 
-    console.log("Semua ruangan tersedia untuk semua role.");
+    // console.log("Semua ruangan tersedia untuk semua role.");
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize state
     handleRoleChange();
 });
 

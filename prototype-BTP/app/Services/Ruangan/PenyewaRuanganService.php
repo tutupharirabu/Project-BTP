@@ -59,7 +59,7 @@ class PenyewaRuanganService
         $query->whereDate('tanggal_mulai', '<=', $tanggalSelesai)
           ->whereDate('tanggal_selesai', '>=', $tanggalMulai);
       })
-      ->whereIn('status', ['Disetujui', 'Selesai'])
+      ->whereIn('status', ['Disetujui'])
       ->get();
 
     $usedTimeSlots = [];
@@ -77,5 +77,10 @@ class PenyewaRuanganService
     }
 
     return $usedTimeSlots;
+  }
+
+  public function getCoworkingWeeklySeatStatus(string $idRuangan, string $tanggalMulai, string $tanggalSelesai): array
+  {
+    return $this->penyewaRuanganRepository->getCoworkingWeeklySeatStatus($idRuangan, $tanggalMulai, $tanggalSelesai);
   }
 }

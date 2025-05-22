@@ -23,10 +23,7 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
     $conflicts = $this->getConflictingBookings($peminjaman);
 
     $peminjaman->status = 'Disetujui';
-    $peminjaman->ruangan->status = 'Digunakan';
     $peminjaman->id_users = $idUser;
-
-    $peminjaman->ruangan->save();
     $peminjaman->save();
 
     foreach ($conflicts as $booking) {
@@ -46,10 +43,7 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
   public function completePengajuan(Peminjaman $peminjaman, string $idUser): void
   {
     $peminjaman->status = 'Selesai';
-    $peminjaman->ruangan->status = 'Tersedia';
     $peminjaman->id_users = $idUser;
-
-    $peminjaman->ruangan->save();
     $peminjaman->save();
   }
 }

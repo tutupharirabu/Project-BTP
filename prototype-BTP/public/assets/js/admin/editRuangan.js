@@ -84,7 +84,7 @@ function submitForm() {
     const form = document.getElementById('edit-form');
     const formData = new FormData(form);
     const roomName = document.getElementById('nama_ruangan').value;
-    console.log('Room name before reset:', roomName); // Debug: Check the room name value before form reset
+    // console.log('Room name before reset:', roomName); // Debug: Check the room name value before form reset
 
     fetch(form.action, {
         method: 'POST',
@@ -104,12 +104,12 @@ function submitForm() {
 }
 
 function showSuccessModal(roomName) {
-    console.log('Room name in showSuccessModal:', roomName); // Debug: Check the room name value
+    // console.log('Room name in showSuccessModal:', roomName); // Debug: Check the room name value
 
     // Update the modal message
     const modalMessage = document.getElementById('modalMessage');
     modalMessage.textContent = 'Ruangan ' + roomName + ' telah diperbarui';
-    console.log('Modal message:', modalMessage.textContent); // Debug: Check the modal message content
+    // console.log('Modal message:', modalMessage.textContent); // Debug: Check the modal message content
 
     // Show and position the success modal
     const modal = document.getElementById('successModal');
@@ -140,7 +140,7 @@ function updateTersedia() {
     } else if (status === 'Digunakan') {
         tersedia.value = 0;
     }
-    console.log('Tersedia value set to:', tersedia.value);
+    // console.log('Tersedia value set to:', tersedia.value);
 }
 
 // Bootstrap form validation

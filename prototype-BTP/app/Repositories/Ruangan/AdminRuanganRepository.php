@@ -28,6 +28,13 @@ class AdminRuanganRepository implements AdminRuanganRepositoryInterface
       ->exists();
   }
 
+  public function getGroupIdByCoreNamaRuangan(string $coreNama): ?string
+  {
+    // Gunakan LIKE biar fleksibel
+    $ruangan = Ruangan::where('nama_ruangan', 'LIKE', $coreNama . '%')->first();
+    return $ruangan ? $ruangan->group_id_ruangan : null;
+  }
+
   public function createRuangan(array $data): Ruangan
   {
     return Ruangan::create($data);

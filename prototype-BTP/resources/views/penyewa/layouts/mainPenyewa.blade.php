@@ -19,12 +19,21 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dragndrop.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
     <script defer src="https://umami.tutupharirabu.cloud/script.js"
         data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
 
 </head>
+
+@if(session('justLoggedOut'))
+    <script>
+        window.location.reload();
+        sessionStorage.clear();
+    </script>
+@endif
 
 <body>
 
@@ -59,9 +68,8 @@
         crossorigin="anonymous"></script>
 
     {{-- jquery --}}
-    {{--
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 

@@ -67,6 +67,7 @@ Route::middleware(['auth', 'throttle:60,1'])->group(function () {
      */
     Route::get('/daftarRuanganAdmin', [AdminRuanganController::class, 'index'])->name('ruangan.listRuangan');
     Route::post('/checkRuanganName', [AdminRuanganController::class, 'checkRuanganName'])->name('ruangan.cekNama');
+    Route::post('/checkGroupIdByRuanganName', [AdminRuanganController::class, 'getGroupId'])->name('ruangan.cekGroupId');
 
     // Tambah Ruangan (Admin - CRUD Ruangan)
     Route::get('/tambahRuanganAdmin', [AdminTambahRuanganController::class, 'index'])->name('ruangan.tambahRuangan');
@@ -120,7 +121,10 @@ Route::get('/dashboardPenyewa', [PenyewaDashboardController::class, 'index']);
  */
 Route::get('/daftarRuanganPenyewa', [PenyewaRuanganController::class, 'index'])->name('penyewa.listRuangan');
 Route::get('/detailRuanganPenyewa/{id}', [PenyewaDetailRuanganController::class, 'show'])->name('penyewa.detailRuangan');
+
+// Urusan Ketersediaan Ruangan (Waktu dan Jumlah Seat)
 Route::get('/getAvailableTimes', [PenyewaDetailRuanganController::class, 'getAvailableTimes']);
+Route::get('/getCoworkingWeeklySeatStatus', [PenyewaDetailRuanganController::class, 'getCoworkingWeeklySeatStatus']);
 /**
  *  Done - Penyewa (Daftar Ruangan & Detail Ruangan)
  */
@@ -131,6 +135,18 @@ Route::get('/getAvailableTimes', [PenyewaDetailRuanganController::class, 'getAva
 Route::get('/meminjamRuangan/{id?}', [PenyewaPeminjamanController::class, 'index'])->name('penyewa.formPeminjaman');
 Route::post('/meminjamRuangan', [PenyewaPeminjamanController::class, 'store'])->name('penyewa.postFormPeminjaman');
 Route::get('/getRuanganDetails', [PenyewaPeminjamanController::class, 'getDetailRuangan']);
+
+// Urusan Group Ruangan ID
+Route::get('/getGroupRuanganIds', [PenyewaPeminjamanController::class, 'getGroupRuanganIds']);
+
+// Urusan Tanggal Mulai dan Tanggal Selesai
+Route::get('/getUnavailableJam', [PenyewaPeminjamanController::class, 'getUnavailableJam']);
+Route::get('/getUnavailableTanggal', [PenyewaPeminjamanController::class, 'getUnavailableTanggal']);
+Route::get('/getAvailableJamMulaiHalfday', [PenyewaPeminjamanController::class, 'getAvailableJamMulaiHalfday']);
+Route::get('/getCoworkingBlockedDates', [PenyewaPeminjamanController::class, 'getCoworkingBlockedDates']);
+Route::get('/getCoworkingBlockedStartDatesForBulan', [PenyewaPeminjamanController::class, 'getCoworkingBlockedStartDatesForBulan']);
+Route::get('/getCoworkingSeatAvailability', [PenyewaPeminjamanController::class, 'getCoworkingSeatAvailability']);
+Route::get('/getPrivateOfficeBlockedDates', [PenyewaPeminjamanController::class, 'getPrivateOfficeBlockedDates']);
 /**
  *  Done - Penyewa (Form Peminjaman)
  */

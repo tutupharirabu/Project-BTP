@@ -57,9 +57,11 @@
                                                             <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
                                                                 class="btn btn-light shadow-none detail-overlay text-capitalize">Detail</a>
                                                             @if ($ruangan->status == 'Tersedia')
-                                                                <span class="status-available status-overlay">Tersedia</span>
-                                                            @else
-                                                                <span class="status-not-available status-overlay">Digunakan</span>
+                                                                <span class="status-available">Tersedia</span>
+                                                            @elseif ($ruangan->status == "Penuh")
+                                                                <span class="status-penuh">Penuh</span>
+                                                            @elseif ($ruangan->status == "Digunakan")
+                                                                <span class="status-not-available">Digunakan</span>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -124,7 +126,7 @@
     <script>
         $(document).ready(function () {
             var bookings = @json($events);
-            console.log(bookings);
+            // console.log(bookings);
 
             $('#calendar').fullCalendar({
                 locale: 'id',

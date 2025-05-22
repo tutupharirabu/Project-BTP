@@ -166,16 +166,10 @@
                     </div>
                     <div class="col-3">
                         <div class="d-flex justify-content-end">
-                            @if ($ruangan->status == 'Tersedia')
-                                <a type="button" class="btn btn-md text-white"
-                                    style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
-                                    href="{{ route('penyewa.formPeminjaman', ['id' => $ruangan->id_ruangan]) }}">Pinjam
-                                    Ruangan</a>
-                            @else
-                                <a type="button" class="btn btn-sm text-white disabled"
-                                    style="background-color: #717171; font-size: 16px; border-radius: 7px;" href="#">Pinjam
-                                    Ruangan</a>
-                            @endif
+                            <a type="button" class="btn btn-md text-white"
+                                style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
+                                href="{{ route('penyewa.formPeminjaman', ['id' => $ruangan->id_ruangan]) }}">Pinjam
+                                Ruangan</a>
                         </div>
                     </div>
                 </div>
@@ -254,8 +248,8 @@
             var bookings = @json($events);
             var dataRuangan = @json($dataRuangan);
 
-            console.log("Events:", @json($events));
-            console.log("Data Ruangan:", @json($dataRuangan));
+            // console.log("Events:", @json($events));
+            // console.log("Data Ruangan:", @json($dataRuangan));
 
             // Event listener for radio button changes
             $('input[name="btnradio"]').change(function () {
@@ -290,6 +284,11 @@
                     hideFooter(); // Clear the footer content
                     $('input[name="btnradio"][value="per_bulan"]').prop('checked', true);
                     $('input[name="btnradio"][value="per_minggu"]').prop('disabled', true);
+                } else if (satuan === 'Seat / Hari') {
+                    showWeeklyView(); // Ganti dengan fungsi yang sesuai tampilan harian
+                    hideFooter();
+                    $('input[name="btnradio"][value="per_bulan"]').prop('disabled', true);
+                    $('input[name="btnradio"][value="per_minggu"]').prop('checked', true);
                 }
             }
 
@@ -301,15 +300,15 @@
 
             function showFooter() {
                 var footerContent = `
-                                            <div class="d-flex align-items-center mr-4">
-                                                <div class="mark-available"></div>
-                                                <p class="my-auto">Tersedia</p>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="mark-notavailable"></div>
-                                                <p class="my-auto">Tidak tersedia</p>
-                                            </div>
-                                        `;
+                                        <div class="d-flex align-items-center mr-4">
+                                            <div class="mark-available"></div>
+                                            <p class="my-auto">Tersedia</p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mark-notavailable"></div>
+                                            <p class="my-auto">Tidak tersedia</p>
+                                        </div>
+                                    `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -321,51 +320,102 @@
                 let startDate = new Date().toISOString().split('T')[0];
                 let ruanganId = $('#roomId').val();
 
-                $.ajax({
-                    url: '/getAvailableTimes',
-                    method: 'GET',
-                    data: {
-                        tanggal_mulai: startDate,
-                        tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate)
-                            .getDate() + 6)).toISOString().split('T')[0],
-                        ruangan_id: ruanganId
-                    },
-                    success: function (response) {
-                        console.log('AJAX success', response);
-                        var content =
-                            '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
-                        var startDateObj = new Date(startDate);
-                        for (var i = 0; i < 7; i++) {
-                            var currentDateObj = new Date(startDateObj);
-                            currentDateObj.setDate(currentDateObj.getDate() + i);
+                // Dapatkan info ruangan dari dataRuangan FE
+                let room = dataRuangan.find(r => r.id_ruangan == ruanganId);
+                let satuan = room ? room.satuan : '';
+                let namaRuangan = room ? room.nama_ruangan : '';
+                let isCoworkingSeatHari = satuan === 'Seat / Hari' && namaRuangan.toLowerCase().includes('coworking');
 
-                            var dayName = currentDateObj.toLocaleDateString('id-ID', {
-                                weekday: 'long'
-                            });
-                            var dayDate = currentDateObj.toISOString().split('T')[0];
-
-                            var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
-
-                            var dayHtml = `
-                                                        <div class="mx-2 text-center">
-                                                            <div>
-                                                                <p class="day-name">${dayName}</p>
-                                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                                                            </div>
-                                                            <div>
-                                                                ${hoursHtml}
-                                                            </div>
-                                                        </div>
-                                                    `;
-                            content += dayHtml;
+                if (isCoworkingSeatHari) {
+                    // Untuk coworking seat/hari: tampilkan status seat/slot per hari (bukan jam)
+                    $.ajax({
+                        url: '/getCoworkingWeeklySeatStatus',
+                        method: 'GET',
+                        data: {
+                            tanggal_mulai: startDate,
+                            tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6)).toISOString().split('T')[0],
+                            id_ruangan: ruanganId
+                        },
+                        success: function(response) {
+                            // response: [{tanggal: '2024-06-09', sisa_seat: 0}, ...]
+                            var content = '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
+                            var startDateObj = new Date(startDate);
+                            for (var i = 0; i < 7; i++) {
+                                var currentDateObj = new Date(startDateObj);
+                                currentDateObj.setDate(currentDateObj.getDate() + i);
+                                var dayName = currentDateObj.toLocaleDateString('id-ID', { weekday: 'long' });
+                                var dayDate = currentDateObj.toISOString().split('T')[0];
+                                var seatInfo = response.find(item => item.tanggal === dayDate);
+                                var isFull = seatInfo ? seatInfo.sisa_seat === 0 : false;
+                                var markClass = isFull ? 'cek-notavailable' : 'cek-available';
+                                var seatLabel = isFull ? 'Penuh' : (seatInfo ? `Sisa ${seatInfo.sisa_seat}` : 'Tersedia');
+                                var dayHtml = `
+                                    <div class="mx-2 text-center">
+                                        <div>
+                                            <p class="day-name">${dayName}</p>
+                                            <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                        </div>
+                                        <div class="${markClass}">
+                                            <p style="margin:0;">${seatLabel}</p>
+                                        </div>
+                                    </div>
+                                `;
+                                content += dayHtml;
+                            }
+                            content += '</div>';
+                            $('#form-content').html(content);
+                        },
+                        error: function(xhr) {
+                            $('#form-content').html('<p class="text-danger">Gagal memuat data seat mingguan.</p>');
                         }
-                        content += '</div>';
-                        $('#form-content').html(content);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', xhr.responseText);
-                    }
-                });
+                    });
+                } else {
+                    // Kode aslinya (slot jam per hari)
+                    $.ajax({
+                        url: '/getAvailableTimes',
+                        method: 'GET',
+                        data: {
+                            tanggal_mulai: startDate,
+                            tanggal_selesai: new Date(new Date(startDate).setDate(new Date(startDate).getDate() + 6)).toISOString().split('T')[0],
+                            ruangan_id: ruanganId
+                        },
+                        success: function (response) {
+                            // console.log('AJAX success', response);
+                            var content =
+                                '<div id="weeklyContainer" class="d-flex justify-content-center flex-wrap">';
+                            var startDateObj = new Date(startDate);
+                            for (var i = 0; i < 7; i++) {
+                                var currentDateObj = new Date(startDateObj);
+                                currentDateObj.setDate(currentDateObj.getDate() + i);
+
+                                var dayName = currentDateObj.toLocaleDateString('id-ID', {
+                                    weekday: 'long'
+                                });
+                                var dayDate = currentDateObj.toISOString().split('T')[0];
+
+                                var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
+
+                                var dayHtml = `
+                                                <div class="mx-2 text-center">
+                                                    <div>
+                                                        <p class="day-name">${dayName}</p>
+                                                        <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                    </div>
+                                                    <div>
+                                                        ${hoursHtml}
+                                                    </div>
+                                                </div>
+                                            `;
+                                content += dayHtml;
+                            }
+                            content += '</div>';
+                            $('#form-content').html(content);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', xhr.responseText);
+                        }
+                    });
+                }
             }
 
             function getHoursHtml(dayDate, usedTimeSlots) {
@@ -387,21 +437,21 @@
 
             function showMonthlyView() {
                 let ruanganId = $('#roomId').val();
-                console.log('Room ID:', ruanganId); // Log the room ID to verify its value
+                // console.log('Room ID:', ruanganId); // Log the room ID to verify its value
 
                 var content = '<div id="calendarContainer"><div id="calendar"></div></div>';
                 $('#form-content').html(content);
 
                 // Check the structure of the bookings array
-                console.log('Bookings:', bookings);
+                // console.log('Bookings:', bookings);
 
                 var filteredBookings = bookings.filter(function (booking) {
-                    console.log('Booking Room ID:', booking.ruangan_id); // Log each booking's room ID
+                    // console.log('Booking Room ID:', booking.ruangan_id); // Log each booking's room ID
                     return booking.ruangan_id == ruanganId;
                 });
 
                 // Log the filtered bookings to verify
-                console.log('Filtered Bookings:', filteredBookings);
+                // console.log('Filtered Bookings:', filteredBookings);
 
                 // Initialize FullCalendar
                 if ($('#calendar').hasClass('fc')) {

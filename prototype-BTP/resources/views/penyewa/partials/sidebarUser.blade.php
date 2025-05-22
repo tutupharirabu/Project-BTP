@@ -44,14 +44,7 @@
                         <span>Lihat Status Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
-                @auth
-                    <div class="m-1">
-                        <a class="text-white nav-link d-flex align-items-center menu-item" href="/logout">
-                            <i class="material-symbols-outlined me-2">logout</i>
-                            <span>Keluar</span>
-                        </a>
-                    </div>
-                @endauth
+
             </nav>
         </div>
     </div>
@@ -102,7 +95,15 @@
         const currentPath = window.location.pathname;
 
         menuItems.forEach(item => {
-            if (item.getAttribute('href') === currentPath) {
+            const href = item.getAttribute('href');
+            // Check for exact match OR prefix match for Daftar Ruangan
+            if (
+                href === currentPath ||
+                (href === '/daftarRuanganPenyewa' && (
+                    currentPath.startsWith('/detailRuangan') ||
+                    currentPath.startsWith('/meminjamRuangan/')
+                ))
+            ) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');

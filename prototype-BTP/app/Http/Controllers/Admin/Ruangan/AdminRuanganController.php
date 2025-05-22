@@ -34,6 +34,13 @@ class AdminRuanganController extends Controller
         return response()->json(['exists' => $exists]);
     }
 
+    public function getGroupId(Request $request)
+    {
+        $nama = $request->input('nama_ruangan');
+        $groupId = $this->adminRuanganRepository->getGroupIdByCoreNamaRuangan($nama);
+        return response()->json(['group_id_ruangan' => $groupId]);
+    }
+
     public function destroy(string $id)
     {
         $ruangan = $this->adminRuanganRepository->getRuanganById($id);

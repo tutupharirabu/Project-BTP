@@ -8,6 +8,7 @@ use App\Models\Ruangan;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Http\Requests\Ruangan\StoreRuanganRequest;
 use App\Http\Requests\Ruangan\UpdateRuanganRequest;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
@@ -24,6 +25,10 @@ class AdminRuanganService
   public function storeRuangan(StoreRuanganRequest $request): void
   {
     $validatedData = $request->validated();
+
+    if (empty($validatedData['group_id_ruangan'])) {
+      $validatedData['group_id_ruangan'] = Str::uuid()->toString();
+    }
 
     $validatedData['keterangan'] = $request->input('keterangan') ?? 'Tidak ada keterangan';
     $validatedData['status'] = 'Tersedia';
@@ -106,8 +111,8 @@ class AdminRuanganService
               'url' => $uploadResult['secure_url']
             ]);
           }
-        } catch (\Exception $e) {
-          \Log::error('Error replacing image in Cloudinary', [
+        } catch (Exception $e) {
+          Log::error('Error replacing image in Cloudinary', [
             'message' => $e->getMessage(),
             'file_index' => $index
           ]);

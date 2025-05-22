@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Penyewa\Ruangan;
 
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PenyewaDetailRuanganController extends PenyewaRuanganController
 {
@@ -16,7 +18,7 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
                 'dataRuangan' => $result['dataRuangan'],
                 'events' => $result['events'],
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             abort(404, $e->getMessage());
         }
     }
@@ -30,9 +32,23 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
                 $request->input('tanggal_selesai')
             );
             return response()->json(['usedTimeSlots' => $slots]);
-        } catch (\Exception $e) {
-            \Log::error("Error: " . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error("Error: " . $e->getMessage());
             return response()->json(['error' => 'An error occurred'], 500);
         }
+    }
+
+    public function getCoworkingWeeklySeatStatus(Request $request)
+    {
+        $idRuangan = $request->input('id_ruangan');
+        $tanggalMulai = $request->input('tanggal_mulai');
+        $tanggalSelesai = $request->input('tanggal_selesai');
+
+        $result = $this->penyewaRuanganService->getCoworkingWeeklySeatStatus(
+            $idRuangan,
+            $tanggalMulai,
+            $tanggalSelesai
+        );
+        return response()->json($result);
     }
 }

@@ -77,7 +77,7 @@
     <script>
         $(document).ready(function () {
             var bookings = @json($events);
-            console.log(bookings);
+            // console.log(bookings);
 
             $('#calendar').fullCalendar({
                 locale: 'id',

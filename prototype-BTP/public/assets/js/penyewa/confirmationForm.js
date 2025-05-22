@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict'
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -6,8 +6,8 @@
 
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
-        .forEach(function(form) {
-            form.addEventListener('submit', function(event) {
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
                 if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
@@ -61,7 +61,7 @@
 function generateInvoice() {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -69,7 +69,13 @@ function generateInvoice() {
     const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
     const invoiceNumber = `BTP${year}${month}${day}${hours}${minutes}${seconds}${randomNumber}`;
 
-    document.getElementById('invoice').value = invoiceNumber;
+    // PATCH: cek dulu elemennya ada
+    const invoiceInput = document.getElementById('invoice');
+    if (invoiceInput) {
+        invoiceInput.value = invoiceNumber;
+    } else {
+        console.warn('Element with id "invoice" not found!');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -170,15 +176,15 @@ function confirmSubmission(event) {
     document.getElementById('spinner').classList.remove('d-none');
 
     fetch(rentalForm.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-            }
-        })
-        .then(response => {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+        }
+    })
+        .then(async response => {
             if (response.ok) {
-                console.log('Data berhasil dikirim');
+                // console.log('Data berhasil dikirim');
 
                 // Tutup modal Confirmation
                 const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
@@ -192,8 +198,17 @@ function confirmSubmission(event) {
                     whatsappModal.show();
                 }, 500);
             } else {
-                console.error('Form submission error:', response);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+                // Cek jika error overlap dari backend
+                let errMsg = 'Terjadi kesalahan. Silakan coba lagi.';
+                if (response.status === 422) {
+                    const data = await response.json();
+                    errMsg = data.message || errMsg;
+                }
+
+                // Opsional: beri delay pendek supaya transisi lebih smooth
+                setTimeout(() => {
+                    showErrorModal(errMsg);
+                }, 5); // bisa diatur ke 50 atau 100 jika ingin transisi benar-benar halus
             }
         })
         .catch(error => {
@@ -207,23 +222,66 @@ function confirmSubmission(event) {
         });
 }
 
-document.getElementById('whatsappButton').addEventListener('click', function() {
-    setTimeout(function() {
+document.getElementById('whatsappButton').addEventListener('click', function () {
+    setTimeout(function () {
         window.location.href = "/dashboardPenyewa";
     }, 1000); // Adjust the timeout as needed
 });
 
 // Redirect to dashboardPenyewa when the WhatsApp modal is closed
-document.querySelector('.whatsapp-close-button').addEventListener('click', function() {
+document.querySelector('.whatsapp-close-button').addEventListener('click', function () {
     window.location.href = "/dashboardPenyewa";
 });
 
-document.getElementById('nomor_induk').addEventListener('input', function(e) {
+document.getElementById('nomor_induk').addEventListener('input', function (e) {
     // Remove non-digit characters
     e.target.value = e.target.value.replace(/\D/g, '');
 });
 
-document.getElementById('nomor_telepon').addEventListener('input', function(e) {
+document.getElementById('nomor_telepon').addEventListener('input', function (e) {
     // Remove non-digit characters
     e.target.value = e.target.value.replace(/\D/g, '');
 });
+
+function showErrorModal(msg) {
+    // Tutup confirmation popup/modal jika masih terbuka
+    var confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    if (confirmationModal) {
+        confirmationModal.hide();
+    }
+
+    var confirmationModal1 = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
+    if (confirmationModal1) {
+        confirmationModal1.hide();
+    }
+
+    let errModal = document.getElementById('errorModal');
+    if (!errModal) {
+        // Buat modal error kalau belum ada
+        const modalHtml = `
+            <!-- Error Alert Modal -->
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="errorModalLabel">Booking Gagal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <span id="errorModalMsg"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn text-white capitalize-first-letter" data-bs-dismiss="modal"
+                                style="background-color:#717171;font-size: 14px;">Batalkan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        errModal = document.getElementById('errorModal');
+    }
+    document.getElementById('errorModalMsg').innerText = msg;
+    var bsModal = new bootstrap.Modal(errModal);
+    bsModal.show();
+}

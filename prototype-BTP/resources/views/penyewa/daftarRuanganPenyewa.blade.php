@@ -48,7 +48,9 @@
                                 <div class="status-group">
                                     @if ($ruangan->status == 'Tersedia')
                                         <span class="status-available">Tersedia</span>
-                                    @else
+                                    @elseif ($ruangan->status == "Penuh")
+                                        <span class="status-penuh">Penuh</span>
+                                    @elseif ($ruangan->status == "Digunakan")
                                         <span class="status-not-available">Digunakan</span>
                                     @endif
                                     <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"

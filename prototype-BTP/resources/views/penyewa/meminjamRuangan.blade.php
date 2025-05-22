@@ -55,7 +55,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-md mt-4">
                                         <label for="nomor_telepon" class="form-label text-color">Nomor Telepon</label>
                                         <input type="text" name="nomor_telepon" id="nomor_telepon"
@@ -96,6 +95,7 @@
                                                 data-max="{{ $ruangan->kapasitas_maksimal }}">
                                             <input type="text" name="nama_ruangan" value="{{ $ruangan->nama_ruangan }}"
                                                 class="form-control border-color" disabled>
+                                            <input type="hidden" id="hidden_satuan" value="{{ $ruangan->satuan }}">
                                             <div class="invalid-feedback">
                                                 Masukkan pilihan ruangan Anda!
                                             </div>
@@ -301,57 +301,36 @@
         </div>
     </div>
 
-    {{-- <!-- Confirmation Popup Modal -->
-    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
-        aria-hidden="true">
+    <!-- Confirmation Popup Modal With Spinner -->
+    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman\penyewaan sudah sesuai?</h5>
+                    <h5 class="modal-title">Apakah Pemesanan untuk peminjaman/penyewaan sudah sesuai?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p>Pastikan pemesanan sesuai dengan permintaan anda</p>
-                    <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
-                        style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn text-white text-capitalize font-btn width-btn "
-                        style="background-color:#0DA200" onclick="confirmSubmission()">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+                    <p>Pastikan pemesanan sesuai dengan permintaan Anda</p>
 
-    <!-- Confirmation Popup Modal With Spinner -->
-    <div class="modal fade" id="confirmationPopupModal" tabindex="-1" aria-labelledby="confirmationPopupModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Apakah Pemesanan untuk peminjaman/penyewaan sudah sesuai?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Pastikan pemesanan sesuai dengan permintaan Anda</p>
-
-                <!-- Spinner -->
-                <div id="spinner" class="d-none">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <!-- Spinner -->
+                    <div id="spinner" class="d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memproses pemesanan...</p>
                     </div>
-                    <p class="mt-2">Memproses pemesanan...</p>
-                </div>
 
-                <!-- Buttons -->
-                <div id="confirmationButtons">
-                    <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
-                        style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn text-white text-capitalize font-btn width-btn"
-                        style="background-color:#0DA200" onclick="confirmSubmission(event)">Ya</button>
+                    <!-- Buttons -->
+                    <div id="confirmationButtons">
+                        <button type="button" class="btn text-white text-capitalize btn-spacing font-btn width-btn"
+                            style="background-color:#FF0000" data-bs-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn text-white text-capitalize font-btn width-btn"
+                            style="background-color:#0DA200" onclick="confirmSubmission(event)">Ya</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- WhatsApp Modal -->
     <div class="modal fade p-1" id="whatsappModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -380,59 +359,76 @@
     <script src="{{ asset('assets/js/penyewa/meminjamRuangan.js') }}"></script>
 
     <script>
+        // console.log('hidden_satuan:', document.getElementById('hidden_satuan')?.value);
         document.addEventListener('DOMContentLoaded', function() {
             var origin = "{{ $origin }}"; // Variabel ini diterima dari controller
 
-            if (origin === 'detailRuangan') {
-                console.log("Running fetchRuanganDetails and adjustParticipantLimits");
-                fetchRuanganDetails();
-                adjustParticipantLimits();
-
-                document.getElementById('role').addEventListener('change', function() {
-                    fetchRuanganDetails(); // Refresh seluruh fungsi saat role berubah
+            // Attach event listener untuk perubahan role, hanya sekali!
+            var roleEl = document.getElementById('role');
+            if (roleEl) {
+                roleEl.addEventListener('change', function() {
+                    if (origin === 'detailRuangan') {
+                        fetchRuanganDetails();
+                        adjustParticipantLimits();
+                    } else {
+                        handleRoleChange();
+                        // fetchRuanganDetails() dan adjustParticipantLimits() sudah dipanggil oleh onchange select di HTML jika bukan detailRuangan
+                    }
                 });
-            } else {
-                // Pasang event listener untuk perubahan ruangan (id_ruangan) hanya jika tidak dari detailRuangan
+            }
+
+            // Attach event listener untuk perubahan ruangan (id_ruangan) hanya jika tidak dari detailRuangan
+            if (origin !== 'detailRuangan') {
                 const idRuanganElement = document.getElementById('id_ruangan');
                 if (idRuanganElement) {
-                    idRuanganElement.addEventListener('change', adjustParticipantLimits);
+                    idRuanganElement.addEventListener('change', function() {
+                        fetchRuanganDetails();
+                        adjustParticipantLimits();
+                    });
                 } else {
                     console.error("Element with id 'id_ruangan' not found");
                 }
             }
 
-            // Pasang event listener untuk perubahan jumlah peserta, terlepas dari asal
+            // Attach event listener untuk perubahan jumlah peserta
             const pesertaElement = document.getElementById('peserta');
             if (pesertaElement) {
                 pesertaElement.addEventListener('change', validateParticipantInput);
             } else {
                 console.error("Element with id 'peserta' not found");
             }
+
+            // Initial fetch/load saat page pertama kali dibuka
+            fetchRuanganDetails();
+            adjustParticipantLimits();
         });
 
+        function getCurrentSatuan() {
+            const origin = "{{ $origin }}";
+            if (origin === 'detailRuangan') {
+                return document.getElementById('hidden_satuan')?.value || '';
+            } else {
+                const idRuanganElement = document.getElementById('id_ruangan');
+                return idRuanganElement?.selectedOptions[0]?.getAttribute('data-satuan') || '';
+            }
+        }
+
         function fetchRuanganDetails() {
-            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}";
             let idRuangan;
 
             if (origin === 'detailRuangan') {
                 const idRuanganElement = document.querySelector('input[name="id_ruangan"]');
-                if (idRuanganElement) {
-                    idRuangan = idRuanganElement.value;
-                    console.log("ID Ruangan Dari Detail Ruangan:", idRuangan);
-                } else {
-                    console.error("ID Ruangan tidak ditemukan");
-                    return;
-                }
+                idRuangan = idRuanganElement ? idRuanganElement.value : null;
             } else {
-                // Menggunakan id_ruangan dari select input jika bukan dari detailRuangan
                 const idRuanganElement = document.getElementById('id_ruangan');
-                if (idRuanganElement) {
-                    idRuangan = idRuanganElement.value;
-                    console.log("ID Ruangan dipilih:", idRuangan);
-                } else {
-                    console.error("Element with id 'id_ruangan' not found");
-                    return;
-                }
+                idRuangan = idRuanganElement ? idRuanganElement.value : null;
+            }
+            if (!idRuangan) {
+                document.getElementById('harga_ruangan').value = '';
+                document.getElementById('total_harga').value = '';
+                document.getElementById('lokasi').value = '';
+                return;
             }
 
             const role = document.getElementById('role').value;
@@ -440,114 +436,79 @@
             const ppnInput = document.getElementById('total_harga');
             const lokasiInput = document.getElementById('lokasi');
 
-            console.log("Selected role:", role);
-            console.log("Selected ruangan ID:", idRuangan);
-
             function updatePrice(data) {
                 if (role) {
                     let hargaRuangan;
                     if (role === 'Pegawai') {
                         hargaRuangan = 0;
-                        console.log("Internal role, setting price to 0");
                     } else if (role === 'Mahasiswa' || role === 'Umum') {
                         hargaRuangan = parseInt(data.harga_ruangan);
-                        console.log("External role, setting price to:", hargaRuangan);
                     }
-
                     const formattedHargaRuangan = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
                     hargaInput.value = formattedHargaRuangan;
-                    console.log("Final formatted price:", formattedHargaRuangan);
 
-                    // Calculate PPN and total price
-                    const ppnRate = 0.11; // Assuming PPN is 11%
+                    const ppnRate = 0.11;
                     const ppnAmount = hargaRuangan * ppnRate;
                     let totalHarga = hargaRuangan + ppnAmount;
-
-                    // Add an additional 2500 for 'Mahasiswa' and 'Umum'
                     if (role === 'Mahasiswa' || role === 'Umum') {
                         totalHarga += 2500;
-                        console.log("Added 2500 to total price for role:", role);
                     }
-
                     const formattedTotalHarga = 'Rp ' + totalHarga.toLocaleString('id-ID');
                     ppnInput.value = formattedTotalHarga;
-                    console.log("Calculated total price including PPN:", formattedTotalHarga);
                 } else {
                     hargaInput.value = '';
                     ppnInput.value = '';
-                    console.log("Role not selected, price not set");
                 }
             }
 
-            if (idRuangan) {
-                fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Fetched data:", data);
-                        lokasiInput.value = data.lokasi;
-                        updatePrice(data); // Mengisi harga dan lokasi saat pertama kali data di-fetch
+            fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
+                .then(response => response.json())
+                .then(data => {
+                    lokasiInput.value = data.lokasi;
+                    updatePrice(data);
 
-                        // Pasang event listener untuk mengupdate harga saat role berubah
-                        if (origin === 'detailRuangan') {
-                            document.getElementById('role').addEventListener('change', function() {
-                                fetchRuanganDetails(); // Refresh seluruh fungsi saat role berubah
-                            });
-                        }
-                    })
-                    .catch(error => console.error('Error fetching ruangan details:', error));
-            } else {
-                // lokasiInput.value = '';
-                hargaInput.value = '';
-                ppnInput.value = '';
-                console.log("No ruangan selected, clearing inputs");
-            }
+                    // Panggil updateFormContent dengan role dan satuan yang pasti
+                    const role = document.getElementById('role').value;
+                    const satuan = data.satuan || getCurrentSatuan();
+                    updateFormContent(role, satuan);
+                })
+                .catch(error => {
+                    hargaInput.value = '';
+                    ppnInput.value = '';
+                    lokasiInput.value = '';
+                    console.error('Error fetching ruangan details:', error);
+                });
         }
 
         function adjustParticipantLimits() {
-            const origin = "{{ $origin }}"; // Asumsi variabel ini dikirim dari controller
+            const origin = "{{ $origin }}";
             let select, min, max;
 
             if (origin === 'detailRuangan') {
-                // Handle case where the room is pre-selected
                 select = document.querySelector('input[name="id_ruangan"]');
-                if (select) {
-                    min = parseInt(select.getAttribute("data-min")) || 0;
-                    max = parseInt(select.getAttribute("data-max")) || 0;
-                } else {
-                    console.error("Ruangan input not found or missing attributes");
-                    return;
-                }
+                min = select ? parseInt(select.getAttribute("data-min")) || 0 : 0;
+                max = select ? parseInt(select.getAttribute("data-max")) || 0 : 0;
             } else {
-                // Handle case where the user selects the room
                 select = document.getElementById("id_ruangan");
                 if (select && select.options[select.selectedIndex]) {
                     const selectedOption = select.options[select.selectedIndex];
                     min = parseInt(selectedOption.getAttribute("data-min")) || 0;
                     max = parseInt(selectedOption.getAttribute("data-max")) || 0;
                 } else {
-                    console.error("Ruangan select not found or no option selected");
-                    return;
+                    min = 0;
+                    max = 0;
                 }
             }
-
             const pesertaSelect = document.getElementById("peserta");
             if (pesertaSelect) {
-                // Clear existing options
                 pesertaSelect.innerHTML = '<option selected disabled value="">Pilih jumlah peserta</option>';
-
-                // Populate new options based on selected room's capacity
                 for (let i = min; i <= max; i++) {
                     const option = document.createElement("option");
                     option.value = i;
                     option.text = i;
                     pesertaSelect.appendChild(option);
                 }
-
-            } else {
-                console.error("Peserta select element not found");
             }
-
-            // Initial check for submit button state
             validateParticipantInput();
         }
 
@@ -555,7 +516,6 @@
             var pesertaSelect = document.getElementById("peserta");
             var submitBtn = document.getElementById("submitBtn");
             var value = parseInt(pesertaSelect.value);
-
             if (!isNaN(value) && pesertaSelect.selectedIndex > 0) {
                 submitBtn.disabled = false;
             } else {
@@ -565,85 +525,127 @@
 
         function showConfirmationModal(event) {
             event.preventDefault();
-            //const invoiceNumber = document.getElementById('invoice').value;
-            const namaPeminjam = document.getElementById('nama_peminjam').value;
-            const nomorInduk = document.getElementById('nomor_induk').value;
-            const nomorTelepon = document.getElementById('nomor_telepon').value;
-            const status = document.getElementById('role').value;
-            const lokasi = document.getElementById('lokasi').value;
-            const jumlahPeserta = document.getElementById('peserta').value;
-            const tanggalMulai = document.getElementById('tanggal_mulai').value;
-            const jamMulai = document.getElementById('jam_mulai').value;
-            const harga = document.getElementById('harga_ruangan').value;
-            const keterangan = document.getElementById('keterangan').value;
 
-            let namaRuangan; // Mendefinisikan variabel di luar blok if-else
+            // Null-safe fetch helper
+            function safeValue(selector, fallback = "") {
+                const el = document.querySelector(selector);
+                return el ? el.value : fallback;
+            }
 
+            let idRuanganElement = document.getElementById('id_ruangan');
+            if (!idRuanganElement) {
+                // Kalau tidak ada, kemungkinan input hidden, ambil by name (khusus detailRuangan)
+                idRuanganElement = document.querySelector('input[name="id_ruangan"]');
+            }
+            const idRuangan = idRuanganElement ? idRuanganElement.value : null;
+
+            const namaPeminjam = safeValue('#nama_peminjam');
+            const nomorInduk = safeValue('#nomor_induk');
+            const nomorTelepon = safeValue('#nomor_telepon');
+            const status = safeValue('#role');
+            const lokasi = safeValue('#lokasi');
+            const jumlahPeserta = safeValue('#peserta');
+            const tanggalMulai = safeValue('#tanggal_mulai');
+            const jamMulai = safeValue('#jam_mulai');
+            const harga = safeValue('#harga_ruangan');
+            const keterangan = safeValue('#keterangan');
+
+            let namaRuangan;
             const origin = "{{ $origin }}";
             if (origin === 'detailRuangan') {
-                namaRuangan = document.querySelector('input[name="nama_ruangan"]').value;
-                console.log("Nama Ruangan Dari Detail Ruangan:", namaRuangan);
+                const namaRuanganInput = document.querySelector('input[name="nama_ruangan"]');
+                namaRuangan = namaRuanganInput ? namaRuanganInput.value : "-";
+            } else if (idRuanganElement && idRuanganElement.selectedOptions) {
+                namaRuangan = idRuanganElement.selectedOptions[0].text;
             } else {
-                namaRuangan = document.getElementById('id_ruangan').selectedOptions[0].text;
-                console.log("Nama Ruangan Tidak Dari Detail Ruangan:", namaRuangan);
+                namaRuangan = "-";
             }
 
-            // Menentukan nilai tanggal selesai dan jam selesai berdasarkan pilihan radio button
-            if (status === 'Mahasiswa' || status === 'Umum') { // Per Jam
-                const durasi = document.getElementById('durasi').value;
-                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
-                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
-                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
-                const jamSelesaiFormatted = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+            // Get tanggal selesai if available
+            const tanggalSelesai = document.getElementById('tanggal_selesai') ? document.getElementById('tanggal_selesai').value : '';
 
-                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
-                    tanggalMulai); // Tanggal selesai sama dengan tanggal mulai
-                document.getElementById('confirm_jam_selesai').innerText =
-                    jamSelesaiFormatted; // Jam selesai dihitung dari jam mulai + durasi
-            } else if (status === 'Pegawai') { // Per Hari
-                const jamSelesai = document.getElementById('jam_selesai').value;
-                const tanggalSelesai = document.getElementById('tanggal_selesai').value;
+            // Debug: log key fields
+            // console.log({
+            //     idRuangan, namaPeminjam, nomorInduk, nomorTelepon, status, lokasi, jumlahPeserta, tanggalMulai, jamMulai, harga, keterangan, namaRuangan, tanggalSelesai
+            // });
 
-                document.getElementById('confirm_tanggal_selesai').innerText = convertToDisplayFormat(
-                    tanggalSelesai); // Tanggal selesai sesuai input
-                document.getElementById('confirm_jam_selesai').innerText = jamSelesai; // Jam selesai sesuai input
+            // Validate required fields, simple check
+            if (!idRuangan || !namaPeminjam || !status || !lokasi || !jumlahPeserta || !tanggalMulai) {
+                alert('Pastikan semua data penting sudah diisi!');
+                return;
             }
 
-            // Debugging logs
-            console.log("Selected status:", status);
-            console.log("Input Harga:", harga);
+            // Fetch satuan ruangan before showing modal
+            if (idRuangan) {
+                fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const satuan = data.satuan;
 
-            const cleanedHarga = harga.replace(/[^\d]/g, '');
-            var hargaAwal = parseFloat(cleanedHarga);
-            var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11) + 2500;
-            var priceAkhir;
+                        let jamMulaiDisplay = jamMulai;
+                        let jamSelesaiDisplay = '';
+                        let tanggalMulaiDisplay = convertToDisplayFormat(tanggalMulai);
+                        let tanggalSelesaiDisplay = tanggalSelesai ? convertToDisplayFormat(tanggalSelesai) : tanggalMulaiDisplay;
 
-            if (status === 'Mahasiswa' || status === 'Umum') {
-                priceAkhir = 'Rp ' + hargaDenganPPN.toLocaleString('id-ID');
-            } else {
-                priceAkhir = 'Rp 0';
+                        if (status === 'Mahasiswa' || status === 'Umum') {
+                            if (satuan === 'Halfday / 4 Jam') {
+                                // Per jam
+                                const durasiEl = document.getElementById('durasi');
+                                if (!durasiEl) {
+                                    alert('Durasi wajib diisi!');
+                                    return;
+                                }
+                                const durasi = durasiEl.value;
+                                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
+                                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
+                                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
+                                jamSelesaiDisplay = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+                                tanggalSelesaiDisplay = tanggalMulaiDisplay;
+                            } else if (satuan === 'Seat / Hari' || satuan === 'Seat / Bulan') {
+                                jamMulaiDisplay = '08:00';
+                                jamSelesaiDisplay = '22:00';
+                            }
+                        } else if (status === 'Pegawai') {
+                            jamMulaiDisplay = jamMulai;
+                            jamSelesaiDisplay = safeValue('#jam_selesai');
+                            tanggalSelesaiDisplay = tanggalSelesai ? convertToDisplayFormat(tanggalSelesai) : tanggalMulaiDisplay;
+                        }
+
+                        // Harga & keterangan
+                        const cleanedHarga = harga.replace(/[^\d]/g, '');
+                        var hargaAwal = parseFloat(cleanedHarga) || 0;
+                        var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11) + 2500;
+                        var priceAkhir = (status === 'Mahasiswa' || status === 'Umum')
+                            ? 'Rp ' + hargaDenganPPN.toLocaleString('id-ID')
+                            : 'Rp 0';
+
+                        // Set all modal fields, null-safe
+                        const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+                        setText('confirm_nama_peminjam', namaPeminjam);
+                        setText('confirm_nama_ruangan', namaRuangan);
+                        setText('confirm_status', status);
+                        setText('confirm_nomor_induk', nomorInduk);
+                        setText('confirm_nomor_telepon', nomorTelepon);
+                        setText('confirm_lokasi', lokasi);
+                        setText('confirm_jumlah_peserta', jumlahPeserta);
+                        setText('confirm_tanggal_mulai', tanggalMulaiDisplay);
+                        setText('confirm_tanggal_selesai', tanggalSelesaiDisplay);
+                        setText('confirm_jam_mulai', jamMulaiDisplay);
+                        setText('confirm_jam_selesai', jamSelesaiDisplay);
+                        setText('confirm_harga', 'Rp ' + hargaAwal.toLocaleString('id-ID'));
+                        setText('confirm_harga_dengan_ppn', priceAkhir);
+                        setText('confirm_keterangan', keterangan);
+
+                        $('#confirmationModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        }).modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching ruangan details:', error);
+                        alert('Gagal mengambil detail ruangan!');
+                    });
             }
-
-            // console.log("Final price:", priceAkhir);
-
-            //document.getElementById('confirm_invoice').innerText = invoiceNumber;
-            document.getElementById('confirm_nama_peminjam').innerText = namaPeminjam;
-            document.getElementById('confirm_nama_ruangan').innerText = namaRuangan;
-            document.getElementById('confirm_status').innerText = status;
-            document.getElementById('confirm_nomor_induk').innerText = nomorInduk;
-            document.getElementById('confirm_nomor_telepon').innerText = nomorTelepon;
-            document.getElementById('confirm_lokasi').innerText = lokasi;
-            document.getElementById('confirm_jumlah_peserta').innerText = jumlahPeserta;
-            document.getElementById('confirm_tanggal_mulai').innerText = convertToDisplayFormat(tanggalMulai);
-            document.getElementById('confirm_jam_mulai').innerText = jamMulai;
-            document.getElementById('confirm_harga').innerText = 'Rp ' + hargaAwal.toLocaleString('id-ID');
-            document.getElementById('confirm_harga_dengan_ppn').innerText = priceAkhir;
-            document.getElementById('confirm_keterangan').innerText = keterangan;
-
-            $('#confirmationModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            }).modal('show');
         }
 
         function handleRoleChange() {
@@ -678,7 +680,6 @@
                 ktpUrlInput.required = true;
             } else {
                 ktpUrlDiv.style.display = 'none';
-                ktpUrlInput.value = '';
                 ktpUrlInput.required = false;
             }
 
@@ -693,20 +694,26 @@
                 const formData = JSON.parse(savedData);
 
                 // Kosongkan field tertentu
-                const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'role']; // Field yang ingin dikosongkan
+                const fieldsToReset = ['nama_peminjam', 'nomor_telepon', 'role', 'keterangan']; // Field yang ingin dikosongkan
                 if (origin !== 'detailRuangan') {
                     fieldsToReset.push('id_ruangan');
                 } else {
                     fieldsToReset.push('jumlah'); // <-- Tambahkan ini agar jumlah peserta juga direset
+
                 }
                 for (const key in formData) {
                     const input = rentalForm.querySelector(`[name="${key}"]`);
                     if (input) {
-                        // Hanya isi kembali field yang tidak ada di fieldsToReset
+                        // Cek jika input file
+                        if (input.type === 'file') {
+                            input.value = ''; // Hanya boleh reset ke kosong
+                            continue; // Lanjut ke field berikutnya
+                        }
+                        // Cek jika input yang tidak ada di fieldsToReset
                         if (!fieldsToReset.includes(key)) {
                             input.value = formData[key];
                         } else {
-                            input.value = ''; // Kosongkan field yang ada di fieldsToReset
+                            input.value = '';
                         }
                     }
                 }
