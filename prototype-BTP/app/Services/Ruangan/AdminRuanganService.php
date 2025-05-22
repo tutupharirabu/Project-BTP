@@ -5,12 +5,12 @@ namespace App\Services\Ruangan;
 use Exception;
 use App\Models\Gambar;
 use App\Models\Ruangan;
-use Cloudinary\Cloudinary;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Http\Requests\Ruangan\StoreRuanganRequest;
 use App\Http\Requests\Ruangan\UpdateRuanganRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Interfaces\Repositories\Ruangan\AdminRuanganRepositoryInterface;
 
 class AdminRuanganService
@@ -42,8 +42,8 @@ class AdminRuanganService
           continue;
 
         try {
-          $cloudinary = new Cloudinary();
-          $uploadResult = $cloudinary->uploadApi()->upload(
+          // Gunakan facade CloudinaryLabs untuk Laravel, bukan new Cloudinary()
+          $uploadResult = Cloudinary::upload(
             $file->getRealPath(),
             [
               'folder' => 'spacerent-btp/ruangan-btp',
@@ -53,7 +53,7 @@ class AdminRuanganService
 
           Gambar::create([
             'id_ruangan' => $ruangan->id_ruangan,
-            'url' => $uploadResult['secure_url']
+            'url' => $uploadResult->getSecurePath()
           ]);
         } catch (Exception $e) {
           Log::error('Error uploading to Cloudinary', [
@@ -88,9 +88,8 @@ class AdminRuanganService
           continue;
 
         try {
-          $cloudinary = new Cloudinary();
           $public_id = $ruangan->id_ruangan . '_image_' . ($index + 1);
-          $uploadResult = $cloudinary->uploadApi()->upload(
+          $uploadResult = Cloudinary::upload(
             $file->getRealPath(),
             [
               'folder' => 'spacerent-btp/ruangan-btp',
@@ -102,13 +101,13 @@ class AdminRuanganService
           if (isset($existingGambar[$index])) {
             $gambar = Gambar::find($existingGambar[$index]->id_gambar);
             if ($gambar) {
-              $gambar->url = $uploadResult['secure_url'];
+              $gambar->url = $uploadResult->getSecurePath();
               $gambar->save();
             }
           } else {
             Gambar::create([
               'id_ruangan' => $ruangan->id_ruangan,
-              'url' => $uploadResult['secure_url']
+              'url' => $uploadResult->getSecurePath()
             ]);
           }
         } catch (Exception $e) {

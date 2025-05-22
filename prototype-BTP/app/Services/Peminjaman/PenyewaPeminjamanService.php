@@ -6,10 +6,10 @@ use Exception;
 use Carbon\Carbon;
 use RuntimeException;
 use App\Models\Ruangan;
-use Cloudinary\Cloudinary;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Peminjaman\BasePeminjamanRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\PenyewaRuanganRepositoryInterface;
@@ -85,23 +85,24 @@ class PenyewaPeminjamanService
   public function uploadKtpImage(UploadedFile $image): ?string
   {
     try {
-      $cloudinary = new Cloudinary();
-
-      $uploadResult = $cloudinary->uploadApi()->upload($image->getRealPath(), [
-        'folder' => 'spacerent-btp/ktp-btp',
-        'transformation' => [
-          [
-            'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',
-            'color' => '#FF0000',
-            'opacity' => 50,
-            'gravity' => 'south_east',
-            'x' => 10,
-            'y' => 10,
+      $uploadResult = Cloudinary::upload(
+        $image->getRealPath(),
+        [
+          'folder' => 'spacerent-btp/ktp-btp',
+          'transformation' => [
+            [
+              'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',
+              'color' => '#FF0000',
+              'opacity' => 50,
+              'gravity' => 'south_east',
+              'x' => 10,
+              'y' => 10,
+            ]
           ]
         ]
-      ]);
+      );
 
-      return $uploadResult['secure_url'] ?? null;
+      return $uploadResult->getSecurePath() ?? null;
 
     } catch (Exception $e) {
       Log::error('Cloudinary gagal upload: ' . $e->getMessage());
