@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Database\UsersDatabaseColumn;
 use App\Models\Users;
 use App\Models\Ruangan;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\Database\PeminjamanDatabaseColumn;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,18 +15,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Peminjaman extends Model
 {
     use HasFactory, HasUuids;
-    protected $table = 'peminjaman';
-    protected $primaryKey = 'id_peminjaman';
-    protected $fillable = ['nama_peminjam', 'role', 'nomor_induk', 'nomor_telepon', 'tanggal_mulai', 'tanggal_selesai', 'jumlah', 'total_harga', 'status', 'keterangan', 'ktp_url', 'id_ruangan'];
-    protected $dates = ['tanggal_mulai', 'tanggal_selesai'];
+    protected $table = PeminjamanDatabaseColumn::Peminjaman->value;
+    protected $primaryKey = PeminjamanDatabaseColumn::IdPeminjaman->value;
+    protected $fillable = [
+        PeminjamanDatabaseColumn::NamaPenyewa->value, 
+        PeminjamanDatabaseColumn::StatusPenyewa->value, 
+        PeminjamanDatabaseColumn::NomorIndukPenyewa->value, 
+        PeminjamanDatabaseColumn::NomorTeleponPenyewa->value, 
+        PeminjamanDatabaseColumn::TanggalMulai->value, 
+        PeminjamanDatabaseColumn::TanggalSelesai->value, 
+        PeminjamanDatabaseColumn::JumlahPeserta->value, 
+        PeminjamanDatabaseColumn::TotalHarga->value, 
+        PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, 
+        PeminjamanDatabaseColumn::KeteranganPenyewaan->value, 
+        PeminjamanDatabaseColumn::UrlKtp->value, 
+        RuanganDatabaseColumn::IdRuangan->value];
+    protected $dates = [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Users::class, 'id_users', 'id_users');
+        return $this->belongsTo(Users::class, UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::IdUsers->value);
     }
     
     public function ruangan(): BelongsTo
     {
-        return $this->belongsTo(Ruangan::class, 'id_ruangan');
+        return $this->belongsTo(Ruangan::class, RuanganDatabaseColumn::IdRuangan->value, RuanganDatabaseColumn::IdRuangan->value);
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use App\Enums\Database\GambarDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -11,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gambar', function (Blueprint $table) {
-            $table->uuid('id_gambar')->primary();
-            $table->uuid('id_ruangan');
-            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
-            $table->string('url', 255);
+        Schema::create(GambarDatabaseColumn::Gambar->value, function (Blueprint $table) {
+            $table->uuid(GambarDatabaseColumn::IdGambar->value)->primary();
+            $table->uuid(RuanganDatabaseColumn::IdRuangan->value);
+            $table->foreign(RuanganDatabaseColumn::IdRuangan->value)->references(RuanganDatabaseColumn::IdRuangan->value)->on(RuanganDatabaseColumn::Ruangan->value)->onDelete('cascade');
+            $table->string(GambarDatabaseColumn::UrlGambar->value, 255);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gambar');
+        Schema::dropIfExists(GambarDatabaseColumn::Gambar->value);
     }
 };

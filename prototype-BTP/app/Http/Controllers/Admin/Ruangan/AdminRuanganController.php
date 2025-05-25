@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Ruangan;
 
+use App\Enums\Database\RuanganDatabaseColumn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Ruangan\AdminRuanganService;
@@ -30,7 +31,7 @@ class AdminRuanganController extends Controller
 
     public function checkRuanganName(Request $request)
     {
-        $exists = $this->adminRuanganRepository->checkRuanganByName($request->input('nama_ruangan'));
+        $exists = $this->adminRuanganRepository->checkRuanganByName($request->input(RuanganDatabaseColumn::NamaRuangan->value));
         return response()->json(['exists' => $exists]);
     }
 
@@ -38,7 +39,7 @@ class AdminRuanganController extends Controller
     {
         $nama = $request->input('nama_ruangan');
         $groupId = $this->adminRuanganRepository->getGroupIdByCoreNamaRuangan($nama);
-        return response()->json(['group_id_ruangan' => $groupId]);
+        return response()->json([RuanganDatabaseColumn::GroupIdRuangan->value => $groupId]);
     }
 
     public function destroy(string $id)

@@ -2,6 +2,9 @@
 
 namespace App\Services\Ruangan;
 
+use App\Enums\Database\PeminjamanDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\StatusPeminjaman;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -53,13 +56,13 @@ class PenyewaRuanganService
     $tanggalMulai = Carbon::parse($start);
     $tanggalSelesai = Carbon::parse($end ?? $tanggalMulai->copy()->addDays(6)->toDateString());
 
-    $usedTimes = DB::table('peminjaman')
-      ->where('id_ruangan', $ruanganId)
+    $usedTimes = DB::table(PeminjamanDatabaseColumn::Peminjaman->value)
+      ->where(RuanganDatabaseColumn::IdRuangan->value, $ruanganId)
       ->where(function ($query) use ($tanggalMulai, $tanggalSelesai) {
-        $query->whereDate('tanggal_mulai', '<=', $tanggalSelesai)
-          ->whereDate('tanggal_selesai', '>=', $tanggalMulai);
+        $query->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $tanggalSelesai)
+          ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $tanggalMulai);
       })
-      ->whereIn('status', ['Disetujui'])
+      ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [StatusPeminjaman::Disetujui->value])
       ->get();
 
     $usedTimeSlots = [];

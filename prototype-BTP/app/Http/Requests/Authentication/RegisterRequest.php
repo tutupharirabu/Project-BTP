@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Authentication;
 
+use App\Enums\Database\UsersDatabaseColumn;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -22,11 +23,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|unique:users,username',
-            'email' => 'required|unique:users,email',
-            'role' => 'required',
-            'nama_lengkap' => 'required|string|max:255',
-            'password' => 'required|min:8'
+            UsersDatabaseColumn::Username->value => 'required|unique:users,username',
+            UsersDatabaseColumn::Email->value => 'required|unique:users,email',
+            UsersDatabaseColumn::Role->value => 'required',
+            UsersDatabaseColumn::NamaLengkap->value => 'required|string|max:255',
+            UsersDatabaseColumn::Password->value => 'required|min:8'
         ];
     }
 }

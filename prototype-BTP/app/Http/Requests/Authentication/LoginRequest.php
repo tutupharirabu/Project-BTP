@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Authentication;
 
+use App\Enums\Database\UsersDatabaseColumn;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -22,8 +23,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required'
+            UsersDatabaseColumn::Email->value => 'required|email',
+            UsersDatabaseColumn::Password->value => 'required'
         ];
     }
 }

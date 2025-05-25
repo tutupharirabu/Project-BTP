@@ -2,12 +2,16 @@
 
 namespace App\Repositories\Peminjaman;
 
+use App\Enums\Penyewa\SatuanPenyewa;
 use DateTime;
 use DatePeriod;
 use DateInterval;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
+use App\Enums\StatusPeminjaman;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Database\PeminjamanDatabaseColumn;
 use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
 
 class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterface
@@ -17,6 +21,38 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     return Peminjaman::all();
   }
 
+  public function getGroupRuanganIdsByRuanganId(string $idRuangan): array
+  {
+    $ruangan = Ruangan::find($idRuangan);
+    if ($ruangan && $ruangan->group_id_ruangan) {
+      return Ruangan::where(RuanganDatabaseColumn::GroupIdRuangan->value, $ruangan->group_id_ruangan)
+        ->pluck(RuanganDatabaseColumn::IdRuangan->value)
+        ->toArray();
+    } else {
+      return [$idRuangan];
+    }
+  }
+
+  public function getApprovedBookingsByRuangan(
+    string|array $idRuangan,
+    ?array $selectFields = null,
+    ?string $tanggal = null
+  ) {
+    $idRuanganArray = is_array($idRuangan) ? $idRuangan : [$idRuangan];
+
+    $query = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value);
+
+    if ($tanggal) {
+      $query->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, $tanggal);
+    }
+
+    if ($selectFields) {
+      return $query->get($selectFields);
+    }
+    return $query->get();
+  }
+
   public function createPeminjaman(array $data): Peminjaman
   {
     return Peminjaman::create($data);
@@ -24,21 +60,22 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
 
   public function existsOverlapPeminjaman(string $id_ruangan, string $tanggal_mulai, string $tanggal_selesai): bool
   {
-    return Peminjaman::where('id_ruangan', $id_ruangan)
-      ->where('status', 'Disetujui')
+    return Peminjaman::where(RuanganDatabaseColumn::IdRuangan->value, $id_ruangan)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
       ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
-        $query->where('tanggal_mulai', '<', $tanggal_selesai)
-          ->where('tanggal_selesai', '>', $tanggal_mulai);
+        $query->where(PeminjamanDatabaseColumn::TanggalMulai->value, '<', $tanggal_selesai)
+          ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>', $tanggal_mulai);
       })
       ->exists();
   }
 
   public function getUnavailableJam(string $idRuangan, string $tanggal): array
   {
-    $bookings = Peminjaman::where('id_ruangan', $idRuangan)
-      ->where('status', 'Disetujui')
-      ->whereDate('tanggal_mulai', $tanggal)
-      ->get(['tanggal_mulai', 'tanggal_selesai']);
+    $bookings = $this->getApprovedBookingsByRuangan(
+      $idRuangan,
+      [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value],
+      $tanggal
+    );
 
     $allJam = [];
     for ($hour = 8; $hour <= 22; $hour++) {
@@ -63,24 +100,16 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     return $unavailableJam;
   }
 
-  public function getGroupRuanganIdsByRuanganId(string $idRuangan): array
-  {
-    $ruangan = Ruangan::find($idRuangan);
-    if ($ruangan && $ruangan->group_id_ruangan) {
-      return Ruangan::where('group_id_ruangan', $ruangan->group_id_ruangan)
-        ->pluck('id_ruangan')
-        ->toArray();
-    } else {
-      return [$idRuangan];
-    }
-  }
-
   public function getUnavailableTanggal(string $idRuangan): array
   {
     // Ambil semua booking yang disetujui
-    $bookings = Peminjaman::where('id_ruangan', $idRuangan)
-      ->where('status', 'Disetujui')
-      ->get(['tanggal_mulai', 'tanggal_selesai']);
+    $bookings = $this->getApprovedBookingsByRuangan(
+      $idRuangan,
+      [
+        PeminjamanDatabaseColumn::TanggalMulai->value,
+        PeminjamanDatabaseColumn::TanggalSelesai->value
+      ]
+    );
 
     // Kumpulkan semua tanggal yang punya booking di range booking
     $tanggalTerbooking = [];
@@ -133,10 +162,11 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   public function getAvailableJamMulaiHalfday(string $id_ruangan, string $tanggal): array
   {
     // Ambil semua booking pada tanggal tersebut
-    $bookings = Peminjaman::where('id_ruangan', $id_ruangan)
-      ->where('status', 'Disetujui')
-      ->whereDate('tanggal_mulai', $tanggal)
-      ->get(['tanggal_mulai', 'tanggal_selesai']);
+    $bookings = $this->getApprovedBookingsByRuangan(
+      $id_ruangan,
+      [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value],
+      $tanggal
+    );
 
     // Generate semua kemungkinan jam_mulai (misal: 08:00-18:00 setiap 30 menit)
     $jamMulaiList = [];
@@ -170,23 +200,23 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
 
     // Ambil kapasitas minimal di group, agar lebih aman (jika seat beda-beda, dipakai yang paling kecil)
-    $kapasitas = Ruangan::whereIn('id_ruangan', $idRuanganArray)->min('kapasitas_maksimal');
+    $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
 
     // Validasi: Hanya proses jika SEMUA ruangan group seat/hari & ada embel-embel coworking
     // Ambil dulu satu ruangan acuan
-    $sampleRuangan = Ruangan::whereIn('id_ruangan', $idRuanganArray)->first();
+    $sampleRuangan = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->first();
     if (
       !$sampleRuangan ||
-      strtolower($sampleRuangan->satuan) !== 'seat / hari' ||
+      strtolower($sampleRuangan->satuan) !== strtolower(SatuanPenyewa::SeatPerHari->value) ||
       stripos($sampleRuangan->nama_ruangan, 'coworking') === false
     ) {
       return [];
     }
 
     // Booking di seluruh ruangan group
-    $bookings = Peminjaman::whereIn('id_ruangan', $idRuanganArray)
-      ->where('status', 'Disetujui')
-      ->whereNotNull('tanggal_mulai')
+    $bookings = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+      ->whereNotNull(PeminjamanDatabaseColumn::TanggalMulai->value)
       ->get();
 
     $dateSeatCount = [];
@@ -208,7 +238,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   {
     // $id_ruangan bisa string (single) atau array (group)
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
-    $kapasitas = Ruangan::whereIn('id_ruangan', $idRuanganArray)->min('kapasitas_maksimal');
+    $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
     $today = Carbon::today();
     $rangeToCheck = 60; // cek 2 bulan ke depan
     $blockedDates = [];
@@ -219,11 +249,12 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
       // Cek 30 hari ke depan dari tanggal mulai ini
       for ($j = 0; $j < 30; $j++) {
         $checkDate = $start->copy()->addDays($j)->toDateString();
-        $seatUsed = Peminjaman::whereIn('id_ruangan', $idRuanganArray)
-          ->where('status', 'Disetujui')
-          ->whereDate('tanggal_mulai', '<=', $checkDate)
-          ->whereDate('tanggal_selesai', '>=', $checkDate)
-          ->sum('jumlah');
+        $seatUsed = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
+          ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+          ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $checkDate)
+          ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $checkDate)
+          ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
+
         if ($seatUsed >= $kapasitas) {
           $allSeatAvailable = false;
           break;
@@ -242,13 +273,13 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
 
     // Ambil kapasitas terkecil (safety)
-    $kapasitas = Ruangan::whereIn('id_ruangan', $idRuanganArray)->min('kapasitas_maksimal');
+    $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
 
     // Jumlah seluruh booking di semua ruangan pada tanggal tsb
-    $booked = Peminjaman::whereIn('id_ruangan', $idRuanganArray)
-      ->where('status', 'Disetujui')
-      ->whereDate('tanggal_mulai', $tanggal)
-      ->sum('jumlah');
+    $booked = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+      ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, $tanggal)
+      ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
 
     return [
       'sisa_seat' => max(0, $kapasitas - $booked),
@@ -260,9 +291,14 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   public function getPrivateOfficeBlockedDates(string $idRuangan): array
   {
     // Ambil semua booking disetujui ruangan ini
-    $bookings = Peminjaman::where('id_ruangan', $idRuangan)
-      ->where('status', 'Disetujui')
-      ->get(['tanggal_mulai', 'tanggal_selesai']);
+    $bookings = $this->getApprovedBookingsByRuangan(
+      $idRuangan,
+      [
+        PeminjamanDatabaseColumn::TanggalMulai->value,
+        PeminjamanDatabaseColumn::TanggalSelesai->value
+      ]
+    );
+
     $blocked = [];
     foreach ($bookings as $b) {
       $period = new DatePeriod(

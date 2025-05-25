@@ -2,12 +2,16 @@
 
 namespace App\Services\Ruangan;
 
+use App\Enums\Database\GambarDatabaseColumn;
 use Exception;
 use App\Models\Gambar;
 use App\Models\Ruangan;
 use Illuminate\Support\Str;
+use App\Enums\StatusRuangan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\Database\UsersDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
 use App\Http\Requests\Ruangan\StoreRuanganRequest;
 use App\Http\Requests\Ruangan\UpdateRuanganRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -26,18 +30,18 @@ class AdminRuanganService
   {
     $validatedData = $request->validated();
 
-    if (empty($validatedData['group_id_ruangan'])) {
-      $validatedData['group_id_ruangan'] = Str::uuid()->toString();
+    if (empty($validatedData[RuanganDatabaseColumn::GroupIdRuangan->value])) {
+      $validatedData[RuanganDatabaseColumn::GroupIdRuangan->value] = Str::uuid()->toString();
     }
 
-    $validatedData['keterangan'] = $request->input('keterangan') ?? 'Tidak ada keterangan';
-    $validatedData['status'] = 'Tersedia';
-    $validatedData['id_users'] = Auth::id();
+    $validatedData[RuanganDatabaseColumn::KeteranganRuangan->value] = $request->input(RuanganDatabaseColumn::KeteranganRuangan->value) ?? 'Tidak ada keterangan';
+    $validatedData[RuanganDatabaseColumn::StatusRuangan->value] = StatusRuangan::Tersedia->value;
+    $validatedData[UsersDatabaseColumn::IdUsers->value] = Auth::id();
 
     $ruangan = $this->adminRuanganRepository->createRuangan($validatedData);
 
-    if ($request->hasFile('url')) {
-      foreach ($request->file('url') as $index => $file) {
+    if ($request->hasFile(GambarDatabaseColumn::UrlGambar->value)) {
+      foreach ($request->file(GambarDatabaseColumn::UrlGambar->value) as $index => $file) {
         if (!$file || !$file->isValid())
           continue;
 
@@ -52,8 +56,8 @@ class AdminRuanganService
           );
 
           Gambar::create([
-            'id_ruangan' => $ruangan->id_ruangan,
-            'url' => $uploadResult->getSecurePath()
+            RuanganDatabaseColumn::IdRuangan->value => $ruangan->id_ruangan,
+            GambarDatabaseColumn::UrlGambar->value => $uploadResult->getSecurePath()
           ]);
         } catch (Exception $e) {
           Log::error('Error uploading to Cloudinary', [
@@ -72,10 +76,10 @@ class AdminRuanganService
 
     $ruangan->fill($validatedData);
     $ruangan->id_users = Auth::id();
-    $ruangan->keterangan = $request->input('keterangan') ?? 'Tidak ada keterangan';
+    $ruangan->keterangan = $request->input(RuanganDatabaseColumn::KeteranganRuangan->value) ?? 'Tidak ada keterangan';
     $ruangan->save();
 
-    if ($request->hasFile('url')) {
+    if ($request->hasFile(GambarDatabaseColumn::UrlGambar->value)) {
       $existingGambar = $ruangan->gambars
         ->sortBy(function ($gambar) {
           preg_match('/_image_(\d+)/', $gambar->url, $matches);
@@ -83,7 +87,7 @@ class AdminRuanganService
         })
         ->values();
 
-      foreach ($request->file('url') as $index => $file) {
+      foreach ($request->file(GambarDatabaseColumn::UrlGambar->value) as $index => $file) {
         if (!$file || !$file->isValid())
           continue;
 
@@ -106,8 +110,8 @@ class AdminRuanganService
             }
           } else {
             Gambar::create([
-              'id_ruangan' => $ruangan->id_ruangan,
-              'url' => $uploadResult->getSecurePath()
+              RuanganDatabaseColumn::IdRuangan->value => $ruangan->id_ruangan,
+              GambarDatabaseColumn::UrlGambar->value => $uploadResult->getSecurePath()
             ]);
           }
         } catch (Exception $e) {

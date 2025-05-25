@@ -1,23 +1,23 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use App\Enums\Database\UsersDatabaseColumn;
+use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id_users')->primary();
-            $table->string('username', 255);
-            $table->string('email', 255);
-            $table->enum('role', ['Admin', 'Petugas']);
-            $table->string('nama_lengkap', 255);
-            $table->string('password', 255);
+        Schema::create(UsersDatabaseColumn::Users->value, function (Blueprint $table) {
+            $table->uuid(UsersDatabaseColumn::IdUsers->value)->primary();
+            $table->string(UsersDatabaseColumn::Username->value, 255);
+            $table->string(UsersDatabaseColumn::Email->value, 255);
+            $table->enum(UsersDatabaseColumn::Role->value, ['Admin', 'Petugas']);
+            $table->string(UsersDatabaseColumn::NamaLengkap->value, 255);
+            $table->string(UsersDatabaseColumn::Password->value, 255);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists(UsersDatabaseColumn::Users->value);
     }
 };

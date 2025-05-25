@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Ruangan;
 
+use App\Enums\Database\RuanganDatabaseColumn;
+
 class UpdateRuanganRequest extends BaseRuanganRequest
 {
     public function rules(): array
     {
         return array_merge(parent::rules(), [
-            'nama_ruangan' => 'required|string',
+            RuanganDatabaseColumn::NamaRuangan->value => 'required|string',
         ]);
     }
 }

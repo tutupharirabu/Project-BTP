@@ -3,6 +3,7 @@
 namespace App\Policies\Admin\Ruangan\Okupansi;
 
 use App\Models\Users;
+use App\Enums\Admin\RoleAdmin;
 
 class AdminOkupansiRuanganPolicy
 {
@@ -16,6 +17,6 @@ class AdminOkupansiRuanganPolicy
 
     public function access(Users $user): bool
     {
-        return in_array($user->role, ['Admin', 'Petugas']);
+        return in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
     }
 }

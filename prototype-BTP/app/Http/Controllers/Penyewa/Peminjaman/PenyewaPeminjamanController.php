@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Penyewa\Peminjaman;
 
+use App\Enums\Database\RuanganDatabaseColumn;
 use RuntimeException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -58,14 +59,14 @@ class PenyewaPeminjamanController extends Controller
 
     public function getGroupRuanganIds(Request $request)
     {
-        $id = $request->input('id_ruangan');
+        $id = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $ids = $this->penyewaPeminjamanService->getGroupRuanganIds($id); // pakai service kalau ada
         return response()->json($ids);
     }
 
     public function getUnavailableJam(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $tanggal = $request->input('tanggal');
 
         // Panggil service
@@ -76,14 +77,14 @@ class PenyewaPeminjamanController extends Controller
 
     public function getUnavailableTanggal(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $unavailableDates = $this->penyewaPeminjamanService->getUnavailableTanggal($idRuangan);
         return response()->json($unavailableDates);
     }
 
     public function getAvailableJamMulaiHalfday(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $tanggal = $request->input('tanggal');
         $data = $this->penyewaPeminjamanService->getAvailableJamMulaiHalfday($idRuangan, $tanggal);
         return response()->json($data);
@@ -91,21 +92,21 @@ class PenyewaPeminjamanController extends Controller
 
     public function getCoworkingBlockedDates(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $dates = $this->penyewaPeminjamanService->getCoworkingFullyBookedDates($idRuangan);
         return response()->json($dates);
     }
 
     public function getCoworkingBlockedStartDatesForBulan(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
         $blockedDates = $this->penyewaPeminjamanService->getCoworkingBlockedStartDatesForBulan($idRuangan);
         return response()->json($blockedDates);
     }
 
     public function getPrivateOfficeBlockedDates(Request $request)
     {
-        $blocked = $this->penyewaPeminjamanService->getPrivateOfficeBlockedDates($request->input('id_ruangan'));
+        $blocked = $this->penyewaPeminjamanService->getPrivateOfficeBlockedDates($request->input(RuanganDatabaseColumn::IdRuangan->value));
         return response()->json($blocked);
     }
 }

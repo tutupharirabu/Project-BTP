@@ -2,6 +2,7 @@
 
 namespace App\Services\Authentication;
 
+use App\Enums\Admin\RoleAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Interfaces\Repositories\Authentication\LoginRepositoryInterface;
@@ -28,7 +29,7 @@ class LoginService
   public function adminOrPetugas()
   {
     $user = Auth::user();
-    if ($user && in_array($user->role, ['Admin', 'Petugas'])) {
+    if ($user && in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])) {
       return $user;
     }
     throw new AuthorizationException('Anda tidak memiliki hak akses.');

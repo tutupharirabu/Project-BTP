@@ -5,7 +5,11 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
+use App\Enums\StatusRuangan;
+use App\Enums\StatusPeminjaman;
 use Illuminate\Console\Command;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Database\PeminjamanDatabaseColumn;
 
 class UpdateRuanganStatus extends Command
 {
@@ -35,41 +39,41 @@ class UpdateRuanganStatus extends Command
                 // === Cek jika ada group_id_ruangan ===
                 if ($r->group_id_ruangan) {
                     // Group-aware logic untuk semua ruangan yg satu group
-                    $groupRuanganIds = Ruangan::where('group_id_ruangan', $r->group_id_ruangan)
-                        ->pluck('id_ruangan')
+                    $groupRuanganIds = Ruangan::where(RuanganDatabaseColumn::GroupIdRuangan->value, $r->group_id_ruangan)
+                        ->pluck(RuanganDatabaseColumn::IdRuangan->value)
                         ->toArray();
 
                     // Logika: khusus coworking, cek status penuh
                     if (stripos($r->nama_ruangan, 'coworking') !== false) {
-                        $kapasitas = Ruangan::whereIn('id_ruangan', $groupRuanganIds)->min('kapasitas_maksimal');
-                        $booked = Peminjaman::whereIn('id_ruangan', $groupRuanganIds)
-                            ->where('status', 'Disetujui')
-                            ->whereDate('tanggal_mulai', '<=', $now->toDateString())
-                            ->whereDate('tanggal_selesai', '>=', $now->toDateString())
-                            ->sum('jumlah');
+                        $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $groupRuanganIds)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
+                        $booked = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $groupRuanganIds)
+                            ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+                            ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $now->toDateString())
+                            ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $now->toDateString())
+                            ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
 
                         if ($booked >= $kapasitas) {
-                            $r->status = 'Penuh';
+                            $r->status = StatusRuangan::Penuh->value;
                         } else {
-                            $r->status = 'Tersedia';
+                            $r->status = StatusRuangan::Tersedia->value;
                         }
                     } else {
                         // Untuk ruangan satu group, tapi bukan coworking
-                        $isUsed = Peminjaman::whereIn('id_ruangan', $groupRuanganIds)
-                            ->where('status', 'Disetujui')
-                            ->where('tanggal_mulai', '<=', $now)
-                            ->where('tanggal_selesai', '>=', $now)
+                        $isUsed = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $groupRuanganIds)
+                            ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+                            ->where(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $now)
+                            ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $now)
                             ->exists();
-                        $r->status = $isUsed ? 'Digunakan' : 'Tersedia';
+                        $r->status = $isUsed ? StatusRuangan::Digunakan->value : StatusRuangan::Tersedia->value;
                     }
                 } else {
                     // Ruangan tanpa group id, logika klasik
-                    $isUsed = Peminjaman::where('id_ruangan', $r->id_ruangan)
-                        ->where('status', 'Disetujui')
-                        ->where('tanggal_mulai', '<=', $now)
-                        ->where('tanggal_selesai', '>=', $now)
+                    $isUsed = Peminjaman::where(RuanganDatabaseColumn::IdRuangan->value, $r->id_ruangan)
+                        ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+                        ->where(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $now)
+                        ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $now)
                         ->exists();
-                    $r->status = $isUsed ? 'Digunakan' : 'Tersedia';
+                    $r->status = $isUsed ? StatusRuangan::Digunakan->value : StatusRuangan::Tersedia->value;
                 }
                 $r->save();
             }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Penyewa\Ruangan;
 
+use App\Enums\Database\PeminjamanDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -28,8 +30,8 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
         try {
             $slots = $this->penyewaRuanganService->getUsedTimeSlots(
                 $request->input('ruangan_id'),
-                $request->input('tanggal_mulai'),
-                $request->input('tanggal_selesai')
+                $request->input(PeminjamanDatabaseColumn::TanggalMulai->value),
+                $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value)
             );
             return response()->json(['usedTimeSlots' => $slots]);
         } catch (Exception $e) {
@@ -40,9 +42,9 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
 
     public function getCoworkingWeeklySeatStatus(Request $request)
     {
-        $idRuangan = $request->input('id_ruangan');
-        $tanggalMulai = $request->input('tanggal_mulai');
-        $tanggalSelesai = $request->input('tanggal_selesai');
+        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
+        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value);
+        $tanggalSelesai = $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value);
 
         $result = $this->penyewaRuanganService->getCoworkingWeeklySeatStatus(
             $idRuangan,

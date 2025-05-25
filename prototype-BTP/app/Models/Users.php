@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Hash;
+use App\Enums\Database\UsersDatabaseColumn;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,9 +16,9 @@ class Users extends Authenticatable
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'users';
-    protected $primaryKey = 'id_users';
-    protected $fillable = ['username', 'password', 'email', 'role', 'nama_lengkap'];
+    protected $table = UsersDatabaseColumn::Users->value;
+    protected $primaryKey = UsersDatabaseColumn::IdUsers->value;
+    protected $fillable = [UsersDatabaseColumn::Username->value, UsersDatabaseColumn::Password->value, UsersDatabaseColumn::Email->value, UsersDatabaseColumn::Role->value, UsersDatabaseColumn::NamaLengkap->value];
 
     protected function password(): Attribute
     {
@@ -28,12 +29,12 @@ class Users extends Authenticatable
 
     public function ruangans(): HasMany
     {
-        return $this->hasMany(Ruangan::class, 'id_users', 'id_users');
+        return $this->hasMany(Ruangan::class, UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::IdUsers->value);
     }
 
     public function peminjamans(): HasMany
     {
-        return $this->hasMany(Peminjaman::class, 'id_users', 'id_users');
+        return $this->hasMany(Peminjaman::class, UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::IdUsers->value);
     }
 
 }

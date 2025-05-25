@@ -2,6 +2,7 @@
 
 namespace App\Services\Ruangan\Okupansi;
 
+use App\Enums\Database\RuanganDatabaseColumn;
 use Carbon\Carbon;
 use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\Okupansi\AdminOkupansiRepositoryInterface;
@@ -86,11 +87,11 @@ class AdminOkupansiService
 
     $csvData[] = array_merge(['Jumlah'], array_values($totalByRoom));
     $csvData[] = ['Total', $totalOverall];
-    $csvData[] = array_merge(['Kapasitas penggunaan per ruangan (jumlah orang)'], array_column($dataRuangan->toArray(), 'kapasitas_maksimal'));
-    $csvData[] = array_merge(['1 Sesi 4 Jam, 1 hari 3 sesi'], array_map(fn($dr) => $dr['kapasitas_maksimal'] * 3, $dataRuangan->toArray()));
-    $csvData[] = array_merge(['Penggunaan kapasitas maksimum per ruangan dalam 1 bulan (31 hari)'], array_map(fn($dr) => $dr['kapasitas_maksimal'] * 3 * 31, $dataRuangan->toArray()));
+    $csvData[] = array_merge(['Kapasitas penggunaan per ruangan (jumlah orang)'], array_column($dataRuangan->toArray(), RuanganDatabaseColumn::KapasitasMaksimal->value));
+    $csvData[] = array_merge(['1 Sesi 4 Jam, 1 hari 3 sesi'], array_map(fn($dr) => $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3, $dataRuangan->toArray()));
+    $csvData[] = array_merge(['Penggunaan kapasitas maksimum per ruangan dalam 1 bulan (31 hari)'], array_map(fn($dr) => $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3 * 31, $dataRuangan->toArray()));
     $totalCapacityMonthly = array_reduce($dataRuangan->toArray(), function ($carry, $dr) {
-      return $carry + $dr['kapasitas_maksimal'] * 3 * 31;
+      return $carry + $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3 * 31;
     }, 0);
     $csvData[] = array_merge(['Kapasitas maksimum semua ruangan'], [$totalCapacityMonthly]);
 

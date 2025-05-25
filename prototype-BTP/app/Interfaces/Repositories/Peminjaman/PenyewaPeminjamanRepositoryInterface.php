@@ -6,9 +6,10 @@ use App\Models\Peminjaman;
 
 interface PenyewaPeminjamanRepositoryInterface extends BasePeminjamanRepositoryInterface
 {
+  public function getGroupRuanganIdsByRuanganId(string $idRuangan): array;
+  public function getApprovedBookingsByRuangan(string|array $idRuangan, ?array $selectFields = null);
   public function createPeminjaman(array $data): Peminjaman;
   public function existsOverlapPeminjaman(string $id_ruangan, string $tanggal_mulai, string $tanggal_selesai): bool;
-  public function getGroupRuanganIdsByRuanganId(string $idRuangan): array;
   public function getUnavailableJam(string $idRuangan, string $tanggal): array;
   public function getUnavailableTanggal(string $idRuangan): array;
   public function getAvailableJamMulaiHalfday(string $id_ruangan, string $tanggal): array;

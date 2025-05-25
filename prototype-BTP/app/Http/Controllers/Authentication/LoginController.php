@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Authentication;
 
+use App\Enums\Admin\RoleAdmin;
+use App\Enums\Database\UsersDatabaseColumn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Authentication\LoginService;
@@ -26,12 +28,12 @@ class LoginController extends Controller
 
     public function authenticate(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->only([UsersDatabaseColumn::Email->value, UsersDatabaseColumn::Password->value]);
 
         if ($this->loginService->authenticate($credentials)) {
             $user = $this->loginService->adminOrPetugas();
 
-            if (in_array($user->role, ['Admin', 'Petugas'])) {
+            if (in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])) {
                 $request->session()->regenerate();
                 return redirect()->intended('/dashboardAdmin');
             }
@@ -43,7 +45,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->loginService->logout();
-        $request->session()->forget(['id_users', 'email']);
+        $request->session()->forget([UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::Email->value]);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Authentication;
 
+use App\Enums\Admin\RoleAdmin;
+use App\Enums\Database\UsersDatabaseColumn;
 use App\Models\Users;
 use App\Interfaces\Repositories\Authentication\RegisterRepositoryInterface;
 
@@ -19,8 +21,8 @@ class RegisterRepository implements RegisterRepositoryInterface
 
   public function findAdminByEmail(string $email): ?Users
   {
-    return Users::where('email', $email)
-      ->whereIn('role', ['Admin', 'Petugas'])
+    return Users::where(UsersDatabaseColumn::Email->value, $email)
+      ->whereIn(UsersDatabaseColumn::Role->value, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])
       ->first();
   }
 }

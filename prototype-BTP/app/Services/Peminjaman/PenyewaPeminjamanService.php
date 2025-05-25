@@ -2,6 +2,10 @@
 
 namespace App\Services\Peminjaman;
 
+use App\Enums\Database\PeminjamanDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Penyewa\SatuanPenyewa;
+use App\Enums\Penyewa\StatusPenyewa;
 use Exception;
 use Carbon\Carbon;
 use RuntimeException;
@@ -125,49 +129,49 @@ class PenyewaPeminjamanService
   public function handlePeminjaman(BasePeminjamanRequest $request): void
   {
     $role = $request->input('role');
-    $idRuangan = $request->input('id_ruangan');
+    $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
     $ruangan = $this->baseRuanganRepository->getRuanganById($idRuangan);
     $satuan = $ruangan->satuan;
     $namaRuangan = $ruangan->nama_ruangan;
     $groupId = $ruangan->group_id_ruangan ?? null;
 
     $ktpUrl = null;
-    $jumlahPeserta = $request->input('jumlah');
+    $jumlahPeserta = $request->input(PeminjamanDatabaseColumn::JumlahPeserta->value);
 
     // Tentukan tanggal mulai dan selesai
-    if ($role === 'Pegawai') {
-      $tanggalMulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
+    if ($role === StatusPenyewa::Pegawai->value) {
+      $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' ' . $request->input(PeminjamanDatabaseColumn::JamMulai->value);
       $tanggalSelesai = $this->calculateTanggalSelesaiPegawai(
-        $request->input('tanggal_selesai'),
-        $request->input('jam_selesai')
+        $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value),
+        $request->input(PeminjamanDatabaseColumn::JamSelesai->value)
       );
-    } elseif (in_array($role, ['Mahasiswa', 'Umum'])) {
-      $ktpUrl = $this->uploadKtpImage($request->file('ktp_url'));
+    } elseif (in_array($role, [StatusPenyewa::Mahasiswa->value, StatusPenyewa::Umum->value])) {
+      $ktpUrl = $this->uploadKtpImage($request->file(PeminjamanDatabaseColumn::UrlKtp->value));
       if (!$ktpUrl) {
         throw new RuntimeException('Upload KTP gagal. Silakan coba lagi nanti.');
       }
 
-      if (stripos($namaRuangan, 'coworking') !== false && $satuan === 'Seat / Hari') {
-        $tanggalMulai = $request->input('tanggal_mulai') . ' 08:00:00';
-        $tanggalSelesai = $request->input('tanggal_mulai') . ' 22:00:00';
-      } elseif (stripos($namaRuangan, 'coworking') !== false && $satuan === 'Seat / Bulan') {
-        $tanggalMulai = $request->input('tanggal_mulai') . ' 08:00:00';
-        $tanggalSelesai = Carbon::parse($request->input('tanggal_mulai'))
+      if (stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerHari->value) {
+        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
+        $tanggalSelesai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 22:00:00';
+      } elseif (stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value) {
+        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
+        $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
           ->addDays(30)
           ->format('Y-m-d') . ' 22:00:00';
-      } elseif (stripos($namaRuangan, 'private') !== false && $satuan === 'Seat / Bulan') {
-        $bulan = (int) $request->input('durasi_bulan');
-        $tanggalMulai = $request->input('tanggal_mulai') . ' 08:00:00';
-        $tanggalSelesai = Carbon::parse($request->input('tanggal_mulai'))
+      } elseif (stripos($namaRuangan, 'private') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value) {
+        $bulan = (int) $request->input(PeminjamanDatabaseColumn::DurasiPerBulan->value);
+        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
+        $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
           ->addMonths($bulan)
           ->subDay()
           ->format('Y-m-d') . ' 22:00:00';
       } else {
         // Default (Halfday / 4 Jam)
-        $tanggalMulai = $request->input('tanggal_mulai') . ' ' . $request->input('jam_mulai');
+        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' ' . $request->input(PeminjamanDatabaseColumn::JamMulai->value);
         $tanggalSelesai = $this->calculateTanggalSelesaiMahasiswa(
-          $request->input('tanggal_mulai'),
-          $request->input('jam_mulai')
+          $request->input(PeminjamanDatabaseColumn::TanggalMulai->value),
+          $request->input(PeminjamanDatabaseColumn::JamMulai->value)
         );
       }
     } else {
@@ -175,8 +179,8 @@ class PenyewaPeminjamanService
     }
 
     // Validasi: Coworking seat (hari/bulan) harus cek seat seluruh group
-    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === 'Seat / Hari';
-    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === 'Seat / Bulan';
+    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerHari->value;
+    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value;
 
     // === Validasi overlap (bukan coworking seat/hari) ===
     if (!($isCoworkingSeatHarian || $isCoworkingSeatBulanan)) {
@@ -195,13 +199,13 @@ class PenyewaPeminjamanService
     if ($isCoworkingSeatHarian || $isCoworkingSeatBulanan) {
       if ($groupId) {
         $ruanganGroupIds = $this->penyewaRuanganRepository->getRuanganByGroupId($groupId)
-          ->pluck('id_ruangan')->toArray();
+          ->pluck(RuanganDatabaseColumn::IdRuangan->value)->toArray();
       } else {
         $ruanganGroupIds = [$idRuangan];
       }
       $sisaSeatData = $this->penyewaPeminjamanRepository->getCoworkingSeatAvailability(
         $ruanganGroupIds,
-        $request->input('tanggal_mulai')
+        $request->input(PeminjamanDatabaseColumn::TanggalMulai->value)
       );
       $sisa_seat = $sisaSeatData['sisa_seat'] ?? 0;
 
@@ -212,18 +216,18 @@ class PenyewaPeminjamanService
 
     // Create booking
     $this->penyewaPeminjamanRepository->createPeminjaman([
-      'nama_peminjam' => $request->input('nama_peminjam'),
-      'nomor_induk' => $request->input('nomor_induk'),
-      'nomor_telepon' => $request->input('nomor_telepon'),
+      'nama_peminjam' => $request->input(PeminjamanDatabaseColumn::NamaPenyewa->value),
+      'nomor_induk' => $request->input(PeminjamanDatabaseColumn::NomorIndukPenyewa->value),
+      'nomor_telepon' => $request->input(PeminjamanDatabaseColumn::NomorTeleponPenyewa->value),
       'id_ruangan' => $idRuangan,
       'ktp_url' => $ktpUrl,
       'role' => $role,
       'tanggal_mulai' => $tanggalMulai,
       'tanggal_selesai' => $tanggalSelesai,
       'jumlah' => $jumlahPeserta,
-      'total_harga' => $request->input('total_harga'),
+      'total_harga' => $request->input(PeminjamanDatabaseColumn::TotalHarga->value),
       'status' => 'Menunggu',
-      'keterangan' => $request->input('keterangan') ?? '~',
+      'keterangan' => $request->input(PeminjamanDatabaseColumn::KeteranganPenyewaan->value) ?? '~',
     ]);
   }
 }

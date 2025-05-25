@@ -3,6 +3,7 @@
 namespace App\Policies\Admin\Dashboard;
 
 use App\Models\Users;
+use App\Enums\Admin\RoleAdmin;
 
 class AdminDashboardPolicy
 {
@@ -16,6 +17,6 @@ class AdminDashboardPolicy
 
     public function view(Users $user): bool
     {
-        return in_array($user->role, ['Admin', 'Petugas']);
+        return in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
     }
 }

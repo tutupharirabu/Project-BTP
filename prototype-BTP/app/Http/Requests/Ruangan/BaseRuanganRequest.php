@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Ruangan;
 
+use App\Enums\Admin\RoleAdmin;
+use App\Enums\Database\RuanganDatabaseColumn;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BaseRuanganRequest extends FormRequest
@@ -11,7 +13,7 @@ class BaseRuanganRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->role === 'Admin';
+        return auth()->check() && in_array(auth()->user()->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
 
         /**
          *  Jika menggunakan Policy
@@ -27,11 +29,11 @@ class BaseRuanganRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kapasitas_maksimal' => 'required|integer|min:1',
-            'kapasitas_minimal' => 'required|integer|min:1',
-            'lokasi' => 'required|string|max:255',
-            'satuan' => 'required|string|max:255',
-            'harga_ruangan' => 'required|numeric|min:0',
+            RuanganDatabaseColumn::KapasitasMaksimal->value => 'required|integer|min:1',
+            RuanganDatabaseColumn::KapasitasMinimal->value => 'required|integer|min:1',
+            RuanganDatabaseColumn::LokasiRuangan->value => 'required|string|max:255',
+            RuanganDatabaseColumn::SatuanPenyewaanRuangan->value => 'required|string|max:255',
+            RuanganDatabaseColumn::HargaRuangan->value => 'required|numeric|min:0',
             'url.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

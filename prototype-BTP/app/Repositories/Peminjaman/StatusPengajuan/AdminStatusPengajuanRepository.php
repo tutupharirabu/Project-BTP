@@ -2,6 +2,9 @@
 
 namespace App\Repositories\Peminjaman\StatusPengajuan;
 
+use App\Enums\Database\PeminjamanDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\StatusPeminjaman;
 use App\Models\Peminjaman;
 use Illuminate\Support\Collection;
 use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterface;
@@ -10,11 +13,11 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
 {
   public function getConflictingBookings(Peminjaman $peminjaman): Collection
   {
-    return Peminjaman::where('tanggal_mulai', '<=', $peminjaman->tanggal_selesai)
-      ->where('tanggal_selesai', '>=', $peminjaman->tanggal_mulai)
-      ->where('id_peminjaman', '!=', $peminjaman->id_peminjaman)
-      ->where('id_ruangan', $peminjaman->id_ruangan)
-      ->where('status', 'Menunggu')
+    return Peminjaman::where(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $peminjaman->tanggal_selesai)
+      ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $peminjaman->tanggal_mulai)
+      ->where(PeminjamanDatabaseColumn::IdPeminjaman->value, '!=', $peminjaman->id_peminjaman)
+      ->where(RuanganDatabaseColumn::IdRuangan->value, $peminjaman->id_ruangan)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Menunggu->value)
       ->get();
   }
 
@@ -22,12 +25,12 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
   {
     $conflicts = $this->getConflictingBookings($peminjaman);
 
-    $peminjaman->status = 'Disetujui';
+    $peminjaman->status = StatusPeminjaman::Disetujui->value;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
 
     foreach ($conflicts as $booking) {
-      $booking->status = 'Ditolak';
+      $booking->status = StatusPeminjaman::Ditolak->value;
       $booking->id_users = $idUser;
       $booking->save();
     }
@@ -35,14 +38,14 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
 
   public function rejectPengajuan(Peminjaman $peminjaman, string $idUser): void
   {
-    $peminjaman->status = 'Ditolak';
+    $peminjaman->status = StatusPeminjaman::Ditolak->value;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
   }
 
   public function completePengajuan(Peminjaman $peminjaman, string $idUser): void
   {
-    $peminjaman->status = 'Selesai';
+    $peminjaman->status = StatusPeminjaman::Selesai->value;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
   }
