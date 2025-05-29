@@ -11,32 +11,25 @@ use Illuminate\Support\Facades\Http;
 
 class MeminjamRuanganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $dataPeminjaman = Peminjaman::all();
         $dataRuangan = Ruangan::all();
-        $origin = 'dashboard'; // Asumsi default asal dari dashboard
+        $origin = 'dashboard'; 
 
         return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan', 'origin'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // Validate the request data
+        // Validate request data
         $validated = $request->validate([
             'nama_peminjam' => 'required|string',
             'nomor_induk' => 'required',
@@ -44,12 +37,11 @@ class MeminjamRuanganController extends Controller
             'id_ruangan' => 'required',
             'role' => 'required',
             'tanggal_mulai' => 'required|date',
-            'jam_mulai' => 'required', // Make sure 'jam_mulai' is validated
+            'jam_mulai' => 'required', 
             'jumlah' => 'required|integer',
-            // 'keterangan' => 'required|string',
         ]);
 
-            // Check for SQL injection via external API (Flask)
+            
         $fieldsToCheck = [
             'nama_peminjam' => $validated['nama_peminjam'],
             'nomor_induk' => $validated['nomor_induk'],
@@ -59,12 +51,11 @@ class MeminjamRuanganController extends Controller
 
         $response = $this->detectSQLInjection($fieldsToCheck);
 
-        // If SQL injection detected, return with error response
         if (isset($response['is_sqli']) && $response['is_sqli']) {
             return response()->json([
                 'is_sqli' => true,
                 'probability' => $response['probability']
-            ], 200);  // Return a 400 Bad Request for SQLi errors
+            ], 200);  
         }
 
         $keterangan = $request->input('keterangan');
@@ -74,7 +65,6 @@ class MeminjamRuanganController extends Controller
 
         $uploadedFileUrl = null;
 
-        // Handle file upload for 'ktp_url'
         $status = $request->input('role');
         if ($status == 'Pegawai') {
             $request->validate([
@@ -109,29 +99,24 @@ class MeminjamRuanganController extends Controller
                 return redirect()->back()->withErrors(['ktp_url' => 'Failed to upload KTP image.']);
             }
 
-            // Continue handling for 'Mahasiswa' and 'Umum'
             $durasi = '04:00';
             $tanggalMulai = $request->input('tanggal_mulai');
             $jamMulai = $request->input('jam_mulai');
 
-            // Convert duration into minutes
             $durasiInMinutes = Carbon::parse($durasi)->diffInMinutes(Carbon::parse('00:00'));
 
             $startTime = Carbon::parse($jamMulai);
             $endTime = $startTime->addMinutes($durasiInMinutes);
 
-            // Using the calculated end time without adding an extra hour
             $tanggal_selesai_plus_one_hour = Carbon::parse($tanggalMulai . ' ' . $endTime->format('H:i:s'));
         } else {
             $tanggal_selesai = $request->input('tanggal_selesai') . ' ' . $request->input('jam_selesai');
             $datetime = Carbon::createFromFormat('Y-m-d H:i', $tanggal_selesai);
 
-            // Adding one hour to the end date
             $datetime->addHour();
             $tanggal_selesai_plus_one_hour = $datetime->format('Y-m-d H:i:s');
         }
 
-        // sql injection check
         $fieldsToCheck = [
             'nama_peminjam' => $validated['nama_peminjam'],
             'nomor_induk' => $validated['nomor_induk'],
@@ -139,7 +124,6 @@ class MeminjamRuanganController extends Controller
             'keterangan' => $request->input('keterangan', '~'), 
         ];
 
-        // Create the new "Peminjaman" (Room Reservation)
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nomor_induk' => $request->input('nomor_induk'),
@@ -157,8 +141,8 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan->save();
 
-        // return redirect('/dashboardPenyewa')->with('success', 'Daftar Meminjam Ruangan Berhasil');
-        return response()->json(['message' => 'Data successfully saved'], 200);  // Send success response
+        
+        return response()->json(['message' => 'Data successfully saved'], 200); 
     }
 
 

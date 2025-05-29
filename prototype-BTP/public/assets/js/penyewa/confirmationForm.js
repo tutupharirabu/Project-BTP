@@ -155,14 +155,14 @@ function showConfirmationPopup() {
 //         });
 // }
 
-// function confirmSubmission() with spinner
+// Function confirmSubmission() with spinner
+// Function confirmSubmission() with spinner
 function confirmSubmission(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); 
 
     const rentalForm = document.getElementById('rentalForm');
     const formData = new FormData(rentalForm);
 
-    // Show spinner and hide the confirmation buttons
     document.getElementById('confirmationButtons').classList.add('d-none');
     document.getElementById('spinner').classList.remove('d-none');
 
@@ -179,75 +179,71 @@ function confirmSubmission(event) {
                 alert('Terjadi kesalahan saat mengirim data');
                 return Promise.reject('Failed response');
             }
-            return response.json(); // Mengambil response dalam format JSON jika status OK
+            return response.json(); // Mengambil response dalam format JSON
         })
         .then(data => {
             if (data.is_sqli) {
-                // SQLi detected: Display the error message below the form
                 console.log('SQL Injection detected:', data);
-                const errorMessage = `SQL Injection detected! Confidence: ${data.probability}`;
                 
-                // Create or update the error message element
+                let confidencePercent = data.probability * 100;
+                
+                // Pembulatan khusus: Jika confidence sangat mendekati 100%, bulatkan ke 99.99
+                // Ini akan memastikan 0.999999 tidak menjadi 100.00 jika Anda memang tidak ingin 100.00
+                if (confidencePercent > 99.99 && confidencePercent < 100) {
+                    confidencePercent = 99.99;
+                } else {
+                    confidencePercent = confidencePercent.toFixed(2); // Bulatkan ke 2 desimal
+                }
+
+                const errorMessage = `SQL Injection terdeteksi! Tingkat keyakinan: ${confidencePercent}%`;
+                
                 let errorElement = document.getElementById('sqliError');
                 if (!errorElement) {
                     errorElement = document.createElement('div');
                     errorElement.id = 'sqliError';
                     errorElement.style.color = 'red';
-                    errorElement.style.fontWeight = 'bold'; // Make it stand out
+                    errorElement.style.fontWeight = 'bold';
                     document.getElementById('rentalForm').appendChild(errorElement);
                 }
                 errorElement.textContent = errorMessage;
 
-                // Send error back to Laravel for form validation display
                 const errorData = {
                     errors: {
-                        sql_injection: `SQL Injection detected! Confidence: ${data.probability}`
+                        sql_injection: `SQL Injection terdeteksi! Tingkat keyakinan: ${confidencePercent}%`
                     }
                 };
 
-                // Manually trigger Laravel's error display logic
                 document.getElementById('rentalForm').classList.add('was-validated');
                 document.querySelector('.alert-danger').innerHTML = `
                     <ul>
-                        <li>${errorData.errors.sql_injection}</li>
+                            <li>${errorData.errors.sql_injection}</li>
                     </ul>
                 `;
 
-                // Prevent showing WhatsApp modal
                 const whatsappModal = bootstrap.Modal.getInstance(document.getElementById('whatsappModal'));
                 if (whatsappModal) {
                     whatsappModal.hide();
                 }
 
-                // Prevent redirect to dashboard
-                window.location.href = "#"; // Stay on the current page
+                window.location.href = "#"; 
             } else {
-                // No SQLi detected: Proceed with normal submission
                 console.log('Data successfully submitted');
 
-                // Close the confirmation modal
                 const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
                 if (confirmationModal) {
                     confirmationModal.hide();
                 }
-
-                // Show WhatsApp modal after a brief delay
                 setTimeout(() => {
                     const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
                     whatsappModal.show();
                 }, 500);
-
-                // Redirect to dashboard after data submission (successful)
                 window.location.href = "/dashboardPenyewa";
             }
         })
         .catch(error => {
-            // Catch any errors in the fetch or response processing
             console.error('Error submitting form:', error);
-            // alert('Terjadi kesalahan saat mengirim data yang ini?.');
         })
         .finally(() => {
-            // Hide spinner and show the confirmation buttons again
             document.getElementById('spinner').classList.add('d-none');
             document.getElementById('confirmationButtons').classList.remove('d-none');
         });

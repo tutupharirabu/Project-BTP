@@ -211,14 +211,14 @@
                             href="https://drive.google.com/file/d/1V0KMW2frSiv1uw8X_GSyBiGABFQySqy-/view?usp=sharing">disini</a>
                     </p>
 
-                    @if (isset($errors) && count($errors))
+                    <!-- @if (isset($errors) && count($errors))
                         There were {{ count($errors->all()) }} Error(s)
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }} </li>
                             @endforeach
                         </ul>
-                    @endif
+                    @endif -->
                 </div>
             </div>
         </div>
