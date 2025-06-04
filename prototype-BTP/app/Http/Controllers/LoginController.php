@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
+use App\Models\Otp;
+use Illuminate\Support\Carbon;
 
 class LoginController extends Controller
 {
@@ -23,21 +27,87 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials) && ((Auth::user()->role == 'admin' || Auth::user()->role == 'petugas'))) {
             $request->session()->regenerate();
-
-            return redirect()->intended('/dashboardAdmin');
-        }
-
-        if (Auth::attempt($credentials) && Auth::user()->role == 'penyewa') {
-            $request->session()->regenerate();
-
-            $request->session()->put('id_users', Auth::user()->id);
-            $request->session()->put('email', Auth::user()->email);
-
-            return redirect()->intended('/');
-        }
-
+            $otp = rand(100000, 999999);
+            Otp::create([
+            'id_users' => Auth::user()->id_users,
+            'otp_code' => $otp,
+            'expired_at' => Carbon::now()->addMinutes(2),
+        ]);
+        
+        Mail::to(Auth::user()->email)->send(new OtpMail($otp));
+        return redirect('/otp')->with('success', 'Kode OTP telah dikirim ke email Anda.');
+        }        
         return back()->with('loginError', 'Login Failed~');
     }
+
+    public function otp(Request $request){
+        if (!Auth::check()) {
+        return redirect()->route('login')->with('loginError', 'Silakan login terlebih dahulu.');
+    }
+    $otp = Otp::where('id_users', Auth::id())
+              ->where('expired_at', '>', Carbon::now())
+              ->latest()
+              ->first();
+
+    if (!$otp) {
+        return redirect()->route('login')->with('loginError', 'Akses tidak sah atau OTP telah kedaluwarsa.');
+    }
+        return view('loginsys.formotp', [
+            'title' => 'otp',
+            'active' => 'otp'
+        ]);
+
+    }
+
+
+    public function authotp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|numeric'
+        ]);
+
+        $inputOtp = $request->input('otp');
+        $userId = Auth::id();
+        $otpRecord = Otp::where('id_users', $userId)
+                        ->where('otp_code', $inputOtp)
+                        ->where('expired_at', '>',Carbon::now())
+                        ->latest()
+                        ->first();
+        if ($otpRecord) {
+            $otpRecord->delete();
+            return redirect()->intended('/dashboardAdmin');
+        }
+        return back()->withErrors(['otp' => 'Kode OTP tidak sesuai atau sudah kadaluarsa.']);
+    }
+
+    public function resendOtp(Request $request)
+{
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('loginError', 'Silakan login terlebih dahulu.');
+    }
+
+    $userId = Auth::id();
+
+    $existingOtp = Otp::where('id_users', $userId)
+                    ->where('expired_at', '>', Carbon::now())
+                    ->latest()
+                    ->first();
+
+    if ($existingOtp) {
+        return back()->withErrors(['otp' => 'Kode OTP sebelumnya masih berlaku. Mohon tunggu beberapa saat.']);
+    }
+    $otp = rand(100000, 999999);
+
+    Otp::create([
+        'id_users' => $userId,
+        'otp_code' => $otp,
+        'expired_at' => Carbon::now()->addMinutes(2),
+    ]);
+   Mail::to(Auth::user()->email)->send(new OtpMail($otp));
+
+    return back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
+}
+
 
     public function logout(Request $request){
         $request->session()->forget('id_users');
