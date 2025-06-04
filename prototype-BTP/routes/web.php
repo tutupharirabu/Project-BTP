@@ -28,6 +28,7 @@ use App\Http\Controllers\StatusPenyewaController;
 |
 */
 
+
 Route::get('/', [DashboardPenyewaController::class, 'index']);
 
 // Authenticate
