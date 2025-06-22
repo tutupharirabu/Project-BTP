@@ -164,14 +164,14 @@
                                 BTP dan menambahkan daya menggunakan genset dengan biaya yang ditanggung oleh penyewa).</p>
                         </div>
                     </div>
-                    <div class="col-3">
+                    {{-- <div class="col-3">
                         <div class="d-flex justify-content-end">
                             <a type="button" class="btn btn-md text-white"
                                 style="background-color: #021BFF; font-size: 16px; border-radius: 7px;"
                                 href="{{ route('penyewa.formPeminjaman', ['id' => $ruangan->id_ruangan]) }}">Pinjam
                                 Ruangan</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

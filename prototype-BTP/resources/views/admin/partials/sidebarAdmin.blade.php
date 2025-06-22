@@ -31,10 +31,16 @@
                         <span>Status Pengajuan Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
-                <div class="m-1">
+                {{-- <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/okupansiRuanganAdmin">
                         <i class="material-symbols-outlined me-2 ">database</i>
                         <span>Okupansi Peminjaman/Penyewaan Ruangan</span>
+                    </a>
+                </div> --}}
+                <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="/meminjamRuangan">
+                        <i class="material-symbols-outlined me-2">description</i>
+                        <span>Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
                 {{-- <div class="m-1">

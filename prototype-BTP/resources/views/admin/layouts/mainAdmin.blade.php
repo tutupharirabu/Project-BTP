@@ -6,6 +6,7 @@
     <link rel="icon" href="{{ asset('assets/img/logoHead.png') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @PwaHead
     <title>Admin Bandung Techno Park</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -70,6 +71,7 @@
 
     {{-- jquery --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    @RegisterServiceWorkerScript
 </body>
 
 <!-- drag drop zone -->

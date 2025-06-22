@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        EragLaravelPwa\EragLaravelPwaServiceProvider::class,
 
     ])->toArray(),
 

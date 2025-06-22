@@ -81,7 +81,7 @@
         </div>
 
         <!-- Right elements -->
-        <div class="fixed-right d-flex align-items-center pe-5" id="navbarRightElements"
+        {{-- <div class="fixed-right d-flex align-items-center pe-5" id="navbarRightElements"
             style="background-color: #FFFFFF;">
             <!-- Avatar -->
             <div class="dropdown">
@@ -106,7 +106,7 @@
                     <li><a class="dropdown-item" href="#">Logout</a></li>
                 </ul>
             </div>
-        </div>
+        </div> --}}
         <!-- Right elements -->
     </div>
     <!-- Container wrapper -->

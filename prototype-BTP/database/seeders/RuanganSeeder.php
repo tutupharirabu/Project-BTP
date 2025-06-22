@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Log;
+use Exception;
+use App\Models\Gambar;
+use App\Models\Ruangan;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
+use Illuminate\Support\Facades\File;
+use App\Enums\Database\GambarDatabaseColumn;
+use App\Enums\Database\RuanganDatabaseColumn;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class RuanganSeeder extends Seeder
 {
@@ -16,133 +19,41 @@ class RuanganSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $sampleImages = File::files(public_path('assets/img/BTP'));
 
-        $rooms = ['Rent Office (Private Space)', 'Coworking Space (Shared Space)', 'Coworking Space (Private Room)', 'Virtual Office', 'Multimedia Room', 'Aula', 'Meeting Room', 'Training Room', 'Overtime Room', 'Coworking Space (Shared Space)'];
-        shuffle($rooms);
+        Ruangan::factory()
+            ->count(50)
+            ->create()
+            ->each(function ($ruangan) use ($sampleImages) {
+                $jumlahGambar = rand(1, 5);
+                // Pastikan ada file untuk diupload
+                for ($i = 0; $i < $jumlahGambar; $i++) {
+                    // Pilih file random dari sampleImages
+                    $file = $sampleImages[array_rand($sampleImages)];
 
-        for ($i = 1; $i <= 10 ; $i++) {
-            $namaRuangan = $rooms[$i-1];
-            $kapasitasRuangan = $faker->numberBetween(10, 100);
+                    try {
+                        $uploadResult = Cloudinary::upload(
+                            $file->getRealPath(),
+                            [
+                                'folder' => 'spacerent-btp/ruangan-btp/v1',
+                                'public_id' => $ruangan->id_ruangan . '_image_' . ($i + 1),
+                                'transformation' => [
+                                    'width' => 1000,
+                                    'crop' => 'limit',
+                                    'quality' => 'auto:good',
+                                    'fetch_format' => 'webp',
+                                ]
+                            ]
+                        );
 
-            if ($namaRuangan == 'Rent Office (Private Space)') {
-                $lokasi = 'Gedung B dan C';
-                $hargaRuangan = 1000000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Coworking Space (Private Room)') {
-                $lokasi = 'Gedung D Lt. 2';
-                $hargaRuangan = 2350000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Multimedia Room') {
-                $lokasi = 'Gedung A';
-                $hargaRuangan = 500000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Aula') {
-                $lokasi = 'Gedung C Lt. 2';
-                $hargaRuangan = 650000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Meeting Room') {
-                $lokasi = 'Gedung B Lt. 2';
-                $hargaRuangan = 500000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Training Room') {
-                $lokasi = 'Gedung B Lt. 2';
-                $hargaRuangan = 300000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Virtual Office') {
-                $lokasi = '-';
-                $hargaRuangan = 200000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-            } elseif ($namaRuangan == 'Overtime Room') {
-                $lokasi = '-';
-                $hargaRuangan = 200000;
-
-                DB::table('ruangan')->insert([
-                    'nama_ruangan'  => $namaRuangan,
-                    'kapasitas_ruangan' => $kapasitasRuangan,
-                    'lokasi' => $lokasi,
-                    'harga_ruangan' => $hargaRuangan,
-                    'tersedia' => true,
-                    'status' => '-',
-                ]);
-
-            } elseif ($namaRuangan == 'Coworking Space (Shared Space)') {
-                $dataruangan = [
-                    ['lokasi' => 'Gedung B Lt. 1', 'harga' => 350000],
-                    ['lokasi' => 'Gedung D Lt. 2', 'harga' => 500000]
-                ];
-
-                foreach ($dataruangan as $data) {
-                    $existingRoom = DB::table('ruangan')->where('lokasi', $data['lokasi'])->first();
-
-                    if (!$existingRoom) {
-                        DB::table('ruangan')->insert([
-                            'nama_ruangan' => $namaRuangan,
-                            'kapasitas_ruangan' => $kapasitasRuangan,
-                            'lokasi' => $data['lokasi'],
-                            'harga_ruangan' => $data['harga'],
-                            'tersedia' => true,
-                            'status' => '-',
+                        Gambar::create([
+                            RuanganDatabaseColumn::IdRuangan->value => $ruangan->id_ruangan,
+                            GambarDatabaseColumn::UrlGambar->value => $uploadResult->getSecurePath(),
                         ]);
+                    } catch (Exception $e) {
+                        Log::error('Cloudinary upload failed: ' . $e->getMessage());
                     }
                 }
-            }
-        }
+            });
     }
 }

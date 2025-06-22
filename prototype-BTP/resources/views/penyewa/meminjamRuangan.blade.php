@@ -1,6 +1,6 @@
-@extends('penyewa.layouts.mainPenyewa')
+@extends('admin.layouts.mainAdmin')
 
-@section('containPenyewa')
+@section('containAdmin')
 
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
