@@ -22,4 +22,6 @@ yarn-error.log
 *.csr
 *.key
 *.pem
+docker/
+docker-compose.yml
 
