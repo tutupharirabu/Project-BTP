@@ -16,10 +16,12 @@ class HealthcheckIpRestriction
     public function handle(Request $request, Closure $next)
     {
         $allowedIps = [
-            '0.0.0.0',        // localhost
-            '127.0.0.1',      // localhost
-            '::1',            // localhost IPv6
-            '100.91.219.109', // IP server Anda
+            '0.0.0.0',
+            '127.0.0.1',
+            '::1',
+            '100.91.219.109',
+            '10.0.1.3',       // IP Docker container yang aktual
+            '10.0.0.0/8',     // Atau allow semua range 10.x.x.x
         ];
 
         if (!in_array($request->ip(), $allowedIps)) {
