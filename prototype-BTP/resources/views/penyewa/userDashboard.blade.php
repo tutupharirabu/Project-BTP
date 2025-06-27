@@ -11,8 +11,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale/id.js"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/daftarRuangan.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/overlaydashboard.css') }}">
-        <script defer src="https://umami.tutupharirabu.cloud/script.js"
-            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
     </head>
 
     <div class="container-fluid mt-4">

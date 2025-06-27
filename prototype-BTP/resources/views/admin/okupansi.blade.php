@@ -9,8 +9,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
         <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
         <script src="{{ asset('assets/js/admin/daftarRuangan.js') }}"></script>
-        <script defer src="https://umami.tutupharirabu.cloud/script.js"
-            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
@@ -35,7 +35,8 @@
                 </form>
             </div>
             <div class="col-md-2 justify-content-md-end">
-                <a href="{{ route('okupansi.downloadDataOkupansiRuangan') }}" class="btn btn-md text-white text-center w-100 w-md-auto mb-2"
+                <a href="{{ route('okupansi.downloadDataOkupansiRuangan') }}"
+                    class="btn btn-md text-white text-center w-100 w-md-auto mb-2"
                     style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
             </div>
         </div>
@@ -110,13 +111,13 @@
                         <tr>
                             <td>Okupansi pemakaian per ruangan di BTP (dalam %)</td>
                             @foreach ($dataRuangan as $dr)
-                                                    @php
-                                                        $totalCapacity = $dr->kapasitas_maksimal * 3 * 31;
-                                                        $totalOccupancy = $totalByRoom[$dr->nama_ruangan] ?? 0;
-                                                        $occupancyPercentage =
-                                                            $totalCapacity > 0 ? ($totalOccupancy / $totalCapacity) * 100 : 0;
-                                                    @endphp
-                                                    <td class="text-center">{{ number_format($occupancyPercentage, 2) }}%</td>
+                                @php
+                                    $totalCapacity = $dr->kapasitas_maksimal * 3 * 31;
+                                    $totalOccupancy = $totalByRoom[$dr->nama_ruangan] ?? 0;
+                                    $occupancyPercentage =
+                                        $totalCapacity > 0 ? ($totalOccupancy / $totalCapacity) * 100 : 0;
+                                @endphp
+                                <td class="text-center">{{ number_format($occupancyPercentage, 2) }}%</td>
                             @endforeach
                         </tr>
                         <tr>

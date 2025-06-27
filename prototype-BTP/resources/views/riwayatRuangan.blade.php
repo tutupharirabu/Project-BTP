@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/admin/daftarRuangan.css') }}">
         <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css" />
         <script src="assets/js/admin/daftarRuangan.js"></script>
-        <script defer src="https://umami.tutupharirabu.cloud/script.js"
-            data-website-id="6552bf4a-7391-40fb-8e93-e35363bb72f5"></script>
+        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
+            data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- Judul -->
@@ -29,7 +29,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
                 <div class="container my-2 mx-2">
-                    <a class="" href="/riwayatPeminjamanRuanganAdmin" style="color: #028391;font-size:12px;font-weight: bold;">Riwayat
+                    <a class="" href="/riwayatPeminjamanRuanganAdmin"
+                        style="color: #028391;font-size:12px;font-weight: bold;">Riwayat
                         Peminjaman\Penyewaan Ruangan</a>
                 </div>
             </div>
@@ -52,25 +53,26 @@
                         {{-- </div> --}}
                     {{-- <div class="col-md-5"></div> --}}
                     <div class="col-12 col-md-12 d-flex justify-content-end align-items-center">
-                        <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center w-23 w-md-auto"
+                        <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}"
+                            class="btn btn-md text-white text-center w-23 w-md-auto"
                             style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                     </div>
                 </div>
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <div class="d-flex align-items-center">
-                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                placeholder="Cari riwayat..."
-                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                            {{-- <button type="button" class="btn btn-md text-white text-center"
-                                        style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                    placeholder="Cari riwayat..."
+                                                                                    style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                {{-- <button type="button" class="btn btn-md text-white text-center"
+                                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                            </div>
+                                                                            <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center"
+                                                                                style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                                                                         </div>
-                                                                        <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center"
-                                                                            style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
-                                                                    </div>
-                                                                </div> -->
+                                                                    </div> -->
 
             <!-- table edit -->
             <div class="row">
