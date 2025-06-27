@@ -1,0 +1,83 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: "./docker/nginx"
+    depends_on:
+      - php-fpm
+    volumes:
+      - ./docker/nginx/sites/laravel.conf:/etc/nginx/conf.d/default.conf:ro # [PROD ONLY] Pastikan ini file nginx.conf prod
+      - ./:/var/www/app:ro  # [PROD ONLY] Pastikan path ini sesuai dengan path kode utama (bisa diubah sesuai struktur projectmu)
+    # - ./docker/logs/nginx:/var/log/nginx # [OPSIONAL] Mount log nginx ke host jika ingin persist log
+    ports:
+      - "80:80"  # [PROD ONLY] Hanya expose port 80, SSL handled by Coolify/reverse proxy
+    networks:
+      - appnet
+
+  php-fpm:
+    build:
+      context: "./docker/php-fpm"
+    volumes:
+      - ./:/var/www/app  # [PROD ONLY] Pastikan sesuai path utama kode
+    networks:
+      - appnet
+    expose:
+      - "9000"  # [PROD ONLY] Port untuk komunikasi internal ke nginx
+    depends_on:
+      - pgsql
+      - redis
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+  # Tambahkan env lain jika perlu, seperti DB_HOST, DB_USERNAME, DB_PASSWORD, dll
+
+  pgsql:
+    image: postgres:17
+    # ports:
+    #   - "5432:5432"  # [DEV ONLY] Jangan expose di prod kecuali perlu akses eksternal, sebaiknya dikomentari
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - sail-pgsql:/var/lib/postgresql/data
+    # - ./docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql # [DEV ONLY]
+    networks:
+      - appnet
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+      retries: 3
+      timeout: 5s
+
+  redis:
+    image: redis:alpine
+    # ports:
+    #   - "6379:6379"  # [DEV ONLY] Jangan expose di prod kecuali perlu akses eksternal, sebaiknya dikomentari
+    volumes:
+      - sail-redis:/data
+    networks:
+      - appnet
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      retries: 3
+      timeout: 5s
+
+  mailpit:
+    image: axllent/mailpit:latest
+    # ports:
+    #   - "1025:1025"
+    #   - "8025:8025"
+    # [DEV ONLY] Biasanya hanya untuk development atau testing email, jangan diaktifkan di prod kecuali memang butuh.
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  sail-pgsql:
+    driver: local
+  sail-redis:
+    driver: local
