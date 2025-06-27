@@ -56,7 +56,7 @@
         <!-- value -->
         <div class="row justify-content-center mt-4">
             <div class="col-11">
-                <div class="card border shadow shadow-md">
+                <div class="card border shadow-md">
                     <div class="card-body">
                         <form id="add-form" class="row g-1 needs-validation"
                             action="{{ route('ruangan.simpanDataRuangan') }}" method="POST" enctype="multipart/form-data"

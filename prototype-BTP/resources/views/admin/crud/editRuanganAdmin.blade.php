@@ -39,7 +39,7 @@
         <!-- value -->
         <div class="row justify-content-center mt-4 mb-md-8 mb-lg-8 mb-xl-8 mb-sm-4">
             <div class="col-11">
-                <div class="card border shadow shadow-md">
+                <div class="card border shadow-md">
                     <div class="card-body">
                         <form action="{{ route('ruangan.updateDataRuangan', $dataRuanganEdit->id_ruangan) }}" method="POST"
                             enctype="multipart/form-data" id="edit-form" class="row g-3 needs-validation"

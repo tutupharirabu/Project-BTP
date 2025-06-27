@@ -38,7 +38,7 @@
         <!-- value -->
         <div class="row justify-content-center mt-2">
             <div class="col m-3">
-                <div class="card border shadow shadow-md p-2">
+                <div class="card border shadow-md p-2">
                     <div class="card-body">
                         <form id="rentalForm" action="{{ route('penyewa.postFormPeminjaman') }}" method="POST"
                             class="needs-validation" enctype="multipart/form-data" novalidate>
