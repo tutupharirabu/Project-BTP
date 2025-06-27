@@ -17,6 +17,7 @@ class AdminStatusPengajuanPolicy
 
     public function access(Users $user): bool
     {
-        return in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
+        $allowedRoles = [RoleAdmin::Admin->value, RoleAdmin::Petugas->value];
+        return in_array($user->role, $allowedRoles);
     }
 }

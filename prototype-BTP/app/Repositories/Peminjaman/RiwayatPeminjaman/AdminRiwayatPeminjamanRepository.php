@@ -11,9 +11,12 @@ class AdminRiwayatPeminjamanRepository implements BasePeminjamanRepositoryInterf
 {
   public function getAllPeminjaman()
   {
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)
-      ->orderBy(PeminjamanDatabaseColumn::CreatedAt->value, 'desc')
-      ->orderBy(PeminjamanDatabaseColumn::UpdatedAt->value, 'desc')
+    $withRuangan = PeminjamanRelasi::Ruangan->value;
+    $orderByCreatedAt = PeminjamanDatabaseColumn::CreatedAt->value;
+    $orderByUpdatedAt = PeminjamanDatabaseColumn::UpdatedAt->value;
+    return Peminjaman::with($withRuangan)
+      ->orderBy($orderByCreatedAt, 'desc')
+      ->orderBy($orderByUpdatedAt, 'desc')
       ->get();
   }
 }

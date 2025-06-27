@@ -21,8 +21,9 @@ class RegisterRepository implements RegisterRepositoryInterface
 
   public function findAdminByEmail(string $email): ?Users
   {
+    $roles = [RoleAdmin::Admin->value, RoleAdmin::Petugas->value];
     return Users::where(UsersDatabaseColumn::Email->value, $email)
-      ->whereIn(UsersDatabaseColumn::Role->value, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])
+      ->whereIn(UsersDatabaseColumn::Role->value, $roles)
       ->first();
   }
 }

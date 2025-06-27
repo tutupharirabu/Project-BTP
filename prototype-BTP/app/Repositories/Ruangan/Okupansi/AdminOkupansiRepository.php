@@ -14,8 +14,12 @@ class AdminOkupansiRepository implements AdminOkupansiRepositoryInterface
 {
   public function getPeminjamanByMonth(Carbon $start, Carbon $end): Collection
   {
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)
-      ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [StatusPeminjaman::Disetujui->value, StatusPeminjaman::Selesai->value])
+    $relation = PeminjamanRelasi::Ruangan->value;
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+    $statusSelesai = StatusPeminjaman::Selesai->value;
+
+    return Peminjaman::with($relation)
+      ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [$statusDisetujui, $statusSelesai])
       ->whereBetween(PeminjamanDatabaseColumn::TanggalMulai->value, [$start, $end])
       ->get();
   }

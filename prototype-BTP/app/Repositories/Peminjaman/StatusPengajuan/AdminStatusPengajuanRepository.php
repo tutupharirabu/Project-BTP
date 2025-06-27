@@ -13,24 +13,29 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
 {
   public function getConflictingBookings(Peminjaman $peminjaman): Collection
   {
+    $statusMenunggu = StatusPeminjaman::Menunggu->value;
+
     return Peminjaman::where(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $peminjaman->tanggal_selesai)
       ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $peminjaman->tanggal_mulai)
       ->where(PeminjamanDatabaseColumn::IdPeminjaman->value, '!=', $peminjaman->id_peminjaman)
       ->where(RuanganDatabaseColumn::IdRuangan->value, $peminjaman->id_ruangan)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Menunggu->value)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusMenunggu)
       ->get();
   }
 
   public function approvePengajuan(Peminjaman $peminjaman, string $idUser): void
   {
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+    $statusDitolak = StatusPeminjaman::Ditolak->value;
+
     $conflicts = $this->getConflictingBookings($peminjaman);
 
-    $peminjaman->status = StatusPeminjaman::Disetujui->value;
+    $peminjaman->status = $statusDisetujui;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
 
     foreach ($conflicts as $booking) {
-      $booking->status = StatusPeminjaman::Ditolak->value;
+      $booking->status = $statusDitolak;
       $booking->id_users = $idUser;
       $booking->save();
     }
@@ -38,14 +43,18 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
 
   public function rejectPengajuan(Peminjaman $peminjaman, string $idUser): void
   {
-    $peminjaman->status = StatusPeminjaman::Ditolak->value;
+    $statusDitolak = StatusPeminjaman::Ditolak->value;
+
+    $peminjaman->status = $statusDitolak;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
   }
 
   public function completePengajuan(Peminjaman $peminjaman, string $idUser): void
   {
-    $peminjaman->status = StatusPeminjaman::Selesai->value;
+    $statusSelesai = StatusPeminjaman::Selesai->value;
+
+    $peminjaman->status = $statusSelesai;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
   }

@@ -2,16 +2,16 @@
 
 namespace App\Services\Peminjaman;
 
-use App\Enums\Database\PeminjamanDatabaseColumn;
-use App\Enums\Database\RuanganDatabaseColumn;
-use App\Enums\Penyewa\SatuanPenyewa;
-use App\Enums\Penyewa\StatusPenyewa;
 use Exception;
 use Carbon\Carbon;
 use RuntimeException;
 use App\Models\Ruangan;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use App\Enums\Penyewa\SatuanPenyewa;
+use App\Enums\Penyewa\StatusPenyewa;
+use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Database\PeminjamanDatabaseColumn;
 use App\Http\Requests\Peminjaman\BasePeminjamanRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -135,31 +135,38 @@ class PenyewaPeminjamanService
     $namaRuangan = $ruangan->nama_ruangan;
     $groupId = $ruangan->group_id_ruangan ?? null;
 
+    $statusPegawai = StatusPenyewa::Pegawai->value;
+    $statusMahasiswa = StatusPenyewa::Mahasiswa->value;
+    $statusUmum = StatusPenyewa::Umum->value;
+    $seatPerHari = SatuanPenyewa::SeatPerHari->value;
+    $seatPerBulan = SatuanPenyewa::SeatPerBulan->value;
+    $statusMenunggu = 'Menunggu';
+
     $ktpUrl = null;
     $jumlahPeserta = $request->input(PeminjamanDatabaseColumn::JumlahPeserta->value);
 
     // Tentukan tanggal mulai dan selesai
-    if ($role === StatusPenyewa::Pegawai->value) {
+    if ($role === $statusPegawai) {
       $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' ' . $request->input(PeminjamanDatabaseColumn::JamMulai->value);
       $tanggalSelesai = $this->calculateTanggalSelesaiPegawai(
         $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value),
         $request->input(PeminjamanDatabaseColumn::JamSelesai->value)
       );
-    } elseif (in_array($role, [StatusPenyewa::Mahasiswa->value, StatusPenyewa::Umum->value])) {
+    } elseif (in_array($role, [$statusMahasiswa, $statusUmum])) {
       $ktpUrl = $this->uploadKtpImage($request->file(PeminjamanDatabaseColumn::UrlKtp->value));
       if (!$ktpUrl) {
         throw new RuntimeException('Upload KTP gagal. Silakan coba lagi nanti.');
       }
 
-      if (stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerHari->value) {
+      if (stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerHari) {
         $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
         $tanggalSelesai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 22:00:00';
-      } elseif (stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value) {
+      } elseif (stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerBulan) {
         $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
         $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
           ->addDays(30)
           ->format('Y-m-d') . ' 22:00:00';
-      } elseif (stripos($namaRuangan, 'private') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value) {
+      } elseif (stripos($namaRuangan, 'private') !== false && $satuan === $seatPerBulan) {
         $bulan = (int) $request->input(PeminjamanDatabaseColumn::DurasiPerBulan->value);
         $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
         $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
@@ -179,8 +186,8 @@ class PenyewaPeminjamanService
     }
 
     // Validasi: Coworking seat (hari/bulan) harus cek seat seluruh group
-    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerHari->value;
-    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === SatuanPenyewa::SeatPerBulan->value;
+    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerHari;
+    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerBulan;
 
     // === Validasi overlap (bukan coworking seat/hari) ===
     if (!($isCoworkingSeatHarian || $isCoworkingSeatBulanan)) {
@@ -226,7 +233,7 @@ class PenyewaPeminjamanService
       'tanggal_selesai' => $tanggalSelesai,
       'jumlah' => $jumlahPeserta,
       'total_harga' => $request->input(PeminjamanDatabaseColumn::TotalHarga->value),
-      'status' => 'Menunggu',
+      'status' => $statusMenunggu,
       'keterangan' => $request->input(PeminjamanDatabaseColumn::KeteranganPenyewaan->value) ?? '~',
     ]);
   }

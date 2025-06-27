@@ -11,9 +11,13 @@ class BaseStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInte
 {
   public function getAllPeminjaman()
   {
-    return Peminjaman::with([PeminjamanRelasi::Ruangan->value, PeminjamanRelasi::User->value])
-      ->orderByDesc(PeminjamanDatabaseColumn::CreatedAt->value)
-      ->orderByDesc(PeminjamanDatabaseColumn::UpdatedAt->value)
+    $withRuangan = PeminjamanRelasi::Ruangan->value;
+    $withUser = PeminjamanRelasi::User->value;
+    $orderByCreatedAt = PeminjamanDatabaseColumn::CreatedAt->value;
+    $orderByUpdatedAt = PeminjamanDatabaseColumn::UpdatedAt->value;
+    return Peminjaman::with([$withRuangan, $withUser])
+      ->orderByDesc($orderByCreatedAt)
+      ->orderByDesc($orderByUpdatedAt)
       ->get();
   }
 

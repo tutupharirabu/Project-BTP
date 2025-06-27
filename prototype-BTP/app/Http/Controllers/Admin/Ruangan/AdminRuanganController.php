@@ -31,15 +31,19 @@ class AdminRuanganController extends Controller
 
     public function checkRuanganName(Request $request)
     {
-        $exists = $this->adminRuanganRepository->checkRuanganByName($request->input(RuanganDatabaseColumn::NamaRuangan->value));
+        $namaRuanganColumn = RuanganDatabaseColumn::NamaRuangan->value;
+        $exists = $this->adminRuanganRepository->checkRuanganByName($request->input($namaRuanganColumn));
         return response()->json(['exists' => $exists]);
     }
 
     public function getGroupId(Request $request)
     {
-        $nama = $request->input('nama_ruangan');
+        $namaRuanganColumn = RuanganDatabaseColumn::NamaRuangan->value;
+        $groupIdColumn = RuanganDatabaseColumn::GroupIdRuangan->value;
+
+        $nama = $request->input($namaRuanganColumn);
         $groupId = $this->adminRuanganRepository->getGroupIdByCoreNamaRuangan($nama);
-        return response()->json([RuanganDatabaseColumn::GroupIdRuangan->value => $groupId]);
+        return response()->json([$groupIdColumn => $groupId]);
     }
 
     public function destroy(string $id)

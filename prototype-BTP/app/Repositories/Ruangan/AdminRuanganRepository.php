@@ -13,28 +13,35 @@ class AdminRuanganRepository implements AdminRuanganRepositoryInterface
 {
   public function getAllRuangan()
   {
-    return Ruangan::with([RuanganRelasi::Gambars->value, RuanganRelasi::User->value])
-      ->orderBy(RuanganDatabaseColumn::CreatedAt->value, 'desc')
+    $gambarsRelasi = RuanganRelasi::Gambars->value;
+    $userRelasi = RuanganRelasi::User->value;
+    $createdAtColumn = RuanganDatabaseColumn::CreatedAt->value;
+    return Ruangan::with([$gambarsRelasi, $userRelasi])
+      ->orderBy($createdAtColumn, 'desc')
       ->get();
   }
 
   public function getRuanganById(string $idRuangan): ?Ruangan
   {
-    return Ruangan::with(RuanganRelasi::Gambars->value)
-      ->where(RuanganDatabaseColumn::IdRuangan->value, $idRuangan)
+    $gambarsRelasi = RuanganRelasi::Gambars->value;
+    $idRuanganColumn = RuanganDatabaseColumn::IdRuangan->value;
+    return Ruangan::with($gambarsRelasi)
+      ->where($idRuanganColumn, $idRuangan)
       ->first();
   }
 
   public function checkRuanganByName(string $namaRuangan): bool
   {
-    return Ruangan::where(RuanganDatabaseColumn::NamaRuangan->value, $namaRuangan)
+    $namaRuanganColumn = RuanganDatabaseColumn::NamaRuangan->value;
+    return Ruangan::where($namaRuanganColumn, $namaRuangan)
       ->exists();
   }
 
   public function getGroupIdByCoreNamaRuangan(string $coreNama): ?string
   {
     // Gunakan LIKE biar fleksibel
-    $ruangan = Ruangan::where(RuanganDatabaseColumn::NamaRuangan->value, 'LIKE', $coreNama . '%')->first();
+    $namaRuanganColumn = RuanganDatabaseColumn::NamaRuangan->value;
+    $ruangan = Ruangan::where($namaRuanganColumn, 'LIKE', $coreNama . '%')->first();
     return $ruangan ? $ruangan->group_id_ruangan : null;
   }
 
@@ -45,8 +52,10 @@ class AdminRuanganRepository implements AdminRuanganRepositoryInterface
 
   public function deleteRuangan(Ruangan $ruangan): void
   {
-    DB::table(GambarDatabaseColumn::Gambar->value)
-      ->where(RuanganDatabaseColumn::IdRuangan->value, $ruangan->id_ruangan)
+    $gambarTable = GambarDatabaseColumn::Gambar->value;
+    $idRuanganColumn = RuanganDatabaseColumn::IdRuangan->value;
+    DB::table($gambarTable)
+      ->where($idRuanganColumn, $ruangan->id_ruangan)
       ->delete();
     $ruangan->delete();
   }

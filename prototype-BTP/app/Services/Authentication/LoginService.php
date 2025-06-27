@@ -29,7 +29,8 @@ class LoginService
   public function adminOrPetugas()
   {
     $user = Auth::user();
-    if ($user && in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])) {
+    $allowedRoles = [RoleAdmin::Admin->value, RoleAdmin::Petugas->value];
+    if ($user && in_array($user->role, $allowedRoles)) {
       return $user;
     }
     throw new AuthorizationException('Anda tidak memiliki hak akses.');

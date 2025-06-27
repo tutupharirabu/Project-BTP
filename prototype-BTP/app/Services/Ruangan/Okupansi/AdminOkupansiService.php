@@ -70,6 +70,8 @@ class AdminOkupansiService
   {
     extract($okupansiData);
 
+    $kapasitasMaksimalColumn = RuanganDatabaseColumn::KapasitasMaksimal->value;
+
     $csvData = [];
     $headers = ['Tanggal'];
     foreach ($dataRuangan as $dr) {
@@ -87,11 +89,11 @@ class AdminOkupansiService
 
     $csvData[] = array_merge(['Jumlah'], array_values($totalByRoom));
     $csvData[] = ['Total', $totalOverall];
-    $csvData[] = array_merge(['Kapasitas penggunaan per ruangan (jumlah orang)'], array_column($dataRuangan->toArray(), RuanganDatabaseColumn::KapasitasMaksimal->value));
-    $csvData[] = array_merge(['1 Sesi 4 Jam, 1 hari 3 sesi'], array_map(fn($dr) => $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3, $dataRuangan->toArray()));
-    $csvData[] = array_merge(['Penggunaan kapasitas maksimum per ruangan dalam 1 bulan (31 hari)'], array_map(fn($dr) => $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3 * 31, $dataRuangan->toArray()));
-    $totalCapacityMonthly = array_reduce($dataRuangan->toArray(), function ($carry, $dr) {
-      return $carry + $dr[RuanganDatabaseColumn::KapasitasMaksimal->value] * 3 * 31;
+    $csvData[] = array_merge(['Kapasitas penggunaan per ruangan (jumlah orang)'], array_column($dataRuangan->toArray(), $kapasitasMaksimalColumn));
+    $csvData[] = array_merge(['1 Sesi 4 Jam, 1 hari 3 sesi'], array_map(fn($dr) => $dr[$kapasitasMaksimalColumn] * 3, $dataRuangan->toArray()));
+    $csvData[] = array_merge(['Penggunaan kapasitas maksimum per ruangan dalam 1 bulan (31 hari)'], array_map(fn($dr) => $dr[$kapasitasMaksimalColumn] * 3 * 31, $dataRuangan->toArray()));
+    $totalCapacityMonthly = array_reduce($dataRuangan->toArray(), function ($carry, $dr) use ($kapasitasMaksimalColumn) {
+      return $carry + $dr[$kapasitasMaksimalColumn] * 3 * 31;
     }, 0);
     $csvData[] = array_merge(['Kapasitas maksimum semua ruangan'], [$totalCapacityMonthly]);
 

@@ -22,12 +22,18 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
+        $username = UsersDatabaseColumn::Username->value;
+        $email = UsersDatabaseColumn::Email->value;
+        $role = UsersDatabaseColumn::Role->value;
+        $namaLengkap = UsersDatabaseColumn::NamaLengkap->value;
+        $password = UsersDatabaseColumn::Password->value;
+
         return [
-            UsersDatabaseColumn::Username->value => 'required|unique:users,username',
-            UsersDatabaseColumn::Email->value => 'required|unique:users,email',
-            UsersDatabaseColumn::Role->value => 'required',
-            UsersDatabaseColumn::NamaLengkap->value => 'required|string|max:255',
-            UsersDatabaseColumn::Password->value => 'required|min:8'
+            $username => 'required|unique:users,username',
+            $email => 'required|unique:users,email',
+            $role => 'required',
+            $namaLengkap => 'required|string|max:255',
+            $password => 'required|min:8'
         ];
     }
 }

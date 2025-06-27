@@ -8,8 +8,10 @@ class UpdateRuanganRequest extends BaseRuanganRequest
 {
     public function rules(): array
     {
+        $namaRuangan = RuanganDatabaseColumn::NamaRuangan->value;
+
         return array_merge(parent::rules(), [
-            RuanganDatabaseColumn::NamaRuangan->value => 'required|string',
+            $namaRuangan => 'required|string',
         ]);
     }
 }

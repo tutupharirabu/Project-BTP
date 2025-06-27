@@ -25,25 +25,42 @@ class BasePeminjamanRequest extends FormRequest
      */
     public function baseRules(): array
     {
+        $namaPenyewa = PeminjamanDatabaseColumn::NamaPenyewa->value;
+        $statusPenyewa = PeminjamanDatabaseColumn::StatusPenyewa->value;
+        $nomorIndukPenyewa = PeminjamanDatabaseColumn::NomorIndukPenyewa->value;
+        $nomorTeleponPenyewa = PeminjamanDatabaseColumn::NomorTeleponPenyewa->value;
+        $tanggalMulai = PeminjamanDatabaseColumn::TanggalMulai->value;
+        $jamMulai = PeminjamanDatabaseColumn::JamMulai->value;
+        $jumlahPeserta = PeminjamanDatabaseColumn::JumlahPeserta->value;
+        $totalHarga = PeminjamanDatabaseColumn::TotalHarga->value;
+        $idRuangan = RuanganDatabaseColumn::IdRuangan->value;
+        $urlKtp = PeminjamanDatabaseColumn::UrlKtp->value;
+        $tanggalSelesai = PeminjamanDatabaseColumn::TanggalSelesai->value;
+        $jamSelesai = PeminjamanDatabaseColumn::JamSelesai->value;
+
+        $statusMahasiswa = StatusPenyewa::Mahasiswa->value;
+        $statusUmum = StatusPenyewa::Umum->value;
+        $statusPegawai = StatusPenyewa::Pegawai->value;
+
         $rules = [
-            PeminjamanDatabaseColumn::NamaPenyewa->value => 'required|string|max:255',
-            PeminjamanDatabaseColumn::StatusPenyewa->value => 'required|in:Mahasiswa,Umum,Pegawai',
-            PeminjamanDatabaseColumn::NomorIndukPenyewa->value => 'required',
-            PeminjamanDatabaseColumn::NomorTeleponPenyewa->value => 'required',
-            PeminjamanDatabaseColumn::TanggalMulai->value => 'required|date',
-            PeminjamanDatabaseColumn::JamMulai->value => 'required',
-            PeminjamanDatabaseColumn::JumlahPeserta->value => 'required|integer', // Ini jumlah peserta
-            PeminjamanDatabaseColumn::TotalHarga->value => 'nullable|numeric',
-            RuanganDatabaseColumn::IdRuangan->value => 'required'
+            $namaPenyewa => 'required|string|max:255',
+            $statusPenyewa => 'required|in:Mahasiswa,Umum,Pegawai',
+            $nomorIndukPenyewa => 'required',
+            $nomorTeleponPenyewa => 'required',
+            $tanggalMulai => 'required|date',
+            $jamMulai => 'required',
+            $jumlahPeserta => 'required|integer', // Ini jumlah peserta
+            $totalHarga => 'nullable|numeric',
+            $idRuangan => 'required'
         ];
 
-        if (in_array($this->input(PeminjamanDatabaseColumn::StatusPenyewa->value), [StatusPenyewa::Mahasiswa->value, StatusPenyewa::Umum->value])) {
-            $rules[PeminjamanDatabaseColumn::UrlKtp->value] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+        if (in_array($this->input($statusPenyewa), [$statusMahasiswa, $statusUmum])) {
+            $rules[$urlKtp] = 'required|image|mimes:jpeg,png,jpg|max:2048';
         }
 
-        if ($this->input(PeminjamanDatabaseColumn::StatusPenyewa->value) === StatusPenyewa::Pegawai->value) {
-            $rules[PeminjamanDatabaseColumn::TanggalSelesai->value] = 'required|date';
-            $rules[PeminjamanDatabaseColumn::JamSelesai->value] = 'required';
+        if ($this->input($statusPenyewa) === $statusPegawai) {
+            $rules[$tanggalSelesai] = 'required|date';
+            $rules[$jamSelesai] = 'required';
         }
 
         return $rules;

@@ -28,12 +28,18 @@ class LoginController extends Controller
 
     public function authenticate(LoginRequest $request)
     {
-        $credentials = $request->only([UsersDatabaseColumn::Email->value, UsersDatabaseColumn::Password->value]);
+        $emailColumn = UsersDatabaseColumn::Email->value;
+        $passwordColumn = UsersDatabaseColumn::Password->value;
+        $credentials = $request->only([$emailColumn, $passwordColumn]);
 
         if ($this->loginService->authenticate($credentials)) {
             $user = $this->loginService->adminOrPetugas();
 
-            if (in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value])) {
+            $adminRole = RoleAdmin::Admin->value;
+            $petugasRole = RoleAdmin::Petugas->value;
+            $roles = [$adminRole, $petugasRole];
+
+            if (in_array($user->role, $roles)) {
                 $request->session()->regenerate();
                 return redirect()->intended('/dashboardAdmin');
             }
@@ -45,7 +51,11 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->loginService->logout();
-        $request->session()->forget([UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::Email->value]);
+
+        $idUsersColumn = UsersDatabaseColumn::IdUsers->value;
+        $emailColumn = UsersDatabaseColumn::Email->value;
+
+        $request->session()->forget([$idUsersColumn, $emailColumn]);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

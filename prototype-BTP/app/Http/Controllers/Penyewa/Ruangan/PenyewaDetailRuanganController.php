@@ -28,10 +28,13 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
     public function getAvailableTimes(Request $request)
     {
         try {
+            $tanggalMulaiKey = PeminjamanDatabaseColumn::TanggalMulai->value;
+            $tanggalSelesaiKey = PeminjamanDatabaseColumn::TanggalSelesai->value;
+
             $slots = $this->penyewaRuanganService->getUsedTimeSlots(
                 $request->input('ruangan_id'),
-                $request->input(PeminjamanDatabaseColumn::TanggalMulai->value),
-                $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value)
+                $request->input($tanggalMulaiKey),
+                $request->input($tanggalSelesaiKey)
             );
             return response()->json(['usedTimeSlots' => $slots]);
         } catch (Exception $e) {
@@ -42,9 +45,13 @@ class PenyewaDetailRuanganController extends PenyewaRuanganController
 
     public function getCoworkingWeeklySeatStatus(Request $request)
     {
-        $idRuangan = $request->input(RuanganDatabaseColumn::IdRuangan->value);
-        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value);
-        $tanggalSelesai = $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value);
+        $idRuanganKey = RuanganDatabaseColumn::IdRuangan->value;
+        $tanggalMulaiKey = PeminjamanDatabaseColumn::TanggalMulai->value;
+        $tanggalSelesaiKey = PeminjamanDatabaseColumn::TanggalSelesai->value;
+
+        $idRuangan = $request->input($idRuanganKey);
+        $tanggalMulai = $request->input($tanggalMulaiKey);
+        $tanggalSelesai = $request->input($tanggalSelesaiKey);
 
         $result = $this->penyewaRuanganService->getCoworkingWeeklySeatStatus(
             $idRuangan,

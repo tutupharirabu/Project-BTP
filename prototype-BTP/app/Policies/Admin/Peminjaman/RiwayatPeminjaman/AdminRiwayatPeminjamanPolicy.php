@@ -17,11 +17,13 @@ class AdminRiwayatPeminjamanPolicy
 
     public function viewAny(Users $user): bool
     {
-        return in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
+        $allowedRoles = [RoleAdmin::Admin->value, RoleAdmin::Petugas->value];
+        return in_array($user->role, $allowedRoles);
     }
 
     public function download(Users $user): bool
     {
-        return in_array($user->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
+        $allowedRoles = [RoleAdmin::Admin->value, RoleAdmin::Petugas->value];
+        return in_array($user->role, $allowedRoles);
     }
 }

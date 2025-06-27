@@ -22,9 +22,12 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        $emailKey = UsersDatabaseColumn::Email->value;
+        $passwordKey = UsersDatabaseColumn::Password->value;
+
         return [
-            UsersDatabaseColumn::Email->value => 'required|email',
-            UsersDatabaseColumn::Password->value => 'required'
+            $emailKey => 'required|email',
+            $passwordKey => 'required'
         ];
     }
 }

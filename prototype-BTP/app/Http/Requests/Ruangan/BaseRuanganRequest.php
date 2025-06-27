@@ -13,7 +13,10 @@ class BaseRuanganRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && in_array(auth()->user()->role, [RoleAdmin::Admin->value, RoleAdmin::Petugas->value]);
+        $adminRole = RoleAdmin::Admin->value;
+        $petugasRole = RoleAdmin::Petugas->value;
+
+        return auth()->check() && in_array(auth()->user()->role, [$adminRole, $petugasRole]);
 
         /**
          *  Jika menggunakan Policy
@@ -28,12 +31,18 @@ class BaseRuanganRequest extends FormRequest
      */
     public function rules(): array
     {
+        $kapasitasMaksimal = RuanganDatabaseColumn::KapasitasMaksimal->value;
+        $kapasitasMinimal = RuanganDatabaseColumn::KapasitasMinimal->value;
+        $lokasiRuangan = RuanganDatabaseColumn::LokasiRuangan->value;
+        $satuanPenyewaanRuangan = RuanganDatabaseColumn::SatuanPenyewaanRuangan->value;
+        $hargaRuangan = RuanganDatabaseColumn::HargaRuangan->value;
+
         return [
-            RuanganDatabaseColumn::KapasitasMaksimal->value => 'required|integer|min:1',
-            RuanganDatabaseColumn::KapasitasMinimal->value => 'required|integer|min:1',
-            RuanganDatabaseColumn::LokasiRuangan->value => 'required|string|max:255',
-            RuanganDatabaseColumn::SatuanPenyewaanRuangan->value => 'required|string|max:255',
-            RuanganDatabaseColumn::HargaRuangan->value => 'required|numeric|min:0',
+            $kapasitasMaksimal => 'required|integer|min:1',
+            $kapasitasMinimal => 'required|integer|min:1',
+            $lokasiRuangan => 'required|string|max:255',
+            $satuanPenyewaanRuangan => 'required|string|max:255',
+            $hargaRuangan => 'required|numeric|min:0',
             'url.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

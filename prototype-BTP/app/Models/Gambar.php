@@ -13,9 +13,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Gambar extends Model
 {
     use HasFactory, HasUuids;
-    protected $table = GambarDatabaseColumn::Gambar->value;
-    protected $primaryKey = GambarDatabaseColumn::IdGambar->value;
-    protected $fillable = [RuanganDatabaseColumn::IdRuangan->value, GambarDatabaseColumn::UrlGambar->value];
+    protected $table;
+    protected $primaryKey;
+    protected $fillable;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->table = GambarDatabaseColumn::Gambar->value;
+        $this->primaryKey = GambarDatabaseColumn::IdGambar->value;
+        $this->fillable = [RuanganDatabaseColumn::IdRuangan->value, GambarDatabaseColumn::UrlGambar->value];
+    }
 
     public function ruangan(): BelongsTo
     {

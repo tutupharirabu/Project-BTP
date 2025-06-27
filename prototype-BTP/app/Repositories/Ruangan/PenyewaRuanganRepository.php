@@ -18,24 +18,40 @@ class PenyewaRuanganRepository implements PenyewaRuanganRepositoryInterface
 {
   public function getApprovedPeminjamanRuangan(string $idRuangan)
   {
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)
-      ->where(RuanganDatabaseColumn::IdRuangan->value, $idRuangan)
-      ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [StatusPeminjaman::Disetujui->value, StatusPeminjaman::Selesai->value])
+    $relasiRuangan = PeminjamanRelasi::Ruangan->value;
+    $columnIdRuangan = RuanganDatabaseColumn::IdRuangan->value;
+    $columnStatusPeminjaman = PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value;
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+    $statusSelesai = StatusPeminjaman::Selesai->value;
+
+    return Peminjaman::with($relasiRuangan)
+      ->where($columnIdRuangan, $idRuangan)
+      ->whereIn($columnStatusPeminjaman, [$statusDisetujui, $statusSelesai])
       ->get();
   }
 
   public function getRuanganByGroupId(string $groupId): Collection
   {
-    return Ruangan::where(RuanganDatabaseColumn::GroupIdRuangan->value, $groupId)->get();
+    $columnGroupIdRuangan = RuanganDatabaseColumn::GroupIdRuangan->value;
+    return Ruangan::where($columnGroupIdRuangan, $groupId)->get();
   }
 
   public function getCoworkingWeeklySeatStatus(string $idRuangan, string $tanggalMulai, string $tanggalSelesai): array
   {
+    $columnGroupIdRuangan = RuanganDatabaseColumn::GroupIdRuangan->value;
+    $columnKapasitasMaksimal = RuanganDatabaseColumn::KapasitasMaksimal->value;
+    $relasiRuangan = PeminjamanRelasi::Ruangan->value;
+    $columnStatusPeminjaman = PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value;
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+    $columnTanggalMulai = PeminjamanDatabaseColumn::TanggalMulai->value;
+    $columnTanggalSelesai = PeminjamanDatabaseColumn::TanggalSelesai->value;
+    $columnJumlahPeserta = PeminjamanDatabaseColumn::JumlahPeserta->value;
+
     $ruangan = Ruangan::findOrFail($idRuangan);
     $groupId = $ruangan->group_id_ruangan;
 
     // Cari kapasitas minimal dari semua ruangan dalam group
-    $minKapasitas = Ruangan::where(RuanganDatabaseColumn::GroupIdRuangan->value, $groupId)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
+    $minKapasitas = Ruangan::where($columnGroupIdRuangan, $groupId)->min($columnKapasitasMaksimal);
 
     $result = [];
     $period = new DatePeriod(
@@ -48,13 +64,13 @@ class PenyewaRuanganRepository implements PenyewaRuanganRepositoryInterface
       $tanggal = $date->format('Y-m-d');
 
       // Sum jumlah semua peminjaman yang tanggalnya overlap pada tanggal ini
-      $booked = Peminjaman::whereHas(PeminjamanRelasi::Ruangan->value, function ($q) use ($groupId) {
-        $q->where(RuanganDatabaseColumn::GroupIdRuangan->value, $groupId);
+      $booked = Peminjaman::whereHas($relasiRuangan, function ($q) use ($groupId, $columnGroupIdRuangan) {
+        $q->where($columnGroupIdRuangan, $groupId);
       })
-        ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
-        ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $tanggal)
-        ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $tanggal)
-        ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
+        ->where($columnStatusPeminjaman, $statusDisetujui)
+        ->whereDate($columnTanggalMulai, '<=', $tanggal)
+        ->whereDate($columnTanggalSelesai, '>=', $tanggal)
+        ->sum($columnJumlahPeserta);
 
       $sisa_seat = max(0, $minKapasitas - $booked);
       $result[] = ['tanggal' => $tanggal, 'sisa_seat' => $sisa_seat];

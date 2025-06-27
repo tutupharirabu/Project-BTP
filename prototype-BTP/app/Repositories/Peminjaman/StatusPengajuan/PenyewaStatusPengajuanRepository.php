@@ -12,14 +12,19 @@ class PenyewaStatusPengajuanRepository implements BaseStatusPengajuanRepositoryI
 {
   public function getAllPeminjaman()
   {
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)
-      ->orderByDesc(PeminjamanDatabaseColumn::CreatedAt->value)
-      ->orderByDesc(PeminjamanDatabaseColumn::UpdatedAt->value)
+    $withRuangan = PeminjamanRelasi::Ruangan->value;
+    $orderByCreatedAt = PeminjamanDatabaseColumn::CreatedAt->value;
+    $orderByUpdatedAt = PeminjamanDatabaseColumn::UpdatedAt->value;
+
+    return Peminjaman::with($withRuangan)
+      ->orderByDesc($orderByCreatedAt)
+      ->orderByDesc($orderByUpdatedAt)
       ->get();
   }
 
   public function getPeminjamanById(string $idPeminjaman): ?Peminjaman
   {
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)->findOrFail($idPeminjaman);
+    $withRuangan = PeminjamanRelasi::Ruangan->value;
+    return Peminjaman::with($withRuangan)->findOrFail($idPeminjaman);
   }
 }

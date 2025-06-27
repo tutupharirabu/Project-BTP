@@ -28,20 +28,26 @@ class AdminRuanganService
 
   public function storeRuangan(StoreRuanganRequest $request): void
   {
+    $groupIdRuangan = RuanganDatabaseColumn::GroupIdRuangan->value;
+    $keteranganRuangan = RuanganDatabaseColumn::KeteranganRuangan->value;
+    $statusRuangan = RuanganDatabaseColumn::StatusRuangan->value;
+    $idUsers = UsersDatabaseColumn::IdUsers->value;
+    $urlGambar = GambarDatabaseColumn::UrlGambar->value;
+
     $validatedData = $request->validated();
 
-    if (empty($validatedData[RuanganDatabaseColumn::GroupIdRuangan->value])) {
-      $validatedData[RuanganDatabaseColumn::GroupIdRuangan->value] = Str::uuid()->toString();
+    if (empty($validatedData[$groupIdRuangan])) {
+      $validatedData[$groupIdRuangan] = Str::uuid()->toString();
     }
 
-    $validatedData[RuanganDatabaseColumn::KeteranganRuangan->value] = $request->input(RuanganDatabaseColumn::KeteranganRuangan->value) ?? 'Tidak ada keterangan';
-    $validatedData[RuanganDatabaseColumn::StatusRuangan->value] = StatusRuangan::Tersedia->value;
-    $validatedData[UsersDatabaseColumn::IdUsers->value] = Auth::id();
+    $validatedData[$keteranganRuangan] = $request->input($keteranganRuangan) ?? 'Tidak ada keterangan';
+    $validatedData[$statusRuangan] = StatusRuangan::Tersedia->value;
+    $validatedData[$idUsers] = Auth::id();
 
     $ruangan = $this->adminRuanganRepository->createRuangan($validatedData);
 
-    if ($request->hasFile(GambarDatabaseColumn::UrlGambar->value)) {
-      foreach ($request->file(GambarDatabaseColumn::UrlGambar->value) as $index => $file) {
+    if ($request->hasFile($urlGambar)) {
+      foreach ($request->file($urlGambar) as $index => $file) {
         if (!$file || !$file->isValid())
           continue;
 
@@ -57,7 +63,7 @@ class AdminRuanganService
 
           Gambar::create([
             RuanganDatabaseColumn::IdRuangan->value => $ruangan->id_ruangan,
-            GambarDatabaseColumn::UrlGambar->value => $uploadResult->getSecurePath()
+            $urlGambar => $uploadResult->getSecurePath()
           ]);
         } catch (Exception $e) {
           Log::error('Error uploading to Cloudinary', [
@@ -72,14 +78,18 @@ class AdminRuanganService
 
   public function updateRuangan(Ruangan $ruangan, UpdateRuanganRequest $request): void
   {
+    $keteranganRuangan = RuanganDatabaseColumn::KeteranganRuangan->value;
+    $idUsers = UsersDatabaseColumn::IdUsers->value;
+    $urlGambar = GambarDatabaseColumn::UrlGambar->value;
+
     $validatedData = $request->validated();
 
     $ruangan->fill($validatedData);
-    $ruangan->id_users = Auth::id();
-    $ruangan->keterangan = $request->input(RuanganDatabaseColumn::KeteranganRuangan->value) ?? 'Tidak ada keterangan';
+    $ruangan->$idUsers = Auth::id();
+    $ruangan->$keteranganRuangan = $request->input($keteranganRuangan) ?? 'Tidak ada keterangan';
     $ruangan->save();
 
-    if ($request->hasFile(GambarDatabaseColumn::UrlGambar->value)) {
+    if ($request->hasFile($urlGambar)) {
       $existingGambar = $ruangan->gambars
         ->sortBy(function ($gambar) {
           preg_match('/_image_(\d+)/', $gambar->url, $matches);
@@ -87,7 +97,7 @@ class AdminRuanganService
         })
         ->values();
 
-      foreach ($request->file(GambarDatabaseColumn::UrlGambar->value) as $index => $file) {
+      foreach ($request->file($urlGambar) as $index => $file) {
         if (!$file || !$file->isValid())
           continue;
 
@@ -111,7 +121,7 @@ class AdminRuanganService
           } else {
             Gambar::create([
               RuanganDatabaseColumn::IdRuangan->value => $ruangan->id_ruangan,
-              GambarDatabaseColumn::UrlGambar->value => $uploadResult->getSecurePath()
+              $urlGambar => $uploadResult->getSecurePath()
             ]);
           }
         } catch (Exception $e) {

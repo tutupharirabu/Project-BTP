@@ -9,10 +9,14 @@ class StoreRuanganRequest extends BaseRuanganRequest
 {
     public function rules(): array
     {
+        $groupIdRuangan = RuanganDatabaseColumn::GroupIdRuangan->value;
+        $namaRuangan = RuanganDatabaseColumn::NamaRuangan->value;
+        $urlGambar = GambarDatabaseColumn::UrlGambar->value;
+
         return array_merge(parent::rules(), [
-            RuanganDatabaseColumn::GroupIdRuangan->value => 'nullable|string|uuid',
-            RuanganDatabaseColumn::NamaRuangan->value => 'required|string|max:255|unique:ruangan,nama_ruangan',
-            GambarDatabaseColumn::UrlGambar->value => 'required|array',
+            $groupIdRuangan => 'nullable|string|uuid',
+            $namaRuangan => 'required|string|max:255|unique:ruangan,nama_ruangan',
+            $urlGambar => 'required|array',
         ]);
     }
 }

@@ -16,20 +16,29 @@ class Ruangan extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $primaryKey = RuanganDatabaseColumn::IdRuangan->value;
-    protected $table = RuanganDatabaseColumn::Ruangan->value;
-    protected $fillable = [
-        RuanganDatabaseColumn::GroupIdRuangan->value,
-        RuanganDatabaseColumn::NamaRuangan->value,
-        RuanganDatabaseColumn::KapasitasMinimal->value,
-        RuanganDatabaseColumn::KapasitasMaksimal->value,
-        RuanganDatabaseColumn::SatuanPenyewaanRuangan->value,
-        RuanganDatabaseColumn::LokasiRuangan->value,
-        RuanganDatabaseColumn::HargaRuangan->value,
-        RuanganDatabaseColumn::StatusRuangan->value,
-        RuanganDatabaseColumn::KeteranganRuangan->value,
-        UsersDatabaseColumn::IdUsers->value
-    ];
+    protected $primaryKey;
+    protected $table;
+    protected $fillable;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->primaryKey = RuanganDatabaseColumn::IdRuangan->value;
+        $this->table = RuanganDatabaseColumn::Ruangan->value;
+        $this->fillable = [
+            RuanganDatabaseColumn::GroupIdRuangan->value,
+            RuanganDatabaseColumn::NamaRuangan->value,
+            RuanganDatabaseColumn::KapasitasMinimal->value,
+            RuanganDatabaseColumn::KapasitasMaksimal->value,
+            RuanganDatabaseColumn::SatuanPenyewaanRuangan->value,
+            RuanganDatabaseColumn::LokasiRuangan->value,
+            RuanganDatabaseColumn::HargaRuangan->value,
+            RuanganDatabaseColumn::StatusRuangan->value,
+            RuanganDatabaseColumn::KeteranganRuangan->value,
+            UsersDatabaseColumn::IdUsers->value
+        ];
+        parent::__construct($attributes);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(Users::class, UsersDatabaseColumn::IdUsers->value, UsersDatabaseColumn::IdUsers->value); // Ini salah cara relasinya harusnya belongsTo
@@ -37,7 +46,7 @@ class Ruangan extends Model
 
     public function gambars(): HasMany
     {
-        return $this->hasMany(Gambar::class,RuanganDatabaseColumn::IdRuangan->value,RuanganDatabaseColumn::IdRuangan->value);
+        return $this->hasMany(Gambar::class, RuanganDatabaseColumn::IdRuangan->value, RuanganDatabaseColumn::IdRuangan->value);
     }
 
     public function peminjamans(): HasMany

@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Peminjaman;
 
-use App\Enums\Penyewa\SatuanPenyewa;
 use DateTime;
 use DatePeriod;
 use DateInterval;
@@ -10,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
 use App\Enums\StatusPeminjaman;
+use App\Enums\Penyewa\SatuanPenyewa;
 use App\Enums\Database\RuanganDatabaseColumn;
 use App\Enums\Database\PeminjamanDatabaseColumn;
 use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
@@ -39,9 +39,10 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     ?string $tanggal = null
   ) {
     $idRuanganArray = is_array($idRuangan) ? $idRuangan : [$idRuangan];
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
 
     $query = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value);
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui);
 
     if ($tanggal) {
       $query->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, $tanggal);
@@ -60,8 +61,10 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
 
   public function existsOverlapPeminjaman(string $id_ruangan, string $tanggal_mulai, string $tanggal_selesai): bool
   {
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+
     return Peminjaman::where(RuanganDatabaseColumn::IdRuangan->value, $id_ruangan)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui)
       ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
         $query->where(PeminjamanDatabaseColumn::TanggalMulai->value, '<', $tanggal_selesai)
           ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>', $tanggal_mulai);
@@ -198,6 +201,8 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   {
     // Support array (group) or single string
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+    $seatPerHari = SatuanPenyewa::SeatPerHari->value;
 
     // Ambil kapasitas minimal di group, agar lebih aman (jika seat beda-beda, dipakai yang paling kecil)
     $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
@@ -207,7 +212,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     $sampleRuangan = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->first();
     if (
       !$sampleRuangan ||
-      strtolower($sampleRuangan->satuan) !== strtolower(SatuanPenyewa::SeatPerHari->value) ||
+      strtolower($sampleRuangan->satuan) !== strtolower($seatPerHari) ||
       stripos($sampleRuangan->nama_ruangan, 'coworking') === false
     ) {
       return [];
@@ -215,7 +220,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
 
     // Booking di seluruh ruangan group
     $bookings = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui)
       ->whereNotNull(PeminjamanDatabaseColumn::TanggalMulai->value)
       ->get();
 
@@ -238,6 +243,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   {
     // $id_ruangan bisa string (single) atau array (group)
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
     $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
     $today = Carbon::today();
     $rangeToCheck = 60; // cek 2 bulan ke depan
@@ -250,7 +256,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
       for ($j = 0; $j < 30; $j++) {
         $checkDate = $start->copy()->addDays($j)->toDateString();
         $seatUsed = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
-          ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+          ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui)
           ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $checkDate)
           ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $checkDate)
           ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
@@ -271,13 +277,14 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
   {
     // Dukung input array ataupun single string (biar backward compatible)
     $idRuanganArray = is_array($id_ruangan) ? $id_ruangan : [$id_ruangan];
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
 
     // Ambil kapasitas terkecil (safety)
     $kapasitas = Ruangan::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)->min(RuanganDatabaseColumn::KapasitasMaksimal->value);
 
     // Jumlah seluruh booking di semua ruangan pada tanggal tsb
     $booked = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, StatusPeminjaman::Disetujui->value)
+      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui)
       ->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, $tanggal)
       ->sum(PeminjamanDatabaseColumn::JumlahPeserta->value);
 

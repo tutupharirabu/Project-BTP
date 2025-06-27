@@ -53,16 +53,23 @@ class PenyewaRuanganService
 
   public function getUsedTimeSlots(string $ruanganId, string $start, ?string $end = null): array
   {
+    $peminjamanTable = PeminjamanDatabaseColumn::Peminjaman->value;
+    $idRuanganColumn = RuanganDatabaseColumn::IdRuangan->value;
+    $tanggalMulaiColumn = PeminjamanDatabaseColumn::TanggalMulai->value;
+    $tanggalSelesaiColumn = PeminjamanDatabaseColumn::TanggalSelesai->value;
+    $statusPeminjamanColumn = PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value;
+    $statusDisetujui = StatusPeminjaman::Disetujui->value;
+
     $tanggalMulai = Carbon::parse($start);
     $tanggalSelesai = Carbon::parse($end ?? $tanggalMulai->copy()->addDays(6)->toDateString());
 
-    $usedTimes = DB::table(PeminjamanDatabaseColumn::Peminjaman->value)
-      ->where(RuanganDatabaseColumn::IdRuangan->value, $ruanganId)
-      ->where(function ($query) use ($tanggalMulai, $tanggalSelesai) {
-        $query->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, '<=', $tanggalSelesai)
-          ->whereDate(PeminjamanDatabaseColumn::TanggalSelesai->value, '>=', $tanggalMulai);
+    $usedTimes = DB::table($peminjamanTable)
+      ->where($idRuanganColumn, $ruanganId)
+      ->where(function ($query) use ($tanggalMulai, $tanggalSelesai, $tanggalMulaiColumn, $tanggalSelesaiColumn) {
+        $query->whereDate($tanggalMulaiColumn, '<=', $tanggalSelesai)
+          ->whereDate($tanggalSelesaiColumn, '>=', $tanggalMulai);
       })
-      ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [StatusPeminjaman::Disetujui->value])
+      ->whereIn($statusPeminjamanColumn, [$statusDisetujui])
       ->get();
 
     $usedTimeSlots = [];
