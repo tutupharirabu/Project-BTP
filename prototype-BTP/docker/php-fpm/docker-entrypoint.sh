@@ -60,9 +60,9 @@ if [ -f "/var/www/package.json" ]; then
   fi
   
   # Hanya build asset untuk prod jika butuh
-  # if [ "$BUILD_NEEDED" = true ] && [ "$APP_ENV" != "local" ]; then
-  #   echo "Building production assets..."
-  #   npm run build
+  if [ "$BUILD_NEEDED" = true ] && [ "$APP_ENV" != "local" ]; then
+    echo "Building production assets..."
+    npm run build
   # === [DEV ONLY: TIDAK DIPERLUKAN DI PROD] ===
   # elif [ "$BUILD_NEEDED" = true ] && [ "$APP_ENV" = "local" ]; then
   #   echo "Development environment detected. Run 'docker-compose exec php-fpm npm run dev' for hot reloading."
