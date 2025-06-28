@@ -71,7 +71,7 @@ if [ -f "/var/www/package.json" ]; then
   #     echo '{}' > public/build/manifest.json
   #     echo "Created empty manifest.json to prevent errors."
   #   fi
-  # fi
+  fi
   # === [END DEV ONLY] ===
 
   # cd - > /dev/null
