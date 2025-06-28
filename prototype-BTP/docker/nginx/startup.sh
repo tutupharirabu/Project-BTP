@@ -55,10 +55,10 @@ nginx -t
 
 if [ $? -eq 0 ]; then
     echo "✅ NGINX configuration is valid"
-    # === [DEV ONLY: Pesan ini khusus dev, di prod tidak perlu reload rutin atau akses ke domain .local] ===
-    echo "🚀 NGINX started, daemon will restart every 6 hours"
-    echo "🌐 Access your app at: https://SpaceRentBTP-v1.local"
-    # === [END DEV ONLY] ===
+    # # === [DEV ONLY: Pesan ini khusus dev, di prod tidak perlu reload rutin atau akses ke domain .local] ===
+    # echo "🚀 NGINX started, daemon will restart every 6 hours"
+    # echo "🌐 Access your app at: https://SpaceRentBTP-v1.local"
+    # # === [END DEV ONLY] ===
 
     # Start nginx in foreground
     nginx
