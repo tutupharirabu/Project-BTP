@@ -24,7 +24,7 @@
 
             <h3 class="text-center pb-3">Masuk</h3>
             <p class="text-center">Halo! selamat datang di website peminjaman Bandung Techno Park</p>
-            <form class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST"
+            <form id="loginForm" class="row g-3 needs-validation" action="{{ route('posts.login') }}" method="POST"
                 enctype="multipart/form-data" novalidate>
                 @csrf
                 <div class="col-md-12">
@@ -63,6 +63,26 @@
         </div>
     </div>
 
+    <!--pilihan otp-->
+
+    <div class="modal fade" id="otpMethod" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">   
+                    <h5 class="modal-title">Pilih Metode Untuk Mendapatkan Kode OTP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>   
+                <div class="modal-body text-center">
+                    <button id="email" class="btn btn-outline-primary m-2">Kirim Via Email</button>
+                    <button id="whatsapp" class="btn btn-outline-primary m-2">Kirim Via Whatsapp</button>
+                    <button id="telegram" class="btn btn-outline-primary m-2">Kirim Via Telegram</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 
     <script>
@@ -101,6 +121,75 @@
                     }, false)
                 })
         })()
+    </script>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e){
+            e.preventDefault();
+            let formData={
+                email: document.getElementById("email").value,
+                password: document.getElementById("inputpassword").value,
+                _token: '{{ csrf_token() }}'
+            };
+
+            fetch("{{ route('posts.login') }}",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(async res => {
+                if (!res.ok) {
+                    let text = await res.text();
+                    throw new Error("Login error " + res.status + ": " + text);
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.success){
+                    var otpModal = new bootstrap.Modal(document.getElementById('otpMethod'));
+                    otpModal.show();
+                } else {
+                    alert(data.message || "Login error");
+                }
+            })
+            .catch(err => console.error("Error: ", err));
+        });
+
+        function sendOTP(method) {
+             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            fetch("{{ route('send.otp') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                },
+            body: JSON.stringify({ method: method })
+        })
+        .then(async res => {
+                if (!res.ok) {
+                    let text = await res.text();
+                    throw new Error("Login error " + res.status + ": " + text);
+                }
+                return res.json();
+            })
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect; // Redirect ke halaman input OTP
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(err => console.error(err));
+    }
+    document.getElementById('email').addEventListener('click', () => sendOTP('email'));
+    document.getElementById('whatsapp').addEventListener('click', () => sendOTP('whatsapp'));
+    document.getElementById('telegram').addEventListener('click', () => sendOTP('telegram'));
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

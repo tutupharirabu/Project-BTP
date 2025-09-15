@@ -43,6 +43,7 @@
                         <button type="submit" class="btn btnlog mx-auto">Submit</button>
                     </div>
                 </div>
+                <p>Kode OTP berlaku selama <span id="countdown"></span></p>
                 <p class="mt-3 text-sm">
                     Tidak menerima kode? 
                     <a href="{{ route('resend.otp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
@@ -70,6 +71,26 @@
                 });
         })();
     </script>
+
+    <script>
+    let expiredAt = new Date("{{ $expiredAt }}").getTime();
+    let timer = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = expiredAt - now;
+
+        if (distance <= 0) {
+            document.getElementById("countdown").innerHTML = "Expired";
+            document.querySelector("button[type=submit]").disabled = true;
+            clearInterval(timer);
+        } else {
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = 
+                minutes.toString().padStart(2, '0') + ":" + 
+                seconds.toString().padStart(2, '0');
+        }
+    }, 1000);
+</script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
