@@ -56,56 +56,6 @@ class LoginController extends Controller
             'expired_at' => Carbon::now()->addMinutes(2),
             ]);
 
-        if($method === 'email'){
-            Mail::to(Auth::user()->email)->send(new OtpMail($otp));
-        } elseif( $method === 'whatsapp'){
-            //...
-        } elseif( $method === 'telegram'){
-            //...
-        }
-        return response()->json([
-            'success' => true,
-            'message' => 'kode otp berhasil dikirim',
-            'redirect' => url('/otp')
-        ]);
-    }
-
-    public function otp(Request $request){
-        if (!Auth::check()) {
-        return redirect()->route('login')->with('loginError', 'Silakan login terlebih dahulu.');
-    }
-    $otp = Otp::where('id_users', Auth::id())
-              ->where('expired_at', '>', Carbon::now())
-              ->latest()
-              ->first();
-
-    if (!$otp) {
-        return redirect()->route('login')->with('loginError', 'Akses tidak sah atau OTP telah kedaluwarsa.');
-    }
-        return view('loginsys.formotp', [
-            'title' => 'otp',
-            'active' => 'otp',
-            'expiredAt' => $otp->expired_at
-        ]);
-
-    }
-
-
-    public function authotp(Request $request)
-    {
-        $request->validate([
-            'otp' => 'required|numeric'
-        ]);
-
-        $inputOtp = $request->input('otp');
-        $userId = Auth::id();
-        $otpRecord = Otp::where('id_users', $userId)
-                        ->where('otp_code', $inputOtp)
-                        ->where('expired_at', '>',Carbon::now())
-                        ->latest()
-                        ->first();
-        if ($otpRecord) {
-            $otpRecord->delete();
             return redirect()->intended('/dashboardAdmin');
         }
         return back()->withErrors(['otp' => 'Kode OTP tidak sesuai atau sudah kadaluarsa.']);

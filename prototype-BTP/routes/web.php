@@ -33,10 +33,6 @@ Route::get('/', [DashboardPenyewaController::class, 'index']);
 // Authenticate
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('posts.login');
-Route::post('/send-otp', [LoginController::class, 'sendOtp'])->name('send.otp');
-Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
-Route::post('/otp', [LoginController::class, 'authotp'])->name('posts.otp');
-Route::get('/resend-otp', [LoginController::class, 'resendOtp'])->name('resend.otp');
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Dashboard
