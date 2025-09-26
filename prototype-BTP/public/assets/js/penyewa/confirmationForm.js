@@ -179,7 +179,7 @@ function confirmSubmission(event) {
                 alert('Terjadi kesalahan saat mengirim data');
                 return Promise.reject('Failed response');
             }
-            return response.json(); // Mengambil response dalam format JSON
+            return response.json(); 
         })
         .then(data => {
             if (data.is_sqli) {
@@ -187,12 +187,10 @@ function confirmSubmission(event) {
                 
                 let confidencePercent = data.probability * 100;
                 
-                // Pembulatan khusus: Jika confidence sangat mendekati 100%, bulatkan ke 99.99
-                // Ini akan memastikan 0.999999 tidak menjadi 100.00 jika Anda memang tidak ingin 100.00
                 if (confidencePercent > 99.99 && confidencePercent < 100) {
                     confidencePercent = 99.99;
                 } else {
-                    confidencePercent = confidencePercent.toFixed(2); // Bulatkan ke 2 desimal
+                    confidencePercent = confidencePercent.toFixed(2); 
                 }
 
                 const errorMessage = `SQL Injection terdeteksi! Tingkat keyakinan: ${confidencePercent}%`;

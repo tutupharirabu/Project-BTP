@@ -8,6 +8,7 @@ use App\Models\Ruangan;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log; // Import Log Facade
 
 class MeminjamRuanganController extends Controller
 {
@@ -22,7 +23,7 @@ class MeminjamRuanganController extends Controller
     {
         $dataPeminjaman = Peminjaman::all();
         $dataRuangan = Ruangan::all();
-        $origin = 'dashboard'; 
+        $origin = 'dashboard';
 
         return view('penyewa.meminjamRuangan', compact('dataPeminjaman', 'dataRuangan', 'origin'));
     }
@@ -37,25 +38,32 @@ class MeminjamRuanganController extends Controller
             'id_ruangan' => 'required',
             'role' => 'required',
             'tanggal_mulai' => 'required|date',
-            'jam_mulai' => 'required', 
+            'jam_mulai' => 'required',
             'jumlah' => 'required|integer',
         ]);
 
-            
         $fieldsToCheck = [
             'nama_peminjam' => $validated['nama_peminjam'],
-            'nomor_induk' => $validated['nomor_induk'],
-            'nomor_telepon' => $validated['nomor_telepon'],
+            // 'nomor_induk' => $validated['nomor_induk'],
+            // 'nomor_telepon' => $validated['nomor_telepon'],
             'keterangan' => $request->input('keterangan', '~'),
         ];
+        // Latency 
+        $startTime = microtime(true); 
 
         $response = $this->detectSQLInjection($fieldsToCheck);
+
+        $endTime = microtime(true); 
+        $latencyMs = round(($endTime - $startTime) * 1000, 2); 
+
+        Log::info('SQL Injection Detection Latency: ' . $latencyMs . ' ms');
 
         if (isset($response['is_sqli']) && $response['is_sqli']) {
             return response()->json([
                 'is_sqli' => true,
-                'probability' => $response['probability']
-            ], 200);  
+                'probability' => $response['probability'],
+                'latency_ms' => $latencyMs 
+            ], 200);
         }
 
         $keterangan = $request->input('keterangan');
@@ -117,12 +125,14 @@ class MeminjamRuanganController extends Controller
             $tanggal_selesai_plus_one_hour = $datetime->format('Y-m-d H:i:s');
         }
 
-        $fieldsToCheck = [
-            'nama_peminjam' => $validated['nama_peminjam'],
-            'nomor_induk' => $validated['nomor_induk'],
-            'nomor_telepon' => $validated['nomor_telepon'],
-            'keterangan' => $request->input('keterangan', '~'), 
-        ];
+        // --- Perhatian: Ada duplikasi logic fieldsToCheck di sini. Pertimbangkan untuk menghapusnya jika tidak diperlukan. ---
+        // $fieldsToCheck = [
+        //     'nama_peminjam' => $validated['nama_peminjam'],
+        //     'nomor_induk' => $validated['nomor_induk'],
+        //     'nomor_telepon' => $validated['nomor_telepon'],
+        //     'keterangan' => $request->input('keterangan', '~'),
+        // ];
+        // --- End of Duplication ---
 
         $meminjamRuangan = new Peminjaman([
             'nama_peminjam' => $request->input('nama_peminjam'),
@@ -141,8 +151,9 @@ class MeminjamRuanganController extends Controller
 
         $meminjamRuangan->save();
 
-        
-        return response()->json(['message' => 'Data successfully saved'], 200); 
+
+        // Tambahkan latency ke response JSON juga jika deteksi tidak teridentifikasi SQLi
+        return response()->json(['message' => 'Data successfully saved', 'is_sqli' => false, 'latency_ms' => $latencyMs], 200);
     }
 
 
@@ -150,7 +161,7 @@ class MeminjamRuanganController extends Controller
     {
         try {
             $textToCheck = implode(' ', array_values($data));
-            
+
             $response = Http::post('http://localhost:5000/detect_sqli', [
                 'query' => $textToCheck
             ]);
@@ -158,7 +169,7 @@ class MeminjamRuanganController extends Controller
             return $response->json();
         } catch (\Exception $e) {
             \Log::error('SQL Injection detection API error: ' . $e->getMessage());
-            return ['is_sqli' => false, 'probability' => 0];
+            return ['is_sqli' => false, 'probability' => 0, 'latency_ms' => 0]; // Tambahkan latency_ms juga di sini untuk konsistensi
         }
     }
 
