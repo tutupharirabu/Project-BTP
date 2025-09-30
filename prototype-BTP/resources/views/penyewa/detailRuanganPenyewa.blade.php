@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/penyewa/detailRuangan.css') }}">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
+        <script defer src="https://umami-web-traffic-analysis.tutupharirabu.cloud/script.js"
+            data-website-id="e379e174-3600-4866-9ed9-a33d3750d016"></script>
     </head>
     <div class="container-fluid mt-4">
         <!-- title -->
@@ -300,15 +300,15 @@
 
             function showFooter() {
                 var footerContent = `
-                                            <div class="d-flex align-items-center mr-4">
-                                                <div class="mark-available"></div>
-                                                <p class="my-auto">Tersedia</p>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="mark-notavailable"></div>
-                                                <p class="my-auto">Tidak tersedia</p>
-                                            </div>
-                                        `;
+                                                <div class="d-flex align-items-center mr-4">
+                                                    <div class="mark-available"></div>
+                                                    <p class="my-auto">Tersedia</p>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mark-notavailable"></div>
+                                                    <p class="my-auto">Tidak tersedia</p>
+                                                </div>
+                                            `;
                 $('#modal-footer-content').html(footerContent);
             }
 
@@ -350,16 +350,16 @@
                                 var markClass = isFull ? 'cek-notavailable' : 'cek-available';
                                 var seatLabel = isFull ? 'Penuh' : (seatInfo ? `Sisa ${seatInfo.sisa_seat}` : 'Tersedia');
                                 var dayHtml = `
-                                        <div class="mx-2 text-center">
-                                            <div>
-                                                <p class="day-name">${dayName}</p>
-                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                            <div class="mx-2 text-center">
+                                                <div>
+                                                    <p class="day-name">${dayName}</p>
+                                                    <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                </div>
+                                                <div class="${markClass}">
+                                                    <p style="margin:0;">${seatLabel}</p>
+                                                </div>
                                             </div>
-                                            <div class="${markClass}">
-                                                <p style="margin:0;">${seatLabel}</p>
-                                            </div>
-                                        </div>
-                                    `;
+                                        `;
                                 content += dayHtml;
                             }
                             content += '</div>';
@@ -396,16 +396,16 @@
                                 var hoursHtml = getHoursHtml(dayDate, response.usedTimeSlots);
 
                                 var dayHtml = `
-                                                    <div class="mx-2 text-center">
-                                                        <div>
-                                                            <p class="day-name">${dayName}</p>
-                                                            <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                        <div class="mx-2 text-center">
+                                                            <div>
+                                                                <p class="day-name">${dayName}</p>
+                                                                <p class="font-weight-bold date-available">${currentDateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                                                            </div>
+                                                            <div>
+                                                                ${hoursHtml}
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            ${hoursHtml}
-                                                        </div>
-                                                    </div>
-                                                `;
+                                                    `;
                                 content += dayHtml;
                             }
                             content += '</div>';

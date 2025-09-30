@@ -8,8 +8,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale/id.js"></script>
-        <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-            data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
+        <script defer src="https://umami-web-traffic-analysis.tutupharirabu.cloud/script.js"
+            data-website-id="e379e174-3600-4866-9ed9-a33d3750d016"></script>
     </head>
 
     <div class="container-fluid mt-4">

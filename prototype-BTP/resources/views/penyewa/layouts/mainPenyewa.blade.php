@@ -24,8 +24,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dragndrop.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/penyewa/form.css') }}">
-    <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-        data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
+    <script defer src="https://umami-web-traffic-analysis.tutupharirabu.cloud/script.js"
+        data-website-id="e379e174-3600-4866-9ed9-a33d3750d016"></script>
 
 </head>
 

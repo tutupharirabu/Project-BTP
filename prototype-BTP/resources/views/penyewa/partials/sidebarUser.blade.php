@@ -11,8 +11,8 @@
     <!-- logo google and friend -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <script defer src="https://umami-web-analytics.tutupharirabu.cloud/script.js"
-        data-website-id="c5e87046-42e9-4b5f-b09e-acec20d1e4f6"></script>
+    <script defer src="https://umami-web-traffic-analysis.tutupharirabu.cloud/script.js"
+        data-website-id="e379e174-3600-4866-9ed9-a33d3750d016"></script>
 </head>
 
 <div class="container-fluid">

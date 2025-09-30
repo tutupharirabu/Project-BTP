@@ -15,4 +15,10 @@ if [ "${BUILD_ASSETS:-false}" = "true" ] && [ -f /var/www/app/package.json ]; th
   npm run build
 fi
 
+if [ -d "/var/www/app/storage" ]; then
+  echo "Ensuring write permissions for storage and bootstrap/cache"
+  chown -R www-data:www-data /var/www/app/storage /var/www/app/bootstrap/cache 2>/dev/null || true
+  chmod -R ug+rwX /var/www/app/storage /var/www/app/bootstrap/cache 2>/dev/null || true
+fi
+
 exec "$@"
