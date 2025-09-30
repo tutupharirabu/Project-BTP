@@ -7,7 +7,7 @@ services:
     depends_on:
       - php-fpm
     volumes:
-      - ./docker/nginx/sites/laravel.conf:/etc/nginx/conf.d/default.conf:ro # [PROD ONLY] Pastikan ini file nginx.conf prod
+      - ./docker/nginx/sites/prod/laravel.conf:/etc/nginx/conf.d/laravel.conf:ro # [PROD ONLY] Gunakan konfigurasi nginx produksi
       - ./:/var/www/app:ro  # [PROD ONLY] Pastikan path ini sesuai dengan path kode utama (bisa diubah sesuai struktur projectmu)
     # - ./docker/logs/nginx:/var/log/nginx # [OPSIONAL] Mount log nginx ke host jika ingin persist log
     networks:

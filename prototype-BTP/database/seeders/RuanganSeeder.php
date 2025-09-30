@@ -22,7 +22,7 @@ class RuanganSeeder extends Seeder
         $sampleImages = File::files(public_path('assets/img/BTP'));
 
         Ruangan::factory()
-            ->count(50)
+            ->count(5)
             ->create()
             ->each(function ($ruangan) use ($sampleImages) {
                 $jumlahGambar = rand(1, 5);

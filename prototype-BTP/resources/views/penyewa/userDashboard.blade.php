@@ -61,7 +61,7 @@
                                                             @elseif ($ruangan->status == "Penuh")
                                                                 <span class="status-penuh">Penuh</span>
                                                             @elseif ($ruangan->status == "Digunakan")
-                                                                <span class="status-not-available">Digunakan</span>
+                                                                <span class="status-digunakan">Digunakan</span>
                                                             @endif
                                                         </div>
                                                     </div>

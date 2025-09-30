@@ -51,7 +51,7 @@
                                     @elseif ($ruangan->status == "Penuh")
                                         <span class="status-penuh">Penuh</span>
                                     @elseif ($ruangan->status == "Digunakan")
-                                        <span class="status-not-available">Digunakan</span>
+                                        <span class="status-digunakan">Digunakan</span>
                                     @endif
                                     <a href="{{ route('penyewa.detailRuangan', $ruangan->id_ruangan) }}"
                                         class="btn btn-dark shadow-none status-detail">Detail</a>

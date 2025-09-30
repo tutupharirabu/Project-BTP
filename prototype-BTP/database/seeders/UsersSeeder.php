@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'id_users' => uuid_create(4),
+            'id_users' => "75dc9697-d474-4707-88ef-f36cf00fdf58",
             'username'  => 'Petugas BTP',
             'email' => 'petugasBTP@gmail.com',
             'role' => 'Admin',

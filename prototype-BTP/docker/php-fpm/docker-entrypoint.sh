@@ -59,20 +59,14 @@ if [ -f "/var/www/package.json" ]; then
     fi
   fi
   
-  # Hanya build asset untuk prod jika butuh
-  if [ "$BUILD_NEEDED" = true ] && [ "$APP_ENV" != "local" ]; then
-    echo "Building production assets..."
+  if [ "$BUILD_NEEDED" = true ]; then
+    if [ "$APP_ENV" = "local" ]; then
+      echo "Local environment detected, building assets for PWA compatibility..."
+    else
+      echo "Building production assets..."
+    fi
     npm run build
-  # === [DEV ONLY: TIDAK DIPERLUKAN DI PROD] ===
-  # elif [ "$BUILD_NEEDED" = true ] && [ "$APP_ENV" = "local" ]; then
-  #   echo "Development environment detected. Run 'docker-compose exec php-fpm npm run dev' for hot reloading."
-  #   if [ ! -f "public/build/manifest.json" ]; then
-  #     mkdir -p public/build
-  #     echo '{}' > public/build/manifest.json
-  #     echo "Created empty manifest.json to prevent errors."
-  #   fi
   fi
-  # === [END DEV ONLY] ===
 
   # cd - > /dev/null
 fi
