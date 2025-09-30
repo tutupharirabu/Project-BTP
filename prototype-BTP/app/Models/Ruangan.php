@@ -16,15 +16,9 @@ class Ruangan extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $primaryKey;
-    protected $table;
-    protected $fillable;
-
-    public function __construct(array $attributes = [])
-    {
-        $this->primaryKey = RuanganDatabaseColumn::IdRuangan->value;
-        $this->table = RuanganDatabaseColumn::Ruangan->value;
-        $this->fillable = [
+    protected $primaryKey = RuanganDatabaseColumn::IdRuangan->value;
+    protected $table = RuanganDatabaseColumn::Ruangan->value;
+    protected $fillable = [
             RuanganDatabaseColumn::GroupIdRuangan->value,
             RuanganDatabaseColumn::NamaRuangan->value,
             RuanganDatabaseColumn::KapasitasMinimal->value,
@@ -36,8 +30,6 @@ class Ruangan extends Model
             RuanganDatabaseColumn::KeteranganRuangan->value,
             UsersDatabaseColumn::IdUsers->value
         ];
-        parent::__construct($attributes);
-    }
 
     public function user(): BelongsTo
     {

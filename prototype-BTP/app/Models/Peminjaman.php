@@ -15,16 +15,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Peminjaman extends Model
 {
     use HasFactory, HasUuids;
-    protected $table;
-    protected $primaryKey;
-    protected $fillable;
-    protected $dates;
-
-    public function __construct(array $attributes = [])
-    {
-        $this->table = PeminjamanDatabaseColumn::Peminjaman->value;
-        $this->primaryKey = PeminjamanDatabaseColumn::IdPeminjaman->value;
-        $this->fillable = [
+    protected $table = PeminjamanDatabaseColumn::Peminjaman->value;
+    protected $primaryKey = PeminjamanDatabaseColumn::IdPeminjaman->value;
+    protected $fillable = [
             PeminjamanDatabaseColumn::NamaPenyewa->value,
             PeminjamanDatabaseColumn::StatusPenyewa->value,
             PeminjamanDatabaseColumn::NomorIndukPenyewa->value,
@@ -38,9 +31,7 @@ class Peminjaman extends Model
             PeminjamanDatabaseColumn::UrlKtp->value,
             RuanganDatabaseColumn::IdRuangan->value
         ];
-        $this->dates = [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value];
-        parent::__construct($attributes);
-    }
+    protected $dates = [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value];
 
     public function user(): BelongsTo
     {

@@ -16,23 +16,15 @@ class Users extends Authenticatable
 {
     use HasFactory, HasUuids;
 
-    protected $table;
-    protected $primaryKey;
-    protected $fillable;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = UsersDatabaseColumn::Users->value;
-        $this->primaryKey = UsersDatabaseColumn::IdUsers->value;
-        $this->fillable = [
+    protected $table = UsersDatabaseColumn::Users->value;
+    protected $primaryKey = UsersDatabaseColumn::IdUsers->value;
+    protected $fillable = [
             UsersDatabaseColumn::Username->value,
             UsersDatabaseColumn::Password->value,
             UsersDatabaseColumn::Email->value,
             UsersDatabaseColumn::Role->value,
             UsersDatabaseColumn::NamaLengkap->value
         ];
-    }
 
     protected function password(): Attribute
     {

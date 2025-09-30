@@ -37,7 +37,8 @@ class PenyewaPeminjamanController extends Controller
     {
         try {
             $this->penyewaPeminjamanService->handlePeminjaman($request);
-            return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.');
+            // return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.'); INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
+            return redirect('/meminjamRuangan')->with('success', 'Peminjaman berhasil.');
         } catch (RuntimeException $e) {
             // Tangkap error dari service (waktu sudah dibooking, seat tidak cukup, dll)
             return response()->json([

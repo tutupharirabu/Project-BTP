@@ -1,24 +1,27 @@
 (function () {
-    'use strict'
+    "use strict";
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
+    var forms = document.querySelectorAll(".needs-validation");
 
     // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+            "submit",
+            function (event) {
                 if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                    event.preventDefault();
+                    event.stopPropagation();
                 } else {
                     showConfirmationModal(event);
                 }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
+                form.classList.add("was-validated");
+            },
+            false
+        );
+    });
+})();
 
 // function adjustParticipantLimits() {
 //     var select = document.getElementById("id_ruangan");
@@ -61,16 +64,19 @@
 function generateInvoice() {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(
+        3,
+        "0"
+    );
     const invoiceNumber = `BTP${year}${month}${day}${hours}${minutes}${seconds}${randomNumber}`;
 
     // PATCH: cek dulu elemennya ada
-    const invoiceInput = document.getElementById('invoice');
+    const invoiceInput = document.getElementById("invoice");
     if (invoiceInput) {
         invoiceInput.value = invoiceNumber;
     } else {
@@ -78,25 +84,28 @@ function generateInvoice() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener("DOMContentLoaded", (event) => {
     generateInvoice();
 });
 
 function generateInvoiceNumber() {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Random 3-digit number
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const randomNumber = String(Math.floor(Math.random() * 1000)).padStart(
+        3,
+        "0"
+    ); // Random 3-digit number
 
     return `BTP${year}${month}${day}${hours}${minutes}${seconds}${randomNumber}`;
 }
 
 function convertToDisplayFormat(dateStr) {
-    const parts = dateStr.split('-');
+    const parts = dateStr.split("-");
     if (parts.length === 3) {
         return `${parts[2]}-${parts[1]}-${parts[0]}`;
     } else {
@@ -106,26 +115,30 @@ function convertToDisplayFormat(dateStr) {
 }
 
 function toggleConfirmButton() {
-    var confirmButton = document.getElementById('confirm_button');
-    var checkbox = document.getElementById('confirm_agreement');
+    var confirmButton = document.getElementById("confirm_button");
+    var checkbox = document.getElementById("confirm_agreement");
     confirmButton.disabled = !checkbox.checked;
 }
 
-document.getElementById('confirm_agreement').addEventListener('change', toggleConfirmButton);
+document
+    .getElementById("confirm_agreement")
+    .addEventListener("change", toggleConfirmButton);
 
 function showConfirmationPopup() {
-    const checkbox = document.getElementById('confirm_agreement');
+    const checkbox = document.getElementById("confirm_agreement");
 
     if (!checkbox.checked) {
-        alert('Anda harus menyetujui syarat & ketentuan sebelum melanjutkan.');
+        alert("Anda harus menyetujui syarat & ketentuan sebelum melanjutkan.");
         return;
     }
 
-    $('#confirmationModal').modal('hide'); // Hide the confirmation modal
-    $('#confirmationPopupModal').modal({
-        backdrop: 'static',
-        keyboard: false
-    }).modal('show'); // Show the confirmation popup modal
+    $("#confirmationModal").modal("hide"); // Hide the confirmation modal
+    $("#confirmationPopupModal")
+        .modal({
+            backdrop: "static",
+            keyboard: false,
+        })
+        .modal("show"); // Show the confirmation popup modal
 }
 // Function confirmSubmission() without spinner
 // function confirmSubmission() {
@@ -165,41 +178,49 @@ function showConfirmationPopup() {
 function confirmSubmission(event) {
     event.preventDefault(); // Mencegah submit bawaan
 
-    const rentalForm = document.getElementById('rentalForm');
+    const rentalForm = document.getElementById("rentalForm");
     const formData = new FormData(rentalForm);
 
     // Simpan data form ke sessionStorage
-    sessionStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData.entries())));
+    sessionStorage.setItem(
+        "formData",
+        JSON.stringify(Object.fromEntries(formData.entries()))
+    );
 
     // Tampilkan spinner dan sembunyikan tombol
-    document.getElementById('confirmationButtons').classList.add('d-none');
-    document.getElementById('spinner').classList.remove('d-none');
+    document.getElementById("confirmationButtons").classList.add("d-none");
+    document.getElementById("spinner").classList.remove("d-none");
 
     fetch(rentalForm.action, {
-        method: 'POST',
+        method: "POST",
         body: formData,
         headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-        }
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                .content,
+        },
     })
-        .then(async response => {
+        .then(async (response) => {
             if (response.ok) {
                 // console.log('Data berhasil dikirim');
 
                 // Tutup modal Confirmation
-                const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
+                const confirmationModal = bootstrap.Modal.getInstance(
+                    document.getElementById("confirmationPopupModal")
+                );
                 if (confirmationModal) {
                     confirmationModal.hide();
                 }
 
                 // Tampilkan modal WhatsApp
                 setTimeout(() => {
-                    const whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'));
+                    const whatsappModal = new bootstrap.Modal(
+                        document.getElementById("whatsappModal")
+                    );
                     whatsappModal.show();
                 }, 500);
             } else {
                 // Cek jika error overlap dari backend
-                let errMsg = 'Terjadi kesalahan. Silakan coba lagi.';
+                let errMsg = "Terjadi kesalahan. Silakan coba lagi.";
                 if (response.status === 422) {
                     const data = await response.json();
                     errMsg = data.message || errMsg;
@@ -211,51 +232,65 @@ function confirmSubmission(event) {
                 }, 5); // bisa diatur ke 50 atau 100 jika ingin transisi benar-benar halus
             }
         })
-        .catch(error => {
-            console.error('Error submitting form:', error);
-            alert('Terjadi kesalahan saat mengirim data.');
+        .catch((error) => {
+            console.error("Error submitting form:", error);
+            alert("Terjadi kesalahan saat mengirim data.");
         })
         .finally(() => {
             // Sembunyikan spinner dan tampilkan tombol kembali
-            document.getElementById('spinner').classList.add('d-none');
-            document.getElementById('confirmationButtons').classList.remove('d-none');
+            document.getElementById("spinner").classList.add("d-none");
+            document
+                .getElementById("confirmationButtons")
+                .classList.remove("d-none");
         });
 }
 
-document.getElementById('whatsappButton').addEventListener('click', function () {
-    setTimeout(function () {
-        window.location.href = "/dashboardPenyewa";
-    }, 1000); // Adjust the timeout as needed
-});
+document
+    .getElementById("whatsappButton")
+    .addEventListener("click", function () {
+        setTimeout(function () {
+            // window.location.href = "/dashboardPenyewa"; INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
+            window.location.href = "/meminjamRuangan";
+        }, 1000); // Adjust the timeout as needed
+    });
 
 // Redirect to dashboardPenyewa when the WhatsApp modal is closed
-document.querySelector('.whatsapp-close-button').addEventListener('click', function () {
-    window.location.href = "/dashboardPenyewa";
+document
+    .querySelector(".whatsapp-close-button")
+    .addEventListener("click", function () {
+        // window.location.href = "/dashboardPenyewa"; INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
+        window.location.href = "/meminjamRuangan";
+    });
+
+document.getElementById("nomor_induk").addEventListener("input", function (e) {
+    // Remove non-digit characters
+    e.target.value = e.target.value.replace(/\D/g, "");
 });
 
-document.getElementById('nomor_induk').addEventListener('input', function (e) {
-    // Remove non-digit characters
-    e.target.value = e.target.value.replace(/\D/g, '');
-});
-
-document.getElementById('nomor_telepon').addEventListener('input', function (e) {
-    // Remove non-digit characters
-    e.target.value = e.target.value.replace(/\D/g, '');
-});
+document
+    .getElementById("nomor_telepon")
+    .addEventListener("input", function (e) {
+        // Remove non-digit characters
+        e.target.value = e.target.value.replace(/\D/g, "");
+    });
 
 function showErrorModal(msg) {
     // Tutup confirmation popup/modal jika masih terbuka
-    var confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    var confirmationModal = bootstrap.Modal.getInstance(
+        document.getElementById("confirmationModal")
+    );
     if (confirmationModal) {
         confirmationModal.hide();
     }
 
-    var confirmationModal1 = bootstrap.Modal.getInstance(document.getElementById('confirmationPopupModal'));
+    var confirmationModal1 = bootstrap.Modal.getInstance(
+        document.getElementById("confirmationPopupModal")
+    );
     if (confirmationModal1) {
         confirmationModal1.hide();
     }
 
-    let errModal = document.getElementById('errorModal');
+    let errModal = document.getElementById("errorModal");
     if (!errModal) {
         // Buat modal error kalau belum ada
         const modalHtml = `
@@ -278,10 +313,10 @@ function showErrorModal(msg) {
                 </div>
             </div>
         `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        errModal = document.getElementById('errorModal');
+        document.body.insertAdjacentHTML("beforeend", modalHtml);
+        errModal = document.getElementById("errorModal");
     }
-    document.getElementById('errorModalMsg').innerText = msg;
+    document.getElementById("errorModalMsg").innerText = msg;
     var bsModal = new bootstrap.Modal(errModal);
     bsModal.show();
 }

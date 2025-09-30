@@ -285,7 +285,7 @@
                                                         style=" background-color: #B0B0B0; ">Digunakan</a>
                                                 @else
                                                     <a class="btn text-white status" style=" background-color: #61677A; ">
-                                                        - </a>
+                                                        Penuh </a>
                                                 @endif
                                             </td>
                                             <td>
