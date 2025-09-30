@@ -4,20 +4,24 @@ services:
   nginx:
     build:
       context: "./docker/nginx"
+      dockerfile: Dockerfile.prod
     depends_on:
       - php-fpm
     volumes:
-      - ./docker/nginx/sites/prod/laravel.conf:/etc/nginx/conf.d/laravel.conf:ro # [PROD ONLY] Gunakan konfigurasi nginx produksi
-      - ./:/var/www/app:ro  # [PROD ONLY] Pastikan path ini sesuai dengan path kode utama (bisa diubah sesuai struktur projectmu)
-    # - ./docker/logs/nginx:/var/log/nginx # [OPSIONAL] Mount log nginx ke host jika ingin persist log
+      - ./docker/nginx/sites/prod/laravel.conf:/etc/nginx/conf.d/laravel.conf:ro
+      - ./:/var/www/app:ro
+      - ./docker/logs/nginx:/var/log/nginx # [OPSIONAL] Mount log nginx ke host jika ingin persist log
+    restart: unless-stopped
     networks:
       - appnet
 
   php-fpm:
     build:
       context: "./docker/php-fpm"
+      dockerfile: Dockerfile.prod
+    working_dir: /var/www/app
     volumes:
-      - ./:/var/www/app  # [PROD ONLY] Pastikan sesuai path utama kode
+      - ./:/var/www/app
     networks:
       - appnet
     expose:
@@ -26,14 +30,12 @@ services:
       - pgsql
       - redis
     environment:
-      - APP_ENV=production
-      - APP_DEBUG=false
-  # Tambahkan env lain jika perlu, seperti DB_HOST, DB_USERNAME, DB_PASSWORD, dll
+      APP_ENV: production
+      APP_DEBUG: "false"
+    restart: unless-stopped
 
   pgsql:
     image: postgres:17
-    # ports:
-    #   - "5432:5432"  # [DEV ONLY] Jangan expose di prod kecuali perlu akses eksternal, sebaiknya dikomentari
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
@@ -47,11 +49,10 @@ services:
       test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
       retries: 3
       timeout: 5s
+    restart: unless-stopped
 
   redis:
     image: redis:alpine
-    # ports:
-    #   - "6379:6379"  # [DEV ONLY] Jangan expose di prod kecuali perlu akses eksternal, sebaiknya dikomentari
     volumes:
       - sail-redis:/data
     networks:
@@ -60,15 +61,7 @@ services:
       test: ["CMD", "redis-cli", "ping"]
       retries: 3
       timeout: 5s
-
-  mailpit:
-    image: axllent/mailpit:latest
-    # ports:
-    #   - "1025:1025"
-    #   - "8025:8025"
-    # [DEV ONLY] Biasanya hanya untuk development atau testing email, jangan diaktifkan di prod kecuali memang butuh.
-    networks:
-      - appnet
+    restart: unless-stopped
 
 networks:
   appnet:

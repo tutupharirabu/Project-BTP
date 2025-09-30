@@ -3,3 +3,5 @@
 *.key
 *.pem
 ssl/
+Dockerfile.dev
+startup.dev.sh
