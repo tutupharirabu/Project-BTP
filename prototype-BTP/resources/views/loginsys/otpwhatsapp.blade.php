@@ -23,9 +23,9 @@
             </div>
 
             <h3 class="text-center pb-3">Kode OTP</h3>
-            <p class="text-center">Silakan masukkan kode OTP yang dikirim ke email Anda</p>
+            <p class="text-center">Silakan masukkan kode OTP yang dikirim ke Whatsapp Anda</p>
 
-            <form class="row g-3 needs-validation" action="{{ route('posts.otp') }}" method="POST" novalidate>
+            <form class="row g-3 needs-validation" action="{{ route('otp.whatsapp') }}" method="POST" novalidate>
                 @csrf
                 <div class="col-md-12">
                     <label for="otp" class="form-label thicker">Kode OTP</label>
@@ -46,27 +46,26 @@
                 <p>Kode OTP berlaku selama <span id="countdown"></span></p>
                 <p class="mt-3 text-sm">
                     Tidak menerima kode? 
-                    <a href="{{ route('resend.otp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
+                    <a href="{{ route('resend.whatsapp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
+                </p>
+                <p class="mt-3 text-sm">
+                    Kirim kode OTP dengan metode lainnya 
+                    <div class="d-flex gap-2 mt-2">
+                        <form action="{{ route('posts.otp') }}" method="POST">
+                            @csrf
+                            <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
+                            Kirim Via Email
+                            </button>
+                        </form>
+                        <form action="#" method="POST">
+                            @csrf
+                            <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
+                            Kirim Via Telegram
+                            </button>
+                        </form>
+                    </div>
                 </p>
             </form>
-            <p class="mt-3 text-sm">
-                Kirim kode OTP dengan metode lainnya 
-                <div class="d-flex gap-2 mt-2">
-                    <form action="{{ route('send.otp.whatsapp') }}" method="POST">
-                        @csrf
-                        <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
-                            Kirim Via Whatsapp
-                        </button>
-                    </form> 
-                        
-                    <form action="#" method="POST">
-                        @csrf
-                        <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
-                        Kirim Via Telegram
-                        </button>
-                    </form>
-                </div>
-            </p>
         </div>
     </div>
 
