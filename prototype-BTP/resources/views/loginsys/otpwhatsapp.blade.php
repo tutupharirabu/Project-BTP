@@ -25,7 +25,7 @@
             <h3 class="text-center pb-3">Kode OTP</h3>
             <p class="text-center">Silakan masukkan kode OTP yang dikirim ke Whatsapp Anda</p>
 
-            <form class="row g-3 needs-validation" action="{{ route('posts.otp') }}" method="POST" novalidate>
+            <form class="row g-3 needs-validation" action="{{ route('otp.whatsapp') }}" method="POST" novalidate>
                 @csrf
                 <div class="col-md-12">
                     <label for="otp" class="form-label thicker">Kode OTP</label>
@@ -46,7 +46,7 @@
                 <p>Kode OTP berlaku selama <span id="countdown"></span></p>
                 <p class="mt-3 text-sm">
                     Tidak menerima kode? 
-                    <a href="{{ route('resend.otp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
+                    <a href="{{ route('resend.whatsapp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
                 </p>
                 <p class="mt-3 text-sm">
                     Kirim kode OTP dengan metode lainnya 

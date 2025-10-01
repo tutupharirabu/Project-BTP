@@ -43,13 +43,30 @@
                         <button type="submit" class="btn btnlog mx-auto">Submit</button>
                     </div>
                 </div>
-                <p>Kode OTP berlaku selama <span id="countdown"></span></p>
-                <p class="mt-3 text-sm">
-                    Tidak menerima kode? 
-                    <a href="{{ route('resend.otp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
-                </p>
-
             </form>
+            <p>Kode OTP berlaku selama <span id="countdown"></span></p>
+            <p class="mt-3 text-sm">
+                Tidak menerima kode? 
+                <a href="{{ route('resend.otp') }}" class="text-blue-500 hover:underline">Kirim ulang OTP</a>
+            </p>
+            <p class="mt-3 text-sm">
+                Kirim kode OTP dengan metode lainnya 
+                <div class="d-flex gap-2 mt-2">
+                    <form action="{{ route('send.otp.whatsapp') }}" method="POST">
+                        @csrf
+                        <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
+                            Kirim Via Whatsapp
+                        </button>
+                    </form> 
+                        
+                    <form action="#" method="POST">
+                        @csrf
+                        <button type="submit" style="background:#0c9300; color:white; border:none; border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer;">
+                        Kirim Via Telegram
+                        </button>
+                    </form>
+                </div>
+            </p>
         </div>
     </div>
 

@@ -33,6 +33,13 @@ Route::get('/', [DashboardPenyewaController::class, 'index']);
 // Authenticate
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('posts.login');
+Route::get('/otp', [LoginController::class, 'otp'])->name('otp');
+Route::post('/otp', [LoginController::class, 'authotp'])->name('posts.otp');
+Route::get('/resend-otp', [LoginController::class, 'resendOtp'])->name('resend.otp');
+Route::get('/otp-whatsapp', [LoginController::class, 'otpWhatsappForm'])->name('otp.whatsapp.form');
+Route::post('/otp/send-whatsapp', [LoginController::class, 'otpwhatsapp'])->name('send.otp.whatsapp');
+Route::post('/otp/whatsapp', [LoginController::class, 'authwhatsapp'])->name('otp.whatsapp');
+
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Dashboard
