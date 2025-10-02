@@ -84,7 +84,7 @@
                 events: bookings,
                 eventClick: function (event) {
                     $('#modalTitle').text(event.title);
-                    $('#modalNama').text(event.nama);
+                    $('#modalNama').text(event.peminjam);
                     $('#modalRuangan').text(event.ruangan);
                     $('#modalStart').text(event.start.format('DD-MM-YYYY | HH:mm'));
                     if (event.end) {
