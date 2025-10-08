@@ -34,6 +34,8 @@ function showConfirmationModal() {
         return;
     }
 
+    toggleConfirmationLoading(false);
+
     const modal = document.getElementById('confirmationModal');
     modal.style.display = 'block';
     modal.style.position = 'fixed';
@@ -43,16 +45,21 @@ function showConfirmationModal() {
 }
 
 function closeConfirmationModal() {
+    toggleConfirmationLoading(false);
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
 function submitForm() {
     const form = document.getElementById('add-form');
     const formData = new FormData(form);
+    const roomName = formData.get('nama_ruangan');
 
-    // Ambil nilai input sebelum mereset form
-    const roomName = document.getElementById('nama_ruangan').value;
-    // console.log('Room name before reset:', roomName); // Debug: Check the room name value before form reset
+    // Normalisasi angka harga agar hanya mengirim digit
+    if (formData.has('harga_ruangan')) {
+        formData.set('harga_ruangan', (formData.get('harga_ruangan') || '').toString().replace(/[^0-9]/g, ''));
+    }
+
+    toggleConfirmationLoading(true);
 
     fetch(form.action, {
         method: 'POST',
@@ -62,16 +69,24 @@ function submitForm() {
         }
     })
         .then(response => {
-            if (response.ok) {
-                closeConfirmationModal();
-                form.reset();
-                form.classList.remove('was-validated');
-                showSuccessModal(roomName); // Pass the roomName to showSuccessModal
-            } else {
-                console.error('Form submission failed.');
+            if (!response.ok) {
+                throw new Error('Form submission failed.');
             }
+            return response;
         })
-        .catch(error => console.error('Form submission error:', error));
+        .then(() => {
+            closeConfirmationModal();
+            form.reset();
+            form.classList.remove('was-validated');
+            showSuccessModal(roomName);
+        })
+        .catch(error => {
+            console.error('Form submission error:', error);
+            alert('Gagal menambahkan ruangan. Silakan coba lagi.');
+        })
+        .finally(() => {
+            toggleConfirmationLoading(false);
+        });
 }
 
 function showSuccessModal(roomName) {
@@ -94,6 +109,23 @@ function showSuccessModal(roomName) {
 function closeSuccessModal() {
     document.getElementById('successModal').style.display = 'none';
     window.location.href = '/daftarRuanganAdmin';
+}
+
+function toggleConfirmationLoading(isLoading) {
+    const spinner = document.getElementById('confirmationSpinner');
+    const buttons = document.getElementById('confirmationButtons');
+
+    if (!spinner || !buttons) {
+        return;
+    }
+
+    if (isLoading) {
+        spinner.classList.remove('d-none');
+        buttons.classList.add('d-none');
+    } else {
+        spinner.classList.add('d-none');
+        buttons.classList.remove('d-none');
+    }
 }
 
 // Bootstrap form validation

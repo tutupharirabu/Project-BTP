@@ -150,7 +150,7 @@
                                 </span>
                             </div>
                             <div
-                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                class="text-center status-count right-status text-black shadow d-flex flex-column justify-content-center">
                                 <p class="text-center mt-1 mb-2"
                                     style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Menunggu</p>
@@ -172,7 +172,7 @@
                                 </span>
                             </div>
                             <div
-                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                class="text-center status-count right-status text-black shadow d-flex flex-column justify-content-center">
                                 <p class="text-center mt-1 mb-2"
                                     style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Selesai</p>

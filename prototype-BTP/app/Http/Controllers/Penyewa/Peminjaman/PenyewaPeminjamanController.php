@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Penyewa\Peminjaman;
 
 use RuntimeException;
+use Throwable;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Enums\Database\RuanganDatabaseColumn;
 use App\Services\Peminjaman\PenyewaPeminjamanService;
@@ -37,14 +40,39 @@ class PenyewaPeminjamanController extends Controller
     {
         try {
             $this->penyewaPeminjamanService->handlePeminjaman($request);
-            // return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.'); INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
-            return redirect('/meminjamRuangan')->with('success', 'Peminjaman berhasil.');
+            return redirect('/dashboardPenyewa')->with('success', 'Peminjaman berhasil.');
+        } catch (QueryException $e) {
+            Log::error('Gagal menyimpan peminjaman dari penyewa.', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $message = 'Peminjaman tidak dapat diproses. Mohon coba lagi atau hubungi admin.';
+
+            if (str_contains($e->getMessage(), "Data too long for column 'keterangan'")) {
+                $message = 'Deskripsi kegiatan terlalu panjang. Mohon ringkas isi kolom keterangan sebelum mengajukan lagi.';
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+            ], 422);
         } catch (RuntimeException $e) {
             // Tangkap error dari service (waktu sudah dibooking, seat tidak cukup, dll)
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 422);
+        } catch (Throwable $e) {
+            Log::error('Terjadi kesalahan umum saat penyewa melakukan peminjaman.', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Sistem sedang mengalami kendala. Mohon coba beberapa saat lagi atau hubungi admin.',
+            ], 500);
         }
     }
 

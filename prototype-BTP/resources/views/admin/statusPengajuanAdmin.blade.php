@@ -168,6 +168,8 @@
                                         <th scope="col" class="text-center">Tanggal Mulai</th>
                                         <th scope="col" class="text-center">Tanggal Selesai</th>
                                         <th scope="col" class="text-center">Foto KTP</th>
+                                        <th scope="col" class="text-center">Foto KTM</th>
+                                        <th scope="col" class="text-center">Foto NPWP</th>
                                         <th scope="col" class="text-center">Disetujui oleh</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" style="width: 230px;" class="text-center">Aksi</th>
@@ -185,49 +187,53 @@
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
-                                            <td>
-                                                <!-- Tombol untuk membuka modal gambar -->
-                                                <button type="button" class="btn btn-success btn-sm text-capitalize"
-                                                    style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                    data-bs-target="#imageModal{{ $data->id_peminjaman }}">
-                                                    Foto KTP
-                                                </button>
+                                            @php
+                                                $documentGallery = [
+                                                    'ktp' => ['label' => 'Foto KTP', 'url' => $data->ktp_signed_url ?? null],
+                                                    'ktm' => ['label' => 'Foto KTM', 'url' => $data->ktm_signed_url ?? null],
+                                                    'npwp' => ['label' => 'Foto NPWP', 'url' => $data->npwp_signed_url ?? null],
+                                                ];
+                                            @endphp
+                                            @foreach ($documentGallery as $docKey => $doc)
+                                                <td>
+                                                    @if ($doc['url'])
+                                                        @php
+                                                            $modalId = $docKey . 'Modal' . $data->id_peminjaman;
+                                                        @endphp
+                                                        <button type="button" class="btn btn-success btn-sm text-capitalize"
+                                                            style="background-color:#0C9300;" data-bs-toggle="modal"
+                                                            data-bs-target="#{{ $modalId }}">
+                                                            {{ $doc['label'] }}
+                                                        </button>
 
-                                                <!-- Modal untuk gambar -->
-                                                <div class="modal fade" id="imageModal{{ $data->id_peminjaman }}" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Foto KTP
-                                                                </h5>
-                                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <!-- Menampilkan gambar tunggal menggunakan Cloudinary -->
-                                                                @if (!empty($data->ktp_url))
-                                                                    {{-- <x-cld-image public-id="{{ $data->ktp_url }}"
-                                                                        class="d-block w-100" width="800" height="400" crop="fill"
-                                                                        alt="Foto KTP">
-                                                                    </x-cld-image> --}}
-                                                                    <img src="{{ $data->ktp_url }}" alt="Foto KTP" width="450"
-                                                                        height="300" style="object-fit: cover;"
-                                                                        oncontextmenu="return false;">
-                                                                @else
-                                                                    <p>Gambar tidak tersedia.</p>
-                                                                @endif
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
+                                                        <div class="modal fade" id="{{ $modalId }}" tabindex="-1" role="dialog"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">{{ $doc['label'] }}</h5>
+                                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                                            aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <img src="{{ $doc['url'] }}" alt="{{ $doc['label'] }}" width="450"
+                                                                            height="300" style="object-fit: cover;"
+                                                                            oncontextmenu="return false;">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
+                                            @endforeach
                                             @if ($data->status == 'Menunggu')
                                                 <td>
                                                     {{ $data->user->nama_lengkap ?? '-' }}

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->bigInteger(PeminjamanDatabaseColumn::JumlahPeserta->value);
             $table->string(PeminjamanDatabaseColumn::TotalHarga->value, 255);
             $table->enum(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, [StatusPeminjaman::Menunggu->value, StatusPeminjaman::Disetujui->value, StatusPeminjaman::Ditolak->value, StatusPeminjaman::Selesai->value]);
-            $table->string(PeminjamanDatabaseColumn::KeteranganPenyewaan->value, 255);
+            $table->text(PeminjamanDatabaseColumn::KeteranganPenyewaan->value);
             $table->uuid(UsersDatabaseColumn::IdUsers->value)->nullable();
             $table->uuid(RuanganDatabaseColumn::IdRuangan->value);
             $table->foreign(UsersDatabaseColumn::IdUsers->value)->references(UsersDatabaseColumn::IdUsers->value)->on(UsersDatabaseColumn::Users->value)->onDelete('cascade');

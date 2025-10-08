@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'cloudinary' => [
+        'signed_url_ttl' => env('CLOUDINARY_SIGNED_URL_TTL', 3600),
+    ],
+
 ];

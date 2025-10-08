@@ -1,6 +1,6 @@
-@extends('admin.layouts.mainAdmin')
+@extends('penyewa.layouts.mainPenyewa')
 
-@section('containAdmin')
+@section('containPenyewa')
 
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -163,19 +163,40 @@
                                         <!-- Konten untuk Isi Tanggal Sewa akan dimuat di sini secara default -->
                                     </div>
                                     <div class="col-md mt-4" id="ktpUrlDiv">
-                                        <label for="ktp_url" class="form-label text-color">Upload KTP
-                                            (JPEG,PNG,JPG)</label>
+                                        <label for="ktp_url" class="form-label text-color">Upload KTP</label>
                                         <input type="file" name="ktp_url" id="ktp_url"
-                                            class="date form-control border-color" required>
-                                        <div class="invalid-feedback">
+                                            class="date form-control border-color" accept="image/jpeg,image/png,image/jpg" required>
+                                        <small class="form-text text-muted d-block mt-1">Format berkas: JPEG, PNG, JPG (maks. 2 MB)</small>
+                                        <div class="invalid-feedback mt-1">
                                             Upload KTP Anda!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4" id="ktmUrlDiv" style="display: none;">
+                                        <label for="ktm_url" class="form-label text-color">Upload KTM</label>
+                                        <input type="file" name="ktm_url" id="ktm_url"
+                                            class="date form-control border-color" accept="image/jpeg,image/png,image/jpg">
+                                        <small class="form-text text-muted d-block mt-1">Format berkas: JPEG, PNG, JPG (maks. 2 MB)</small>
+                                        <div class="invalid-feedback mt-1">
+                                            Upload KTM Anda!
+                                        </div>
+                                    </div>
+                                    <div class="col-md mt-4" id="npwpUrlDiv" style="display: none;">
+                                        <label for="npwp_url" class="form-label text-color">Upload NPWP (Opsional)</label>
+                                        <input type="file" name="npwp_url" id="npwp_url"
+                                            class="date form-control border-color" accept="image/jpeg,image/png,image/jpg">
+                                        <small class="form-text text-muted d-block mt-1">Format berkas: JPEG, PNG, JPG (maks. 2 MB)</small>
+                                        <div class="invalid-feedback mt-1">
+                                            Upload NPWP Anda!
                                         </div>
                                     </div>
                                     <br>
                                     <div class="col-md">
                                         <div class="form-group">
-                                            <label for="keterangan" class="mb-2 text-color">Catatan</label>
-                                            <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="254"></textarea>
+                                            <label for="keterangan" class="mb-2 text-color">Deskripsi Kegiatan</label>
+                                            <textarea class="form-control border-color" name="keterangan" id="keterangan" rows="8" maxlength="254" required placeholder="Contoh: Kegiatan ini diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi (HMIT) Telkom University. Acara berupa Seminar Hasil Tugas Akhir yang bertujuan memfasilitasi mahasiswa dalam mempresentasikan hasil penelitian di depan dosen pembimbing dan penguji."></textarea>
+                                            <div class="invalid-feedback">
+                                                Deskripsi Kegiatan wajib diisi.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -281,7 +302,7 @@
                         <p id="confirm_harga_dengan_ppn" class="bordered-text" name="total_harga"></p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-color">Catatan Peminjaman\Penyewaan</label>
+                        <label class="form-label text-color">Deskripsi Kegiatan</label>
                         <p id="confirm_keterangan" class="bordered-text"></p>
                     </div>
                     <div class="form-check">
@@ -423,18 +444,25 @@
                 const idRuanganElement = document.getElementById('id_ruangan');
                 idRuangan = idRuanganElement ? idRuanganElement.value : null;
             }
-            if (!idRuangan) {
-                document.getElementById('harga_ruangan').value = '';
-                document.getElementById('total_harga').value = '';
-                document.getElementById('lokasi').value = '';
-                updateFormContent(document.getElementById('role').value, '');
-                return;
-            }
-
             const role = document.getElementById('role').value;
             const hargaInput = document.getElementById('harga_ruangan');
             const ppnInput = document.getElementById('total_harga');
             const lokasiInput = document.getElementById('lokasi');
+
+            if (!idRuangan) {
+                hargaInput.value = '';
+                delete hargaInput.dataset.perSession;
+                delete hargaInput.dataset.basePrice;
+                ppnInput.value = '';
+                delete ppnInput.dataset.perSession;
+                lokasiInput.value = '';
+                updateFormContent(document.getElementById('role').value, '');
+                if (typeof updatePricingBySessionCount === 'function') {
+                    updatePricingBySessionCount();
+                }
+                validateParticipantInput();
+                return;
+            }
 
             fetch(`/getRuanganDetails?id_ruangan=${idRuangan}`)
                 .then(response => response.json())
@@ -442,31 +470,50 @@
                     console.log('DATA RUANGAN:', data); // Pastikan ada data.satuan
                     // Update lokasi
                     lokasiInput.value = data.lokasi || '';
-                    // Harga (khusus Pegawai = 0, lainya pakai harga dari data)
+                    // Harga dasar per sesi
                     let hargaRuangan = 0;
                     if (role === 'Pegawai') {
                         hargaRuangan = 0;
-                    } else if (role === 'Mahasiswa' || role === 'Umum') {
+                    } else {
                         hargaRuangan = parseInt(data.harga_ruangan) || 0;
                     }
-                    hargaInput.value = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
-                    // Hitung harga total+PPN+2500 jika perlu
+
                     const ppnRate = 0.11;
-                    let totalHarga = hargaRuangan + (hargaRuangan * ppnRate);
+                    let totalHargaPerSession = hargaRuangan;
                     if (role === 'Mahasiswa' || role === 'Umum') {
-                        totalHarga += 2500;
+                        totalHargaPerSession += hargaRuangan * ppnRate;
+                        totalHargaPerSession += 2500;
                     }
-                    ppnInput.value = 'Rp ' + totalHarga.toLocaleString('id-ID');
+                    totalHargaPerSession = Math.round(totalHargaPerSession);
+
+                    hargaInput.dataset.perSession = hargaRuangan;
+                    hargaInput.dataset.basePrice = hargaRuangan;
+                    hargaInput.value = 'Rp ' + hargaRuangan.toLocaleString('id-ID');
+
+                    ppnInput.dataset.perSession = totalHargaPerSession;
+                    ppnInput.value = totalHargaPerSession;
 
                     // PENTING: Panggil updateFormContent hanya dengan satuan dari API!
                     const satuan = data.satuan || '';
                     updateFormContent(role, satuan);
+
+                    if (typeof updatePricingBySessionCount === 'function') {
+                        updatePricingBySessionCount();
+                    }
+                    validateParticipantInput();
                 })
                 .catch(error => {
                     hargaInput.value = '';
+                    delete hargaInput.dataset.perSession;
+                    delete hargaInput.dataset.basePrice;
                     ppnInput.value = '';
+                    delete ppnInput.dataset.perSession;
                     lokasiInput.value = '';
                     updateFormContent(document.getElementById('role').value, '');
+                    if (typeof updatePricingBySessionCount === 'function') {
+                        updatePricingBySessionCount();
+                    }
+                    validateParticipantInput();
                     console.error('Error fetching ruangan details:', error);
                 });
         }
@@ -504,13 +551,29 @@
         }
 
         function validateParticipantInput() {
-            var pesertaSelect = document.getElementById("peserta");
             var submitBtn = document.getElementById("submitBtn");
-            var value = parseInt(pesertaSelect.value);
-            if (!isNaN(value) && pesertaSelect.selectedIndex > 0) {
-                submitBtn.disabled = false;
+            if (!submitBtn) return;
+
+            var pesertaSelect = document.getElementById("peserta");
+            var pesertaValid = true;
+            if (pesertaSelect) {
+                var value = parseInt(pesertaSelect.value);
+                pesertaValid = !isNaN(value) && pesertaSelect.selectedIndex > 0;
+            }
+
+            var sessionsValid = true;
+            if (typeof isSessionSelectionValid === 'function') {
+                sessionsValid = isSessionSelectionValid();
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.classList.toggle('disabled', false);
+            submitBtn.setAttribute('aria-disabled', 'false');
+
+            if (!sessionsValid) {
+                submitBtn.dataset.sessionsInvalid = 'true';
             } else {
-                submitBtn.disabled = true;
+                delete submitBtn.dataset.sessionsInvalid;
             }
         }
 
@@ -529,6 +592,30 @@
                 idRuanganElement = document.querySelector('input[name="id_ruangan"]');
             }
             const idRuangan = idRuanganElement ? idRuanganElement.value : null;
+
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn && submitBtn.dataset.sessionsInvalid === 'true') {
+                if (typeof updateHalfdaySessionFeedback === 'function') {
+                    updateHalfdaySessionFeedback();
+                }
+                alert('Pilih sesi penyewaan yang valid sebelum melanjutkan.');
+                return;
+            }
+
+            const tanggalMulaiInput = document.getElementById('tanggal_mulai');
+            const tanggalSelesaiInput = document.getElementById('tanggal_selesai');
+
+            if (tanggalMulaiInput && !tanggalMulaiInput.value) {
+                tanggalMulaiInput.classList.add('is-invalid');
+                tanggalMulaiInput.focus();
+                return;
+            }
+
+            if (tanggalSelesaiInput && !tanggalSelesaiInput.disabled && !tanggalSelesaiInput.value) {
+                tanggalSelesaiInput.classList.add('is-invalid');
+                tanggalSelesaiInput.focus();
+                return;
+            }
 
             const namaPeminjam = safeValue('#nama_peminjam');
             const nomorInduk = safeValue('#nomor_induk');
@@ -573,42 +660,54 @@
                     .then(data => {
                         const satuan = data.satuan;
 
+                        const formatCurrency = (amount) => 'Rp ' + (Number(amount) || 0).toLocaleString('id-ID');
+
                         let jamMulaiDisplay = jamMulai;
                         let jamSelesaiDisplay = '';
-                        let tanggalMulaiDisplay = convertToDisplayFormat(tanggalMulai);
+                        const tanggalMulaiDisplay = convertToDisplayFormat(tanggalMulai);
                         let tanggalSelesaiDisplay = tanggalSelesai ? convertToDisplayFormat(tanggalSelesai) : tanggalMulaiDisplay;
+
+                        const hargaInputEl = document.getElementById('harga_ruangan');
+                        const totalHargaInputEl = document.getElementById('total_harga');
+                        const hargaPerSesi = hargaInputEl && hargaInputEl.dataset ? parseInt(hargaInputEl.dataset.perSession || '0', 10) : 0;
+                        const totalHargaValue = totalHargaInputEl ? parseInt(totalHargaInputEl.value || '0', 10) : 0;
+
+                        let hargaTanpaPPNDisplay = hargaInputEl && hargaInputEl.value ? hargaInputEl.value : formatCurrency(hargaPerSesi);
+                        let totalHargaDisplay = formatCurrency(totalHargaValue);
 
                         if (status === 'Mahasiswa' || status === 'Umum') {
                             if (satuan === 'Halfday / 4 Jam') {
-                                // Per jam
-                                const durasiEl = document.getElementById('durasi');
-                                if (!durasiEl) {
-                                    alert('Durasi wajib diisi!');
+                                const selectedSessions = typeof getSelectedHalfdaySessions === 'function'
+                                    ? getSelectedHalfdaySessions()
+                                    : (jamMulai ? [jamMulai] : []);
+                                if (!selectedSessions.length) {
+                                    alert('Pilih sesi penyewaan terlebih dahulu.');
                                     return;
                                 }
-                                const durasi = durasiEl.value;
-                                const durasiMenit = parseInt(durasi.split(':')[0]) * 60 + parseInt(durasi.split(':')[1]);
-                                const jamMulaiDate = new Date(`1970-01-01T${jamMulai}:00`);
-                                const jamSelesaiDate = new Date(jamMulaiDate.getTime() + durasiMenit * 60000);
-                                jamSelesaiDisplay = jamSelesaiDate.toTimeString().split(' ')[0].substring(0, 5);
+                                const sessionRanges = selectedSessions.map((start) => (
+                                    typeof formatHalfdaySessionRange === 'function'
+                                        ? formatHalfdaySessionRange(start)
+                                        : `${start}`
+                                ));
+                                jamMulaiDisplay = sessionRanges.join(' | ');
+                                jamSelesaiDisplay = 'Jumlah sesi: ' + selectedSessions.length;
                                 tanggalSelesaiDisplay = tanggalMulaiDisplay;
+                                const subtotal = hargaPerSesi * selectedSessions.length;
+                                hargaTanpaPPNDisplay = formatCurrency(subtotal);
+                                totalHargaDisplay = formatCurrency(totalHargaValue);
                             } else if (satuan === 'Seat / Hari' || satuan === 'Seat / Bulan') {
                                 jamMulaiDisplay = '08:00';
                                 jamSelesaiDisplay = '22:00';
+                                hargaTanpaPPNDisplay = hargaInputEl && hargaInputEl.value ? hargaInputEl.value : formatCurrency(hargaPerSesi);
+                                totalHargaDisplay = formatCurrency(totalHargaValue);
                             }
                         } else if (status === 'Pegawai') {
                             jamMulaiDisplay = jamMulai;
                             jamSelesaiDisplay = safeValue('#jam_selesai');
                             tanggalSelesaiDisplay = tanggalSelesai ? convertToDisplayFormat(tanggalSelesai) : tanggalMulaiDisplay;
+                            hargaTanpaPPNDisplay = hargaInputEl && hargaInputEl.value ? hargaInputEl.value : formatCurrency(hargaPerSesi);
+                            totalHargaDisplay = formatCurrency(totalHargaValue);
                         }
-
-                        // Harga & keterangan
-                        const cleanedHarga = harga.replace(/[^\d]/g, '');
-                        var hargaAwal = parseFloat(cleanedHarga) || 0;
-                        var hargaDenganPPN = hargaAwal + (hargaAwal * 0.11) + 2500;
-                        var priceAkhir = (status === 'Mahasiswa' || status === 'Umum')
-                            ? 'Rp ' + hargaDenganPPN.toLocaleString('id-ID')
-                            : 'Rp 0';
 
                         // Set all modal fields, null-safe
                         const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
@@ -623,8 +722,8 @@
                         setText('confirm_tanggal_selesai', tanggalSelesaiDisplay);
                         setText('confirm_jam_mulai', jamMulaiDisplay);
                         setText('confirm_jam_selesai', jamSelesaiDisplay);
-                        setText('confirm_harga', 'Rp ' + hargaAwal.toLocaleString('id-ID'));
-                        setText('confirm_harga_dengan_ppn', priceAkhir);
+                        setText('confirm_harga', hargaTanpaPPNDisplay || 'Rp 0');
+                        setText('confirm_harga_dengan_ppn', totalHargaDisplay || 'Rp 0');
                         setText('confirm_keterangan', keterangan);
 
                         $('#confirmationModal').modal({
@@ -647,6 +746,10 @@
             const nomorIndukInput = document.getElementById('nomor_induk');
             const ktpUrlDiv = document.getElementById('ktpUrlDiv');
             const ktpUrlInput = document.getElementById('ktp_url');
+            const ktmUrlDiv = document.getElementById('ktmUrlDiv');
+            const ktmUrlInput = document.getElementById('ktm_url');
+            const npwpUrlDiv = document.getElementById('npwpUrlDiv');
+            const npwpUrlInput = document.getElementById('npwp_url');
 
             if (origin !== 'detailRuangan') {
                 if (role) {
@@ -672,6 +775,25 @@
             } else {
                 ktpUrlDiv.style.display = 'none';
                 ktpUrlInput.required = false;
+                ktpUrlInput.value = '';
+            }
+
+            if (role === 'Mahasiswa') {
+                ktmUrlDiv.style.display = 'block';
+                ktmUrlInput.required = true;
+            } else {
+                ktmUrlDiv.style.display = 'none';
+                ktmUrlInput.required = false;
+                ktmUrlInput.value = '';
+            }
+
+            if (role === 'Umum') {
+                npwpUrlDiv.style.display = 'block';
+                npwpUrlInput.required = false;
+            } else {
+                npwpUrlDiv.style.display = 'none';
+                npwpUrlInput.required = false;
+                npwpUrlInput.value = '';
             }
 
             // Panggil dengan preserveSelection true jika dari detailRuangan
@@ -695,7 +817,10 @@
                     'role',
                     'keterangan',
                     'id_ruangan',
-                    'jumlah'
+                    'jumlah',
+                    'ktp_url',
+                    'ktm_url',
+                    'npwp_url'
                 ]; // Reset semuanya untuk semua origin (biar ga nyangkut id_ruangan)
 
                 for (const key in formData) {

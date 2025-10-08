@@ -219,11 +219,15 @@ function confirmSubmission(event) {
                     whatsappModal.show();
                 }, 500);
             } else {
-                // Cek jika error overlap dari backend
                 let errMsg = "Terjadi kesalahan. Silakan coba lagi.";
-                if (response.status === 422) {
+
+                try {
                     const data = await response.json();
-                    errMsg = data.message || errMsg;
+                    if (data && typeof data === "object" && data.message) {
+                        errMsg = data.message;
+                    }
+                } catch (parseError) {
+                    // Abaikan jika respons bukan JSON, gunakan pesan default
                 }
 
                 // Opsional: beri delay pendek supaya transisi lebih smooth
@@ -249,8 +253,7 @@ document
     .getElementById("whatsappButton")
     .addEventListener("click", function () {
         setTimeout(function () {
-            // window.location.href = "/dashboardPenyewa"; INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
-            window.location.href = "/meminjamRuangan";
+            window.location.href = "/dashboardPenyewa";
         }, 1000); // Adjust the timeout as needed
     });
 
@@ -258,8 +261,7 @@ document
 document
     .querySelector(".whatsapp-close-button")
     .addEventListener("click", function () {
-        // window.location.href = "/dashboardPenyewa"; INI DIPINDAH KE DASHBOARD ADMIN JANGAN LUPA UNTUK DI UNCOMMENT KALO DAH PINDAH KE DASHBOARD PENYEWA
-        window.location.href = "/meminjamRuangan";
+        window.location.href = "/dashboardPenyewa";
     });
 
 document.getElementById("nomor_induk").addEventListener("input", function (e) {

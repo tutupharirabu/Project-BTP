@@ -53,11 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function removeRpPrefix() {
-    const hargaInput = document.getElementById('harga_ruangan');
-    hargaInput.value = hargaInput.value.replace(/^Rp\. /, '');
-}
-
 function showConfirmationModal() {
     const form = document.getElementById('edit-form');
 
@@ -66,6 +61,8 @@ function showConfirmationModal() {
         form.classList.add('was-validated');
         return;
     }
+
+    toggleConfirmationLoading(false);
 
     const modal = document.getElementById('confirmationModal');
     modal.style.display = 'block';
@@ -76,15 +73,21 @@ function showConfirmationModal() {
 }
 
 function closeConfirmationModal() {
+    toggleConfirmationLoading(false);
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
 function submitForm() {
-    removeRpPrefix(); // Ensure prefix is removed before submission
+    updateTersedia();
     const form = document.getElementById('edit-form');
     const formData = new FormData(form);
-    const roomName = document.getElementById('nama_ruangan').value;
-    // console.log('Room name before reset:', roomName); // Debug: Check the room name value before form reset
+    const roomName = formData.get('nama_ruangan');
+
+    if (formData.has('harga_ruangan')) {
+        formData.set('harga_ruangan', (formData.get('harga_ruangan') || '').toString().replace(/[^0-9]/g, ''));
+    }
+
+    toggleConfirmationLoading(true);
 
     fetch(form.action, {
         method: 'POST',
@@ -94,16 +97,24 @@ function submitForm() {
         }
     })
         .then(response => {
-            if (response.ok) {
-                closeConfirmationModal();
-                form.reset();
-                form.classList.remove('was-validated');
-                showSuccessModal(roomName); // Pass the roomName to showSuccessModal
-            } else {
-                console.error('Form submission failed.');
+            if (!response.ok) {
+                throw new Error('Form submission failed.');
             }
+            return response;
         })
-        .catch(error => console.error('Form submission error:', error));
+        .then(() => {
+            closeConfirmationModal();
+            form.reset();
+            form.classList.remove('was-validated');
+            showSuccessModal(roomName);
+        })
+        .catch(error => {
+            console.error('Form submission error:', error);
+            alert('Gagal memperbarui ruangan. Silakan coba lagi.');
+        })
+        .finally(() => {
+            toggleConfirmationLoading(false);
+        });
 }
 
 function showSuccessModal(roomName) {
@@ -144,6 +155,23 @@ function updateTersedia() {
         tersedia.value = 0;
     }
     // console.log('Tersedia value set to:', tersedia.value);
+}
+
+function toggleConfirmationLoading(isLoading) {
+    const spinner = document.getElementById('confirmationSpinner');
+    const buttons = document.getElementById('confirmationButtons');
+
+    if (!spinner || !buttons) {
+        return;
+    }
+
+    if (isLoading) {
+        spinner.classList.remove('d-none');
+        buttons.classList.add('d-none');
+    } else {
+        spinner.classList.add('d-none');
+        buttons.classList.remove('d-none');
+    }
 }
 
 // Bootstrap form validation

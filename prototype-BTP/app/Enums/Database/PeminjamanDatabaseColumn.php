@@ -11,6 +11,14 @@ enum PeminjamanDatabaseColumn: string
     case NomorIndukPenyewa = 'nomor_induk';
     case NomorTeleponPenyewa = 'nomor_telepon';
     case UrlKtp = 'ktp_url';
+    case UrlKtm = 'ktm_url';
+    case UrlNpwp = 'npwp_url';
+    case KtpPublicId = 'ktp_public_id';
+    case KtpFormat = 'ktp_format';
+    case KtmPublicId = 'ktm_public_id';
+    case KtmFormat = 'ktm_format';
+    case NpwpPublicId = 'npwp_public_id';
+    case NpwpFormat = 'npwp_format';
     case TanggalMulai = 'tanggal_mulai';
     case JamMulai = 'jam_mulai';
     case TanggalSelesai = 'tanggal_selesai';

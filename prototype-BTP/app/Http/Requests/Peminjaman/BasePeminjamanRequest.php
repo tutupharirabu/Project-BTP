@@ -35,8 +35,12 @@ class BasePeminjamanRequest extends FormRequest
         $totalHarga = PeminjamanDatabaseColumn::TotalHarga->value;
         $idRuangan = RuanganDatabaseColumn::IdRuangan->value;
         $urlKtp = PeminjamanDatabaseColumn::UrlKtp->value;
+        $urlKtm = PeminjamanDatabaseColumn::UrlKtm->value;
+        $urlNpwp = PeminjamanDatabaseColumn::UrlNpwp->value;
         $tanggalSelesai = PeminjamanDatabaseColumn::TanggalSelesai->value;
         $jamSelesai = PeminjamanDatabaseColumn::JamSelesai->value;
+        $jumlahSesi = 'jumlah_sesi';
+        $jamMulaiSessions = 'jam_mulai_sessions';
 
         $statusMahasiswa = StatusPenyewa::Mahasiswa->value;
         $statusUmum = StatusPenyewa::Umum->value;
@@ -51,11 +55,26 @@ class BasePeminjamanRequest extends FormRequest
             $jamMulai => 'required',
             $jumlahPeserta => 'required|integer', // Ini jumlah peserta
             $totalHarga => 'nullable|numeric',
-            $idRuangan => 'required'
+            $idRuangan => 'required',
+            $jumlahSesi => 'nullable|integer|min:1|max:3',
+            $urlKtp => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            $urlKtm => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            $urlNpwp => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
+
+        $rules[$jamMulaiSessions] = 'sometimes|array';
+        $rules[$jamMulaiSessions . '.*'] = 'string';
 
         if (in_array($this->input($statusPenyewa), [$statusMahasiswa, $statusUmum])) {
             $rules[$urlKtp] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+        }
+
+        if ($this->input($statusPenyewa) === $statusMahasiswa) {
+            $rules[$urlKtm] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+        }
+
+        if ($this->input($statusPenyewa) === $statusUmum) {
+            $rules[$urlNpwp] = 'nullable|image|mimes:jpeg,png,jpg|max:2048';
         }
 
         if ($this->input($statusPenyewa) === $statusPegawai) {

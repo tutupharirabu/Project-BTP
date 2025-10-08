@@ -273,11 +273,21 @@
                         <span class="material-symbols-outlined text-white" style="font-size: 4em;">add</span>
                     </div>
                     <p style="margin-top: 10px;">Apakah anda ingin menambahkan ruangan?</p>
-                    <button type="button" class="btn text-white text-capitalize"
-                        style="background-color: #FF3636; margin-right: 30px"
-                        onclick="closeConfirmationModal()">TIDAK</button>
-                    <button type="button" class="btn text-white text-capitalize" style="background-color: #00DE09"
-                        onclick="submitForm()">YA</button>
+
+                    <div id="confirmationSpinner" class="d-none mt-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2 mb-0">Menambahkan ruangan...</p>
+                    </div>
+
+                    <div id="confirmationButtons" class="mt-3">
+                        <button type="button" class="btn text-white text-capitalize"
+                            style="background-color: #FF3636; margin-right: 30px"
+                            onclick="closeConfirmationModal()">TIDAK</button>
+                        <button type="button" class="btn text-white text-capitalize" style="background-color: #00DE09"
+                            onclick="submitForm()">YA</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -86,13 +86,14 @@ class PenyewaPeminjamanService
     return $this->penyewaPeminjamanRepository->getCoworkingBlockedStartDatesForBulan($idRuangan);
   }
 
-  public function uploadKtpImage(UploadedFile $image): ?string
+  public function uploadDocument(UploadedFile $image, string $folder): array
   {
     try {
       $uploadResult = Cloudinary::upload(
         $image->getRealPath(),
         [
-          'folder' => 'spacerent-btp/ktp-btp',
+          'folder' => 'spacerent-btp/' . $folder,
+          'access_mode' => 'authenticated',
           'transformation' => [
             [
               'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',
@@ -106,11 +107,15 @@ class PenyewaPeminjamanService
         ]
       );
 
-      return $uploadResult->getSecurePath() ?? null;
+      return [
+        'url' => $uploadResult->getSecurePath() ?? null,
+        'public_id' => $uploadResult->getPublicId(),
+        'format' => method_exists($uploadResult, 'getExtension') ? $uploadResult->getExtension() : ($uploadResult['format'] ?? null),
+      ];
 
     } catch (Exception $e) {
       Log::error('Cloudinary gagal upload: ' . $e->getMessage());
-      throw new RuntimeException('Gagal mengunggah gambar KTP.');
+      throw new RuntimeException('Gagal mengunggah dokumen.');
     }
   }
 
@@ -142,67 +147,153 @@ class PenyewaPeminjamanService
     $seatPerBulan = SatuanPenyewa::SeatPerBulan->value;
     $statusMenunggu = 'Menunggu';
 
-    $ktpUrl = null;
-    $jumlahPeserta = $request->input(PeminjamanDatabaseColumn::JumlahPeserta->value);
+    $jumlahPeserta = (int) $request->input(PeminjamanDatabaseColumn::JumlahPeserta->value);
+    $jumlahSesi = (int) $request->input('jumlah_sesi', 1);
+    $jumlahSesi = $jumlahSesi > 0 ? $jumlahSesi : 1;
+    $keteranganBase = $request->input(PeminjamanDatabaseColumn::KeteranganPenyewaan->value) ?? '~';
+    $totalHargaForm = (float) $request->input(PeminjamanDatabaseColumn::TotalHarga->value, 0);
 
-    // Tentukan tanggal mulai dan selesai
+    $ktpUrl = null;
+    $ktmUrl = null;
+    $npwpUrl = null;
+    $ktpPublicId = null;
+    $ktpFormat = null;
+    $ktmPublicId = null;
+    $ktmFormat = null;
+    $npwpPublicId = null;
+    $npwpFormat = null;
+    $bookingEntries = [];
+
+    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerHari;
+    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerBulan;
+
     if ($role === $statusPegawai) {
-      $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' ' . $request->input(PeminjamanDatabaseColumn::JamMulai->value);
+      $tanggalMulaiInput = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value);
+      $jamMulaiInput = $request->input(PeminjamanDatabaseColumn::JamMulai->value);
+      $tanggalMulai = Carbon::parse($tanggalMulaiInput . ' ' . $jamMulaiInput)->format('Y-m-d H:i:s');
       $tanggalSelesai = $this->calculateTanggalSelesaiPegawai(
         $request->input(PeminjamanDatabaseColumn::TanggalSelesai->value),
         $request->input(PeminjamanDatabaseColumn::JamSelesai->value)
       );
+
+      $bookingEntries[] = [
+        'start' => $tanggalMulai,
+        'end' => $tanggalSelesai,
+        'session_start' => $jamMulaiInput,
+      ];
     } elseif (in_array($role, [$statusMahasiswa, $statusUmum])) {
-      $ktpUrl = $this->uploadKtpImage($request->file(PeminjamanDatabaseColumn::UrlKtp->value));
-      if (!$ktpUrl) {
+      $ktpUpload = $this->uploadDocument($request->file(PeminjamanDatabaseColumn::UrlKtp->value), 'ktp-btp');
+      if (empty($ktpUpload['url']) || empty($ktpUpload['public_id'])) {
         throw new RuntimeException('Upload KTP gagal. Silakan coba lagi nanti.');
       }
+      $ktpUrl = $ktpUpload['url'];
+      $ktpPublicId = $ktpUpload['public_id'];
+      $ktpFormat = $ktpUpload['format'];
 
-      if (stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerHari) {
-        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
-        $tanggalSelesai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 22:00:00';
-      } elseif (stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerBulan) {
-        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
-        $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
+      if ($role === $statusMahasiswa) {
+        $ktmFile = $request->file(PeminjamanDatabaseColumn::UrlKtm->value);
+        $ktmUpload = $ktmFile ? $this->uploadDocument($ktmFile, 'ktm-btp') : null;
+        if (!$ktmUpload || empty($ktmUpload['url']) || empty($ktmUpload['public_id'])) {
+          throw new RuntimeException('Upload KTM gagal. Silakan coba lagi nanti.');
+        }
+        $ktmUrl = $ktmUpload['url'];
+        $ktmPublicId = $ktmUpload['public_id'];
+        $ktmFormat = $ktmUpload['format'];
+      }
+
+      if ($role === $statusUmum && $request->hasFile(PeminjamanDatabaseColumn::UrlNpwp->value)) {
+        $npwpFile = $request->file(PeminjamanDatabaseColumn::UrlNpwp->value);
+        $npwpUpload = $npwpFile ? $this->uploadDocument($npwpFile, 'npwp-btp') : null;
+        if ($npwpUpload && !empty($npwpUpload['public_id'])) {
+          $npwpUrl = $npwpUpload['url'];
+          $npwpPublicId = $npwpUpload['public_id'];
+          $npwpFormat = $npwpUpload['format'];
+        }
+      }
+
+      $tanggalMulaiInput = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value);
+
+      if ($isCoworkingSeatHarian) {
+        $bookingEntries[] = [
+          'start' => $tanggalMulaiInput . ' 08:00:00',
+          'end' => $tanggalMulaiInput . ' 22:00:00',
+          'session_start' => '08:00',
+        ];
+      } elseif ($isCoworkingSeatBulanan) {
+        $tanggalMulai = $tanggalMulaiInput . ' 08:00:00';
+        $tanggalSelesai = Carbon::parse($tanggalMulaiInput)
           ->addDays(30)
           ->format('Y-m-d') . ' 22:00:00';
+
+        $bookingEntries[] = [
+          'start' => $tanggalMulai,
+          'end' => $tanggalSelesai,
+          'session_start' => '08:00',
+        ];
       } elseif (stripos($namaRuangan, 'private') !== false && $satuan === $seatPerBulan) {
         $bulan = (int) $request->input(PeminjamanDatabaseColumn::DurasiPerBulan->value);
-        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' 08:00:00';
-        $tanggalSelesai = Carbon::parse($request->input(PeminjamanDatabaseColumn::TanggalMulai->value))
+        $bulan = $bulan > 0 ? $bulan : 1;
+
+        $tanggalMulai = $tanggalMulaiInput . ' 08:00:00';
+        $tanggalSelesai = Carbon::parse($tanggalMulaiInput)
           ->addMonths($bulan)
           ->subDay()
           ->format('Y-m-d') . ' 22:00:00';
+
+        $bookingEntries[] = [
+          'start' => $tanggalMulai,
+          'end' => $tanggalSelesai,
+          'session_start' => '08:00',
+        ];
       } else {
-        // Default (Halfday / 4 Jam)
-        $tanggalMulai = $request->input(PeminjamanDatabaseColumn::TanggalMulai->value) . ' ' . $request->input(PeminjamanDatabaseColumn::JamMulai->value);
-        $tanggalSelesai = $this->calculateTanggalSelesaiMahasiswa(
-          $request->input(PeminjamanDatabaseColumn::TanggalMulai->value),
-          $request->input(PeminjamanDatabaseColumn::JamMulai->value)
-        );
+        $sessions = $request->input('jam_mulai_sessions', []);
+        if (!is_array($sessions)) {
+          $sessions = [$sessions];
+        }
+        $sessions = array_values(array_unique(array_filter($sessions)));
+        if (empty($sessions)) {
+          $sessions = [$request->input(PeminjamanDatabaseColumn::JamMulai->value)];
+        }
+        sort($sessions);
+
+        if ($jumlahSesi && count($sessions) !== $jumlahSesi) {
+          throw new RuntimeException('Jumlah sesi yang dipilih tidak sesuai.');
+        }
+
+        foreach ($sessions as $sessionStart) {
+          $start = Carbon::parse($tanggalMulaiInput . ' ' . $sessionStart)->format('Y-m-d H:i:s');
+          $end = $this->calculateTanggalSelesaiMahasiswa($tanggalMulaiInput, $sessionStart);
+
+          $bookingEntries[] = [
+            'start' => $start,
+            'end' => $end,
+            'session_start' => $sessionStart,
+          ];
+        }
       }
     } else {
       throw new RuntimeException('Role tidak valid.');
     }
 
-    // Validasi: Coworking seat (hari/bulan) harus cek seat seluruh group
-    $isCoworkingSeatHarian = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerHari;
-    $isCoworkingSeatBulanan = stripos($namaRuangan, 'coworking') !== false && $satuan === $seatPerBulan;
+    if (empty($bookingEntries)) {
+      throw new RuntimeException('Tidak ada sesi peminjaman yang dipilih.');
+    }
 
-    // === Validasi overlap (bukan coworking seat/hari) ===
     if (!($isCoworkingSeatHarian || $isCoworkingSeatBulanan)) {
-      if (
-        $this->penyewaPeminjamanRepository->existsOverlapPeminjaman(
-          $idRuangan,
-          $tanggalMulai,
-          $tanggalSelesai
-        )
-      ) {
-        throw new RuntimeException('Ruangan sudah dibooking pada waktu tersebut. Silakan pilih waktu lain.');
+      foreach ($bookingEntries as $entry) {
+        if (
+          $this->penyewaPeminjamanRepository->existsOverlapPeminjaman(
+            $idRuangan,
+            $entry['start'],
+            $entry['end']
+          )
+        ) {
+          $startTime = Carbon::parse($entry['start'])->format('H:i');
+          throw new RuntimeException('Ruangan sudah dibooking pada sesi ' . $startTime . '. Silakan pilih waktu lain.');
+        }
       }
     }
 
-    // === Validasi seat coworking (gabungan semua id_ruangan satu group) ===
     if ($isCoworkingSeatHarian || $isCoworkingSeatBulanan) {
       if ($groupId) {
         $ruanganGroupIds = $this->penyewaRuanganRepository->getRuanganByGroupId($groupId)
@@ -214,27 +305,71 @@ class PenyewaPeminjamanService
         $ruanganGroupIds,
         $request->input(PeminjamanDatabaseColumn::TanggalMulai->value)
       );
-      $sisa_seat = $sisaSeatData['sisa_seat'] ?? 0;
+      $sisaSeat = $sisaSeatData['sisa_seat'] ?? 0;
 
-      if ($jumlahPeserta > $sisa_seat) {
-        throw new RuntimeException('Jumlah peserta melebihi sisa seat. Tersisa hanya ' . $sisa_seat . ' kursi.');
+      if ($jumlahPeserta > $sisaSeat) {
+        throw new RuntimeException('Jumlah peserta melebihi sisa seat. Tersisa hanya ' . $sisaSeat . ' kursi.');
       }
     }
 
-    // Create booking
-    $this->penyewaPeminjamanRepository->createPeminjaman([
-      'nama_peminjam' => $request->input(PeminjamanDatabaseColumn::NamaPenyewa->value),
-      'nomor_induk' => $request->input(PeminjamanDatabaseColumn::NomorIndukPenyewa->value),
-      'nomor_telepon' => $request->input(PeminjamanDatabaseColumn::NomorTeleponPenyewa->value),
-      'id_ruangan' => $idRuangan,
-      'ktp_url' => $ktpUrl,
-      'role' => $role,
-      'tanggal_mulai' => $tanggalMulai,
-      'tanggal_selesai' => $tanggalSelesai,
-      'jumlah' => $jumlahPeserta,
-      'total_harga' => $request->input(PeminjamanDatabaseColumn::TotalHarga->value),
-      'status' => $statusMenunggu,
-      'keterangan' => $request->input(PeminjamanDatabaseColumn::KeteranganPenyewaan->value) ?? '~',
-    ]);
+    $entryCount = count($bookingEntries);
+    $totalHargaForm = round(max(0, $totalHargaForm));
+    $prices = [];
+    $remainingTotal = $totalHargaForm;
+
+    if ($entryCount > 0) {
+      for ($i = 0; $i < $entryCount; $i++) {
+        $entriesLeft = $entryCount - $i;
+        $portion = $entriesLeft > 0 ? (int) floor($remainingTotal / $entriesLeft) : 0;
+        $prices[] = (string) $portion;
+        $remainingTotal -= $portion;
+      }
+
+      if ($remainingTotal > 0 && $entryCount > 0) {
+        $prices[$entryCount - 1] = (string) ((int) $prices[$entryCount - 1] + $remainingTotal);
+      }
+    }
+
+    foreach ($bookingEntries as $index => $entry) {
+      $keteranganFinal = $keteranganBase;
+
+      if ($entryCount > 1) {
+        $slotLabel = Carbon::parse($entry['start'])->format('H:i') . ' - ' . Carbon::parse($entry['end'])->format('H:i');
+        $slotInfo = 'Jadwal ' . $slotLabel;
+
+        if ($keteranganFinal === '~' || trim($keteranganFinal) === '') {
+          $keteranganFinal = $slotInfo;
+        } else {
+          $keteranganFinal .= ' | ' . $slotInfo;
+        }
+      }
+
+      if (trim($keteranganFinal) === '') {
+        $keteranganFinal = '~';
+      }
+
+      $this->penyewaPeminjamanRepository->createPeminjaman([
+        'nama_peminjam' => $request->input(PeminjamanDatabaseColumn::NamaPenyewa->value),
+        'nomor_induk' => $request->input(PeminjamanDatabaseColumn::NomorIndukPenyewa->value),
+        'nomor_telepon' => $request->input(PeminjamanDatabaseColumn::NomorTeleponPenyewa->value),
+        'id_ruangan' => $idRuangan,
+        'ktp_url' => $ktpUrl,
+        'ktm_url' => $ktmUrl,
+        'npwp_url' => $npwpUrl,
+        'ktp_public_id' => $ktpPublicId ?? null,
+        'ktp_format' => $ktpFormat ?? null,
+        'ktm_public_id' => $ktmPublicId ?? null,
+        'ktm_format' => $ktmFormat ?? null,
+        'npwp_public_id' => $npwpPublicId ?? null,
+        'npwp_format' => $npwpFormat ?? null,
+        'role' => $role,
+        'tanggal_mulai' => $entry['start'],
+        'tanggal_selesai' => $entry['end'],
+        'jumlah' => $jumlahPeserta,
+        'total_harga' => $prices[$index] ?? '0',
+        'status' => $statusMenunggu,
+        'keterangan' => $keteranganFinal,
+      ]);
+    }
   }
 }
