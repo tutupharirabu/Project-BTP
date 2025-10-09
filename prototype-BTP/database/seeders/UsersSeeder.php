@@ -21,7 +21,7 @@ class UsersSeeder extends Seeder
             'email' => 'petugasBTP@gmail.com',
             'role' => 'Admin',
             'nama_lengkap' => 'Petugas BTP',
-            'password' => Hash::make('Admin123!'),
+            'password' => Hash::make('Admin123!465$'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
