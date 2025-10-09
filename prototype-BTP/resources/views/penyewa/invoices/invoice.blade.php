@@ -79,7 +79,7 @@
                 <tr>
                     <td style="border: 1px solid black; padding: 5px; text-align: center">
                         {{ Carbon\Carbon::parse($data->created_at)->locale('id_ID')->translatedFormat('d F Y') }}</td>
-                    <td style="border: 1px solid black; padding: 5px; text-align: center">027/TNT05-07/TESTAJA/2024</td>
+                    <td style="border: 1px solid black; padding: 5px; text-align: center">{{ $data->invoice_number ?? 'INV-DRAFT' }}</td>
                 </tr>
             </table>
         </div>
@@ -106,10 +106,21 @@
                     <td>:</td>
                     <td>{{ Carbon\Carbon::parse($data->tanggal_selesai)->format('d-m-Y | H:i') }}</td>
                 </tr>
+                @if (!empty($data->session_ranges))
+                    <tr>
+                        <td><strong>Jadwal sesi</strong></td>
+                        <td>:</td>
+                        <td>
+                            @foreach ($data->session_ranges as $range)
+                                {{ $range }}@if (! $loop->last)<br>@endif
+                            @endforeach
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td><strong>Total harga yang dibayarkan</strong></td>
                     <td>:</td>
-                    <td>{{ $data->total_harga }}</td>
+                    <td>Rp {{ number_format((int) $data->total_harga, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td><strong>Status</strong></td>

@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Peminjaman/Penyewaan Ruangan</h4>
+                    <h4>Dashboard Peminjaman/Penyewaan Ruangan</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
+                <div class="container my-2">
                     <a class="" href="/dashboardPenyewa"
                         style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
                 </div>

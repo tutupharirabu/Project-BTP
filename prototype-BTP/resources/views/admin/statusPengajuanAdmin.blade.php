@@ -18,8 +18,8 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
-                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status
+                <div class="container my-2">
+                    <a class="" href="/statusPengajuanAdmin" style="color:#028391;font-size:12px;font-weight: bold;">Status
                         Ruangan</a>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                                 </span>
                             </div>
                             <div
-                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                class="text-center status-count right-status text-black shadow d-flex flex-column justify-content-center">
                                 <p class="text-center mt-1 mb-2"
                                     style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Menunggu</p>
@@ -108,7 +108,7 @@
                                 </span>
                             </div>
                             <div
-                                class="text-center status-count right-status text-black text-justify shadow d-flex flex-column justify-content-center">
+                                class="text-center status-count right-status text-black shadow d-flex flex-column justify-content-center">
                                 <p class="text-center mt-1 mb-2"
                                     style="font-size: 18px; margin-top: 8px;font-weight: bold;">
                                     Selesai</p>
@@ -139,16 +139,16 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                                                                                                                                                                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                                                                                                                                                                                                                        <div class="d-flex align-items-center">
-                                                                                                                                                                                                                                                                            <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                                                                                                                                                                                                                placeholder="Cari pengajuan..."
-                                                                                                                                                                                                                                                                                style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                                                                                                                                                                                                            {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
-                            style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
-                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                                                                                                                                                                                <div class="d-flex align-items-center">
+                                                                                                                                                                                                                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                                                                                                                                                                                                                        placeholder="Cari pengajuan..."
+                                                                                                                                                                                                                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                                                                                                                                                                                                                    {{-- <button id="searchButton" type="button" class="btn btn-md text-white text-center"
+                                    style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                        </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -171,7 +171,7 @@
                                         <th scope="col" class="text-center">Foto KTM</th>
                                         <th scope="col" class="text-center">Foto NPWP</th>
                                         <th scope="col" class="text-center">Disetujui oleh</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Deskripsi Kegiatan</th>
                                         <th scope="col" style="width: 230px;" class="text-center">Aksi</th>
                                         <th scope="col" class="text-center">Status</th>
                                     </tr>
@@ -183,8 +183,36 @@
                                             <td>{{ $data->nama_peminjam }}</td>
                                             <td>{{ $data->nomor_telepon }}</td>
                                             <td>{{ $data->ruangan->nama_ruangan }}</td>
-                                            <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
-                                            <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
+                                            @php
+                                                $sessionRanges = collect($data->session_ranges);
+                                                $sessionStarts = $sessionRanges
+                                                    ->map(function ($range) {
+                                                        return explode(' - ', $range)[0] ?? null;
+                                                    })
+                                                    ->filter()
+                                                    ->values();
+                                                $sessionEnds = $sessionRanges
+                                                    ->map(function ($range) {
+                                                        return explode(' - ', $range)[1] ?? null;
+                                                    })
+                                                    ->filter()
+                                                    ->values();
+                                                $hasMultipleSessions = $sessionStarts->count() > 1 && $sessionEnds->count() > 0;
+                                            @endphp
+                                            <td>
+                                                @if ($sessionStarts->isNotEmpty())
+                                                    {{ $hasMultipleSessions ? $sessionStarts->first() : $sessionStarts->implode(', ') }}
+                                                @else
+                                                    {{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($sessionEnds->isNotEmpty())
+                                                    {{ $hasMultipleSessions ? $sessionEnds->last() : $sessionEnds->implode(', ') }}
+                                                @else
+                                                    {{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}
+                                                @endif
+                                            </td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
                                             @php
@@ -218,8 +246,8 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body text-center">
-                                                                        <img src="{{ $doc['url'] }}" alt="{{ $doc['label'] }}" width="450"
-                                                                            height="300" style="object-fit: cover;"
+                                                                        <img src="{{ $doc['url'] }}" alt="{{ $doc['label'] }}"
+                                                                            width="450" height="300" style="object-fit: cover;"
                                                                             oncontextmenu="return false;">
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -234,6 +262,11 @@
                                                     @endif
                                                 </td>
                                             @endforeach
+                                            @php
+                                                $noteModalId = 'noteModal' . $data->id_peminjaman;
+                                                $noteModalLabel = 'noteModalLabel' . $data->id_peminjaman;
+                                            @endphp
+
                                             @if ($data->status == 'Menunggu')
                                                 <td>
                                                     {{ $data->user->nama_lengkap ?? '-' }}
@@ -241,23 +274,23 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal{{ $data->id_peminjaman }}">
+                                                        data-bs-target="#{{ $noteModalId }}">
                                                         Catatan
                                                     </button>
-                                                    <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
-                                                        tabindex="-1" aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
+                                                    <div class="modal fade" id="{{ $noteModalId }}"
+                                                        tabindex="-1" aria-labelledby="{{ $noteModalLabel }}"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5"
-                                                                        id="exampleModalLabel{{ $data->id_peminjaman }}">
-                                                                        Keterangan Ruangan</h1>
+                                                                        id="{{ $noteModalLabel }}">
+                                                                        Deskripsi Kegiatan</h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    {{ $data->keterangan }}
+                                                                    {{ $data->keterangan ?? '-' }}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -292,22 +325,21 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal">
+                                                        data-bs-target="#{{ $noteModalId }}">
                                                         Catatan
                                                     </button>
-                                                    <div class="modal fade" id="exampleModal{{ $data->id_peminjaman }}"
-                                                        tabindex="-1" aria-labelledby="exampleModalLabel{{ $data->id_peminjaman }}"
-                                                        aria-hidden="true">
+                                                    <div class="modal fade" id="{{ $noteModalId }}"
+                                                        tabindex="-1" aria-labelledby="{{ $noteModalLabel }}" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Catatan Dari Pengguna</h1>
+                                                                    <h1 class="modal-title fs-5" id="{{ $noteModalLabel }}">
+                                                                        Deskripsi Kegiatan</h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    {{ $data->keterangan }}
+                                                                    {{ $data->keterangan ?? '-' }}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -338,22 +370,22 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal">
+                                                        data-bs-target="#{{ $noteModalId }}">
                                                         Catatan
                                                     </button>
 
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="{{ $noteModalId }}" tabindex="-1"
+                                                        aria-labelledby="{{ $noteModalLabel }}" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Catatan Dari Pengguna</h1>
+                                                                    <h1 class="modal-title fs-5" id="{{ $noteModalLabel }}">
+                                                                        Deskripsi Kegiatan</h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    {{ $data->keterangan }}
+                                                                    {{ $data->keterangan ?? '-' }}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -363,16 +395,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="justify-content-between">
-                                                    <form
-                                                        action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
-                                                        method="POST">
-                                                        <a type="button" class="btn btn-outline-success btn-styl"
-                                                            style="width: 75px;font-size: 12px;">Setuju</a>
-                                                        <a type="button" class="btn text-white btn-styl"
-                                                            style="width: 75px;font-size: 12px;border: 2px;background-color: #FF2E26;">Tolak</a>
-                                                    </form>
-                                                </td>
+                                                <td class="text-center text-muted">Tidak ada aksi</td>
                                                 <td>
                                                     <a type="button" class="btn text-white"
                                                         style="background-color: #FF2E26; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
@@ -384,22 +407,22 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-md text-capitalize"
                                                         style="background-color:#0C9300" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal">
+                                                        data-bs-target="#{{ $noteModalId }}">
                                                         Catatan
                                                     </button>
 
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="{{ $noteModalId }}" tabindex="-1"
+                                                        aria-labelledby="{{ $noteModalLabel }}" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Catatan Dari Pengguna</h1>
+                                                                    <h1 class="modal-title fs-5" id="{{ $noteModalLabel }}">
+                                                                        Deskripsi Kegiatan</h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    {{ $data->keterangan }}
+                                                                    {{ $data->keterangan ?? '-' }}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -594,4 +617,6 @@
                     color: orange;
                 }
             </style>
+        </div>
+    </div>
 @endsection

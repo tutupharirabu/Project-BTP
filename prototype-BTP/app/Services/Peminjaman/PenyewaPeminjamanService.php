@@ -279,7 +279,12 @@ class PenyewaPeminjamanService
       throw new RuntimeException('Tidak ada sesi peminjaman yang dipilih.');
     }
 
-    if (!($isCoworkingSeatHarian || $isCoworkingSeatBulanan)) {
+    $shouldCheckOverlap = !($isCoworkingSeatHarian || $isCoworkingSeatBulanan);
+    if ($role === $statusPegawai) {
+      $shouldCheckOverlap = false;
+    }
+
+    if ($shouldCheckOverlap) {
       foreach ($bookingEntries as $entry) {
         if (
           $this->penyewaPeminjamanRepository->existsOverlapPeminjaman(
@@ -312,43 +317,121 @@ class PenyewaPeminjamanService
       }
     }
 
-    $entryCount = count($bookingEntries);
-    $totalHargaForm = round(max(0, $totalHargaForm));
-    $prices = [];
-    $remainingTotal = $totalHargaForm;
+    usort($bookingEntries, function ($a, $b) {
+      return strcmp($a['start'], $b['start']);
+    });
 
+    $totalHargaForm = round(max(0, $totalHargaForm));
+    $entryCount = count($bookingEntries);
+
+    $entryAmounts = [];
+    $remainingTotal = $totalHargaForm;
     if ($entryCount > 0) {
       for ($i = 0; $i < $entryCount; $i++) {
         $entriesLeft = $entryCount - $i;
-        $portion = $entriesLeft > 0 ? (int) floor($remainingTotal / $entriesLeft) : 0;
-        $prices[] = (string) $portion;
+        $portion = $entriesLeft > 0 ? intdiv($remainingTotal, $entriesLeft) : 0;
+        $entryAmounts[$i] = $portion;
         $remainingTotal -= $portion;
       }
-
-      if ($remainingTotal > 0 && $entryCount > 0) {
-        $prices[$entryCount - 1] = (string) ((int) $prices[$entryCount - 1] + $remainingTotal);
+      if ($remainingTotal > 0) {
+        $entryAmounts[$entryCount - 1] = ($entryAmounts[$entryCount - 1] ?? 0) + $remainingTotal;
       }
     }
 
+    $halfdayOrder = [
+      '08:00' => 0,
+      '13:00' => 1,
+      '18:00' => 2,
+    ];
+
+    $indexedEntries = [];
     foreach ($bookingEntries as $index => $entry) {
-      $keteranganFinal = $keteranganBase;
+      $indexedEntries[] = [
+        'entry' => $entry,
+        'index' => $index,
+      ];
+    }
 
-      if ($entryCount > 1) {
-        $slotLabel = Carbon::parse($entry['start'])->format('H:i') . ' - ' . Carbon::parse($entry['end'])->format('H:i');
-        $slotInfo = 'Jadwal ' . $slotLabel;
+    $groupedEntries = [];
+    $currentGroup = [];
+    $previousOrder = null;
 
-        if ($keteranganFinal === '~' || trim($keteranganFinal) === '') {
-          $keteranganFinal = $slotInfo;
-        } else {
-          $keteranganFinal .= ' | ' . $slotInfo;
+    foreach ($indexedEntries as $item) {
+      $entryOrder = null;
+      $sessionStart = $item['entry']['session_start'] ?? null;
+      if ($sessionStart !== null && array_key_exists($sessionStart, $halfdayOrder)) {
+        $entryOrder = $halfdayOrder[$sessionStart];
+      }
+
+      $shouldStartNewGroup = false;
+      if (empty($currentGroup)) {
+        $shouldStartNewGroup = true;
+      } else {
+        $isContiguousHalfday = $entryOrder !== null && $previousOrder !== null && $entryOrder === $previousOrder + 1;
+        if (!$isContiguousHalfday) {
+          $groupedEntries[] = $currentGroup;
+          $currentGroup = [];
+          $shouldStartNewGroup = true;
         }
       }
 
-      if (trim($keteranganFinal) === '') {
-        $keteranganFinal = '~';
+      if ($shouldStartNewGroup) {
+        $currentGroup = [];
       }
 
-      $this->penyewaPeminjamanRepository->createPeminjaman([
+      $currentGroup[] = $item;
+      $previousOrder = $entryOrder;
+    }
+
+    if (!empty($currentGroup)) {
+      $groupedEntries[] = $currentGroup;
+    }
+
+    foreach ($groupedEntries as $group) {
+      $groupEntries = array_column($group, 'entry');
+      $groupIndices = array_column($group, 'index');
+
+      $groupStart = $groupEntries[0]['start'];
+      $groupEnd = collect($groupEntries)->max(fn ($entry) => $entry['end']);
+
+      $groupSessionLabels = collect($groupEntries)->map(function ($entry) {
+        $startLabel = Carbon::parse($entry['start'])->format('H:i');
+        $endLabel = Carbon::parse($entry['end'])->format('H:i');
+        return 'Jadwal ' . $startLabel . ' - ' . $endLabel;
+      })->values()->all();
+
+      $groupKeterangan = $keteranganBase;
+      $shouldAppendGroupSlots = count($groupSessionLabels) > 1;
+      if ($shouldAppendGroupSlots) {
+        if ($groupKeterangan === '~' || trim($groupKeterangan) === '') {
+          $groupKeterangan = implode(' | ', $groupSessionLabels);
+        } else {
+          $groupKeterangan .= ' | ' . implode(' | ', $groupSessionLabels);
+        }
+      } elseif (!empty($groupSessionLabels) && ($groupKeterangan === '~' || trim($groupKeterangan) === '')) {
+        $groupKeterangan = $groupSessionLabels[0];
+      }
+
+      if (trim($groupKeterangan) === '') {
+        $groupKeterangan = '~';
+      }
+
+      $groupTotalHarga = array_sum(array_map(function ($index) use ($entryAmounts) {
+        return $entryAmounts[$index] ?? 0;
+      }, $groupIndices));
+
+      $groupSessionPayload = array_map(function ($entry) {
+        return [
+          'start' => $entry['start'],
+          'end' => $entry['end'],
+          'session_start' => $entry['session_start'] ?? null,
+          'label' => isset($entry['start'], $entry['end'])
+            ? 'Jadwal ' . Carbon::parse($entry['start'])->format('H:i') . ' - ' . Carbon::parse($entry['end'])->format('H:i')
+            : null,
+        ];
+      }, $groupEntries);
+
+      $this->penyewaPeminjamanRepository->createPeminjamanWithSessions([
         'nama_peminjam' => $request->input(PeminjamanDatabaseColumn::NamaPenyewa->value),
         'nomor_induk' => $request->input(PeminjamanDatabaseColumn::NomorIndukPenyewa->value),
         'nomor_telepon' => $request->input(PeminjamanDatabaseColumn::NomorTeleponPenyewa->value),
@@ -363,13 +446,13 @@ class PenyewaPeminjamanService
         'npwp_public_id' => $npwpPublicId ?? null,
         'npwp_format' => $npwpFormat ?? null,
         'role' => $role,
-        'tanggal_mulai' => $entry['start'],
-        'tanggal_selesai' => $entry['end'],
+        'tanggal_mulai' => $groupStart,
+        'tanggal_selesai' => $groupEnd,
         'jumlah' => $jumlahPeserta,
-        'total_harga' => $prices[$index] ?? '0',
+        'total_harga' => (string) $groupTotalHarga,
         'status' => $statusMenunggu,
-        'keterangan' => $keteranganFinal,
-      ]);
+        'keterangan' => $groupKeterangan,
+      ], $groupSessionPayload);
     }
   }
 }

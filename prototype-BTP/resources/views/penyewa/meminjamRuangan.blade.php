@@ -13,7 +13,7 @@
         <!-- title -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-8">
-                <div class="container mx-2">
+                <div class="container mx-12">
                     <h4>Peminjaman/Penyewaan Ruangan</h4>
                 </div>
             </div>

@@ -50,17 +50,15 @@
 
 <body>
     @include('admin.partials.navigationAdmin')
-    <div class="row d-flex">
+    <div class="row g-0 min-vh-100">
         <div class="col-sm-12 col-md-2 col-xl-2 col-lg-2">
             @include('admin.partials.sidebarAdmin')
         </div>
-        <div class="col-sm-12 col-md-10 col-xl-10">
-            <div>
+        <div class="col-sm-12 col-md-10 col-xl-10 d-flex flex-column px-0">
+            <div class="flex-grow-1 px-4 px-md-5 py-4">
                 @yield('containAdmin')
             </div>
-            <div>
-                @include('admin.partials.footerAdmin')
-            </div>
+            @include('admin.partials.footerAdmin')
         </div>
     </div>
 

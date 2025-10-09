@@ -4,6 +4,7 @@ namespace App\Services\Ruangan;
 
 use App\Enums\Database\PeminjamanDatabaseColumn;
 use App\Enums\Database\RuanganDatabaseColumn;
+use App\Enums\Relation\PeminjamanRelasi;
 use App\Enums\StatusPeminjaman;
 use Exception;
 use Carbon\Carbon;
@@ -34,14 +35,32 @@ class PenyewaRuanganService
 
     $events = [];
     foreach ($peminjamans as $peminjaman) {
-      $events[] = [
-        'title' => $peminjaman->nama_peminjam . " - " . $peminjaman->ruangan->nama_ruangan,
-        'peminjam' => $peminjaman->nama_peminjam,
-        'ruangan' => $peminjaman->ruangan->nama_ruangan,
-        'start' => $peminjaman->tanggal_mulai,
-        'end' => $peminjaman->tanggal_selesai,
-        'ruangan_id' => $peminjaman->id_ruangan,
-      ];
+      $sessions = $peminjaman->relationLoaded(PeminjamanRelasi::Sessions->value)
+        ? $peminjaman->sessions
+        : $peminjaman->sessions()->get();
+
+      if ($sessions->isEmpty()) {
+        $events[] = [
+          'title' => $peminjaman->nama_peminjam . " - " . $peminjaman->ruangan->nama_ruangan,
+          'peminjam' => $peminjaman->nama_peminjam,
+          'ruangan' => $peminjaman->ruangan->nama_ruangan,
+          'start' => Carbon::parse($peminjaman->tanggal_mulai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'end' => Carbon::parse($peminjaman->tanggal_selesai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'ruangan_id' => $peminjaman->id_ruangan,
+        ];
+        continue;
+      }
+
+      foreach ($sessions as $session) {
+        $events[] = [
+          'title' => $peminjaman->nama_peminjam . " - " . $peminjaman->ruangan->nama_ruangan,
+          'peminjam' => $peminjaman->nama_peminjam,
+          'ruangan' => $peminjaman->ruangan->nama_ruangan,
+          'start' => Carbon::parse($session->tanggal_mulai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'end' => Carbon::parse($session->tanggal_selesai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'ruangan_id' => $peminjaman->id_ruangan,
+        ];
+      }
     }
 
     return [
@@ -63,14 +82,20 @@ class PenyewaRuanganService
     $tanggalMulai = Carbon::parse($start);
     $tanggalSelesai = Carbon::parse($end ?? $tanggalMulai->copy()->addDays(6)->toDateString());
 
-    $usedTimes = DB::table($peminjamanTable)
-      ->where($idRuanganColumn, $ruanganId)
-      ->where(function ($query) use ($tanggalMulai, $tanggalSelesai, $tanggalMulaiColumn, $tanggalSelesaiColumn) {
-        $query->whereDate($tanggalMulaiColumn, '<=', $tanggalSelesai)
-          ->whereDate($tanggalSelesaiColumn, '>=', $tanggalMulai);
+    $sessionTable = 'peminjaman_sessions';
+
+    $usedTimes = DB::table($sessionTable)
+      ->join($peminjamanTable, $peminjamanTable . '.' . PeminjamanDatabaseColumn::IdPeminjaman->value, '=', $sessionTable . '.peminjaman_id')
+      ->where($peminjamanTable . '.' . $idRuanganColumn, $ruanganId)
+      ->where($peminjamanTable . '.' . $statusPeminjamanColumn, $statusDisetujui)
+      ->where(function ($query) use ($sessionTable, $tanggalMulai, $tanggalSelesai) {
+        $query->whereDate($sessionTable . '.tanggal_mulai', '<=', $tanggalSelesai)
+          ->whereDate($sessionTable . '.tanggal_selesai', '>=', $tanggalMulai);
       })
-      ->whereIn($statusPeminjamanColumn, [$statusDisetujui])
-      ->get();
+      ->get([
+        $sessionTable . '.tanggal_mulai as tanggal_mulai',
+        $sessionTable . '.tanggal_selesai as tanggal_selesai',
+      ]);
 
     $usedTimeSlots = [];
     foreach ($usedTimes as $time) {

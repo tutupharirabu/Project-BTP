@@ -39,17 +39,15 @@
 <body>
 
     @include('penyewa.partials.navigationUser')
-    <div class="row d-flex">
+    <div class="row g-0 min-vh-100">
         <div class="col-sm-12 col-md-2 col-xl-2 col-lg-2">
             @include('penyewa.partials.sidebarUser')
         </div>
-        <div class="col-sm-12 col-md-10 col-xl-10">
-            <div>
+        <div class="col-sm-12 col-md-10 col-xl-10 d-flex flex-column px-0">
+            <div class="flex-grow-1 px-4 px-md-5 py-4">
                 @yield('containPenyewa')
             </div>
-            <div>
-                @include('penyewa.partials.footerUser')
-            </div>
+            @include('penyewa.partials.footerUser')
         </div>
     </div>
 

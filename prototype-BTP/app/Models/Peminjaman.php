@@ -4,12 +4,15 @@ namespace App\Models;
 
 use App\Models\Users;
 use App\Models\Ruangan;
+use App\Models\PeminjamanSession;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\Database\UsersDatabaseColumn;
 use App\Enums\Database\RuanganDatabaseColumn;
 use App\Enums\Database\PeminjamanDatabaseColumn;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
@@ -28,6 +31,7 @@ class Peminjaman extends Model
             PeminjamanDatabaseColumn::JumlahPeserta->value,
             PeminjamanDatabaseColumn::TotalHarga->value,
             PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value,
+            PeminjamanDatabaseColumn::InvoiceNumber->value,
             PeminjamanDatabaseColumn::KeteranganPenyewaan->value,
             PeminjamanDatabaseColumn::UrlKtp->value,
             PeminjamanDatabaseColumn::UrlKtm->value,
@@ -50,6 +54,81 @@ class Peminjaman extends Model
     public function ruangan(): BelongsTo
     {
         return $this->belongsTo(Ruangan::class, RuanganDatabaseColumn::IdRuangan->value, RuanganDatabaseColumn::IdRuangan->value);
+    }
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(
+            PeminjamanSession::class,
+            'peminjaman_id',
+            PeminjamanDatabaseColumn::IdPeminjaman->value
+        )->orderBy('tanggal_mulai');
+    }
+
+    public function getSessionRangesAttribute(): array
+    {
+        if (!$this->relationLoaded('sessions')) {
+            $this->setRelation('sessions', $this->sessions()->get());
+        }
+
+        $sessions = $this->getRelation('sessions');
+
+        if ($sessions->isEmpty()) {
+            if ($this->{PeminjamanDatabaseColumn::TanggalMulai->value} && $this->{PeminjamanDatabaseColumn::TanggalSelesai->value}) {
+                return [
+                    Carbon::parse($this->{PeminjamanDatabaseColumn::TanggalMulai->value})->format('H:i') .
+                    ' - ' .
+                    Carbon::parse($this->{PeminjamanDatabaseColumn::TanggalSelesai->value})->format('H:i'),
+                ];
+            }
+
+            return [];
+        }
+
+        return $sessions->map(function (PeminjamanSession $session) {
+            return Carbon::parse($session->tanggal_mulai)->format('H:i') . ' - ' . Carbon::parse($session->tanggal_selesai)->format('H:i');
+        })->values()->all();
+    }
+
+    public function getSessionRangeStringAttribute(): string
+    {
+        return implode(', ', $this->session_ranges);
+    }
+
+    public static function nextInvoiceNumber(): string
+    {
+        $now = Carbon::now();
+        $prefix = 'INV-' . $now->format('Ymd');
+
+        $latest = static::query()
+            ->whereDate(PeminjamanDatabaseColumn::CreatedAt->value, $now->toDateString())
+            ->whereNotNull(PeminjamanDatabaseColumn::InvoiceNumber->value)
+            ->where(PeminjamanDatabaseColumn::InvoiceNumber->value, 'like', $prefix . '%')
+            ->lockForUpdate()
+            ->orderBy(PeminjamanDatabaseColumn::InvoiceNumber->value, 'desc')
+            ->value(PeminjamanDatabaseColumn::InvoiceNumber->value);
+
+        $nextSequence = $latest
+            ? ((int) substr($latest, -4)) + 1
+            : 1;
+
+        return sprintf('%s-%04d', $prefix, $nextSequence);
+    }
+
+    public function ensureInvoiceNumber(): void
+    {
+        if ($this->{PeminjamanDatabaseColumn::InvoiceNumber->value}) {
+            return;
+        }
+
+        $this->getConnection()->transaction(function () {
+            $this->refresh();
+
+            if (!$this->{PeminjamanDatabaseColumn::InvoiceNumber->value}) {
+                $this->{PeminjamanDatabaseColumn::InvoiceNumber->value} = static::nextInvoiceNumber();
+                $this->save();
+            }
+        });
     }
 
     protected function generateSignedUrl(?string $publicId, ?string $format): ?string

@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-6 col mb-0">
                 <div class="container ml-4">
-                    <h4>Peminjaman/Penyewaan Ruangan</h4>
+                    <h4>Dashboard Admin SpaceRent BTP</h4>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
+                <div class="container my-2">
                     <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Dashboard</a>
                 </div>
             </div>
@@ -42,14 +42,14 @@
             <br>
         </div>
 
-        <div class="p-3 border mb-2"
+        {{-- <div class="p-3 border mb-2"
             style="border: 6px solid #61677A; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 
             <center>
                 <h2>Grafik Peminjaman/Penyewaan Per Bulan</h2>
             </center>
             <canvas id="occupancyChart" width="200" height="100"></canvas>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Modal -->

@@ -28,7 +28,7 @@ class AdminRiwayatPeminjamanController extends Controller
     public function index()
     {
         $dataPeminjaman = $this->adminRiwayatPeminjamanService->getRiwayatPeminjaman();
-        return view('riwayatRuangan', compact('dataPeminjaman'));
+        return view('admin.riwayatRuangan', compact('dataPeminjaman'));
     }
 
     public function downloadCSV()

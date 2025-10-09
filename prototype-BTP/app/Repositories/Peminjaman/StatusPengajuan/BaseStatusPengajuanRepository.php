@@ -15,7 +15,9 @@ class BaseStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInte
     $withUser = PeminjamanRelasi::User->value;
     $orderByCreatedAt = PeminjamanDatabaseColumn::CreatedAt->value;
     $orderByUpdatedAt = PeminjamanDatabaseColumn::UpdatedAt->value;
-    return Peminjaman::with([$withRuangan, $withUser])
+    $withSessions = PeminjamanRelasi::Sessions->value;
+
+    return Peminjaman::with([$withRuangan, $withUser, $withSessions])
       ->orderByDesc($orderByCreatedAt)
       ->orderByDesc($orderByUpdatedAt)
       ->get();
@@ -23,6 +25,10 @@ class BaseStatusPengajuanRepository implements BaseStatusPengajuanRepositoryInte
 
   public function getPeminjamanById(string $idPeminjaman): ?Peminjaman
   {
-    return Peminjaman::findOrFail($idPeminjaman);
+    $withRuangan = PeminjamanRelasi::Ruangan->value;
+    $withUser = PeminjamanRelasi::User->value;
+    $withSessions = PeminjamanRelasi::Sessions->value;
+
+    return Peminjaman::with([$withRuangan, $withUser, $withSessions])->findOrFail($idPeminjaman);
   }
 }

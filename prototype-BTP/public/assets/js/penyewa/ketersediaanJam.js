@@ -64,10 +64,23 @@ function setDateInputsMinToday() {
 const HALF_DAY_SESSIONS = [
     { start: '08:00', end: '12:00' },
     { start: '13:00', end: '17:00' },
-    { start: '18:00', end: '21:00' },
+    { start: '18:00', end: '22:00' },
 ];
 let halfDayAvailableSessions = [];
 let selectedHalfdaySessions = [];
+let sessionSelectionRequired = false;
+
+function formatLocalDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return (hours * 60) + minutes;
+}
 
 function applyFlatpickrBlockedDates() {
     // Dukung select atau input hidden
@@ -159,6 +172,9 @@ function applyFlatpickrPrivateOfficeBlockedDates() {
 
 
 function updateFormContent(role, satuan) {
+    // Default: sesi halfday tidak wajib sampai form khususnya aktif
+    sessionSelectionRequired = false;
+
     // Cek keduanya sudah ada
     if (!role || !satuan) {
         $('#form-content').html('');
@@ -319,6 +335,7 @@ function updateFormContent(role, satuan) {
 }
 
 function showPerJamForm() {
+    sessionSelectionRequired = true;
     selectedHalfdaySessions = [];
     halfDayAvailableSessions = [];
 
@@ -417,18 +434,45 @@ function loadAvailableHalfdaySessions() {
     }
 
     $.get('/getAvailableJamMulaiHalfday', { id_ruangan: idRuangan, tanggal: tanggal }, function (validJamMulai) {
-        renderHalfdaySessionOptions(validJamMulai || []);
+        renderHalfdaySessionOptions(validJamMulai || [], tanggal);
         syncSelectedHalfdaySessions();
     });
 }
 
-function renderHalfdaySessionOptions(validJamMulai) {
-    var availableSet = new Set((validJamMulai || []).map(String));
+function normalizeTimeString(value) {
+    return String(value).slice(0, 5);
+}
+
+function renderHalfdaySessionOptions(validJamMulai, tanggalDipilih) {
+    var availableSet = new Set((validJamMulai || []).map(normalizeTimeString));
+    const todayLocal = formatLocalDate(new Date());
+    const isTodaySelected = tanggalDipilih === todayLocal;
+    const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
     halfDayAvailableSessions = HALF_DAY_SESSIONS.map(function (session) {
+        let status = 'unknown';
+        let available = false;
+
+        if (availableSet.has(session.start)) {
+            status = 'available';
+            available = true;
+        } else if (tanggalDipilih) {
+            status = 'booked';
+        }
+
+        if (isTodaySelected && available) {
+            const sessionStartMinutes = timeToMinutes(session.start);
+            if (sessionStartMinutes <= currentMinutes) {
+                available = false;
+                status = 'expired';
+            }
+        }
+
         return {
             start: session.start,
             end: session.end,
-            available: availableSet.has(session.start),
+            available: available,
+            status: status,
         };
     });
     selectedHalfdaySessions = selectedHalfdaySessions.filter(function (start) {
@@ -458,7 +502,8 @@ function renderAvailableSessionsList() {
                 return `<div><span class="badge bg-secondary text-white me-2">Dipilih</span>${label}</div>`;
             }
             if (!session.available) {
-                return `<div><span class="badge bg-secondary me-2">Penuh</span>${label}</div>`;
+                var badgeLabel = session.status === 'booked' ? 'Telah di Booking' : 'Tidak tersedia';
+                return `<div><span class="badge bg-secondary me-2">${badgeLabel}</span>${label}</div>`;
             }
             return `<div><span class="badge bg-success text-white fw-semibold me-2">Tersedia</span>${label}</div>`;
         })
@@ -642,6 +687,10 @@ function updateHalfdaySessionFeedback(customMessage, isError) {
 }
 
 function isSessionSelectionValid() {
+    if (!sessionSelectionRequired) {
+        return true;
+    }
+
     updateHalfdaySessionFeedback();
 
     var availableCount = halfDayAvailableSessions.filter(function (session) {
@@ -699,6 +748,8 @@ window.getSelectedHalfdaySessions = getSelectedHalfdaySessions;
 window.formatHalfdaySessionRange = formatHalfdaySessionRange;
 
 function showPerHariForm() {
+    sessionSelectionRequired = false;
+
     $('#form-content').html(`
         <div class="row">
             <div class="col-12">
@@ -717,27 +768,7 @@ function showPerHariForm() {
                 <label for="jam_mulai" class="form-label text-color">Jam Mulai Penyewaan</label>
                 <select name="jam_mulai" id="jam_mulai" class="form-control border-color" required>
                     <option value="">Pilih Jam Mulai Penyewaan</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option> 
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
+                    ${generateTimeOptions('08:00', '18:00')}
                 </select>
                 <div class="invalid-feedback">Masukkan Jam Mulai Peminjaman!</div>
             </div>
@@ -745,35 +776,7 @@ function showPerHariForm() {
                 <label for="jam_selesai" class="form-label text-color">Jam Selesai Penyewaan</label>
                 <select name="jam_selesai" id="jam_selesai" class="form-control border-color" required disabled>
                     <option value="">Pilih Jam Selesai Penyewaan</option>
-                    <option value="08:00">08:00</option>
-                    <option value="08:30">08:30</option>
-                    <option value="09:00">09:00</option>
-                    <option value="09:30">09:30</option>
-                    <option value="10:00">10:00</option>
-                    <option value="10:30">10:30</option>
-                    <option value="11:00">11:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="12:00">12:00</option>
-                    <option value="12:30">12:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="13:30">13:30</option>
-                    <option value="14:00">14:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="15:00">15:00</option>
-                    <option value="15:30">15:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="16:30">16:30</option>
-                    <option value="17:00">17:00</option>
-                    <option value="17:30">17:30</option>
-                    <option value="18:00">18:00</option>
-                    <option value="18:30">18:30</option>
-                    <option value="19:00">19:00</option>
-                    <option value="19:30">19:30</option>
-                    <option value="20:00">20:00</option>
-                    <option value="20:30">20:30</option>
-                    <option value="21:00">21:00</option>
-                    <option value="21:30">21:30</option>
-                    <option value="22:00">22:00</option>
+                    ${generateTimeOptions('08:00', '22:00')}
                 </select>
                 <div class="invalid-feedback">Masukkan Jam Selesai Peminjaman!</div>
             </div>
@@ -781,43 +784,18 @@ function showPerHariForm() {
     `);
 
     setDateInputsMinToday();
-
-    $('#form-content').on('change', '#tanggal_mulai', function () {
-        this.classList.remove('is-invalid');
-        var tanggal = $('#tanggal_mulai').val();
-        var idRuangan = $('#id_ruangan').val();
-        if (!tanggal || !idRuangan) return;
-
-        $.get('/getUnavailableJam', { id_ruangan: idRuangan, tanggal: tanggal }, function (unavailableJam) {
-            // Reset semua jam mulai
-            $('#jam_mulai option').each(function () {
-                $(this).prop('disabled', false).show();
-            });
-
-            // Disable/hide jam mulai yang sudah tidak available
-            unavailableJam.forEach(function (jam) {
-                $('#jam_mulai option').each(function () {
-                    if ($(this).val() === jam) {
-                        $(this).prop('disabled', true);
-                    }
-                });
-            });
-
-            // Jika option terpilih jadi disabled, reset value
-            if ($('#jam_mulai option:selected').prop('disabled')) {
-                $('#jam_mulai').val('');
-            }
-        });
-    });
-
     $('#form-content').on('change', '#tanggal_mulai, #tanggal_selesai, #jam_mulai', function (event) {
         var tanggalMulai = $('#tanggal_mulai').val();
         var tanggalSelesai = $('#tanggal_selesai').val();
         var jamMulai = $('#jam_mulai').val();
-        var idRuangan = $('#id_ruangan').val() || $('input[name="id_ruangan"]').val();
 
-        if (event.target.id === 'tanggal_mulai' && tanggalMulai) {
-            $('#tanggal_mulai').removeClass('is-invalid');
+        if (event.target.id === 'tanggal_mulai') {
+            if (tanggalMulai) {
+                $('#tanggal_mulai').removeClass('is-invalid');
+                $('#tanggal_selesai').attr('min', tanggalMulai);
+            } else {
+                $('#tanggal_selesai').attr('min', null);
+            }
         }
 
         if (event.target.id === 'tanggal_selesai' && tanggalSelesai) {
@@ -829,36 +807,43 @@ function showPerHariForm() {
 
         // Enable jam selesai jika jam mulai sudah dipilih
         $('#jam_selesai').prop('disabled', !jamMulai);
-
-        // Reset jam selesai (supaya tidak ada value salah)
-        $('#jam_selesai').val('');
-
-        // Validasi jam_selesai
-        if (tanggalMulai && tanggalSelesai && jamMulai && idRuangan) {
-            // Ambil unavailable jam untuk tanggal_selesai (bukan tanggal_mulai!)
-            $.get('/getUnavailableJam', { id_ruangan: idRuangan, tanggal: tanggalSelesai }, function (unavailableJam) {
-                $('#jam_selesai option').each(function () {
-                    var jamOption = $(this).val();
-                    // Default: enable semua
-                    var disable = false;
-
-                    // Kasus tanggal_mulai === tanggal_selesai: jam_selesai tidak boleh <= jam_mulai dan tidak boleh unavailable
-                    if (tanggalMulai === tanggalSelesai) {
-                        if (jamOption && jamMulai && jamOption <= jamMulai) disable = true;
-                    }
-                    // Di kedua kasus, block juga jam_selesai jika unavailable di tanggal_selesai
-                    if (jamOption && unavailableJam.includes(jamOption)) disable = true;
-
-                    $(this).prop('disabled', disable);
-                });
-            });
-        } else {
-            // Enable semua jika data kurang
+        if (jamMulai) {
             $('#jam_selesai option').each(function () {
-                $(this).prop('disabled', false);
+                var value = $(this).val();
+                if (!value) {
+                    $(this).prop('disabled', false);
+                    return;
+                }
+                $(this).prop('disabled', value <= jamMulai);
             });
+
+            if ($('#jam_selesai option:selected').prop('disabled')) {
+                $('#jam_selesai').val('');
+            }
+        } else {
+            $('#jam_selesai option').prop('disabled', false);
+            $('#jam_selesai').val('');
         }
     });
 
-    applyFlatpickrBlockedDates();
+    $('#form-content').on('change', '#jam_selesai', function () {
+        if ($(this).val()) {
+            $(this).removeClass('is-invalid');
+        }
+    });
+}
+
+function generateTimeOptions(startTime, endTime) {
+    var options = [];
+    var start = timeToMinutes(startTime);
+    var end = timeToMinutes(endTime);
+
+    for (var minutes = start; minutes <= end; minutes += 30) {
+        var hours = Math.floor(minutes / 60);
+        var mins = minutes % 60;
+        var value = String(hours).padStart(2, '0') + ':' + String(mins).padStart(2, '0');
+        options.push(`<option value="${value}">${value}</option>`);
+    }
+
+    return options.join('');
 }

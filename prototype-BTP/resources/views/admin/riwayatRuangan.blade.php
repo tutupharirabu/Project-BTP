@@ -28,7 +28,7 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
+                <div class="container my-2">
                     <a class="" href="/riwayatPeminjamanRuanganAdmin"
                         style="color: #028391;font-size:12px;font-weight: bold;">Riwayat
                         Peminjaman\Penyewaan Ruangan</a>
@@ -61,18 +61,18 @@
             </div>
 
             <!-- <div class="container mt-4 mb-2">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
-                                                                                        placeholder="Cari riwayat..."
-                                                                                        style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
-                                                                                    {{-- <button type="button" class="btn btn-md text-white text-center"
-                                                style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <input id="searchInput" onkeyup="liveSearch()" type="text" class="form-control"
+                                                                                            placeholder="Cari riwayat..."
+                                                                                            style="width: 434px; height: 36px; border-radius: 6px; color: #070F2B; border: 2px solid #B1B1B1;">
+                                                                                        {{-- <button type="button" class="btn btn-md text-white text-center"
+                                                    style="margin-left:20px; background-color: #0EB100; border-radius: 6px;">Cari</button> --}}
+                                                                                    </div>
+                                                                                    <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center"
+                                                                                        style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
                                                                                 </div>
-                                                                                <a href="{{ route('riwayat.downloadRiwayatPeminjamanRuangan') }}" class="btn btn-md text-white text-center"
-                                                                                    style="background-color: #0EB100; border-radius: 6px">Download CSV</a>
-                                                                            </div>
-                                                                        </div> -->
+                                                                            </div> -->
 
             <!-- table edit -->
             <div class="row">
@@ -198,4 +198,5 @@
                 }
             }
         </script>
+    </div>
 @endsection

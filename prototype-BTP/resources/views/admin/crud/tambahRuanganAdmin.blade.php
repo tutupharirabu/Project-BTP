@@ -157,8 +157,8 @@
                                             required> --}}
                                         <select class="bordered-text form-control" name="satuan" id="satuan" required>
                                             <option value="" selected disabled>Pilih Satuan Waktu</option>
-                                            <option value="Seat / Bulan">Seat / Bulan</option>
-                                            <option value="Seat / Hari">Seat / Hari</option>
+                                            {{-- <option value="Seat / Bulan">Seat / Bulan</option>
+                                            <option value="Seat / Hari">Seat / Hari</option> --}}
                                             <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
                                         </select>
                                         <div class="invalid-feedback">Silakan masukkan satuan waktu.</div>

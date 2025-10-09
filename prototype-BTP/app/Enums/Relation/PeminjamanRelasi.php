@@ -6,4 +6,5 @@ enum PeminjamanRelasi: string
 {
   case User = 'user';
   case Ruangan = 'ruangan';
+  case Sessions = 'sessions';
 }

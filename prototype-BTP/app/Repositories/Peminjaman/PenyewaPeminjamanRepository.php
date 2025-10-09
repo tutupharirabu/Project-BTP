@@ -8,11 +8,14 @@ use DateInterval;
 use Carbon\Carbon;
 use App\Models\Ruangan;
 use App\Models\Peminjaman;
+use App\Models\PeminjamanSession;
 use App\Enums\StatusPeminjaman;
 use App\Enums\Penyewa\SatuanPenyewa;
 use App\Enums\Database\RuanganDatabaseColumn;
 use App\Enums\Database\PeminjamanDatabaseColumn;
+use App\Enums\Relation\PeminjamanRelasi;
 use App\Interfaces\Repositories\Peminjaman\PenyewaPeminjamanRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterface
 {
@@ -41,44 +44,108 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
     $idRuanganArray = is_array($idRuangan) ? $idRuangan : [$idRuangan];
     $statusDisetujui = StatusPeminjaman::Disetujui->value;
 
-    $query = Peminjaman::whereIn(RuanganDatabaseColumn::IdRuangan->value, $idRuanganArray)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui);
+    $peminjamanTable = PeminjamanDatabaseColumn::Peminjaman->value;
+    $idRuanganColumn = RuanganDatabaseColumn::IdRuangan->value;
+    $statusColumn = PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value;
+    $jumlahColumn = PeminjamanDatabaseColumn::JumlahPeserta->value;
+
+    $query = PeminjamanSession::query()
+      ->select([
+        'peminjaman_sessions.*',
+        $peminjamanTable . '.' . $jumlahColumn . ' as jumlah',
+        $peminjamanTable . '.' . $idRuanganColumn . ' as id_ruangan',
+      ])
+      ->join(
+        $peminjamanTable,
+        $peminjamanTable . '.' . PeminjamanDatabaseColumn::IdPeminjaman->value,
+        '=',
+        'peminjaman_sessions.peminjaman_id'
+      )
+      ->whereIn($peminjamanTable . '.' . $idRuanganColumn, $idRuanganArray)
+      ->where($peminjamanTable . '.' . $statusColumn, $statusDisetujui);
 
     if ($tanggal) {
-      $query->whereDate(PeminjamanDatabaseColumn::TanggalMulai->value, $tanggal);
+      $query->whereDate('peminjaman_sessions.tanggal_mulai', $tanggal);
     }
 
     if ($selectFields) {
-      return $query->get($selectFields);
+      $columns = [];
+      foreach ($selectFields as $field) {
+        if (in_array($field, [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value], true)) {
+          $columns[] = 'peminjaman_sessions.' . $field;
+        } else {
+          $columns[] = $peminjamanTable . '.' . $field;
+        }
+      }
+      $query->select(array_merge(['peminjaman_sessions.id'], array_unique($columns)));
     }
+
     return $query->get();
   }
 
   public function createPeminjaman(array $data): Peminjaman
   {
-    return Peminjaman::create($data);
+    $start = $data[PeminjamanDatabaseColumn::TanggalMulai->value] ?? null;
+    $end = $data[PeminjamanDatabaseColumn::TanggalSelesai->value] ?? null;
+
+    $sessions = [];
+    if ($start && $end) {
+      $sessions[] = [
+        'start' => $start,
+        'end' => $end,
+        'session_start' => null,
+        'label' => null,
+      ];
+    }
+
+    return $this->createPeminjamanWithSessions($data, $sessions);
+  }
+
+  public function createPeminjamanWithSessions(array $data, array $sessions): Peminjaman
+  {
+    return DB::transaction(function () use ($data, $sessions) {
+      if (empty($data[PeminjamanDatabaseColumn::InvoiceNumber->value] ?? null)) {
+        $data[PeminjamanDatabaseColumn::InvoiceNumber->value] = Peminjaman::nextInvoiceNumber();
+      }
+
+      $peminjaman = Peminjaman::create($data);
+
+      foreach ($sessions as $session) {
+        if (empty($session['start']) || empty($session['end'])) {
+          continue;
+        }
+
+        PeminjamanSession::create([
+          'peminjaman_id' => $peminjaman->{PeminjamanDatabaseColumn::IdPeminjaman->value},
+          'tanggal_mulai' => $session['start'],
+          'tanggal_selesai' => $session['end'],
+          'session_label' => $session['session_start'] ?? ($session['label'] ?? null),
+        ]);
+      }
+
+      return $peminjaman->load(PeminjamanRelasi::Sessions->value);
+    });
   }
 
   public function existsOverlapPeminjaman(string $id_ruangan, string $tanggal_mulai, string $tanggal_selesai): bool
   {
     $statusDisetujui = StatusPeminjaman::Disetujui->value;
 
-    return Peminjaman::where(RuanganDatabaseColumn::IdRuangan->value, $id_ruangan)
-      ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui)
+    return PeminjamanSession::query()
+      ->whereHas('peminjaman', function ($query) use ($id_ruangan, $statusDisetujui) {
+        $query->where(RuanganDatabaseColumn::IdRuangan->value, $id_ruangan)
+          ->where(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusDisetujui);
+      })
       ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
-        $query->where(PeminjamanDatabaseColumn::TanggalMulai->value, '<', $tanggal_selesai)
-          ->where(PeminjamanDatabaseColumn::TanggalSelesai->value, '>', $tanggal_mulai);
+        $query->where('tanggal_mulai', '<', $tanggal_selesai)
+          ->where('tanggal_selesai', '>', $tanggal_mulai);
       })
       ->exists();
   }
 
   public function getUnavailableJam(string $idRuangan, string $tanggal): array
   {
-    $bookings = $this->getApprovedBookingsByRuangan(
-      $idRuangan,
-      [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value],
-      $tanggal
-    );
+    $bookings = $this->getApprovedBookingsByRuangan($idRuangan, null, $tanggal);
 
     $allJam = [];
     for ($hour = 8; $hour <= 22; $hour++) {
@@ -105,14 +172,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
 
   public function getUnavailableTanggal(string $idRuangan): array
   {
-    // Ambil semua booking yang disetujui
-    $bookings = $this->getApprovedBookingsByRuangan(
-      $idRuangan,
-      [
-        PeminjamanDatabaseColumn::TanggalMulai->value,
-        PeminjamanDatabaseColumn::TanggalSelesai->value
-      ]
-    );
+    $bookings = $this->getApprovedBookingsByRuangan($idRuangan);
 
     // Kumpulkan semua tanggal yang punya booking di range booking
     $tanggalTerbooking = [];
@@ -145,9 +205,9 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
       $slotUsed = [];
       foreach ($allJam as $jam) {
         $current = Carbon::createFromFormat('Y-m-d H:i', "$tanggal $jam");
-        foreach ($bookings as $booking) {
-          $mulai = Carbon::parse($booking->tanggal_mulai);
-          $selesai = Carbon::parse($booking->tanggal_selesai);
+      foreach ($bookings as $booking) {
+        $mulai = Carbon::parse($booking->tanggal_mulai);
+        $selesai = Carbon::parse($booking->tanggal_selesai);
           if ($current->greaterThanOrEqualTo($mulai) && $current->lessThanOrEqualTo($selesai)) {
             $slotUsed[] = $jam;
             break;
@@ -297,14 +357,7 @@ class PenyewaPeminjamanRepository implements PenyewaPeminjamanRepositoryInterfac
 
   public function getPrivateOfficeBlockedDates(string $idRuangan): array
   {
-    // Ambil semua booking disetujui ruangan ini
-    $bookings = $this->getApprovedBookingsByRuangan(
-      $idRuangan,
-      [
-        PeminjamanDatabaseColumn::TanggalMulai->value,
-        PeminjamanDatabaseColumn::TanggalSelesai->value
-      ]
-    );
+    $bookings = $this->getApprovedBookingsByRuangan($idRuangan);
 
     $blocked = [];
     foreach ($bookings as $b) {

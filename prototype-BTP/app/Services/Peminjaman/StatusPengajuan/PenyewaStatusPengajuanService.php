@@ -23,6 +23,11 @@ class PenyewaStatusPengajuanService
   {
     $data = $this->penyewaStatusPengajuanRepository->getPeminjamanById($idPeminjaman);
 
+    if (method_exists($data, 'ensureInvoiceNumber')) {
+      $data->ensureInvoiceNumber();
+      $data->refresh();
+    }
+
     return Pdf::loadView('penyewa.invoices.invoice', compact('data'))
       ->setPaper([0, 0, 595.28, 566.93], 'portrait');
   }

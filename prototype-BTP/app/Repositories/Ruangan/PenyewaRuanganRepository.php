@@ -24,7 +24,9 @@ class PenyewaRuanganRepository implements PenyewaRuanganRepositoryInterface
     $statusDisetujui = StatusPeminjaman::Disetujui->value;
     $statusSelesai = StatusPeminjaman::Selesai->value;
 
-    return Peminjaman::with($relasiRuangan)
+    $relations = [$relasiRuangan, PeminjamanRelasi::Sessions->value];
+
+    return Peminjaman::with($relations)
       ->where($columnIdRuangan, $idRuangan)
       ->whereIn($columnStatusPeminjaman, [$statusDisetujui, $statusSelesai])
       ->get();

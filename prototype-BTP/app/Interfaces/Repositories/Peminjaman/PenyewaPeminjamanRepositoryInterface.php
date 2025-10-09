@@ -9,6 +9,7 @@ interface PenyewaPeminjamanRepositoryInterface extends BasePeminjamanRepositoryI
   public function getGroupRuanganIdsByRuanganId(string $idRuangan): array;
   public function getApprovedBookingsByRuangan(string|array $idRuangan, ?array $selectFields = null);
   public function createPeminjaman(array $data): Peminjaman;
+  public function createPeminjamanWithSessions(array $data, array $sessions): Peminjaman;
   public function existsOverlapPeminjaman(string $id_ruangan, string $tanggal_mulai, string $tanggal_selesai): bool;
   public function getUnavailableJam(string $idRuangan, string $tanggal): array;
   public function getUnavailableTanggal(string $idRuangan): array;

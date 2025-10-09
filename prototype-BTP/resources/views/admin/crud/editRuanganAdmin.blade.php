@@ -146,12 +146,12 @@
                                             name="satuan" value="{{ $dataRuangan->satuan }}" required> --}}
                                         <select class="bordered-text form-control" name="satuan" id="satuan" required>
                                             <option>{{ $dataRuanganEdit->satuan }}</option>
-                                            @if ($dataRuanganEdit->satuan != 'Seat / Bulan')
+                                            {{-- @if ($dataRuanganEdit->satuan != 'Seat / Bulan')
                                                 <option value="Seat / Bulan">Seat / Bulan</option>
                                             @endif
                                             @if ($dataRuanganEdit->satuan != 'Seat / Hari')
                                                 <option value="Seat / Hari">Seat / Hari</option>
-                                            @endif
+                                            @endif --}}
                                             @if ($dataRuanganEdit->satuan != 'Halfday / 4 Jam')
                                                 <option value="Halfday / 4 Jam">Halfday / 4 Jam</option>
                                             @endif

@@ -22,8 +22,8 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
-                    <a class="" href="" style="color: #028391;font-size:12px;font-weight: bold;">Daftar
+                <div class="container my-2">
+                    <a class="" href="/daftarRuanganAdmin" style="color: #028391;font-size:12px;font-weight: bold;">Daftar
                         Ruangan</a>
                 </div>
             </div>
@@ -378,4 +378,5 @@
                 }
             }
         </script>
+    </div>
 @endsection

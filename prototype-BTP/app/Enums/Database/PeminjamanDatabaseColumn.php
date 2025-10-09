@@ -27,6 +27,7 @@ enum PeminjamanDatabaseColumn: string
     case JumlahPeserta = 'jumlah';
     case TotalHarga = 'total_harga';
     case StatusPeminjamanPenyewa = 'status';
+    case InvoiceNumber = 'invoice_number';
     case KeteranganPenyewaan = 'keterangan';
     case CreatedAt = 'created_at';
     case UpdatedAt = 'updated_at';

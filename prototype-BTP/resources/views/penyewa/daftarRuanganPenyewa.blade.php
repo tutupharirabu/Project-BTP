@@ -20,7 +20,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="container my-2 mx-2">
-                    <h6 href="" style="color: #028391;font-size:12px;">Daftar Ruangan<h4>
+                     <a class="" href="/daftarRuanganPenyewa"
+                        style="color:#028391;font-size:12px;font-weight: bold;">Daftar Ruangan</a>
                 </div>
             </div>
         </div>

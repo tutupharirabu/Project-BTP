@@ -1,5 +1,5 @@
-<footer class="footer border-top mt-4" style="margin-left:-10px; margin-right:-10px;">
-    <div class="container d-flex justify-content-center align-items-center">
+<footer class="footer border-top mt-auto w-100">
+    <div class="container d-flex justify-content-center align-items-center gap-3">
         <div class="footer-logo d-flex align-items-center">
             <img src="{{ asset('assets/img/logo_nav.png') }}" alt="Logo Telkom University"
                 class="footer-logo-img">
@@ -18,8 +18,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 56px;
-        /* Atur tinggi footer */
+        width: 100%;
+        padding: 12px 0;
+        margin-top: 2rem;
     }
 
     .footer .container {
@@ -27,7 +28,6 @@
         justify-content: center;
         align-items: center;
         padding: 0;
-        /* Menghilangkan padding agar sesuai dengan tinggi footer */
     }
 
     .footer-logo {

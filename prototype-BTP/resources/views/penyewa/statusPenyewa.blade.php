@@ -83,8 +83,9 @@
         <!-- href ui -->
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                <div class="container my-2 mx-2">
-                    <a class="" href="" style="color:#028391;font-size:12px;font-weight: bold;">Status Ruangan</a>
+                <div class="container my-2">
+                    <a class="" href="/statusPengajuanPenyewa"
+                        style="color:#028391;font-size:12px;font-weight: bold;">Status Ruangan</a>
                 </div>
             </div>
         </div>
@@ -215,18 +216,47 @@
                                             <td>{{ $data->ruangan->nama_ruangan }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_mulai)->format('d-m-Y') }}</td>
                                             <td>{{ Carbon::parse($data->tanggal_selesai)->format('d-m-Y') }}</td>
-                                            <td>{{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}</td>
-                                            <td>{{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}</td>
+                                            @php
+                                                $sessionRanges = collect($data->session_ranges);
+                                                $sessionStarts = $sessionRanges
+                                                    ->map(function ($range) {
+                                                        return explode(' - ', $range)[0] ?? null;
+                                                    })
+                                                    ->filter()
+                                                    ->values();
+                                                $sessionEnds = $sessionRanges
+                                                    ->map(function ($range) {
+                                                        return explode(' - ', $range)[1] ?? null;
+                                                    })
+                                                    ->filter()
+                                                    ->values();
+                                                $hasMultipleSessions = $sessionStarts->count() > 1 && $sessionEnds->count() > 0;
+                                            @endphp
+                                            <td>
+                                                @if ($sessionStarts->isNotEmpty())
+                                                    {{ $hasMultipleSessions ? $sessionStarts->first() : $sessionStarts->implode(', ') }}
+                                                @else
+                                                    {{ Carbon::parse($data->tanggal_mulai)->format('H:i') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($sessionEnds->isNotEmpty())
+                                                    {{ $hasMultipleSessions ? $sessionEnds->last() : $sessionEnds->implode(', ') }}
+                                                @else
+                                                    {{ Carbon::parse($data->tanggal_selesai)->format('H:i') }}
+                                                @endif
+                                            </td>
                                             <td>{{ $data->status }}</td>
                                             <td>
                                                 @if (in_array($data->status, ['Menunggu', 'Tolak', 'Ditolak']))
-                                                    <button class="btn btn-md text-white text-capitalize" style="background-color:#aaa; cursor:not-allowed;" disabled>
+                                                    <button class="btn btn-md text-white text-capitalize"
+                                                        style="background-color:#aaa; cursor:not-allowed;" disabled>
                                                         Lihat Invoice
                                                     </button>
                                                 @else
                                                     <a href="{{ route('penyewa.cetakInvoicePengajuanPeminjaman', $data->id_peminjaman) }}"
-                                                    class="btn btn-md text-white text-capitalize"
-                                                    style="background-color:#0C9300">
+                                                        class="btn btn-md text-white text-capitalize"
+                                                        style="background-color:#0C9300">
                                                         Lihat Invoice
                                                     </a>
                                                 @endif
@@ -284,4 +314,6 @@
                     });
                 });
             </script>
+        </div>
+    </div>
 @endsection

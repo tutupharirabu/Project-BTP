@@ -13,7 +13,7 @@ class DashboardRepository implements DashboardRepositoryInterface
   public function getDisetujuiOrSelesaiWithRuangan()
   {
     $statusArray = [StatusPeminjaman::Disetujui->value, StatusPeminjaman::Selesai->value];
-    return Peminjaman::with(PeminjamanRelasi::Ruangan->value)
+    return Peminjaman::with([PeminjamanRelasi::Ruangan->value, PeminjamanRelasi::Sessions->value])
       ->whereIn(PeminjamanDatabaseColumn::StatusPeminjamanPenyewa->value, $statusArray)
       ->get();
   }

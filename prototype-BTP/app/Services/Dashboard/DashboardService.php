@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard;
 
 use Carbon\Carbon;
+use App\Enums\Relation\PeminjamanRelasi;
 use App\Interfaces\Repositories\Dashboard\DashboardRepositoryInterface;
 use App\Interfaces\Repositories\Ruangan\BaseRuanganRepositoryInterface;
 
@@ -24,13 +25,30 @@ class DashboardService
 
     $events = [];
     foreach ($peminjamans as $peminjaman) {
-      $events[] = [
-        'title' => $peminjaman->nama_peminjam . ' - ' . $peminjaman->ruangan->nama_ruangan,
-        'peminjam' => $peminjaman->nama_peminjam,
-        'ruangan' => $peminjaman->ruangan->nama_ruangan,
-        'start' => $peminjaman->tanggal_mulai,
-        'end' => $peminjaman->tanggal_selesai,
-      ];
+      $sessions = $peminjaman->relationLoaded(PeminjamanRelasi::Sessions->value)
+        ? $peminjaman->sessions
+        : $peminjaman->sessions()->get();
+
+      if ($sessions->isEmpty()) {
+        $events[] = [
+          'title' => $peminjaman->nama_peminjam . ' - ' . $peminjaman->ruangan->nama_ruangan,
+          'peminjam' => $peminjaman->nama_peminjam,
+          'ruangan' => $peminjaman->ruangan->nama_ruangan,
+          'start' => Carbon::parse($peminjaman->tanggal_mulai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'end' => Carbon::parse($peminjaman->tanggal_selesai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+        ];
+        continue;
+      }
+
+      foreach ($sessions as $session) {
+        $events[] = [
+          'title' => $peminjaman->nama_peminjam . ' - ' . $peminjaman->ruangan->nama_ruangan,
+          'peminjam' => $peminjaman->nama_peminjam,
+          'ruangan' => $peminjaman->ruangan->nama_ruangan,
+          'start' => Carbon::parse($session->tanggal_mulai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+          'end' => Carbon::parse($session->tanggal_selesai)->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+        ];
+      }
     }
 
     // Data khusus admin (misal occupancy)
