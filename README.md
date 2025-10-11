@@ -1,102 +1,180 @@
-# Prototype BTP - Room Rental Management System
+# SpaceRent BTP
 
-## Overview
-Prototype BTP is a comprehensive room rental management system developed for Bandung Techno Park. This web-based application streamlines the process of room booking, rental management, and administration for various types of users including administrators, staff, and tenants.
+Aplikasi manajemen peminjaman dan okupansi ruang BTP yang dibangun dengan Laravel 10, Vite, dan ekosistem Postgres/Redis. Project ini mendukung dua alur pengembangan utama:
 
-## Features
+- **Laravel Sail (Docker)** untuk lingkungan yang terisolasi dan seragam.
+- **PHP lokal (tanpa Docker)** untuk pengembangan ringan dengan `php artisan serve`.
 
-### For Administrators and Staff
-- **Dashboard**: View calendar of approved bookings and room occupancy statistics
-- **Room Management**: Add, edit, delete, and manage room information including details, pricing, and availability
-- **Booking Management**: Review, approve, or reject booking applications 
-- **Occupancy Reports**: Generate and export detailed occupancy data for analytics
-- **Rental History**: View and export comprehensive rental history reports
+Panduan ini menyesuaikan dengan konfigurasi yang sudah ada di repositori.
 
-### For Tenants/Users
-- **Room Browsing**: View all available rooms with detailed information
-- **Room Details**: Check room specifications, pricing, and real-time availability
-- **Booking System**: Submit rental applications with time slot selection
-- **Status Tracking**: Track application status (pending, approved, rejected, completed)
-- **Invoice Generation**: Download rental invoices for approved bookings
+## Prasyarat
 
-## Technical Stack
-- **Backend**: Laravel 10.x PHP Framework
-- **Frontend**: Bootstrap 5.x, jQuery, AJAX
-- **Database**: MySQL
-- **Image Storage**: Cloudinary
-- **Authentication**: Laravel built-in authentication
-- **Calendar/Scheduling**: FullCalendar.js
-- **PDF Generation**: DomPDF
+- Git
+- Composer 2.x
+- Node.js 20.x + npm (atau jalankan via Sail)
+- Jika memakai Sail: Docker Desktop / Podman yang mendukung Compose v2
+- Jika tanpa Sail: PHP 8.1 atau 8.2, ekstensi yang diperlukan Laravel, MySQL/MariaDB (atau Postgres), dan Redis
 
-## System Requirements
-- PHP 8.1 or 8.2
-- MySQL 5.7 or higher
-- Composer
-- Node.js and NPM (for frontend asset compilation)
-- Web server (Apache/Nginx)
+## Persiapan Konfigurasi
 
-## Installation
+1. Duplikasikan file contoh environment dan sesuaikan nilainya.
 
-1. Clone the repository:
-   ```
-   https://github.com/tutupharirabu/Project-BTP.git
-   cd Project-BTP/prototype-BTP
-   ```
-
-2. Install PHP dependencies:
-   ```
-   composer install
-   ```
-
-3. Copy environment file and configure database settings:
-   ```
+   ```bash
    cp .env.example .env
    ```
 
-4. Generate application key:
+2. Setel variabel dasar:
+
    ```
+   APP_NAME=SpacerentBTP
+   APP_ENV=local
+   APP_URL=https://SpaceRentBTP-v1.localhost
+   ```
+
+3. Tentukan koneksi database, cache, dan queue sesuai mode yang dipakai:
+
+   **Menggunakan Sail (Postgres & Redis di dalam container):**
+
+   ```
+   DB_CONNECTION=pgsql
+   DB_HOST=pgsql
+   DB_PORT=5432
+   DB_DATABASE=db_btp
+   DB_USERNAME=sail
+   DB_PASSWORD=password
+
+   REDIS_HOST=redis
+   REDIS_PORT=6379
+   REDIS_PASSWORD=null
+   ```
+
+   **Menggunakan PHP lokal (MySQL & Redis di host):**
+
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=db_btp
+   DB_USERNAME=your_user
+   DB_PASSWORD=your_password
+
+   REDIS_HOST=127.0.0.1
+   REDIS_PORT=6379
+   ```
+
+4. Konfigurasikan integrasi pihak ketiga (mis. `CLOUDINARY_URL`, kredensial e-mail) dengan nilai milik Anda sendiri.
+
+5. Generate application key jika belum ada:
+
+   ```bash
    php artisan key:generate
    ```
 
-5. Run database migrations and seed data:
+## Menjalankan dengan Laravel Sail
+
+1. Instal dependensi PHP di host (dibutuhkan sebelum `./vendor/bin/sail` tersedia).
+
+   ```bash
+   composer install
    ```
+
+2. Bangun dan jalankan kontainer.
+
+   ```bash
+   ./vendor/bin/sail up -d --build
+   ```
+
+   Alias `sail` bisa ditambahkan agar perintah lebih singkat:
+
+   ```bash
+   alias sail='[ -f sail ] && bash sail || ./vendor/bin/sail'
+   ```
+
+3. Jalankan migrasi dan seeder awal.
+
+   ```bash
+   sail artisan migrate --seed
+   ```
+
+4. Instal dependensi front-end dan mulai Vite dev server (berjalan di dalam kontainer).
+
+   ```bash
+   sail npm install
+   sail npm run dev
+   ```
+
+   Untuk build production gunakan `sail npm run build`.
+
+5. Aplikasi dapat diakses melalui:
+
+   - HTTPS: `https://SpaceRentBTP-v1.localhost`
+   - HTTP: `http://localhost`
+   - Mailpit: `http://localhost:8025`
+
+   Sertifikat pengembangan tersimpan di `docker/nginx/ssl`. Tambahkan ke trusted root jika ingin menghindari peringatan browser.
+
+6. Hentikan layanan saat selesai.
+
+   ```bash
+   sail down
+   ```
+
+## Menjalankan tanpa Docker (`php artisan serve`)
+
+1. Pastikan dependency sistem tersedia (PHP 8.1/8.2 dengan ekstensi `pdo_mysql`/`pdo_pgsql`, `bcmath`, `intl`, `pcntl`, `redis`, dan Redis server lokal).
+
+2. Pasang dependency PHP dan JavaScript.
+
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Jalankan migrasi dan seeder.
+
+   ```bash
    php artisan migrate --seed
    ```
 
-6. Link storage for public file access:
-   ```
-   php artisan storage:link
-   ```
+4. Mulai server aplikasi.
 
-7. Configure Cloudinary credentials in the .env file:
-   ```
-   CLOUDINARY_URL=cloudinary://your_api_key:your_api_secret@your_cloud_name
-   CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+   ```bash
+   php artisan serve --host=127.0.0.1 --port=8000
    ```
 
-8. Start the development server:
+5. Di terminal terpisah jalankan Vite agar asset dimuat.
+
+   ```bash
+   npm run dev
    ```
-   php artisan serve
+
+6. Jika memakai queue/cron, jalankan worker yang dibutuhkan:
+
+   ```bash
+   php artisan queue:work
+   php artisan schedule:work
    ```
 
-## User Roles
-- **Admin/Staff**: Full access to room management, booking approvals, and reporting
-- **Tenant/User**: Access to room browsing, booking, and status tracking
+## Perintah Harian
 
-## Default Login Credentials
-- **Admin**
-  - Email: petugasBTP@gmail.com
-  - Password: admin123!
+- Jalankan ulang cache konfigurasi: `php artisan optimize:clear`
+- Pengujian otomatis: `php artisan test`
+- Sinkronisasi storage link: `php artisan storage:link`
+- Regenerasi sertifikat lokal: `bash docker/nginx/ssl/generate-keys.sh`
 
-## Documentation
-The application follows Laravel's MVC architecture:
-- **Models**: Located in `app/Models/`
-- **Controllers**: Located in `app/Http/Controllers/`
-- **Views**: Located in `resources/views/`
-- **Routes**: Defined in `routes/web.php`
+## Struktur Docker
 
-## Contributors
-This project was developed by the BTP development team.
+- `docker-compose.yml` menjalankan `nginx`, `php-fpm`, `pgsql`, `redis`, dan `mailpit` di jaringan `sail`.
+- `docker/php-fpm/Dockerfile.dev` membangun image PHP 8.4 dengan ekstensi tambahan (imagick, redis, memcached, soap, dsb) dan Node.js 20 untuk proses build asset.
+- `docker/nginx/sites/dev/laravel.conf` mengarahkan domain `SpaceRentBTP-v1.localhost` ke `public/index.php` dan memaksa HTTPS.
 
-## License
-This project is proprietary and belongs to Bandung Techno Park. Unauthorized use, distribution, or modification is prohibited.
+## Tips & Troubleshooting
+
+- Pastikan folder `storage` dan `bootstrap/cache` writable. Sail men-set otomatis, namun pada lingkungan lokal gunakan `chmod -R 775`.
+- Jika asset tidak ter-update, jalankan `npm run build` atau hapus `public/build`.
+- Ubah port default (80/443/5432) di `.env` apabila bentrok dengan layanan lain.
+- Saat mengubah env, jalankan `php artisan config:clear` agar perubahan terbaca.
+
+---
+
+Selamat mengembangkan SpaceRent BTP! Jika menemukan kendala khusus, dokumentasikan di issue tracker proyek ini.
