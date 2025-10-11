@@ -1,180 +1,66 @@
-# SpaceRent BTP
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Aplikasi manajemen peminjaman dan okupansi ruang BTP yang dibangun dengan Laravel 10, Vite, dan ekosistem Postgres/Redis. Project ini mendukung dua alur pengembangan utama:
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-- **Laravel Sail (Docker)** untuk lingkungan yang terisolasi dan seragam.
-- **PHP lokal (tanpa Docker)** untuk pengembangan ringan dengan `php artisan serve`.
+## About Laravel
 
-Panduan ini menyesuaikan dengan konfigurasi yang sudah ada di repositori.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Prasyarat
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-- Git
-- Composer 2.x
-- Node.js 20.x + npm (atau jalankan via Sail)
-- Jika memakai Sail: Docker Desktop / Podman yang mendukung Compose v2
-- Jika tanpa Sail: PHP 8.1 atau 8.2, ekstensi yang diperlukan Laravel, MySQL/MariaDB (atau Postgres), dan Redis
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Persiapan Konfigurasi
+## Learning Laravel
 
-1. Duplikasikan file contoh environment dan sesuaikan nilainya.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-   ```bash
-   cp .env.example .env
-   ```
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-2. Setel variabel dasar:
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-   ```
-   APP_NAME=SpacerentBTP
-   APP_ENV=local
-   APP_URL=https://SpaceRentBTP-v1.localhost
-   ```
+## Laravel Sponsors
 
-3. Tentukan koneksi database, cache, dan queue sesuai mode yang dipakai:
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-   **Menggunakan Sail (Postgres & Redis di dalam container):**
+### Premium Partners
 
-   ```
-   DB_CONNECTION=pgsql
-   DB_HOST=pgsql
-   DB_PORT=5432
-   DB_DATABASE=db_btp
-   DB_USERNAME=sail
-   DB_PASSWORD=password
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-   REDIS_HOST=redis
-   REDIS_PORT=6379
-   REDIS_PASSWORD=null
-   ```
+## Contributing
 
-   **Menggunakan PHP lokal (MySQL & Redis di host):**
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-   ```
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=db_btp
-   DB_USERNAME=your_user
-   DB_PASSWORD=your_password
+## Code of Conduct
 
-   REDIS_HOST=127.0.0.1
-   REDIS_PORT=6379
-   ```
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-4. Konfigurasikan integrasi pihak ketiga (mis. `CLOUDINARY_URL`, kredensial e-mail) dengan nilai milik Anda sendiri.
+## Security Vulnerabilities
 
-5. Generate application key jika belum ada:
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-   ```bash
-   php artisan key:generate
-   ```
+## License
 
-## Menjalankan dengan Laravel Sail
-
-1. Instal dependensi PHP di host (dibutuhkan sebelum `./vendor/bin/sail` tersedia).
-
-   ```bash
-   composer install
-   ```
-
-2. Bangun dan jalankan kontainer.
-
-   ```bash
-   ./vendor/bin/sail up -d --build
-   ```
-
-   Alias `sail` bisa ditambahkan agar perintah lebih singkat:
-
-   ```bash
-   alias sail='[ -f sail ] && bash sail || ./vendor/bin/sail'
-   ```
-
-3. Jalankan migrasi dan seeder awal.
-
-   ```bash
-   sail artisan migrate --seed
-   ```
-
-4. Instal dependensi front-end dan mulai Vite dev server (berjalan di dalam kontainer).
-
-   ```bash
-   sail npm install
-   sail npm run dev
-   ```
-
-   Untuk build production gunakan `sail npm run build`.
-
-5. Aplikasi dapat diakses melalui:
-
-   - HTTPS: `https://SpaceRentBTP-v1.localhost`
-   - HTTP: `http://localhost`
-   - Mailpit: `http://localhost:8025`
-
-   Sertifikat pengembangan tersimpan di `docker/nginx/ssl`. Tambahkan ke trusted root jika ingin menghindari peringatan browser.
-
-6. Hentikan layanan saat selesai.
-
-   ```bash
-   sail down
-   ```
-
-## Menjalankan tanpa Docker (`php artisan serve`)
-
-1. Pastikan dependency sistem tersedia (PHP 8.1/8.2 dengan ekstensi `pdo_mysql`/`pdo_pgsql`, `bcmath`, `intl`, `pcntl`, `redis`, dan Redis server lokal).
-
-2. Pasang dependency PHP dan JavaScript.
-
-   ```bash
-   composer install
-   npm install
-   ```
-
-3. Jalankan migrasi dan seeder.
-
-   ```bash
-   php artisan migrate --seed
-   ```
-
-4. Mulai server aplikasi.
-
-   ```bash
-   php artisan serve --host=127.0.0.1 --port=8000
-   ```
-
-5. Di terminal terpisah jalankan Vite agar asset dimuat.
-
-   ```bash
-   npm run dev
-   ```
-
-6. Jika memakai queue/cron, jalankan worker yang dibutuhkan:
-
-   ```bash
-   php artisan queue:work
-   php artisan schedule:work
-   ```
-
-## Perintah Harian
-
-- Jalankan ulang cache konfigurasi: `php artisan optimize:clear`
-- Pengujian otomatis: `php artisan test`
-- Sinkronisasi storage link: `php artisan storage:link`
-- Regenerasi sertifikat lokal: `bash docker/nginx/ssl/generate-keys.sh`
-
-## Struktur Docker
-
-- `docker-compose.yml` menjalankan `nginx`, `php-fpm`, `pgsql`, `redis`, dan `mailpit` di jaringan `sail`.
-- `docker/php-fpm/Dockerfile.dev` membangun image PHP 8.4 dengan ekstensi tambahan (imagick, redis, memcached, soap, dsb) dan Node.js 20 untuk proses build asset.
-- `docker/nginx/sites/dev/laravel.conf` mengarahkan domain `SpaceRentBTP-v1.localhost` ke `public/index.php` dan memaksa HTTPS.
-
-## Tips & Troubleshooting
-
-- Pastikan folder `storage` dan `bootstrap/cache` writable. Sail men-set otomatis, namun pada lingkungan lokal gunakan `chmod -R 775`.
-- Jika asset tidak ter-update, jalankan `npm run build` atau hapus `public/build`.
-- Ubah port default (80/443/5432) di `.env` apabila bentrok dengan layanan lain.
-- Saat mengubah env, jalankan `php artisan config:clear` agar perubahan terbaca.
-
----
-
-Selamat mengembangkan SpaceRent BTP! Jika menemukan kendala khusus, dokumentasikan di issue tracker proyek ini.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
