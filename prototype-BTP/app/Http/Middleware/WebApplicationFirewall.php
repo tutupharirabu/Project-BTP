@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 
+use App\Models\BlockedIp;
+
 class WebApplicationFirewall
 {
     public function handle(Request $request, Closure $next): Response
@@ -16,14 +18,20 @@ class WebApplicationFirewall
         $ip = $request->ip();
         $userAgent = strtolower($request->userAgent());
 
-        //  Static IP blocklist
-        $blockedIps = ['203.0.113.45', '192.168.1.10', '192.168.1.100', '10.0.0.5']; //buat tes '127.0.0.1'
+        // Admin-controlled blacklist via table `blocked_ips`
+        if (BlockedIp::where('ip_address', $ip)->exists()) {
+            Log::warning("Blocked by admin-controlled blacklist", ['ip' => $ip]);
+            return response()->view('errors.blocked_admin', ['ip' => $ip], 403);
+        }
+
+        // Static blocklist
+        $blockedIps = ['203.0.113.45', '192.168.1.10', '192.168.1.100', '10.0.0.5'];
         if (in_array($ip, $blockedIps)) {
             Log::warning("Blocked static IP", ['ip' => $ip]);
             return response()->view('errors.blocked_static', ['ip' => $ip], 403);
         }
 
-        //  Dynamic blocklist from failed login attempts
+        // Temporary block from failed login
         $record = DB::table('failed_logins')->where('ip', $ip)->first();
         if ($record && $record->blocked_until && Carbon::now()->lt($record->blocked_until)) {
             Log::warning("Blocked temporary IP due to failed login", ['ip' => $ip]);
@@ -33,7 +41,7 @@ class WebApplicationFirewall
             ], 429);
         }
 
-        //  SQL Injection detection
+        // SQL Injection detection
         $sqliPatterns = ['select', 'union', 'insert', 'drop', '--', ';', ' or ', '1=1'];
         foreach ($request->all() as $key => $value) {
             foreach ($sqliPatterns as $pattern) {
@@ -48,7 +56,7 @@ class WebApplicationFirewall
             }
         }
 
-        //  Block known bad bots
+        // Bad bot detection
         $badAgents = ['curl', 'httpclient', 'scanner', 'sqlmap', 'nmap'];
         foreach ($badAgents as $bad) {
             if (str_contains($userAgent, $bad)) {
@@ -57,7 +65,7 @@ class WebApplicationFirewall
             }
         }
 
-        //  Payload size limit
+        // Payload size limit
         $contentLength = $request->headers->get('Content-Length');
         if ($contentLength && $contentLength > 50000) {
             Log::warning("Payload too large", ['ip' => $ip, 'length' => $contentLength]);

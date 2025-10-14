@@ -52,6 +52,17 @@ class MeminjamRuanganController extends Controller
             $keterangan = '~';
         }
 
+        // Check blacklist
+        $blacklistedWords = BlacklistedWord::pluck('word')->toArray();
+
+        foreach ($blacklistedWords as $word) {
+            if (stripos($keterangan, $word) !== false) {
+                return back()
+                    ->withErrors(['keterangan' => 'Permintaan tidak dapat diproses: ' . $word])
+                    ->withInput();
+            }
+        }
+
         $uploadedFileUrl = null;
 
         $status = $request->input('role');

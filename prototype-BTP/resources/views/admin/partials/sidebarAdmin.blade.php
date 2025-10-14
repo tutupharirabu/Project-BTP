@@ -49,6 +49,12 @@
                         <span>Riwayat Peminjaman/Penyewaan Ruangan</span>
                     </a>
                 </div>
+                 <div class="m-1">
+                    <a class="text-white nav-link d-flex align-items-center menu-item" href="{{ route('blacklisted-words.index') }}">
+                        <i class="fas fa-ban me-2"></i> Kelola Blacklist</i>
+                        
+                    </a>
+                </div>
                 <div class="m-1">
                     <a class="text-white nav-link d-flex align-items-center menu-item" href="/logout">
                         <i class="material-symbols-outlined me-2">logout</i>

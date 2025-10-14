@@ -17,6 +17,8 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\OkupansiController;
 use App\Http\Controllers\StatusPenyewaController;
 
+use App\Http\Controllers\BlacklistedWordController;  //Forblacklist
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,3 +87,11 @@ Route::get('/download/okupansi', [OkupansiController::class, 'downloadOkupansi']
 // status penyewa
 Route::get('/statusPenyewa', [StatusPenyewaController::class, 'index']);
 Route::get('/invoice/{id}', [StatusPenyewaController::class, 'generateInvoice'])->name('generateInvoice');
+
+//blacklist
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/blacklisted-words', [BlacklistedWordController::class, 'index'])->name('blacklisted-words.index');
+    Route::post('/admin/blacklisted-words', [BlacklistedWordController::class, 'store'])->name('blacklisted-words.store');
+    Route::delete('/admin/blacklisted-words/{id}', [BlacklistedWordController::class, 'destroy'])->name('blacklisted-words.destroy');
+});
+
