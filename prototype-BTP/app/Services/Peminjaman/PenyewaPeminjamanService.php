@@ -88,21 +88,34 @@ class PenyewaPeminjamanService
   public function uploadDocument(UploadedFile $image, string $folder): array
   {
     try {
+      $rotationAngle = null;
+
+      if (in_array($folder, ['ktm-btp', 'npwp-btp'], true)) {
+        $imageInfo = @getimagesize($image->getRealPath());
+        if ($imageInfo && is_array($imageInfo)) {
+          [$width, $height] = $imageInfo;
+          if ($height > $width) {
+            $rotationAngle = 90;
+          }
+        }
+      }
+
       $uploadResult = Cloudinary::upload(
         $image->getRealPath(),
         [
           'folder' => 'spacerent-btp/' . $folder,
           'access_mode' => 'authenticated',
           'transformation' => [
-            [
+            array_filter([
               'overlay' => 'text:Arial_20:Confidential-Bandung Techno Park',
               'color' => '#FF0000',
               'opacity' => 50,
               'gravity' => 'south_east',
               'x' => 10,
               'y' => 10,
-            ]
-          ]
+              'angle' => $rotationAngle,
+            ])
+          ],
         ]
       );
 

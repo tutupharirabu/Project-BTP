@@ -23,6 +23,17 @@ class AdminStatusPengajuanService
     return $this->baseStatusPengajuanRepository->getAllPeminjaman();
   }
 
+  public function getPeminjamanById(string $id)
+  {
+    $peminjaman = $this->baseStatusPengajuanRepository->getPeminjamanById($id);
+
+    if (!$peminjaman) {
+      throw new ModelNotFoundException("Peminjaman tidak ditemukan");
+    }
+
+    return $peminjaman;
+  }
+
   public function updateStatus(string $id, string $pilihan, string $idUser): void
   {
     $peminjaman = $this->baseStatusPengajuanRepository->getPeminjamanById($id);
@@ -47,6 +58,17 @@ class AdminStatusPengajuanService
     }
 
     $this->adminStatusPengajuanRepository->completePengajuan($peminjaman, $idUser);
+  }
+
+  public function deletePeminjaman(string $id): void
+  {
+    $peminjaman = $this->baseStatusPengajuanRepository->getPeminjamanById($id);
+
+    if (!$peminjaman) {
+      throw new ModelNotFoundException("Peminjaman tidak ditemukan");
+    }
+
+    $this->adminStatusPengajuanRepository->deletePengajuan($peminjaman);
   }
 
 }

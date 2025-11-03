@@ -11,4 +11,5 @@ interface AdminStatusPengajuanRepositoryInterface
   public function approvePengajuan(Peminjaman $peminjaman, string $idUser): void;
   public function rejectPengajuan(Peminjaman $peminjaman, string $idUser): void;
   public function completePengajuan(Peminjaman $peminjaman, string $idUser): void;
+  public function deletePengajuan(Peminjaman $peminjaman): void;
 }

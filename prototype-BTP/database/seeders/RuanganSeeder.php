@@ -22,7 +22,7 @@ class RuanganSeeder extends Seeder
         $sampleImages = File::files(public_path('assets/img/BTP'));
 
         Ruangan::factory()
-            ->count(5)
+            ->count(50)
             ->create()
             ->each(function ($ruangan) use ($sampleImages) {
                 $jumlahGambar = rand(1, 5);
@@ -35,7 +35,7 @@ class RuanganSeeder extends Seeder
                         $uploadResult = Cloudinary::upload(
                             $file->getRealPath(),
                             [
-                                'folder' => 'spacerent-btp/ruangan-btp/v1',
+                                'folder' => 'spacerent-btp/ruangan-btp/v1/test',
                                 'public_id' => $ruangan->id_ruangan . '_image_' . ($i + 1),
                                 'transformation' => [
                                     'width' => 1000,

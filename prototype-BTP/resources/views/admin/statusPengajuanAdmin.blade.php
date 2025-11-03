@@ -228,15 +228,22 @@
                                                         @php
                                                             $modalId = $docKey . 'Modal' . $data->id_peminjaman;
                                                         @endphp
-                                                        <button type="button" class="btn btn-success btn-sm text-capitalize"
-                                                            style="background-color:#0C9300;" data-bs-toggle="modal"
-                                                            data-bs-target="#{{ $modalId }}">
-                                                            {{ $doc['label'] }}
-                                                        </button>
-
-                                                        <div class="modal fade" id="{{ $modalId }}" tabindex="-1" role="dialog"
+                                                        <div class="d-flex flex-column gap-1 align-items-stretch">
+                                                            <button type="button"
+                                                                class="btn btn-success btn-sm text-capitalize"
+                                                                style="background-color:#0C9300;" data-bs-toggle="modal"
+                                                                data-bs-target="#{{ $modalId }}">
+                                                                {{ $doc['label'] }}
+                                                            </button>
+                                                            <a href="{{ route('statusPengajuan.downloadDokumen', ['id' => $data->id_peminjaman, 'document' => $docKey]) }}"
+                                                                class="btn btn-outline-primary btn-sm"
+                                                                style="text-transform: capitalize;">
+                                                                Download
+                                                            </a>
+                                                        </div>
+                                                        <div class="modal fade document-modal" id="{{ $modalId }}" tabindex="-1" role="dialog"
                                                             aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title">{{ $doc['label'] }}</h5>
@@ -247,10 +254,14 @@
                                                                     </div>
                                                                     <div class="modal-body text-center">
                                                                         <img src="{{ $doc['url'] }}" alt="{{ $doc['label'] }}"
-                                                                            width="450" height="300" style="object-fit: cover;"
+                                                                            class="img-fluid document-preview"
                                                                             oncontextmenu="return false;">
                                                                     </div>
                                                                     <div class="modal-footer">
+                                                                        <a href="{{ route('statusPengajuan.downloadDokumen', ['id' => $data->id_peminjaman, 'document' => $docKey]) }}"
+                                                                            class="btn btn-primary">
+                                                                            Download
+                                                                        </a>
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close</button>
                                                                     </div>
@@ -300,10 +311,10 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="d-flex justify-content-between" style="align-items: center;">
+                                                <td class="d-flex flex-wrap gap-2 justify-content-center" style="align-items: center;">
                                                     <form
                                                         action="{{ route('statusPengajuan.updateStatusPengajuan', $data->id_peminjaman) }}"
-                                                        method="POST">
+                                                        method="POST" class="d-flex gap-2">
                                                         @csrf
                                                         <input type="hidden" name="pilihan" id="pilihan">
                                                         <button type="button" name="pilihan" value='terima'
@@ -312,6 +323,16 @@
                                                         <button type="button" name="pilihan" value='tolak'
                                                             class="btn btn-outline-danger btn-styl"
                                                             style="width: 75px;font-size: 12px;border: 2px solid black;border-color: #FF2E26;color: red">Tolak</button>
+                                                    </form>
+                                                    <form
+                                                        action="{{ route('statusPengajuan.hapusPeminjaman', $data->id_peminjaman) }}"
+                                                        method="POST" class="form-delete-peminjaman">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                            style="border-radius:6px;width: 75px;font-size: 12px;text-transform: capitalize;">
+                                                            Hapus
+                                                        </button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -349,7 +370,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class=" justify-content-between">
+                                                <td class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
                                                     <form
                                                         action="{{ route('statusPengajuan.selesaiPeminjaman', $data->id_peminjaman) }}"
                                                         method="POST">
@@ -357,6 +378,16 @@
                                                         @method('PUT')
                                                         <button type="submit" value='selesai' class="btn btn-outline-warning"
                                                             style="border-radius:6px;font-size: 13px;text-transform: capitalize;">Selesai</button>
+                                                    </form>
+                                                    <form
+                                                        action="{{ route('statusPengajuan.hapusPeminjaman', $data->id_peminjaman) }}"
+                                                        method="POST" class="form-delete-peminjaman">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">
+                                                            Hapus
+                                                        </button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -395,7 +426,18 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-center text-muted">Tidak ada aksi</td>
+                                                <td class="d-flex justify-content-center">
+                                                    <form
+                                                        action="{{ route('statusPengajuan.hapusPeminjaman', $data->id_peminjaman) }}"
+                                                        method="POST" class="form-delete-peminjaman">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">
+                                                            Hapus
+                                                        </button>
+                                                    </form>
+                                                </td>
                                                 <td>
                                                     <a type="button" class="btn text-white"
                                                         style="background-color: #FF2E26; border-radius:6px;width: 100px;font-size: 13px;text-transform: capitalize;">Ditolak</a>
@@ -432,12 +474,20 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class=" justify-content-between">
-                                                    <form action="" method="POST">
+                                                <td class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        style="border-radius:6px;font-size: 13px;text-transform: capitalize;" disabled>
+                                                        Selesai
+                                                    </button>
+                                                    <form
+                                                        action="{{ route('statusPengajuan.hapusPeminjaman', $data->id_peminjaman) }}"
+                                                        method="POST" class="form-delete-peminjaman">
                                                         @csrf
-                                                        <button disabled type="button" name="pilihan" value='selesai'
-                                                            class="btn btn-outline-secondary"
-                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">Selesai</button>
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                            style="border-radius:6px;font-size: 13px;text-transform: capitalize;">
+                                                            Hapus
+                                                        </button>
                                                     </form>
                                                 </td>
                                                 <td>
@@ -518,6 +568,14 @@
                             confirmationModal.show();
                         });
                     });
+
+                    document.querySelectorAll('.form-delete-peminjaman').forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!confirm('Apakah Anda yakin ingin menghapus peminjaman ini?')) {
+                                event.preventDefault();
+                            }
+                        });
+                    });
                 });
             </script>
             <script>
@@ -558,6 +616,22 @@
                 .table th {
                     padding: 10px;
                     /* Adjust the padding table */
+                }
+
+                .document-modal .modal-dialog {
+                    max-width: 900px;
+                }
+
+                .document-modal .modal-body {
+                    max-height: 80vh;
+                    overflow: auto;
+                }
+
+                .document-preview {
+                    max-width: 100%;
+                    height: auto;
+                    max-height: 75vh;
+                    object-fit: contain;
                 }
 
                 .center-text {

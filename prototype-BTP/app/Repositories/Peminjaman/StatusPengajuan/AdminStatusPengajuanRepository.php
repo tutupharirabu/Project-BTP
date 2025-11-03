@@ -10,6 +10,8 @@ use App\Enums\StatusPeminjaman;
 use App\Models\Peminjaman;
 use Illuminate\Support\Collection;
 use App\Interfaces\Repositories\Peminjaman\StatusPengajuan\AdminStatusPengajuanRepositoryInterface;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Log;
 
 class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryInterface
 {
@@ -111,5 +113,32 @@ class AdminStatusPengajuanRepository implements AdminStatusPengajuanRepositoryIn
     $peminjaman->status = $statusSelesai;
     $peminjaman->id_users = $idUser;
     $peminjaman->save();
+  }
+
+  public function deletePengajuan(Peminjaman $peminjaman): void
+  {
+    $publicIds = [
+      $peminjaman->{PeminjamanDatabaseColumn::KtpPublicId->value} ?? null,
+      $peminjaman->{PeminjamanDatabaseColumn::KtmPublicId->value} ?? null,
+      $peminjaman->{PeminjamanDatabaseColumn::NpwpPublicId->value} ?? null,
+    ];
+
+    foreach ($publicIds as $publicId) {
+      if (!$publicId) {
+        continue;
+      }
+
+      try {
+        Cloudinary::destroy($publicId, ['resource_type' => 'image']);
+      } catch (\Throwable $exception) {
+        Log::warning('Gagal menghapus dokumen Cloudinary peminjaman', [
+          'peminjaman_id' => $peminjaman->id_peminjaman,
+          'public_id' => $publicId,
+          'message' => $exception->getMessage(),
+        ]);
+      }
+    }
+
+    $peminjaman->delete();
   }
 }

@@ -88,6 +88,8 @@ Route::middleware(['auth', 'throttle:60,1'])->group(function () {
      */
     Route::get('/statusPengajuanAdmin', [AdminStatusPengajuanController::class, 'index']);
     Route::post('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'update'])->name('statusPengajuan.updateStatusPengajuan');
+    Route::get('/statusPengajuanAdmin/{id}/download/{document}', [AdminStatusPengajuanController::class, 'downloadDocument'])->name('statusPengajuan.downloadDokumen');
+    Route::delete('/statusPengajuanAdmin/{id}', [AdminStatusPengajuanController::class, 'destroy'])->name('statusPengajuan.hapusPeminjaman');
     Route::put('/finishPeminjaman/{id}', [AdminStatusPengajuanController::class, 'finish'])->name('statusPengajuan.selesaiPeminjaman');
     /**
      *  Done - Admin (Status Pengajuan Peminjaman)

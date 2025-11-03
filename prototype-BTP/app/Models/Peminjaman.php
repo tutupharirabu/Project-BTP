@@ -42,6 +42,7 @@ class Peminjaman extends Model
             PeminjamanDatabaseColumn::KtmFormat->value,
             PeminjamanDatabaseColumn::NpwpPublicId->value,
             PeminjamanDatabaseColumn::NpwpFormat->value,
+            UsersDatabaseColumn::IdUsers->value,
             RuanganDatabaseColumn::IdRuangan->value
         ];
     protected $dates = [PeminjamanDatabaseColumn::TanggalMulai->value, PeminjamanDatabaseColumn::TanggalSelesai->value];

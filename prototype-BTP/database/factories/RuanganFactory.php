@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Ruangan;
 use App\Enums\StatusRuangan;
+use App\Models\Users;
+use App\Enums\Database\UsersDatabaseColumn;
 use App\Enums\Penyewa\SatuanPenyewa;
 use App\Enums\Database\RuanganDatabaseColumn;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +24,8 @@ class RuanganFactory extends Factory
 
     public function definition(): array
     {
+        $user = Users::inRandomOrder()->first() ?? Users::factory()->create();
+
         return [
             RuanganDatabaseColumn::GroupIdRuangan->value => $this->faker->uuid(),
             RuanganDatabaseColumn::NamaRuangan->value => $this->faker->words(2, true),
@@ -32,8 +36,8 @@ class RuanganFactory extends Factory
             RuanganDatabaseColumn::HargaRuangan->value => $this->faker->numberBetween(50000, 1000000),
             RuanganDatabaseColumn::StatusRuangan->value => $this->faker->randomElement([StatusRuangan::Penuh->value, StatusRuangan::Tersedia->value, StatusRuangan::Digunakan->value]),
             RuanganDatabaseColumn::KeteranganRuangan->value => $this->faker->sentence(4),
-            // User id: assign sesuai kebutuhan, misal random yang sudah ada
-            'id_users' => "75dc9697-d474-4707-88ef-f36cf00fdf58" // atau pakai $this->faker->numberBetween(1, 10) jika ada banyak user
+            // pastikan ruangan terhubung ke user yang valid
+            UsersDatabaseColumn::IdUsers->value => $user->getKey(),
         ];
     }
 }

@@ -56,7 +56,7 @@ class AdminRuanganService
           $uploadResult = Cloudinary::upload(
             $file->getRealPath(),
             [
-              'folder' => 'spacerent-btp/ruangan-btp/v1',
+              'folder' => 'spacerent-btp/ruangan-btp/v1/test',
               'public_id' => $ruangan->id_ruangan . '_image_' . ($index + 1)
             ]
           );
@@ -106,7 +106,7 @@ class AdminRuanganService
           $uploadResult = Cloudinary::upload(
             $file->getRealPath(),
             [
-              'folder' => 'spacerent-btp/ruangan-btp/v1',
+              'folder' => 'spacerent-btp/ruangan-btp/v1/test',
               'public_id' => $public_id,
               'overwrite' => true
             ]
