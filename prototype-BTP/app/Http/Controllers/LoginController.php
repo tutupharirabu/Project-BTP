@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Mail\OtpMail;
 use App\Models\Otp;
 use Illuminate\Support\Carbon;
+use Twilio\Rest\Client;
 
 class LoginController extends Controller
 {
@@ -57,12 +59,9 @@ class LoginController extends Controller
             'active' => 'otp',
             'expiredAt' => $otp->expired_at
         ]);
-
     }
 
-
-    public function authotp(Request $request)
-    {
+    public function authotp(Request $request){
         $request->validate([
             'otp' => 'required|numeric'
         ]);
@@ -81,33 +80,27 @@ class LoginController extends Controller
         return back()->withErrors(['otp' => 'Kode OTP tidak sesuai atau sudah kadaluarsa.']);
     }
 
-    public function resendOtp(Request $request)
-{
-    if (!Auth::check()) {
+    public function resendOtp(Request $request){
+        if (!Auth::check()) {
         return redirect()->route('login')->with('loginError', 'Silakan login terlebih dahulu.');
-    }
-
-    $userId = Auth::id();
-
-    $existingOtp = Otp::where('id_users', $userId)
-                    ->where('expired_at', '>', Carbon::now())
-                    ->latest()
-                    ->first();
-
-    if ($existingOtp) {
+        }
+        $userId = Auth::id();
+        $existingOtp = Otp::where('id_users', $userId)
+                        ->where('expired_at', '>', Carbon::now())
+                        ->latest()
+                        ->first();
+        if ($existingOtp) {
         return back()->withErrors(['otp' => 'Kode OTP sebelumnya masih berlaku. Mohon tunggu beberapa saat.']);
+        }
+        $otp = rand(100000, 999999);
+        Otp::create([
+            'id_users' => $userId,
+            'otp_code' => $otp,
+            'expired_at' => Carbon::now()->addMinutes(2),
+        ]);
+        Mail::to(Auth::user()->email)->send(new OtpMail($otp));
+        return back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
     }
-    $otp = rand(100000, 999999);
-
-    Otp::create([
-        'id_users' => $userId,
-        'otp_code' => $otp,
-        'expired_at' => Carbon::now()->addMinutes(2),
-    ]);
-   Mail::to(Auth::user()->email)->send(new OtpMail($otp));
-
-    return back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
-}
 
     public function otpWhatsappForm(){
     $otp = Otp::where('id_users', Auth::id())
@@ -125,6 +118,51 @@ class LoginController extends Controller
         'expiredAt' => $otp->expired_at
     ]);
 }
+
+    public function otpwhatsapp(Request $request){
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('loginError', 'Silakan login terlebih dahulu.');
+    }
+    $user = Auth::user();
+    $userId = $user->id_users;
+    $existingOtp = Otp::where('id_users', $userId)
+                    ->where('expired_at', '>', Carbon::now())
+                    ->latest()
+                    ->first();
+    if ($existingOtp) {
+        return back()->withErrors(['otp' => 'Kode OTP sebelumnya masih berlaku. Mohon tunggu beberapa saat.']);
+    }
+
+    $otpCode = rand(100000, 999999);
+        Otp::create([
+            'id_users' => $userId,
+            'otp_code' => $otpCode,
+            'expired_at' => Carbon::now()->addMinutes(2),
+        ]);
+
+        try {
+        $sid    = env('TWILIO_SID');
+        $token  = env('TWILIO_AUTH_TOKEN');
+        $from   = env('TWILIO_WHATSAPP_NUMBER');
+        $twilio = new \Twilio\Rest\Client($sid, $token);
+        }
+    }
+    public function otpWhatsappForm(){
+    $otp = Otp::where('id_users', Auth::id())
+              ->where('expired_at', '>', Carbon::now())
+              ->latest()
+              ->first();
+
+    if (!$otp) {
+        return redirect()->route('login')->with('loginError', 'OTP WhatsApp sudah kadaluarsa.');
+    }
+
+    return view('loginsys.otpwhatsapp', [
+        'title' => 'OTP WhatsApp',
+        'active' => 'otp-whatsapp',
+        'expiredAt' => $otp->expired_at
+    ]); 
+    }
 
     public function otpwhatsapp(Request $request){
         if (!Auth::check()) {
